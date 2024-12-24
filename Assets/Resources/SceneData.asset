@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SceneData
   m_EditorClassIdentifier: 
   scenes:
-  - sceneName: SampleScene
-    sceneIdentifier: Scene_0
+  - sceneName: Splash
+    sceneIdentifier: Splash
+  - sceneName: Title
+    sceneIdentifier: Title
