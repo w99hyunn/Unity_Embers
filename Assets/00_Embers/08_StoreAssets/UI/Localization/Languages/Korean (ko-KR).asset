@@ -24,31 +24,31 @@ MonoBehaviour:
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementTotal
-      value: 
+      value: Total
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementLegendary
-      value: 
+      value: Legendary
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementRare
-      value: 
+      value: Rare
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementCommon
-      value: 
+      value: Common
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ButtonAll
-      value: 
+      value: All
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PAK_Part1
-      value: 
+      value: Press
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PAK_Key
-      value: 
+      value: Any Key
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PAK_Part2
