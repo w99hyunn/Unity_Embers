@@ -8,6 +8,7 @@ namespace STARTING
     public class SplashControl : MonoBehaviour
     {
         public GameObject startingLogo;
+        public GameObject embersLogo;
 
         private const string nextSceneName = "Title";
         private AsyncOperation _asyncLoad;
@@ -15,6 +16,7 @@ namespace STARTING
         private void Start()
         {
             startingLogo.SetActive(false);
+            embersLogo.SetActive(false);
             SwitchCanvasAndLoadScene().Forget();
             LoadSceneAsync().Forget();
         }
@@ -25,6 +27,9 @@ namespace STARTING
             await UniTask.Delay(4000);
             startingLogo.SetActive(true);
             await UniTask.Delay(4000);
+            embersLogo.SetActive(true);
+            await UniTask.Delay(4000);
+
             Cursor.visible = true;
             _asyncLoad.allowSceneActivation = true;
         }

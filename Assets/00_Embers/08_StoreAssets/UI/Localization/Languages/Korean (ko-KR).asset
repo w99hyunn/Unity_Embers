@@ -20,7 +20,7 @@ MonoBehaviour:
   - table: {fileID: 11400000, guid: c4d223e438e911a44aecec230da547ea, type: 2}
     tableContent:
     - key: AchievementsTitle
-      value: "\uC5C5\uC801"
+      value: Achievements
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementTotal
@@ -52,615 +52,661 @@ MonoBehaviour:
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PAK_Part2
-      value: 
+      value: To Start
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ButtonGoBack
-      value: 
+      value: // Go Back
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: StoryModeTitle
-      value: 
+      value: Story Mode
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MultiplayerTitle
-      value: 
+      value: Multiplayer
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ExitTitle
-      value: 
+      value: Exit
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ExtrasTitle
-      value: 
+      value: Extras
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsTitle
-      value: 
+      value: Settings
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: GeneralTitle
-      value: 
+      value: General
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ControlsTitle
-      value: 
+      value: Controls
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AudioTitle
-      value: 
+      value: Audio
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: VisualsTitle
-      value: 
+      value: Visuals
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MultiplayerSearchingLabel
-      value: 
+      value: Searching for games...
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: LanguageTitle
-      value: 
+      value: Language
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsTitle
-      value: 
+      value: News
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ButtonMoreDetails
-      value: 
+      value: More Details
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemTitle1
-      value: 
+      value: Welcome to Reach UI
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemDescription1
-      value: 
+      value: This is a panel which you can show the latest updates, changelog and
+        more.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemTitle2
-      value: 
+      value: Fully customizable
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemDescription2
-      value: 
+      value: You can add new items, change the size or change the appearance of the
+        panel by tweaking the news item preset.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemTitle3
-      value: 
+      value: Easily add new content
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NewsItemDescription3
-      value: 
+      value: You can easily add new slider items using the 'News Slider' component
+        which is added to the slider object.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementHiddenTitle
-      value: 
+      value: Hidden Achievement
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementHiddenDesc
-      value: 
+      value: This is a hidden achievement and must be unlocked to preview.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementSampleTitle
-      value: 
+      value: Sample Achievement
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AchievementSampleDesc
-      value: 
+      value: This is a sample achievement made for demo purposes.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: DiscordDescription
-      value: 
+      value: Join us on Discord
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: TwitterDescription
-      value: 
+      value: Follow us on Twitter
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterContinue
-      value: 
+      value: Continue
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterPlay
-      value: 
+      value: Play
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterReplay
-      value: 
+      value: Replay
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterCompleted
-      value: 
+      value: Completed
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterUnlocked
-      value: 
+      value: Unlocked
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ChapterLocked
-      value: 
+      value: Locked
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter1Title
-      value: 
+      value: Chapter 1
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter1Description
-      value: 
+      value: This is a description field. You can say something about the chapter
+        here. This is a multi-line field and is automatically sized depending on
+        its content. You can also use any TMP-supported rich text. You can use the
+        'Chapter Manager' component to make any changes to the chapter panel. Don't
+        worry, it's really easy to use!
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter2Title
-      value: 
+      value: Chapter 2
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter2Description
-      value: 
+      value: This is a description field. You can say something about the chapter
+        here. This is a multi-line field and is automatically sized depending on
+        its content. You can also use any TMP-supported rich text. You can use the
+        'Chapter Manager' component to make any changes to the chapter panel. Don't
+        worry, it's really easy to use!
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter3Title
-      value: 
+      value: Chapter 3
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter3Description
-      value: 
+      value: This is a description field. You can say something about the chapter
+        here. This is a multi-line field and is automatically sized depending on
+        its content. You can also use any TMP-supported rich text. You can use the
+        'Chapter Manager' component to make any changes to the chapter panel. Don't
+        worry, it's really easy to use!
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter4Title
-      value: 
+      value: Chapter 4
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Chapter4Description
-      value: 
+      value: This is a description field. You can say something about the chapter
+        here. This is a multi-line field and is automatically sized depending on
+        its content. You can also use any TMP-supported rich text. You can use the
+        'Chapter Manager' component to make any changes to the chapter panel. Don't
+        worry, it's really easy to use!
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ButtonCancel
-      value: 
+      value: Cancel
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ButtonConfirm
-      value: 
+      value: Confirm
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ExitModalDescription
-      value: 
+      value: Are you sure you want to exit? This action cannot be undone.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: LabelOn
-      value: 
+      value: On
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: LabelOff
-      value: 
+      value: Off
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsTitle
-      value: 
+      value: Credits
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SelectLabel
-      value: 
+      value: Select
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NavigateLabel
-      value: 
+      value: Navigate
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PrevChapterLabel
-      value: 
+      value: Previous Chapter
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NextChapterLabel
-      value: 
+      value: Next Chapter
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: GoBackLabel
-      value: 
+      value: Go Back
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PrevCategoryLabel
-      value: 
+      value: Previous Category
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NextCategoryLabel
-      value: 
+      value: Next Category
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: BoostCreditsLabel
-      value: 
+      value: Boost (Hold)
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CloseLabel
-      value: 
+      value: Close
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ControllerLayoutTitle
-      value: 
+      value: Controller Layout
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsVoiceover
-      value: 
+      value: Voiceover
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsCreatedBy
-      value: 
+      value: Created by
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsArtDesign
-      value: 
+      value: Art Design
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsProgrammer
-      value: 
+      value: Programming
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsSoundDesign
-      value: 
+      value: Sound Design
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsConceptArtist
-      value: 
+      value: Concept Artist
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsVFXArtist
-      value: 
+      value: VFX Artist
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsUI
-      value: 
+      value: User Interface
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsPlaytesters
-      value: 
+      value: Playtesters
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: WebsiteDescription
-      value: 
+      value: Check our website
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: RedditDescription
-      value: 
+      value: Follow us on Reddit
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: YouTubeDescription
-      value: 
+      value: Subscribe us on YouTube
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: EnableHintsLabel
-      value: 
+      value: Enable Hints
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: EnableTutorialsLabel
-      value: 
+      value: Enable Tutorials
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: UIScaleLabel
-      value: 
+      value: UI Scale
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SubtitleScaleLabel
-      value: 
+      value: Subtitle Scale
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: EnableSubtitlesLabel
-      value: 
+      value: Enable Subtitles
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: VolumeHeader
-      value: 
+      value: Volume
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MasterVolumeLabel
-      value: 
+      value: Master Volume
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MusicVolumeLabel
-      value: 
+      value: Music Volume
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SFXVolumeLabel
-      value: 
+      value: SFX Volume
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: UIVolumeLabel
-      value: 
+      value: UI Volume
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: DisplayHeader
-      value: 
+      value: Display
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ResolutionLabel
-      value: 
+      value: Resolution
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: EnableHintsDesc
-      value: 
+      value: 'First timer? Want to learn some new stuff while playing? If so, you
+        can enable this.
+
+        *This is a non-functional placeholder.'
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: EnableSubtitlesDesc
-      value: 
+      value: 'See what people saying on the screen.
+
+        *This is a non-functional
+        placeholder.'
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: LanguageDesc
-      value: 
+      value: Select a language that you prefer.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: UIScaleDesc
-      value: 
+      value: Too big? Too small? That's what she said? Well, you can manage UI size
+        here.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SubtitleScaleDesc
-      value: 
+      value: 'Too big? Too small? That''s what she said? Well, you can manage subtitle
+        size here.
+
+        *This is a non-functional placeholder.'
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MasterVolumeDesc
-      value: 
+      value: If you want to decrease or increase the general volume of the game,
+        you can play with this slider.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: MusicVolumeDesc
-      value: 
+      value: If you want to decrease or increase the music volume of the game, you
+        can play with this slider.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SFXVolumeDesc
-      value: 
+      value: If you want to decrease or increase the effect volume of the game, you
+        can play with this slider.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: UIVolumeDesc
-      value: 
+      value: If you want to decrease or increase the UI of the game, you can play
+        with this slider.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ResolutionDesc
-      value: 
+      value: Higher resolution screens are capable of producing sharper, clearer,
+        more detailed images. You can choose any resolution you desire.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsDesc
-      value: 
+      value: Tweak some options and make your gameplay experience even better! You
+        can change between categories using the buttons on the top.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: VSyncLabel
-      value: 
+      value: VSync
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: VSyncDesc
-      value: 
+      value: VSync is the graphics technology responsible for synchronizing the frame
+        rate of a game to the refresh rate of a monitor. This synchronization delivers
+        smooth, uninterrupted gameplay for graphics-heavy 3D games.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: FrameRateLabel
-      value: 
+      value: Frame Rate
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: FrameRateDesc
-      value: 
+      value: Limit the frame rate. It is recommended to match this option with the
+        refresh rate of your monitor. Note that this option has no effect when VSync
+        is enabled.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: FrameRateUnlimited
-      value: 
+      value: Unlimited
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: WindowModeLabel
-      value: 
+      value: Window Mode
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: WindowModeDesc
-      value: 
+      value: Select the preferred window mode. If you're experiencing input lags,
+        you can try the <b>Fullscreen</b> mode.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: BorderlessLabel
-      value: 
+      value: Borderless
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: FullscreenLabel
-      value: 
+      value: Fullscreen
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: WindowedLabel
-      value: 
+      value: Windowed
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CreditsLogoDescription
-      value: 
+      value: 'Optional footnote goes here.
+
+        You can add additional information
+        or license details here.'
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AccessibilityTitle
-      value: 
+      value: Accessibility
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SearchLabel
-      value: 
+      value: Search
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CancelSearchLabel
-      value: 
+      value: Cancel Search
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: GameModeLabel
-      value: 
+      value: Game Mode
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PlayLabel
-      value: 
+      value: Play
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SearchingLabel
-      value: 
+      value: Searching...
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: DeathmatchLabel
-      value: 
+      value: Deathmatch
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CTFLabel
-      value: 
+      value: Capture the flag
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ConquestLabel
-      value: 
+      value: Conquest
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PauseMenuContinue
-      value: 
+      value: Continue
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ExitMainMenuTitle
-      value: 
+      value: Exit to main menu
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ExitMainMenuDescription
-      value: 
+      value: Are you sure you want to exit to the main menu? Any unsaved progress
+        will be lost.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: QuestTextSample
-      value: 
+      value: Example quest description
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NotificationTextSample
-      value: 
+      value: Task completed <b>[+50 XP]</b>
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PausedLabel
-      value: 
+      value: Paused
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: TextureQualityLabel
-      value: 
+      value: Texture Quality
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: TextureQualityDesc
-      value: 
+      value: Higher quality textures result in significantly deeper details, but
+        also require more VRAM and video processing hardware.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsGraphicsLow
-      value: 
+      value: Low
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsGraphicsMedium
-      value: 
+      value: Medium
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsGraphicsHigh
-      value: 
+      value: High
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SettingsGraphicsUltra
-      value: 
+      value: Ultra
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AnisotropicFilteringLabel
-      value: 
+      value: Anisotropic filtering
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AnisotropicFilteringDesc
-      value: 
+      value: Texture filtering makes distant objects in games look sharper. It works
+        by improving the appearance of textures viewed at a steep angle.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CamAndPlayerLabel
-      value: 
+      value: Camera & Player
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CamSensitivityLabel
-      value: 
+      value: Camera sensitivity
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: CamSensitivityDesc
-      value: 
+      value: Adjust camera sensitivity.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SprintModeLabel
-      value: 
+      value: Sprint mode
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SprintModeLabelDesc
-      value: 
+      value: Set whether you want to sprint by holding the button or toggling.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SprintToggleLabel
-      value: 
+      value: Toggle
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SprintHoldLabel
-      value: 
+      value: Hold
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ReverseLookLabel
-      value: 
+      value: Reverse look
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ReverseLookDesc
-      value: 
+      value: Inverts camera look when enabled.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: KeyBindingsHeader
-      value: 
+      value: Key Bindings
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: AdvancedHeader
-      value: 
+      value: Advanced
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ScrollLabel
-      value: 
+      value: Scroll
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: LobbyLabel
-      value: 
+      value: Lobby
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ReadyLabel
-      value: 
+      value: Ready
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: NotReadyLabel
-      value: 
+      value: Not Ready
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: UnreadyLabel
-      value: 
+      value: Unready
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PAK_Touchscreen
-      value: 
+      value: Touchscreen
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ShopTitle
-      value: 
+      value: Shop
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: WeaponsTitle
-      value: 
+      value: Weapons
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: ClothesTitle
-      value: 
+      value: Clothes
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: VehiclesTitle
-      value: 
+      value: Vehicles
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PurchaseItemTitle
-      value: 
+      value: Purchase Item
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PurchaseItemDescription
-      value: 
+      value: Are you sure you want to buy the item?
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SampleShopItemTitle
-      value: 
+      value: Sample Title
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: SampleShopItemDescription
-      value: 
+      value: Shop button description here. Supports multi-line.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PurchasedLabel
-      value: 
+      value: Purchased
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: PurchaseLabel
-      value: 
+      value: Purchase
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
     - key: Key #161
