@@ -20,7 +20,7 @@ MonoBehaviour:
   hoverSound: {fileID: 8300000, guid: f0cb06f9461ea8b4bba64f3f7064a702, type: 3}
   clickSound: {fileID: 8300000, guid: 4656469a7b79f5c4a84f2ecd79f129d1, type: 3}
   notificationSound: {fileID: 8300000, guid: 35a7b929e025d674898e2f6a2d87c68a, type: 3}
-  accentColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+  accentColor: {r: 0.9150943, g: 0.5181829, b: 0.14244394, a: 1}
   accentColorInvert: {r: 0.09803922, g: 0.13725491, b: 0.1764706, a: 1}
   primaryColor: {r: 1, g: 1, b: 1, a: 1}
   secondaryColor: {r: 1, g: 1, b: 1, a: 1}
@@ -36,7 +36,7 @@ MonoBehaviour:
   localizationSettings: {fileID: 11400000, guid: 2cbd73cf0fc79bf4ab2e27e18b1ba7c8, type: 2}
   currentLanguage: {fileID: 0}
   brandLogo: {fileID: 21300000, guid: 78ca0ac98a59e2d49a61da6d805033a7, type: 3}
-  gameLogo: {fileID: 21300000, guid: 7901a018cadd54949b0bddb1b544505c, type: 3}
+  gameLogo: {fileID: 21300000, guid: 687cf33556f66f245967e2c2222ff7ef, type: 3}
   enableSplashScreen: 1
   showSplashScreenOnce: 1
   pakType: 0
