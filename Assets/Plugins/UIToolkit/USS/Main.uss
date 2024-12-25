@@ -1,0 +1,15 @@
+.splashLogo {
+    flex-grow: 1;
+    background-image: url("project://database/Assets/00_Embers/04_Images/Brand/Unity.png?fileID=21300000&guid=7a93d9a3f0a67fe469a002442c0b49a5&type=3#Unity");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 20%;
+    height: 100%;
+    transition-duration: 0.5s;
+    position: absolute;
+    opacity: 0;
+}
+
+.splashLogo-show {
+    opacity: 1;
+    transition-duration: 0.5s;
+}
