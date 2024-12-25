@@ -8,7 +8,7 @@ namespace STARTING
     public class SceneDataEditor : EditorWindow
     {
         private SceneData sceneData;
-        private const string sceneFolderPath = "Assets/00_Orbit/01_Scenes/";
+        private const string sceneFolderPath = "Assets/00_Embers/01_Scenes/";
 
         [MenuItem("STARTING/Scene Data Wizard")]
         public static void ShowWindow()
@@ -19,7 +19,7 @@ namespace STARTING
         private void OnEnable()
         {
             sceneData = Resources.Load<SceneData>("SceneData");
-            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/00_Orbit/04_Images/GameLevel Icon.png");
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/00_Embers/04_Images/Editor/GameLevel Icon.png");
             titleContent = new GUIContent("Scene Data Wizard", icon);
         }
 

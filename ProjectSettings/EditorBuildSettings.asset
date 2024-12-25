@@ -10,7 +10,10 @@ EditorBuildSettings:
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/00_Embers/01_Scenes/Title.unity
-    guid: 1f60ec0bbd74036449fd5eff8eb9a3a4
+    guid: a4638c6f0a7111d4e8707e8d6919f378
+  - enabled: 1
+    path: Assets/00_Embers/01_Scenes/In-Game (Desktop).unity
+    guid: 9d6eb2a5eb14eb444a02cdf15cc529c8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

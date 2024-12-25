@@ -17,3 +17,5 @@ MonoBehaviour:
     sceneIdentifier: Splash
   - sceneName: Title
     sceneIdentifier: Title
+  - sceneName: In-Game (Desktop)
+    sceneIdentifier: Scene_2

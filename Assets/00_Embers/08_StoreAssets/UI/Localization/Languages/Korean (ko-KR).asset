@@ -1,0 +1,669 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70abea511859e248a1cf2c44035e321, type: 3}
+  m_Name: Korean (ko-KR)
+  m_EditorClassIdentifier: 
+  localizationSettings: {fileID: 11400000, guid: 2cbd73cf0fc79bf4ab2e27e18b1ba7c8, type: 2}
+  languageID: ko-KR
+  languageName: Korean
+  localizedName: "\uD55C\uAD6D\uC5B4"
+  tableList:
+  - table: {fileID: 11400000, guid: c4d223e438e911a44aecec230da547ea, type: 2}
+    tableContent:
+    - key: AchievementsTitle
+      value: "\uC5C5\uC801"
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementTotal
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementLegendary
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementRare
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementCommon
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ButtonAll
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PAK_Part1
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PAK_Key
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PAK_Part2
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ButtonGoBack
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: StoryModeTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MultiplayerTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ExitTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ExtrasTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: GeneralTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ControlsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AudioTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: VisualsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MultiplayerSearchingLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: LanguageTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ButtonMoreDetails
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemTitle1
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemDescription1
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemTitle2
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemDescription2
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemTitle3
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NewsItemDescription3
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementHiddenTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementHiddenDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementSampleTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AchievementSampleDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: DiscordDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: TwitterDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterContinue
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterPlay
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterReplay
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterCompleted
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterUnlocked
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ChapterLocked
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter1Title
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter1Description
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter2Title
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter2Description
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter3Title
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter3Description
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter4Title
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Chapter4Description
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ButtonCancel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ButtonConfirm
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ExitModalDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: LabelOn
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: LabelOff
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SelectLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NavigateLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PrevChapterLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NextChapterLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: GoBackLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PrevCategoryLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NextCategoryLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: BoostCreditsLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CloseLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ControllerLayoutTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsVoiceover
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsCreatedBy
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsArtDesign
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsProgrammer
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsSoundDesign
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsConceptArtist
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsVFXArtist
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsUI
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsPlaytesters
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: WebsiteDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: RedditDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: YouTubeDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: EnableHintsLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: EnableTutorialsLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: UIScaleLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SubtitleScaleLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: EnableSubtitlesLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: VolumeHeader
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MasterVolumeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MusicVolumeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SFXVolumeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: UIVolumeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: DisplayHeader
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ResolutionLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: EnableHintsDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: EnableSubtitlesDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: LanguageDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: UIScaleDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SubtitleScaleDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MasterVolumeDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: MusicVolumeDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SFXVolumeDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: UIVolumeDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ResolutionDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: VSyncLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: VSyncDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: FrameRateLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: FrameRateDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: FrameRateUnlimited
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: WindowModeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: WindowModeDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: BorderlessLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: FullscreenLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: WindowedLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CreditsLogoDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AccessibilityTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SearchLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CancelSearchLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: GameModeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PlayLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SearchingLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: DeathmatchLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CTFLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ConquestLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PauseMenuContinue
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ExitMainMenuTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ExitMainMenuDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: QuestTextSample
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NotificationTextSample
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PausedLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: TextureQualityLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: TextureQualityDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsGraphicsLow
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsGraphicsMedium
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsGraphicsHigh
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SettingsGraphicsUltra
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AnisotropicFilteringLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AnisotropicFilteringDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CamAndPlayerLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CamSensitivityLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: CamSensitivityDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SprintModeLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SprintModeLabelDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SprintToggleLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SprintHoldLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ReverseLookLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ReverseLookDesc
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: KeyBindingsHeader
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: AdvancedHeader
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ScrollLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: LobbyLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ReadyLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: NotReadyLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: UnreadyLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PAK_Touchscreen
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ShopTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: WeaponsTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: ClothesTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: VehiclesTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PurchaseItemTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PurchaseItemDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SampleShopItemTitle
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SampleShopItemDescription
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PurchasedLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: PurchaseLabel
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Key #161
+      value: 
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
