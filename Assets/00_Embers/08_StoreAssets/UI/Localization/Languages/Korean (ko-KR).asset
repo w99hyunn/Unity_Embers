@@ -709,7 +709,40 @@ MonoBehaviour:
       value: Purchase
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
-    - key: Key #161
+    - key: SPLASH_ID
+      value: ID
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SPLASH_PW
+      value: PW
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SPLASH_JOIN_BTN
+      value: JOIN
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SPLASH_LOGIN_BTN
+      value: LOGIN
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: JoinTitle
+      value: JOIN
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: JoinDescription
+      value: All information is encrypted and stored.
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SPLASH_EMAIL
+      value: EMAIL
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: SPLASH_EMAIL_NEED
+      value: Email is required to find your account information. Please enter it
+        correctly.
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Key 168
       value: 
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}

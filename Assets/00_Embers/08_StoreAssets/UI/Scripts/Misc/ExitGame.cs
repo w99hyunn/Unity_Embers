@@ -8,7 +8,7 @@ namespace Michsky.UI.Reach
         { 
             Application.Quit();
 #if UNITY_EDITOR
-            Debug.Log("<b>[Reach UI]</b> Exit function works in builds only.");
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
         }
     }

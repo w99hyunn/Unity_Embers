@@ -176,3 +176,11 @@ MonoBehaviour:
   - key: SampleShopItemDescription
   - key: PurchasedLabel
   - key: PurchaseLabel
+  - key: SPLASH_ID
+  - key: SPLASH_PW
+  - key: SPLASH_JOIN_BTN
+  - key: SPLASH_LOGIN_BTN
+  - key: JoinTitle
+  - key: JoinDescription
+  - key: SPLASH_EMAIL
+  - key: SPLASH_EMAIL_NEED
