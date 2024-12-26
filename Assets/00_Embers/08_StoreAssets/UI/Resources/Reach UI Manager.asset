@@ -34,9 +34,9 @@ MonoBehaviour:
   customFont: {fileID: 0}
   enableLocalization: 1
   localizationSettings: {fileID: 11400000, guid: 2cbd73cf0fc79bf4ab2e27e18b1ba7c8, type: 2}
-  currentLanguage: {fileID: 11400000, guid: 874ef6b3ce721b84eb1f04e13b47915a, type: 2}
+  currentLanguage: {fileID: 11400000, guid: 7f0d34462af20e740a7fc45541f666a0, type: 2}
   brandLogo: {fileID: 21300000, guid: 56860a8ddd1654a4eb12272c7c176514, type: 3}
-  gameLogo: {fileID: 21300000, guid: 598ff2f5a2db7c64dbb442385b459cbf, type: 3}
+  gameLogo: {fileID: 21300000, guid: 689c07a8ff4d01b4380185592ae471c1, type: 3}
   enableSplashScreen: 0
   showSplashScreenOnce: 1
   pakType: 0
