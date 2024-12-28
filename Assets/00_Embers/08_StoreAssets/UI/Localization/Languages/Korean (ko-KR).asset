@@ -742,7 +742,15 @@ MonoBehaviour:
         correctly.
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}
-    - key: Key 168
+    - key: RememberOn
+      value: SAVE ON
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: RememberOff
+      value: SAVE OFF
+      audioValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+    - key: Key 170
       value: 
       audioValue: {fileID: 0}
       spriteValue: {fileID: 0}

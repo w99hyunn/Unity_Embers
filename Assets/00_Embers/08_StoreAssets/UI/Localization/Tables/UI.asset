@@ -184,3 +184,5 @@ MonoBehaviour:
   - key: JoinDescription
   - key: SPLASH_EMAIL
   - key: SPLASH_EMAIL_NEED
+  - key: RememberOn
+  - key: RememberOff

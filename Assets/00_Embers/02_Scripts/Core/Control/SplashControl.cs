@@ -11,14 +11,27 @@ namespace STARTING
         public GameObject embersLogo;
 
         private const string nextSceneName = "Title";
-        private AsyncOperation _asyncLoad;
+        private const string sessionSceneName = "Session";
 
+        private AsyncOperation _asyncLoad;
+        private AsyncOperation _asyncLoad2;
         private void Start()
         {
             startingLogo.SetActive(false);
             embersLogo.SetActive(false);
-            SwitchCanvasAndLoadScene().Forget();
             LoadSceneAsync().Forget();
+            SwitchCanvasAndLoadScene().Forget();
+        }
+
+        private async UniTask LoadSceneAsync()
+        {
+            _asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+            _asyncLoad.allowSceneActivation = false;
+
+            _asyncLoad2 = SceneManager.LoadSceneAsync(sessionSceneName, LoadSceneMode.Additive);
+            _asyncLoad2.allowSceneActivation = false;
+
+            await _asyncLoad.ToUniTask();
         }
 
         private async UniTask SwitchCanvasAndLoadScene()
@@ -32,20 +45,18 @@ namespace STARTING
 
             Cursor.visible = true;
             _asyncLoad.allowSceneActivation = true;
+            _asyncLoad2.allowSceneActivation = true;
         }
 
-        private async UniTask LoadSceneAsync()
-        {
-            _asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
-            _asyncLoad.allowSceneActivation = false;
-            await _asyncLoad.ToUniTask();
-        }
-
-        //스플래시 스킵
+        /// <summary>
+        /// ESC누르면 스플래시화면 스킵
+        /// </summary>
+        /// <param name="value"></param>
         private void OnSkip(InputValue value)
         {
             Cursor.visible = true;
             SceneManager.LoadScene(SceneDataManager.GetSceneName(nextSceneName));
+            SceneManager.LoadScene(SceneDataManager.GetSceneName(sessionSceneName), LoadSceneMode.Additive);
         }
     }
 }

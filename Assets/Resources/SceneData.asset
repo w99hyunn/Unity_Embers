@@ -19,3 +19,5 @@ MonoBehaviour:
     sceneIdentifier: Title
   - sceneName: In-Game (Desktop)
     sceneIdentifier: Scene_2
+  - sceneName: Session
+    sceneIdentifier: Session

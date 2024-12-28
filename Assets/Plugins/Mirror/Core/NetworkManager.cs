@@ -18,12 +18,14 @@ namespace Mirror
     {
         /// <summary>Enable to keep NetworkManager alive when changing scenes.</summary>
         // This should be set if your game has a single NetworkManager that exists for the lifetime of the process. If there is a NetworkManager in each scene, then this should not be set.</para>
+        [HideInInspector]
         [Header("Configuration")]
         [FormerlySerializedAs("m_DontDestroyOnLoad")]
         [Tooltip("Should the Network Manager object be persisted through scene changes?")]
         public bool dontDestroyOnLoad = true;
 
         /// <summary>Multiplayer games should always run in the background so the network doesn't time out.</summary>
+        [HideInInspector]
         [FormerlySerializedAs("m_RunInBackground")]
         [Tooltip("Multiplayer games should always run in the background so the network doesn't time out.")]
         public bool runInBackground = true;
@@ -48,6 +50,7 @@ namespace Mirror
         // public int clientSendRate = 30; // 33 ms
 
         /// <summary>Automatically switch to this scene upon going offline (on start / on disconnect / on shutdown).</summary>
+        [HideInInspector]
         [Header("Scene Management")]
         [Scene]
         [FormerlySerializedAs("m_OfflineScene")]
@@ -55,6 +58,7 @@ namespace Mirror
         public string offlineScene = "";
 
         /// <summary>Automatically switch to this scene upon going online (after connect/startserver).</summary>
+        [HideInInspector]
         [Scene]
         [FormerlySerializedAs("m_OnlineScene")]
         [Tooltip("Scene that Mirror will switch to when the server is started. Clients will recieve a Scene Message to load the server's current scene when they connect.")]
@@ -69,6 +73,7 @@ namespace Mirror
         public Transport transport;
 
         /// <summary>Server's address for clients to connect to.</summary>
+        ///         [HideInInspector]
         [FormerlySerializedAs("m_NetworkAddress")]
         [Tooltip("Network Address where the client should connect to the server. Server does not use this for anything.")]
         public string networkAddress = "localhost";
@@ -87,6 +92,7 @@ namespace Mirror
         [Tooltip("Timeout in seconds for server to automatically disconnect inactive connections if 'disconnectInactiveConnections' is enabled.")]
         public float disconnectInactiveTimeout = 60f;
 
+        [HideInInspector]
         [Header("Authentication")]
         [Tooltip("Authentication component attached to this object")]
         public NetworkAuthenticator authenticator;
@@ -133,6 +139,7 @@ namespace Mirror
         [FormerlySerializedAs("connectionQualityInterval")]
         public float evaluationInterval = 3;
 
+        [HideInInspector]
         [Header("Interpolation UI - Requires Editor / Dev Build")]
         public bool timeInterpolationGui = false;
 
