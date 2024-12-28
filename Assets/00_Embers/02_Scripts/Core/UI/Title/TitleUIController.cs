@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace STARTING
 {
@@ -9,6 +10,7 @@ namespace STARTING
         private TitleUIView _view;
 
         private int serverConnectMaxRetry = 10;
+        private bool isCheckingConnection;
 
         private void Start()
         {
@@ -55,6 +57,7 @@ namespace STARTING
                 if (NetworkClient.isConnected)
                 {
                     _view.ConnectingSuccess();
+                    CheckServerConnectionLoop().Forget();
                     connected = true;
                 }
                 else
@@ -68,6 +71,34 @@ namespace STARTING
             {
                 _view.ConnectingFail();
             }
+        }
+
+
+        private async UniTaskVoid CheckServerConnectionLoop()
+        {
+            Debug.Log("서버 연결상태 확인 시작");
+            isCheckingConnection = true;
+
+            while (isCheckingConnection)
+            {
+                await UniTask.Delay(30000); // 30초 대기
+
+                // 서버 연결 상태 확인
+                if (!NetworkClient.isConnected)
+                {
+                    HandleServerDisconnection();
+                    break; // 연결이 끊기면 루프 종료
+                }
+            }
+        }
+
+        /// <summary>
+        /// 서버 연결 끊김 처리
+        /// </summary>
+        private void HandleServerDisconnection()
+        {
+            _view.ConnectingLost();
+            isCheckingConnection = false;
         }
 
         /// <summary>

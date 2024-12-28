@@ -11,8 +11,10 @@ namespace STARTING
         public GameObject Connecting;
         public TMP_Text ConnectingMessage;
         public GameObject Login;
-        public ModalWindowManager connectingFailPopup;
         public GameObject RetryBtn;
+        [Header("Connecting Popup")]
+        public ModalWindowManager connectingFailPopup;
+        public ModalWindowManager connectingLostPopup;
 
         [Header("Login")]
         public TMP_InputField loginIdInputField;
@@ -46,6 +48,11 @@ namespace STARTING
         {
             RetryBtn.SetActive(true);
             connectingFailPopup.OpenWindow();
+        }
+
+        public void ConnectingLost()
+        {
+            connectingLostPopup.OpenWindow();
         }
 
         public void SignUpResultPopup(SignUpResult result)

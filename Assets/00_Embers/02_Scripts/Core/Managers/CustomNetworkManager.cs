@@ -20,6 +20,7 @@ namespace STARTING
             base.StartClient();
         }
 
+
         public override void OnStartServer()
         {
             base.OnStartServer();
@@ -31,8 +32,6 @@ namespace STARTING
 
 
             Debug.Log(Managers.DB.ConnectDB());
-
-
         }
 
         /// <summary>
@@ -98,6 +97,7 @@ namespace STARTING
         //{
         //    DBManager.Instance.UpdateGameDataInDB(msg.userId, msg.gameData);
         //}
+
 
     }
 }
