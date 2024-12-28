@@ -5,30 +5,29 @@ using UnityEngine.InputSystem;
 
 namespace STARTING
 {
-    public class SplashControl : MonoBehaviour
+    public class SplashUIController : MonoBehaviour
     {
-        public GameObject startingLogo;
-        public GameObject embersLogo;
-
-        private const string nextSceneName = "Title";
-        private const string sessionSceneName = "Session";
+        private SplashUIView _view;
+        private SplashUIModel _model;
 
         private AsyncOperation _asyncLoad;
         private AsyncOperation _asyncLoad2;
+
         private void Start()
         {
-            startingLogo.SetActive(false);
-            embersLogo.SetActive(false);
+            TryGetComponent<SplashUIView>(out _view);
+            _model = new SplashUIModel();
+
             LoadSceneAsync().Forget();
             SwitchCanvasAndLoadScene().Forget();
         }
 
         private async UniTask LoadSceneAsync()
         {
-            _asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+            _asyncLoad = SceneManager.LoadSceneAsync(_model.nextSceneName);
             _asyncLoad.allowSceneActivation = false;
 
-            _asyncLoad2 = SceneManager.LoadSceneAsync(sessionSceneName, LoadSceneMode.Additive);
+            _asyncLoad2 = SceneManager.LoadSceneAsync(_model.sessionSceneName, LoadSceneMode.Additive);
             _asyncLoad2.allowSceneActivation = false;
 
             await _asyncLoad.ToUniTask();
@@ -38,9 +37,9 @@ namespace STARTING
         {
             Cursor.visible = false;
             await UniTask.Delay(4000);
-            startingLogo.SetActive(true);
+            _view.StartingLogo(true);
             await UniTask.Delay(4000);
-            embersLogo.SetActive(true);
+            _view.EmbersLogo(true);
             await UniTask.Delay(4000);
 
             Cursor.visible = true;
@@ -55,8 +54,8 @@ namespace STARTING
         private void OnSkip(InputValue value)
         {
             Cursor.visible = true;
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(nextSceneName));
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(sessionSceneName), LoadSceneMode.Additive);
+            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.nextSceneName));
+            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.sessionSceneName), LoadSceneMode.Additive);
         }
     }
 }

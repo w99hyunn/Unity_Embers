@@ -9,6 +9,7 @@ namespace STARTING
         //Manager
         public static CustomNetworkManager Network { get; private set; }
         public static DBManager DB { get; private set; }
+        public static LogManager Log { get; private set; }
 
         private void Awake()
         {
@@ -22,6 +23,7 @@ namespace STARTING
 
             Network = GetComponentInChildren<CustomNetworkManager>();
             DB = GetComponentInChildren<DBManager>();
+            Log = GetComponentInChildren<LogManager>();
         }
     }
 }

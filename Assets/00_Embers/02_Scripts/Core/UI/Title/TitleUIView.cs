@@ -31,8 +31,6 @@ namespace STARTING
         public ModalWindowManager signUpPopup;
         public ModalWindowManager signUpResultPopup;
 
-        private string savedLoginId;
-
         public void ConnectingMessageUpdate(string text)
         {
             ConnectingMessage.text = $"Connecting Server...\r\n{text}";
@@ -131,8 +129,7 @@ namespace STARTING
 
         private void SaveLoginId(string value)
         {
-            savedLoginId = value;
-            PlayerPrefs.SetString("LoginId", savedLoginId);
+            PlayerPrefs.SetString("LoginId", value);
             PlayerPrefs.Save();
         }
 
@@ -140,8 +137,7 @@ namespace STARTING
         {
             if (PlayerPrefs.HasKey("LoginId"))
             {
-                savedLoginId = PlayerPrefs.GetString("LoginId");
-                loginIdInputField.text = savedLoginId;
+                loginIdInputField.text = PlayerPrefs.GetString("LoginId");
             }
         }
     }

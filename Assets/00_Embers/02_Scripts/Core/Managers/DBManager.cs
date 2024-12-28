@@ -82,12 +82,12 @@ namespace STARTING
             try
             {
                 cmd.ExecuteNonQuery();
-                Debug.Log("회원가입 성공");
+                Managers.Log.Log($"Sign Up New User : {username}");
                 return SignUpResult.SUCCESS;
             }
             catch (Exception ex)
             {
-                Debug.LogError("회원가입 실패: " + ex.Message);
+                Managers.Log.LogError($"Sign Up New User Failed : {username}");
                 return SignUpResult.ERROR;
             }
         }
@@ -135,32 +135,29 @@ namespace STARTING
 
                         if (inputPasswordHash == storedPasswordHash)
                         {
-                            reader.Close(); // MySqlDataReader 닫기
+                            reader.Close();
 
                             string updateQuery = "UPDATE account SET is_online = TRUE WHERE username = @username";
                             MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection);
                             updateCmd.Parameters.AddWithValue("@username", username);
                             updateCmd.ExecuteNonQuery();
 
-                            Debug.Log("로그인 성공");
+                            Managers.Log.Log($"User Login : {username}");
                             return LoginResult.SUCCESS;
                         }
                         else
                         {
-                            Debug.Log("비밀번호가 일치하지 않습니다.");
                             return LoginResult.PWWRONG;
                         }
                     }
                     else
                     {
-                        Debug.Log("사용자가 존재하지 않습니다.");
                         return LoginResult.IDWRONG;
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.Log("로그인 실패: " + ex.Message);
                 return LoginResult.ERROR;
             }
         }

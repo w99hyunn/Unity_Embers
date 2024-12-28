@@ -9,6 +9,17 @@ namespace STARTING
         public string IP;
         public ushort PORT;
 
+        public override void Start()
+        {
+#if UNITY_SERVER
+            if (!NetworkServer.active)
+            {
+                StartServer();
+            }
+#endif
+            base.Start();
+        }
+
         public new void StartClient()
         {
             base.networkAddress = IP;
@@ -30,8 +41,8 @@ namespace STARTING
             //NetworkServer.RegisterHandler<GameDataRequestMessage>(OnGameDataRequest);
             //NetworkServer.RegisterHandler<GameDataUpdateRequestMessage>(OnGameDataUpdateRequest);
 
-
-            Debug.Log(Managers.DB.ConnectDB());
+            bool dbserver = Managers.DB.ConnectDB();
+            Managers.Log.Log($"DB Connect? : {dbserver}");
         }
 
         /// <summary>

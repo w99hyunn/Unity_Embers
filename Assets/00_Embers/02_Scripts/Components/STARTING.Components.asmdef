@@ -1,8 +1,8 @@
 {
-    "name": "UI",
+    "name": "STARTING.Components",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:a45bd50bbbb43ce45a83a90a3af5c70a",
         "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [
