@@ -180,6 +180,8 @@ namespace STARTING
 
         public void EditProfilePopupInit()
         {
+            editProfilePWInputField.text = "";
+            editProfilePWConfirmInputField.text = "";
             editProfileEmailInputField.text = Managers.Game.playerData.Email;
             editProfileCreatedInputField.text = Managers.Game.playerData.CreatedDate.ToString();
             editProfilePopup.OpenWindow();
