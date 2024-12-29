@@ -44,7 +44,7 @@ namespace Michsky.UI.Reach
         LocalizedObject localizedObject;
         string animSpeedKey = "AnimSpeed";
 
-        public enum ChapterState { Locked, Unlocked, Completed, Current }
+        public enum ChapterState { Locked, Create, CharacterPlay, CharacterPlayAndDelete }
 
         [System.Serializable]
         public class ChapterItem
@@ -60,9 +60,9 @@ namespace Michsky.UI.Reach
             public string descriptionKey = "DescriptionKey";
 
             [Header("Events")]
-            public UnityEvent onContinue;
+            public UnityEvent onDelete;
+            public UnityEvent onCreate;
             public UnityEvent onPlay;
-            public UnityEvent onReplay;
         }
 
         void Awake()
@@ -153,37 +153,37 @@ namespace Michsky.UI.Reach
                 }
 
                 // Set events
-                item.continueButton.onClick.RemoveAllListeners();
-                item.continueButton.onClick.AddListener(chapters[tempIndex].onContinue.Invoke);
+                item.deleteButton.onClick.RemoveAllListeners();
+                item.deleteButton.onClick.AddListener(chapters[tempIndex].onDelete.Invoke);
+
+                item.createButton.onClick.RemoveAllListeners();
+                item.createButton.onClick.AddListener(chapters[tempIndex].onCreate.Invoke);
 
                 item.playButton.onClick.RemoveAllListeners();
                 item.playButton.onClick.AddListener(chapters[tempIndex].onPlay.Invoke);
-
-                item.replayButton.onClick.RemoveAllListeners();
-                item.replayButton.onClick.AddListener(chapters[tempIndex].onReplay.Invoke);
 
                 // Check for chapter data
                 if (checkChapterData == true)
                 {
                     if (!PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID))
                     {
-                        if (chapters[i].defaultState == ChapterState.Unlocked) { item.SetUnlocked(); }
+                        if (chapters[i].defaultState == ChapterState.Create) { item.SetCreate(); }
                         else if (chapters[i].defaultState == ChapterState.Locked) { item.SetLocked(); }
-                        else if (chapters[i].defaultState == ChapterState.Completed) { item.SetCompleted(); }
-                        else { item.SetCurrent(); }
+                        else if (chapters[i].defaultState == ChapterState.CharacterPlay) { item.SetCharacterPlay(); }
+                        else { item.SetCharacterPlayAndDelete(); }
                     }
-                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "unlocked") { item.SetUnlocked(); }
-                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "current") { item.SetCurrent(); }
-                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "completed") { item.SetCompleted(); }
+                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "unlocked") { item.SetCreate(); }
+                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "current") { item.SetCharacterPlayAndDelete(); }
+                    else if (PlayerPrefs.HasKey("ChapterState_" + chapters[i].chapterID) && PlayerPrefs.GetString("ChapterState_" + chapters[i].chapterID) == "completed") { item.SetCharacterPlay(); }
                     else { item.SetLocked(); }
                 }
 
                 else
                 {
-                    if (chapters[i].defaultState == ChapterState.Unlocked) { item.SetUnlocked(); }
+                    if (chapters[i].defaultState == ChapterState.Create) { item.SetCreate(); }
                     else if (chapters[i].defaultState == ChapterState.Locked) { item.SetLocked(); }
-                    else if (chapters[i].defaultState == ChapterState.Completed) { item.SetCompleted(); }
-                    else { item.SetCurrent(); }
+                    else if (chapters[i].defaultState == ChapterState.CharacterPlay) { item.SetCharacterPlay(); }
+                    else { item.SetCharacterPlayAndDelete(); }
                 }
 
                 // Set visibility

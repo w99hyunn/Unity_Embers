@@ -12,9 +12,9 @@ namespace Michsky.UI.Reach
         public Image backgroundImage;
         public TextMeshProUGUI titleObject;
         public TextMeshProUGUI descriptionObject;
-        public ButtonManager continueButton;
+        public ButtonManager deleteButton;
+        public ButtonManager createButton;
         public ButtonManager playButton;
-        public ButtonManager replayButton;
         public GameObject completedIndicator;
         public GameObject unlockedIndicator;
         public GameObject lockedIndicator;
@@ -29,65 +29,65 @@ namespace Michsky.UI.Reach
             chapterManager.DoStretch();
         }
 
-        public void SetCurrent()
+        public void SetCharacterPlayAndDelete()
         {
-            completedIndicator.SetActive(false);
-            unlockedIndicator.SetActive(true);
-            lockedIndicator.SetActive(false);
+            //completedIndicator.SetActive(false);
+            //unlockedIndicator.SetActive(true);
+            //lockedIndicator.SetActive(false);
 
-            continueButton.gameObject.SetActive(true);
-            playButton.gameObject.SetActive(false);
-            replayButton.gameObject.SetActive(true);
+            deleteButton.gameObject.SetActive(true);
+            createButton.gameObject.SetActive(false);
+            playButton.gameObject.SetActive(true);
 
             isLocked = false;
             isCurrent = true;
-            continueButton.isInteractable = true;
-            replayButton.isInteractable = true;
+            deleteButton.isInteractable = true;
+            playButton.isInteractable = true;
         }
 
         public void SetLocked()
         {
-            completedIndicator.SetActive(false);
-            unlockedIndicator.SetActive(false);
-            lockedIndicator.SetActive(true);
+            //completedIndicator.SetActive(false);
+            //unlockedIndicator.SetActive(false);
+            //lockedIndicator.SetActive(true);
 
-            continueButton.gameObject.SetActive(false);
-            playButton.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(false);
+            deleteButton.gameObject.SetActive(false);
+            createButton.gameObject.SetActive(true);
+            playButton.gameObject.SetActive(false);
 
             isLocked = true;
             isCurrent = false;
-            playButton.isInteractable = false;
+            createButton.isInteractable = false;
         }
 
-        public void SetUnlocked()
+        public void SetCreate()
         {
-            completedIndicator.SetActive(false);
-            unlockedIndicator.SetActive(true);
-            lockedIndicator.SetActive(false);
+            //completedIndicator.SetActive(false);
+            //unlockedIndicator.SetActive(true);
+            //lockedIndicator.SetActive(false);
 
-            continueButton.gameObject.SetActive(false);
+            deleteButton.gameObject.SetActive(false);
+            createButton.gameObject.SetActive(true);
+            playButton.gameObject.SetActive(false);
+
+            isLocked = false;
+            isCurrent = false;
+            createButton.isInteractable = true;
+        }
+
+        public void SetCharacterPlay()
+        {
+            //completedIndicator.SetActive(true);
+            //unlockedIndicator.SetActive(false);
+            //lockedIndicator.SetActive(false);
+
+            deleteButton.gameObject.SetActive(false);
+            createButton.gameObject.SetActive(false);
             playButton.gameObject.SetActive(true);
-            replayButton.gameObject.SetActive(false);
 
             isLocked = false;
             isCurrent = false;
             playButton.isInteractable = true;
-        }
-
-        public void SetCompleted()
-        {
-            completedIndicator.SetActive(true);
-            unlockedIndicator.SetActive(false);
-            lockedIndicator.SetActive(false);
-
-            continueButton.gameObject.SetActive(false);
-            playButton.gameObject.SetActive(false);
-            replayButton.gameObject.SetActive(true);
-
-            isLocked = false;
-            isCurrent = false;
-            replayButton.isInteractable = true;
         }
     }
 }
