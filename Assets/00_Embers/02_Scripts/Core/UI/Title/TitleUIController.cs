@@ -44,7 +44,7 @@ namespace STARTING
                 Managers.Network.StartClient();
                 attemptCount++;
 
-                _view.ConnectingMessageUpdate($"Connect Try {attemptCount} / {serverConnectMaxRetry}");
+                _view.ConnectingMessageUpdate($"Try {attemptCount} / {serverConnectMaxRetry}");
 
                 //연결됐는지 확인
                 while (NetworkClient.active && !NetworkClient.isConnected)
