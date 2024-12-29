@@ -61,16 +61,13 @@ namespace STARTING
 
         public SignUpResult SignUp(string username, string password, string email)
         {
-            // 먼저 username이 중복되는지 확인
+            // username 중복 확인
             if (IsUsernameDuplicate(username))
             {
                 return SignUpResult.DUPLICATE;
             }
 
-            // 비밀번호 해시와 salt 생성
             var (passwordHash, salt) = GeneratePasswordHashAndSalt(password);
-
-            // SQL 쿼리
             string query = "INSERT INTO account (username, password_hash, password_salt, email) VALUES (@username, @passwordHash, @salt, @email)";
 
             MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -87,7 +84,7 @@ namespace STARTING
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError($"Sign Up New User Failed : {username}");
+                Managers.Log.LogError($"Sign Up New User Failed : {username} / Exception : {ex}");
                 return SignUpResult.ERROR;
             }
         }
@@ -110,7 +107,7 @@ namespace STARTING
             }
             catch (Exception ex)
             {
-                Debug.LogError("중복 확인 중 오류 발생: " + ex.Message);
+                Managers.Log.LogError("중복 확인 중 오류 발생: " + ex.Message);
                 return false;
             }
         }
@@ -163,11 +160,8 @@ namespace STARTING
         }
 
 
-
-
         private (string, string) GeneratePasswordHashAndSalt(string password)
         {
-            // 32 바이트 길이의 랜덤한 솔트 생성
             byte[] salt = new byte[32];
             using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
             {

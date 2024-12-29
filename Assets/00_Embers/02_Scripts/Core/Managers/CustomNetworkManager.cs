@@ -57,6 +57,7 @@ namespace STARTING
 
             LoginResponseMessage response = new LoginResponseMessage
             {
+                username = msg.username,
                 result = result
             };
             

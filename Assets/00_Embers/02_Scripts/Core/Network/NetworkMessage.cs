@@ -11,6 +11,7 @@ namespace STARTING
 
     public struct LoginResponseMessage : NetworkMessage
     {
+        public string username;
         public LoginResult result;
     }
 

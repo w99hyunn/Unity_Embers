@@ -47,7 +47,7 @@ namespace STARTING
 
                 if (sceneData == null)
                 {
-                    Debug.LogError("SceneData.asset를 찾을 수 없음. Resources 폴더 안에 존재해야함.");
+                    Managers.Log.LogError("SceneData.asset를 찾을 수 없음. Resources 폴더 안에 존재해야함.");
                 }
             }
         }

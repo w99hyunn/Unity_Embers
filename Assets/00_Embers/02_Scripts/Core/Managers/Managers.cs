@@ -7,6 +7,7 @@ namespace STARTING
         public static Managers Instance { get; private set; }
 
         //Manager
+        public static GameManager Game { get; private set; }
         public static CustomNetworkManager Network { get; private set; }
         public static DBManager DB { get; private set; }
         public static LogManager Log { get; private set; }
@@ -21,6 +22,7 @@ namespace STARTING
 
             Instance = this;
 
+            Game = GetComponentInChildren<GameManager>();
             Network = GetComponentInChildren<CustomNetworkManager>();
             DB = GetComponentInChildren<DBManager>();
             Log = GetComponentInChildren<LogManager>();

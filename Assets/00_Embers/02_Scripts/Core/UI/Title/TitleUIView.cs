@@ -7,6 +7,7 @@ namespace STARTING
 {
     public class TitleUIView : MonoBehaviour
     {
+        [Header("Splash Screen")]
         [Header("Connecting")]
         public GameObject Connecting;
         public TMP_Text ConnectingMessage;
@@ -30,6 +31,10 @@ namespace STARTING
         [Header("SignUp Popup")]
         public ModalWindowManager signUpPopup;
         public ModalWindowManager signUpResultPopup;
+
+        [Space(10)]
+        [Header("Main Content")]
+        public ButtonManager profileEdit;
 
         public void ConnectingMessageUpdate(string text)
         {
@@ -87,31 +92,13 @@ namespace STARTING
             signUpPopup.CloseWindow();
         }
 
-        public void LoginResultPopup(LoginResult result)
+        public void LoginResultPopup(string message)
         {
-            string message;
-
-            switch (result)
-            {
-                case LoginResult.SUCCESS:
-                    LoginSuccess();
-                    return;
-                case LoginResult.IDWRONG:
-                    message = "This ID does not exist.";
-                    break;
-                case LoginResult.PWWRONG:
-                    message = "Password does not match.";
-                    break;
-                case LoginResult.ERROR:
-                default:
-                    message = "An error has occurred. Please try again.";
-                    break;
-            }
             loginResultPopup.windowDescription.text = message;
             loginResultPopup.OpenWindow();
         }
 
-        private void LoginSuccess()
+        public void LoginSuccess()
         {
             loginSuccess?.Invoke();
         }

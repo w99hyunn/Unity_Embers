@@ -75,7 +75,7 @@ namespace STARTING
 
         private async UniTaskVoid CheckServerConnectionLoop()
         {
-            Debug.Log("서버 연결상태 확인 시작");
+            Managers.Log.Log("서버 연결상태 확인 시작");
             isCheckingConnection = true;
 
             while (isCheckingConnection)
@@ -148,8 +148,27 @@ namespace STARTING
 
         private void OnLoginResultReceived(LoginResponseMessage msg)
         {
-            _view.LoginResultPopup(msg.result);
-        }
+            string message;
 
+            switch (msg.result)
+            {
+                case LoginResult.SUCCESS:
+                    Managers.Game.LoginSuccess(msg.username);
+                    _view.LoginSuccess();
+                    return;
+                case LoginResult.IDWRONG:
+                    message = "This ID does not exist.";
+                    break;
+                case LoginResult.PWWRONG:
+                    message = "Password does not match.";
+                    break;
+                case LoginResult.ERROR:
+                default:
+                    message = "An error has occurred. Please try again.";
+                    break;
+            }
+
+            _view.LoginResultPopup(message);
+        }
     }
 }
