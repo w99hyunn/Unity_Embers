@@ -7,6 +7,10 @@ namespace STARTING
 {
     public class TitleUIView : MonoBehaviour
     {
+        [Header("General")]
+        public ModalWindowManager alertModal;
+
+        [Space(20)]
         [Header("Splash Screen")]
         [Header("Connecting")]
         public GameObject Connecting;
@@ -35,7 +39,34 @@ namespace STARTING
         [Space(10)]
         [Header("Main Content")]
         public ButtonManager profileEdit;
+        [Header("Edit Profile")]
+        public ModalWindowManager editProfilePopup;
+        public TMP_InputField editProfilePWInputField;
+        public TMP_InputField editProfilePWConfirmInputField;
+        public TMP_InputField editProfileEmailInputField;
+        public TMP_InputField editProfileCreatedInputField;
 
+        /// <summary>
+        /// General
+        /// </summary>
+        /// <param name="message"></param>
+        public void Alert(string message)
+        {
+            alertModal.windowDescription.text = message;
+            alertModal.OpenWindow();
+        }
+
+        public void EditProfileUpdateSuccess(string message)
+        {
+            Alert(message);
+            editProfilePopup.CloseWindow();
+        }
+
+
+        /// <summary>
+        /// Connecting 관련
+        /// </summary>
+        /// <param name="text"></param>
         public void ConnectingMessageUpdate(string text)
         {
             ConnectingMessage.text = $"Connecting Server...\r\n{text}";
@@ -58,6 +89,11 @@ namespace STARTING
             connectingLostPopup.OpenWindow();
         }
 
+
+        /// <summary>
+        /// 회원가입 관련
+        /// </summary>
+        /// <param name="result"></param>
         public void SignUpResultPopup(SignUpResult result)
         {
             string message;
@@ -92,6 +128,10 @@ namespace STARTING
             signUpPopup.CloseWindow();
         }
 
+        /// <summary>
+        /// 로그인 관련
+        /// </summary>
+        /// <param name="message"></param>
         public void LoginResultPopup(string message)
         {
             loginResultPopup.windowDescription.text = message;
@@ -101,8 +141,13 @@ namespace STARTING
         public void LoginSuccess()
         {
             loginSuccess?.Invoke();
+            TopPanelProfileUpdate();
         }
 
+
+        /// <summary>
+        /// 스플래시 - 로그인 화면
+        /// </summary>
         public void OnSwitchOn()
         {
             LoadLoginId();
@@ -127,5 +172,19 @@ namespace STARTING
                 loginIdInputField.text = PlayerPrefs.GetString("LoginId");
             }
         }
+
+        public void TopPanelProfileUpdate()
+        {
+            profileEdit.buttonText = Managers.Game.playerData.AccountID;
+        }
+
+        public void EditProfilePopupInit()
+        {
+            editProfileEmailInputField.text = Managers.Game.playerData.Email;
+            editProfileCreatedInputField.text = Managers.Game.playerData.CreatedDate.ToString();
+            editProfilePopup.OpenWindow();
+        }
+
+
     }
 }

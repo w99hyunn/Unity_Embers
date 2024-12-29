@@ -38,7 +38,7 @@ namespace STARTING
 
             NetworkServer.RegisterHandler<LoginRequestMessage>(OnLoginRequest);
             NetworkServer.RegisterHandler<SignUpRequestMessage>(OnRegisterRequest);
-            //NetworkServer.RegisterHandler<GameDataRequestMessage>(OnGameDataRequest);
+            NetworkServer.RegisterHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
             //NetworkServer.RegisterHandler<GameDataUpdateRequestMessage>(OnGameDataUpdateRequest);
 
             bool dbserver = Managers.DB.ConnectDB();
@@ -53,12 +53,14 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnLoginRequest(NetworkConnectionToClient conn, LoginRequestMessage msg)
         {
-            LoginResult result = Managers.DB.Login(msg.username, msg.password);
+            LoginResponse result = Managers.DB.Login(msg.username, msg.password);
 
             LoginResponseMessage response = new LoginResponseMessage
             {
                 username = msg.username,
-                result = result
+                email = result.Email,
+                createdDate = result.CreatedAt,
+                result = result.Result,
             };
             
             conn.Send(response);
@@ -77,6 +79,18 @@ namespace STARTING
             SignUpResponseMessage response = new SignUpResponseMessage
             {
                 result = result
+            };
+            conn.Send(response);
+        }
+
+        private void OnProfileUpdateRequest(NetworkConnectionToClient conn, ProfileUpdateRequestMessage msg)
+        {
+            bool result = Managers.DB.UpdateUserInfo(msg.username, msg.password, msg.email);
+
+            ProfileUpdateResponseMessage response = new ProfileUpdateResponseMessage
+            {
+                email = msg.email,
+                success = result
             };
             conn.Send(response);
         }

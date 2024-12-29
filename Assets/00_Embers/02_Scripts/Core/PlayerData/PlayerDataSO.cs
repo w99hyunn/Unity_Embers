@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace STARTING
@@ -6,6 +7,9 @@ namespace STARTING
     public class PlayerDataSO : ScriptableObject
     {
         public string AccountID;
+        public string Email;
+        public string CreatedDate;
+
         public string Username;
         public int Level;
         public int Hp;

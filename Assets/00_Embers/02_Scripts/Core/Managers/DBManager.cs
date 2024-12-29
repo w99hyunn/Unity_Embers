@@ -7,6 +7,13 @@ using UnityEngine;
 
 namespace STARTING
 {
+    public class LoginResponse
+    {
+        public LoginResult Result { get; set; }
+        public string Email { get; set; }
+        public string CreatedAt { get; set; }
+    }
+
     public enum SignUpResult
     {
         SUCCESS,
@@ -107,15 +114,16 @@ namespace STARTING
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError("중복 확인 중 오류 발생: " + ex.Message);
+                Managers.Log.LogError("Duplicate Error: " + ex.Message);
                 return false;
             }
         }
 
+
         // 로그인 처리
-        public LoginResult Login(string username, string password)
+        public LoginResponse Login(string username, string password)
         {
-            string query = "SELECT password_hash, password_salt FROM account WHERE username = @username";
+            string query = "SELECT password_hash, password_salt, email, created_at FROM account WHERE username = @username";
             MySqlCommand cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@username", username);
 
@@ -132,6 +140,10 @@ namespace STARTING
 
                         if (inputPasswordHash == storedPasswordHash)
                         {
+                            string email = reader.GetString("email");
+                            DateTime createdAt = reader.GetDateTime("created_at");
+                            string createdAtString = createdAt.ToString("yyyy-MM-dd HH:mm:ss");
+
                             reader.Close();
 
                             string updateQuery = "UPDATE account SET is_online = TRUE WHERE username = @username";
@@ -140,24 +152,89 @@ namespace STARTING
                             updateCmd.ExecuteNonQuery();
 
                             Managers.Log.Log($"User Login : {username}");
-                            return LoginResult.SUCCESS;
+                            return new LoginResponse
+                            {
+                                Result = LoginResult.SUCCESS,
+                                Email = email,
+                                CreatedAt = createdAtString
+                            };
                         }
                         else
                         {
-                            return LoginResult.PWWRONG;
+                            return new LoginResponse
+                            {
+                                Result = LoginResult.PWWRONG
+                            };
                         }
                     }
                     else
                     {
-                        return LoginResult.IDWRONG;
+                        return new LoginResponse
+                        {
+                            Result = LoginResult.IDWRONG
+                        };
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return LoginResult.ERROR;
+                Managers.Log.Log($"User Login Error: {username}, Exception : {ex}");
+                return new LoginResponse
+                {
+                    Result = LoginResult.ERROR
+                };
             }
         }
+
+        public bool UpdateUserInfo(string username, string newPassword, string newEmail)
+        {
+            string passwordHash = null;
+            string salt = null;
+
+            if (!string.IsNullOrEmpty(newPassword))
+            {
+                var (newPasswordHash, newSalt) = GeneratePasswordHashAndSalt(newPassword);
+                passwordHash = newPasswordHash;
+                salt = newSalt;
+            }
+
+            string query = "UPDATE account SET email = @email" +
+                           (passwordHash != null ? ", password_hash = @passwordHash, password_salt = @salt" : "") +
+                           " WHERE username = @username";
+
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@email", newEmail);
+
+            // 비밀번호가 있으면 추가
+            if (passwordHash != null)
+            {
+                cmd.Parameters.AddWithValue("@passwordHash", passwordHash);
+                cmd.Parameters.AddWithValue("@salt", salt);
+            }
+
+            try
+            {
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    Managers.Log.Log($"User Info Updated : {username}");
+                    return true;
+                }
+                else
+                {
+                    Managers.Log.LogError($"User not found or no changes made : {username}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Managers.Log.LogError($"Error Updating User Info : {username} / Exception : {ex}");
+                return false;
+            }
+        }
+
 
 
         private (string, string) GeneratePasswordHashAndSalt(string password)

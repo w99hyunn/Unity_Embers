@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 
 namespace STARTING
 {
@@ -12,6 +13,8 @@ namespace STARTING
     public struct LoginResponseMessage : NetworkMessage
     {
         public string username;
+        public string email;
+        public string createdDate;
         public LoginResult result;
     }
 
@@ -27,12 +30,33 @@ namespace STARTING
     {
         public SignUpResult result;
     }
-    //
 
-    // 게임 데이터 로드
-    public struct GameDataRequestMessage : NetworkMessage
+
+    public struct ProfileUpdateRequestMessage : NetworkMessage
     {
-        public int userId;
+        public string username;
+        public string email;
+        public string password;
     }
 
+    public struct ProfileUpdateResponseMessage : NetworkMessage
+    {
+        public string email;
+        public bool success;
+    }
+
+    //
+
+
+    //// 계정 정보 클라이언트가 요청 후 Edit Profile Popup에 띄우기 위함
+    //public struct ProfileInfoRequestMessage : NetworkMessage
+    //{
+    //    public string username;
+    //}
+
+    //public struct ProfileInfoResponseMessage : NetworkMessage
+    //{
+    //    public string username;
+    //    public string email;
+    //}
 }

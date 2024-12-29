@@ -153,7 +153,7 @@ namespace STARTING
             switch (msg.result)
             {
                 case LoginResult.SUCCESS:
-                    Managers.Game.LoginSuccess(msg.username);
+                    Managers.Game.LoginSuccess(msg.username, msg.email, msg.createdDate);
                     _view.LoginSuccess();
                     return;
                 case LoginResult.IDWRONG:
@@ -169,6 +169,55 @@ namespace STARTING
             }
 
             _view.LoginResultPopup(message);
+        }
+
+        public void EditProfilePopupOpen()
+        {
+            _view.EditProfilePopupInit();
+        }
+
+        public void EditProfileConfirm()
+        {
+            if (_view.editProfilePWInputField.text != _view.editProfilePWConfirmInputField.text)
+            {
+                //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
+                _view.Alert("Invalid password input, please enter the same value.");
+                return;
+            }
+
+            EditProfileUpdate(_view.editProfilePWInputField.text, _view.editProfileEmailInputField.text);
+
+        }
+
+        public void EditProfileUpdate(string password, string email)
+        {
+            EditProfileRequest(password, email);
+        }
+
+        private void EditProfileRequest(string password, string email)
+        {
+            ProfileUpdateRequestMessage profileUpdateRequestMessage = new ProfileUpdateRequestMessage
+            {
+                username = Managers.Game.playerData.AccountID,
+                email = email,
+                password = password
+            };
+
+            NetworkClient.RegisterHandler<ProfileUpdateResponseMessage>(OnProfileUpdateResultReceived);
+            NetworkClient.Send(profileUpdateRequestMessage);
+        }
+
+        private void OnProfileUpdateResultReceived(ProfileUpdateResponseMessage msg)
+        {
+            if (true == msg.success)
+            {
+                Managers.Game.UserInfoUpdate(msg.email);
+                _view.EditProfileUpdateSuccess("User information update successful.");
+            }
+            else
+            {
+                _view.Alert("Failed to update user information.");
+            }
         }
     }
 }
