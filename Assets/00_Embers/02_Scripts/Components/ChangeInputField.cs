@@ -10,7 +10,6 @@ namespace STARTING
     {
         EventSystem system;
         public Selectable firstInput;
-        public ButtonManager submitButton;
 
 
         void Start()
@@ -37,10 +36,5 @@ namespace STARTING
         //        next.Select();
         //    }
         //}
-
-        void OnLogin(InputValue input)
-        {
-            submitButton.onClick.Invoke();
-        }
     }
 }
