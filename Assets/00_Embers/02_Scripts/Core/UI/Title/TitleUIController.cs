@@ -117,7 +117,7 @@ namespace STARTING
                 email = email
             };
 
-            NetworkClient.RegisterHandler<SignUpResponseMessage>(OnSignUpResultReceived);
+            NetworkClient.ReplaceHandler<SignUpResponseMessage>(OnSignUpResultReceived);
             NetworkClient.Send(signUpRequestMessage);
         }
 
@@ -142,7 +142,7 @@ namespace STARTING
                 password = password
             };
 
-            NetworkClient.RegisterHandler<LoginResponseMessage>(OnLoginResultReceived);
+            NetworkClient.ReplaceHandler<LoginResponseMessage>(OnLoginResultReceived);
             NetworkClient.Send(loginRequestMessage);
         }
 
@@ -203,7 +203,7 @@ namespace STARTING
                 password = password
             };
 
-            NetworkClient.RegisterHandler<ProfileUpdateResponseMessage>(OnProfileUpdateResultReceived);
+            NetworkClient.ReplaceHandler<ProfileUpdateResponseMessage>(OnProfileUpdateResultReceived);
             NetworkClient.Send(profileUpdateRequestMessage);
         }
 

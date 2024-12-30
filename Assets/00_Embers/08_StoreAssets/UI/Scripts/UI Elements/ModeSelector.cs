@@ -31,7 +31,7 @@ namespace Michsky.UI.Reach
         [SerializeField] private TextMeshProUGUI disabledTextObj;
         [SerializeField] private TextMeshProUGUI normalTextObj;
         [SerializeField] private TextMeshProUGUI highlightTextObj;
-        [SerializeField] private Image backgroundImage;
+        [SerializeField] public Image backgroundImage;
         [SerializeField] private Image disabledIconObj;
         [SerializeField] private Image normalIconObj;
         [SerializeField] private Image highlightIconObj;

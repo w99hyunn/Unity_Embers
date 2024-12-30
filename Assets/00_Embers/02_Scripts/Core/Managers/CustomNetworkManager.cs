@@ -36,10 +36,10 @@ namespace STARTING
         {
             base.OnStartServer();
 
-            NetworkServer.RegisterHandler<LoginRequestMessage>(OnLoginRequest);
-            NetworkServer.RegisterHandler<SignUpRequestMessage>(OnRegisterRequest);
-            NetworkServer.RegisterHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
-            //NetworkServer.RegisterHandler<GameDataUpdateRequestMessage>(OnGameDataUpdateRequest);
+            NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
+            NetworkServer.ReplaceHandler<SignUpRequestMessage>(OnRegisterRequest);
+            NetworkServer.ReplaceHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
+            //NetworkServer.ReplaceHandler<GameDataUpdateRequestMessage>(OnGameDataUpdateRequest);
 
             bool dbserver = Managers.DB.ConnectDB();
             Managers.Log.Log($"DB Connect? : {dbserver}");
