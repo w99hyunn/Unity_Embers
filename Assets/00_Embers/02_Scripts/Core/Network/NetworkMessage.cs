@@ -31,7 +31,7 @@ namespace STARTING
         public SignUpResult result;
     }
 
-
+    //프로필 정보 업데이트
     public struct ProfileUpdateRequestMessage : NetworkMessage
     {
         public string username;
@@ -45,18 +45,21 @@ namespace STARTING
         public bool success;
     }
 
-    //
+    
+    //캐릭터 생성
+    public struct CreateCharacterRequestMessage : NetworkMessage
+    {
+        public string username;
+        public string characterName;
+        public int faction;
+        public int characterClass;
+        public int gender;
+        public int mapCode;
+    }
 
+    public struct CreateCharacterResponsetMessage : NetworkMessage
+    {
+        public CreateCharacterResult result;
+    }
 
-    //// 계정 정보 클라이언트가 요청 후 Edit Profile Popup에 띄우기 위함
-    //public struct ProfileInfoRequestMessage : NetworkMessage
-    //{
-    //    public string username;
-    //}
-
-    //public struct ProfileInfoResponseMessage : NetworkMessage
-    //{
-    //    public string username;
-    //    public string email;
-    //}
 }

@@ -82,6 +82,12 @@ namespace Michsky.UI.Reach
 
             CheckForEventButtons();
         }
+        
+        public void ExitButtonSet(bool index)
+        {
+            confirmButton.gameObject.SetActive(!index);
+            cancelButton.gameObject.SetActive(index);
+        }
 
         void InitModalWindow()
         {

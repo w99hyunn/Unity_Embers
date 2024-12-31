@@ -11,7 +11,7 @@ namespace STARTING
 
         public override void Start()
         {
-#if UNITY_SERVER
+#if UNITY_SERVER || UNITY_EDITOR
             if (!NetworkServer.active)
             {
                 StartServer();
@@ -39,7 +39,7 @@ namespace STARTING
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
             NetworkServer.ReplaceHandler<SignUpRequestMessage>(OnRegisterRequest);
             NetworkServer.ReplaceHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
-            //NetworkServer.ReplaceHandler<GameDataUpdateRequestMessage>(OnGameDataUpdateRequest);
+            NetworkServer.ReplaceHandler<CreateCharacterRequestMessage>(OnCreateCharacterRequest);
 
             bool dbserver = Managers.DB.ConnectDB();
             Managers.Log.Log($"DB Connect? : {dbserver}");
@@ -83,6 +83,11 @@ namespace STARTING
             conn.Send(response);
         }
 
+        /// <summary>
+        /// 클라이언트로부터 받은 프로필 정보 업데이트 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
         private void OnProfileUpdateRequest(NetworkConnectionToClient conn, ProfileUpdateRequestMessage msg)
         {
             bool result = Managers.DB.UpdateUserInfo(msg.username, msg.password, msg.email);
@@ -94,6 +99,25 @@ namespace STARTING
             };
             conn.Send(response);
         }
+
+
+        private void OnCreateCharacterRequest(NetworkConnectionToClient conn, CreateCharacterRequestMessage msg)
+        {
+            CreateCharacterResult result = Managers.DB.CreateCharacter(
+                msg.username,
+                msg.characterName,
+                msg.faction,
+                msg.characterClass,
+                msg.gender,
+                msg.mapCode);
+
+            CreateCharacterResponsetMessage response = new CreateCharacterResponsetMessage
+            {
+                result = result
+            };
+            conn.Send(response);
+        }
+        
 
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)

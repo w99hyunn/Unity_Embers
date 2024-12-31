@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 390157418}
   - component: {fileID: 390157421}
   - component: {fileID: 390157419}
+  - component: {fileID: 390157422}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -228,6 +229,20 @@ MonoBehaviour:
   timeInterpolationGui: 0
   IP: 172.30.1.67
   PORT: 8484
+--- !u!114 &390157422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390157417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetX: 0
+  offsetY: 0
 --- !u!1 &390961614
 GameObject:
   m_ObjectHideFlags: 0

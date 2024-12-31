@@ -29,6 +29,13 @@ namespace STARTING
         ERROR
     }
 
+    public enum CreateCharacterResult
+    {
+        SUCCESS,
+        DUPLICATE,
+        ERROR
+    }
+
     public class DBManager : MonoBehaviour
     {
         [Header("DB Server Info")]
@@ -66,6 +73,50 @@ namespace STARTING
             }
         }
 
+        public void CloseDBServer()
+        {
+            if (connection != null)
+            {
+                connection.Close();
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            CloseDBServer();
+        }
+
+        private (string, string) GeneratePasswordHashAndSalt(string password)
+        {
+            byte[] salt = new byte[32];
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(salt);
+            }
+            string saltString = Convert.ToBase64String(salt);
+            string passwordHash = GetHash(password, saltString);
+
+            return (passwordHash, saltString);
+        }
+
+        private string GetHash(string password, string salt)
+        {
+            byte[] saltBytes = Convert.FromBase64String(salt);
+
+            var pbkdf2 = new System.Security.Cryptography.HMACSHA256();
+            pbkdf2.Key = saltBytes;
+            byte[] hashBytes = pbkdf2.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            return Convert.ToBase64String(hashBytes);
+        }
+
+        /// <summary>
+        /// 회원가입
+        /// </summary>
+        /// <param name="username">아이디</param>
+        /// <param name="password">비밀번호</param>
+        /// <param name="email">이메일</param>
+        /// <returns></returns>
         public SignUpResult SignUp(string username, string password, string email)
         {
             // username 중복 확인
@@ -120,7 +171,12 @@ namespace STARTING
         }
 
 
-        // 로그인 처리
+        /// <summary>
+        /// 로그인
+        /// </summary>
+        /// <param name="username">아이디</param>
+        /// <param name="password">비밀번호</param>
+        /// <returns></returns>
         public LoginResponse Login(string username, string password)
         {
             string query = "SELECT password_hash, password_salt, email, created_at FROM account WHERE username = @username";
@@ -186,6 +242,13 @@ namespace STARTING
             }
         }
 
+        /// <summary>
+        /// 유저 정보 업데이트
+        /// </summary>
+        /// <param name="username">아이디</param>
+        /// <param name="newPassword">비밀번호</param>
+        /// <param name="newEmail">이메일</param>
+        /// <returns></returns>
         public bool UpdateUserInfo(string username, string newPassword, string newEmail)
         {
             string passwordHash = null;
@@ -235,44 +298,89 @@ namespace STARTING
             }
         }
 
-
-
-        private (string, string) GeneratePasswordHashAndSalt(string password)
+        /// <summary>
+        /// 캐릭터 생성
+        /// </summary>
+        /// <param name="username">로그인 ID</param>
+        /// <param name="characterName">캐릭터명</param>
+        /// <param name="faction">int값 Hope: 0, Fire: 1</param>
+        /// <param name="characterClass">Warrior, Mage, ...</param>
+        /// <param name="gender">Male, Female, Other</param>
+        /// <param name="mapCode">인트값</param>
+        /// <returns></returns>
+        public CreateCharacterResult CreateCharacter(string username, string characterName, int faction, int characterClass, int gender, int mapCode)
         {
-            byte[] salt = new byte[32];
-            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            try
             {
-                rng.GetBytes(salt);
+                // 1. username으로 account_id 가져오기
+                string accountQuery = "SELECT account_id FROM account WHERE username = @username";
+                int accountId;
+
+                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, connection))
+                {
+                    accountCmd.Parameters.AddWithValue("@username", username);
+
+                    object result = accountCmd.ExecuteScalar();
+                    if (result == null)
+                    {
+                        Managers.Log.Log("CreateCharacter Error: Username not found.");
+                        return CreateCharacterResult.ERROR;
+                    }
+
+                    accountId = Convert.ToInt32(result);
+                }
+
+                // 2. 캐릭터 이름 중복 검사
+                string nameCheckQuery = "SELECT COUNT(*) FROM `character` WHERE name = @name";
+                using (MySqlCommand nameCheckCmd = new MySqlCommand(nameCheckQuery, connection))
+                {
+                    nameCheckCmd.Parameters.AddWithValue("@name", characterName);
+
+                    int nameCount = Convert.ToInt32(nameCheckCmd.ExecuteScalar());
+                    if (nameCount > 0)
+                    {
+                        return CreateCharacterResult.DUPLICATE;
+                    }
+                }
+
+                // 3. character 생성 쿼리
+                string characterQuery = @"
+                                        INSERT INTO `character`
+                                        (account_id, name, faction, class, gender, current_map_code) 
+                                        VALUES 
+                                        (@account_id, @name, @faction, @class, @gender, @current_map_code)";
+
+                using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, connection))
+                {
+                    characterCmd.Parameters.AddWithValue("@account_id", accountId);
+                    characterCmd.Parameters.AddWithValue("@name", characterName);
+                    characterCmd.Parameters.AddWithValue("@faction", faction);
+                    characterCmd.Parameters.AddWithValue("@class", characterClass);
+                    characterCmd.Parameters.AddWithValue("@gender", gender);
+                    characterCmd.Parameters.AddWithValue("@current_map_code", mapCode);
+
+                    int rowsAffected = characterCmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        Managers.Log.Log("Character created successfully. : " + characterName);
+                        return CreateCharacterResult.SUCCESS;
+                    }
+                    else
+                    {
+                        Managers.Log.Log("Character creation failed.");
+                        return CreateCharacterResult.ERROR;
+                    }
+                }
             }
-            string saltString = Convert.ToBase64String(salt);
-            string passwordHash = GetHash(password, saltString);
-
-            return (passwordHash, saltString);
-        }
-
-        private string GetHash(string password, string salt)
-        {
-            byte[] saltBytes = Convert.FromBase64String(salt);
-
-            var pbkdf2 = new System.Security.Cryptography.HMACSHA256();
-            pbkdf2.Key = saltBytes;
-            byte[] hashBytes = pbkdf2.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            return Convert.ToBase64String(hashBytes);
-        }
-
-
-        public void CloseDBServer()
-        {
-            if (connection != null)
+            catch (Exception ex)
             {
-                connection.Close();
+                Managers.Log.Log("Error creating character: " + ex.Message);
+                return CreateCharacterResult.ERROR;
             }
         }
 
-        private void OnApplicationQuit()
-        {
-            CloseDBServer();
-        }
+
+
+
     }
 }
