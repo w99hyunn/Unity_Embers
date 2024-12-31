@@ -6,9 +6,6 @@ namespace STARTING
 {
     public class GeneralUIView : MonoBehaviour
     {
-        [Header("Title UI - Manager")]
-        public TitleUIManager TitleUIManager;
-
         [Space(20)]
         [Header("Splash Screen")]
         [Header("Connecting")]
@@ -24,6 +21,7 @@ namespace STARTING
         [Header("Sign Up")]
         public TMP_InputField signUpIdInputField;
         public TMP_InputField signUpPwInputField;
+        public TMP_InputField signUpPwConfirmInputField;
         public TMP_InputField signUpEmailInputField;
         [Header("SignUp Popup")]
         public ModalWindowManager signUpPopup;
@@ -40,6 +38,7 @@ namespace STARTING
 
         public string SignUpID => signUpIdInputField.text;
         public string SignUpPW => signUpPwInputField.text;
+        public string SignUpPWConfirm => signUpPwConfirmInputField.text;
         public string SignUpEmail => signUpEmailInputField.text;
 
         public string LoginID => loginIdInputField.text;
@@ -49,14 +48,24 @@ namespace STARTING
         public string EditProfilePWConfirm => editProfilePWConfirmInputField.text;
         public string EditProfileEmail => editProfileEmailInputField.text;
 
-        public void Alert(string title, string message, bool isExit = false)
+        private void Update()
         {
-            TitleUIManager.Alert(title, message, isExit);
+            if (loginPwInputField.isFocused ||
+                signUpPwInputField.isFocused ||
+                signUpPwConfirmInputField.isFocused ||
+                editProfilePWInputField.isFocused ||
+                editProfilePWConfirmInputField.isFocused)
+            {
+                Input.imeCompositionMode = IMECompositionMode.Off;
+            }
+            else
+            {
+                Input.imeCompositionMode = IMECompositionMode.On;
+            }
         }
 
-        public void EditProfileUpdateSuccess(string title, string message)
+        public void EditProfileUpdateSuccess()
         {
-            Alert(title, message);
             editProfilePopup.CloseWindow();
         }
 
@@ -78,31 +87,19 @@ namespace STARTING
         public void ConnectingFail()
         {
             RetryBtn.SetActive(true);
-            Alert("CONNECTING FAIL",
-                "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
         }
 
-        public void ConnectingLost()
-        {
-            Alert("CONNECTING LOST",
-                "The connection to the server is lost, and the game is terminated.", true);
-        }
 
         public void SignUpSuccess()
         {
             loginIdInputField.text = signUpIdInputField.text;
+            signUpPopup.CloseWindow();
 
+            //Reset
             signUpIdInputField.text = null;
             signUpPwInputField.text = null;
+            signUpPwConfirmInputField.text = null;
             signUpEmailInputField.text = null;
-
-            signUpPopup.CloseWindow();
-        }
-
-        public void LoginSuccess()
-        {
-            TitleUIManager.menuManager.DisableSplashScreen();
-            TopPanelProfileUpdate();
         }
 
         public void TopPanelProfileUpdate()

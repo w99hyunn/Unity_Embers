@@ -1,5 +1,8 @@
 using Mirror;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
 {
@@ -60,6 +63,18 @@ namespace STARTING
     public struct CreateCharacterResponsetMessage : NetworkMessage
     {
         public CreateCharacterResult result;
+    }
+
+    //캐릭터 정보 로드
+
+    public struct CharacterInfoLoadRequestMessage : NetworkMessage
+    {
+        public string username;
+    }
+
+    public struct CharacterInfoLoadResponseMessage : NetworkMessage
+    {
+        public List<ChapterItem> characterData;
     }
 
 }

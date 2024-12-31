@@ -51,7 +51,8 @@ namespace Michsky.UI.Reach
         {
             public string chapterID;
             public string title;
-            public Sprite background;
+            public int characterClass;
+            public Sprite background = null;
             [TextArea] public string description;
             public ChapterState defaultState;
 
@@ -60,9 +61,9 @@ namespace Michsky.UI.Reach
             public string descriptionKey = "DescriptionKey";
 
             [Header("Events")]
-            public UnityEvent onDelete;
-            public UnityEvent onCreate;
-            public UnityEvent onPlay;
+            public UnityEvent onDelete = null;
+            public UnityEvent onCreate = null;
+            public UnityEvent onPlay = null;
         }
 
         void Awake()
@@ -137,6 +138,19 @@ namespace Michsky.UI.Reach
                         tempLoc.localizationKey = chapters[i].titleKey;
                         tempLoc.UpdateItem();
                     }
+                }
+
+                // ClassName
+                if (useLocalization == false && chapters[i].characterClass != -1) { item.classNameObject.text = ((STARTING.Class)chapters[i].characterClass).ToString(); }
+                else
+                {
+                    //LocalizedObject tempLoc = item.descriptionObject.GetComponent<LocalizedObject>();
+                    //if (tempLoc != null)
+                    //{
+                    //    tempLoc.tableIndex = localizedObject.tableIndex;
+                    //    tempLoc.localizationKey = chapters[i].descriptionKey;
+                    //    tempLoc.UpdateItem();
+                    //}
                 }
 
                 // Description

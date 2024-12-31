@@ -6,6 +6,9 @@ namespace STARTING
 {
     public class GeneralUIController : MonoBehaviour
     {
+        [Header("Title UI - Manager")]
+        public TitleUIManager TitleUIManager;
+
         private GeneralUIView _view;
 
         private int serverConnectMaxRetry = 10;
@@ -69,6 +72,8 @@ namespace STARTING
             if (!connected)
             {
                 _view.ConnectingFail();
+                TitleUIManager.Alert("CONNECTING FAIL",
+                "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
             }
         }
 
@@ -96,7 +101,8 @@ namespace STARTING
         /// </summary>
         private void HandleServerDisconnection()
         {
-            _view.ConnectingLost();
+            TitleUIManager.Alert("CONNECTING LOST",
+                "The connection to the server is lost, and the game is terminated.", true);
             isCheckingConnection = false;
         }
 
@@ -105,6 +111,12 @@ namespace STARTING
         /// </summary>
         public void SignUp()
         {
+            if (_view.SignUpPW != _view.SignUpPWConfirm)
+            {
+                TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
+                return;
+            }
+
             SignUpRequest(_view.SignUpID, _view.SignUpPW, _view.SignUpEmail);
         }
 
@@ -144,7 +156,7 @@ namespace STARTING
                     break;
             }
 
-            _view.Alert(title, message);
+            TitleUIManager.Alert(title, message);
         }
 
         /// <summary>
@@ -176,7 +188,8 @@ namespace STARTING
             {
                 case LoginResult.SUCCESS:
                     Managers.Game.LoginSuccess(msg.username, msg.email, msg.createdDate);
-                    _view.LoginSuccess();
+                    TitleUIManager.LoginSuccess();
+                    _view.TopPanelProfileUpdate();
                     return;
                 case LoginResult.IDWRONG:
                     title = "ID WRONG";
@@ -193,7 +206,7 @@ namespace STARTING
                     break;
             }
 
-            _view.Alert(title, message);
+            TitleUIManager.Alert(title, message);
         }
 
         public void EditProfilePopupOpen()
@@ -206,7 +219,7 @@ namespace STARTING
             if (_view.EditProfilePW != _view.EditProfilePWConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                _view.Alert("FAIL", "Invalid password input, please enter the same value.");
+                TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -237,12 +250,14 @@ namespace STARTING
             if (true == msg.success)
             {
                 Managers.Game.UserInfoUpdate(msg.email);
-                _view.EditProfileUpdateSuccess("SUCCESS", "User information update successful.");
+                TitleUIManager.Alert("SUCCESS", "User information update successful.");
+                _view.EditProfileUpdateSuccess();
             }
             else
             {
-                _view.Alert("FAIL", "Failed to update user information.");
+                TitleUIManager.Alert("FAIL", "Failed to update user information.");
             }
         }
+
     }
 }

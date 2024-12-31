@@ -9,6 +9,10 @@ namespace STARTING
         public ModalWindowManager alertModal;
         public MenuManager menuManager;
         public PanelManager panelManager;
+        public ChapterManager chapterManager;
+
+        public GeneralUIController GeneralUIController;
+        public CharacterUIController CharacterUIController;
 
         /// <summary>
         /// General
@@ -33,6 +37,12 @@ namespace STARTING
         public void OpenPanel(string panelName)
         {
             panelManager.OpenPanel(panelName);
+        }
+
+        public void LoginSuccess()
+        {
+            menuManager.DisableSplashScreen();
+            CharacterUIController.LoadCharacterInfo();
         }
     }
 }

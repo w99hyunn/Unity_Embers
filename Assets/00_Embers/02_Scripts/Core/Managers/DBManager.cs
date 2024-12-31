@@ -1,9 +1,11 @@
+using log4net.Core;
 using MySql.Data.MySqlClient;
 
 using System;
-
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
 {
@@ -377,6 +379,62 @@ namespace STARTING
                 Managers.Log.Log("Error creating character: " + ex.Message);
                 return CreateCharacterResult.ERROR;
             }
+        }
+
+        public List<ChapterItem> GetCharactersByUsername(string username)
+        {
+            List<ChapterItem> characters = new List<ChapterItem>();
+
+            try
+            {
+                // 1. username으로 account_id 가져오기
+                string accountQuery = "SELECT account_id FROM account WHERE username = @username";
+                int accountId;
+
+                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, connection))
+                {
+                    accountCmd.Parameters.AddWithValue("@username", username);
+
+                    object result = accountCmd.ExecuteScalar();
+                    if (result == null)
+                    {
+                        Debug.LogError("GetCharactersByUsername Error: Username not found.");
+                        return characters; // 빈 리스트 반환
+                    }
+
+                    accountId = Convert.ToInt32(result);
+                }
+
+                // 2. account_id로 캐릭터 목록 가져오기
+                string characterQuery = "SELECT name, class, level, attack FROM `character` WHERE account_id = @account_id";
+
+                using (MySqlCommand cmd = new MySqlCommand(characterQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@account_id", accountId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ChapterItem character = new ChapterItem
+                            {
+                                chapterID = reader.GetString("name"),
+                                title = reader.GetString("name"),
+                                characterClass = reader.GetInt32("class"),
+                                description = $"Level {reader.GetInt32("level")} | Attack {reader.GetInt32("attack")}",
+                                defaultState = ChapterState.CharacterPlayAndDelete,
+                            };
+                            characters.Add(character);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("GetCharactersByUsername Error: " + ex.Message);
+            }
+
+            return characters;
         }
 
 

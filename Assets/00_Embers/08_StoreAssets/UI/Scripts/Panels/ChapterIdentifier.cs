@@ -11,6 +11,7 @@ namespace Michsky.UI.Reach
         [SerializeField] private RectTransform backgroundRect;
         public Image backgroundImage;
         public TextMeshProUGUI titleObject;
+        public TextMeshProUGUI classNameObject;
         public TextMeshProUGUI descriptionObject;
         public ButtonManager deleteButton;
         public ButtonManager createButton;

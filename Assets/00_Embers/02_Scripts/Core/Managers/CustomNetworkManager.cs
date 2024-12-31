@@ -1,5 +1,7 @@
 using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
+using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
 {
@@ -40,6 +42,7 @@ namespace STARTING
             NetworkServer.ReplaceHandler<SignUpRequestMessage>(OnRegisterRequest);
             NetworkServer.ReplaceHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
             NetworkServer.ReplaceHandler<CreateCharacterRequestMessage>(OnCreateCharacterRequest);
+            NetworkServer.ReplaceHandler<CharacterInfoLoadRequestMessage>(OnLoadCharacterInfoRequest);
 
             bool dbserver = Managers.DB.ConnectDB();
             Managers.Log.Log($"DB Connect? : {dbserver}");
@@ -118,6 +121,16 @@ namespace STARTING
             conn.Send(response);
         }
         
+        private void OnLoadCharacterInfoRequest(NetworkConnectionToClient conn, CharacterInfoLoadRequestMessage msg)
+        {
+            List<ChapterItem> characterData = Managers.DB.GetCharactersByUsername(msg.username);
+
+            CharacterInfoLoadResponseMessage response = new CharacterInfoLoadResponseMessage
+            {
+                characterData = characterData
+            };
+            conn.Send(response);
+        }
 
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)
