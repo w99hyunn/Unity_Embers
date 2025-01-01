@@ -494,6 +494,32 @@ namespace STARTING
         }
 
         /// <summary>
+        /// 캐릭터 삭제
+        /// </summary>
+        /// <param name="username"></param>
+        public bool DeleteCharacter(string username)
+        {
+            try
+            {
+                string query = "DELETE FROM `character` WHERE `name` = @name;";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@name", username);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    Managers.Log.Log($"Character deleted successfully. Rows affected: {rowsAffected}");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Managers.Log.LogError($"Error deleting character: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 클라이언트의 데이터에 변화가 있을 때 해당 캐릭터의 정보 업데이트
         /// </summary>
         /// <param name="username"></param>

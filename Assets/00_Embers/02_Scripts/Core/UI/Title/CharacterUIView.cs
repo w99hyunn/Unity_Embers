@@ -8,6 +8,8 @@ namespace STARTING
     {
         public Sprite warriorBackground;
         public Sprite mageBackground;
+        public ModalWindowManager deleteCharacterPopup;
+
 
         [Space(20)]
         public ModeSelector classSelector;

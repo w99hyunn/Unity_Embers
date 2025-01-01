@@ -115,13 +115,24 @@ namespace STARTING
                     });
 
                 }
-
+                
                 if (character.onDelete == null)
-                    character.onDelete = new UnityEvent(); //TODO 캐릭터 삭제 실행 로직 추가 요함
+                {
+                    character.onDelete = new UnityEvent();
+                    character.onDelete.AddListener(() =>
+                    {
+                        //해당 캐릭터를 정말 삭제할건지 묻는 팝업의 Confirm에 삭제 이벤트를 붙이고 해당 팝업을 열음
+                        _view.deleteCharacterPopup.onConfirm.AddListener(() =>
+                        {
+                            DeleteCharacter(character.title);
+                        });
+                        _view.deleteCharacterPopup.OpenWindow();
+                    });
+                }
 
             }
 
-            // 첫 번째 요소를 제외하고 리스트 초기화
+            // 첫 번째 요소(캐릭터 생성창)를 제외하고 리스트 초기화 후 받아온 정보 추가함.
             if (TitleUIManager.chapterManager.chapters.Count > 1)
             {
                 var firstChapter = TitleUIManager.chapterManager.chapters[0];
@@ -129,7 +140,6 @@ namespace STARTING
                 TitleUIManager.chapterManager.chapters.Add(firstChapter);
             }
 
-            // 새로운 데이터 추가
             TitleUIManager.chapterManager.chapters.AddRange(msg.characterData);
             TitleUIManager.chapterManager.InitializeChapters();
         }
@@ -171,6 +181,32 @@ namespace STARTING
 
             //클라이언트 정보를 받아오는걸 성공하면 클라이언트 데이터가 업데이트 될 때마다 서버 DB 업데이트하는 이벤트 등록
             Managers.Game.SelectCharacterAfterDataUpdateEventRegister();
+        }
+
+
+        //캐릭터 삭제
+        public void DeleteCharacter(string characterName)
+        {
+            DeleteCharacterRequest(characterName);
+        }
+
+        private void DeleteCharacterRequest(string characterName)
+        {
+            DeleteCharacterRequestMessage deleteCharacterRequestMessage = new DeleteCharacterRequestMessage
+            {
+                username = characterName
+            };
+
+            NetworkClient.ReplaceHandler<DeleteCharacterResponseMessage>(OnDeleteCharacterReceived);
+            NetworkClient.Send(deleteCharacterRequestMessage);
+        }
+
+        private void OnDeleteCharacterReceived(DeleteCharacterResponseMessage msg)
+        {
+            if (true == msg.result)
+            {
+                LoadCharacterInfo();
+            }
         }
     }
 }

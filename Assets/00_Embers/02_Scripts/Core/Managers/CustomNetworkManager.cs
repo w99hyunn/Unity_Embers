@@ -48,7 +48,7 @@ namespace STARTING
             NetworkServer.ReplaceHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
             NetworkServer.ReplaceHandler<CreateCharacterRequestMessage>(OnCreateCharacterRequest);
             NetworkServer.ReplaceHandler<CharacterInfoLoadRequestMessage>(OnLoadCharacterInfoRequest);
-
+            NetworkServer.ReplaceHandler<DeleteCharacterRequestMessage>(OnDeleteCharacterRequest);
             NetworkServer.ReplaceHandler<CharacterDataRequestMessage>(OnCharacterDataRequest);
 
             //Player Data Update
@@ -180,6 +180,22 @@ namespace STARTING
             conn.Send(message);
         }
 
+        /// <summary>
+        /// 캐릭터 삭제
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
+        public void OnDeleteCharacterRequest(NetworkConnectionToClient conn, DeleteCharacterRequestMessage msg)
+        {
+            bool result = Managers.DB.DeleteCharacter(msg.username);
+
+            DeleteCharacterResponseMessage message = new DeleteCharacterResponseMessage
+            {
+                result = result
+            };
+
+            conn.Send(message);
+        }
 
 
         /// <summary>
@@ -192,6 +208,7 @@ namespace STARTING
             Managers.Log.Log($"Updating {message.fieldName} to {message.newValue} in the database.");
             Managers.DB.UpdateDatabase(message.username, message.fieldName, message.newValue);
         }
+
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)
         //{

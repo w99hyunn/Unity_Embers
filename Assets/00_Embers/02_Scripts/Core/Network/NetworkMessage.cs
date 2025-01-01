@@ -99,6 +99,16 @@ namespace STARTING
         public string MapCode;
     }
 
+    //캐릭터 삭제
+    public struct DeleteCharacterRequestMessage : NetworkMessage
+    {
+        public string username;
+    }
+
+    public struct DeleteCharacterResponseMessage : NetworkMessage
+    {
+        public bool result;
+    }
 
     //PlayerDataSO update
     public struct UpdatePlayerDataMessage : NetworkMessage
