@@ -9,6 +9,8 @@ namespace STARTING
         //Managers.Game.playerData의 정보가 업데이트되면 자동으로 네트워크 메시지를 보내 DB 업데이트
         public PlayerDataSO playerData;
 
+        public bool suppressDataChangeEvents = true;
+
         [Header("K를 누르면 아래에 해당 정보를 업데이트하는용으로 테스트할 수 있음.")]
         public string testCharacterName;
         public int testHP;
@@ -29,7 +31,7 @@ namespace STARTING
 
 
 
-        public void SelectCharacterAfterDataUpdateEventRegister()
+        public void OnEnable()
         {
             if (playerData != null)
             {
@@ -47,6 +49,11 @@ namespace STARTING
 
         private void HandleDataChanged(string fieldName, object newValue)
         {
+            if (false == suppressDataChangeEvents)
+            {
+                return;
+            }
+
             Debug.Log($"Field {fieldName} changed to {newValue}");
             SendDataToServer(fieldName, newValue);
         }
@@ -75,9 +82,5 @@ namespace STARTING
             playerData.Email = email;
         }
 
-        public void InitCharacter()
-        {
-
-        }
     }
 }

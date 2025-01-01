@@ -14,19 +14,8 @@ namespace STARTING
         public string CreatedDate;
 
         // Character-related data
-        [SerializeField] private string username;
-        public string Username
-        {
-            get => username;
-            set
-            {
-                if (username != value)
-                {
-                    username = value;
-                    OnDataChanged?.Invoke(nameof(Username), value);
-                }
-            }
-        }
+        public string Username;
+
 
         [SerializeField] private int level;
         public int Level
@@ -56,6 +45,20 @@ namespace STARTING
             }
         }
 
+        [SerializeField] private int maxHp;
+        public int MaxHp
+        {
+            get => maxHp;
+            set
+            {
+                if (maxHp != value)
+                {
+                    maxHp = value;
+                    OnDataChanged?.Invoke(nameof(MaxHp), value);
+                }
+            }
+        }
+
         [SerializeField] private int mp;
         public int Mp
         {
@@ -66,6 +69,20 @@ namespace STARTING
                 {
                     mp = value;
                     OnDataChanged?.Invoke(nameof(Mp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int maxMp;
+        public int MaxMp
+        {
+            get => maxMp;
+            set
+            {
+                if (maxMp != value)
+                {
+                    maxMp = value;
+                    OnDataChanged?.Invoke(nameof(MaxMp), value);
                 }
             }
         }
@@ -94,34 +111,6 @@ namespace STARTING
                 {
                     gold = value;
                     OnDataChanged?.Invoke(nameof(Gold), value);
-                }
-            }
-        }
-
-        [SerializeField] private int maxHp;
-        public int MaxHp
-        {
-            get => maxHp;
-            set
-            {
-                if (maxHp != value)
-                {
-                    maxHp = value;
-                    OnDataChanged?.Invoke(nameof(MaxHp), value);
-                }
-            }
-        }
-
-        [SerializeField] private int maxMp;
-        public int MaxMp
-        {
-            get => maxMp;
-            set
-            {
-                if (maxMp != value)
-                {
-                    maxMp = value;
-                    OnDataChanged?.Invoke(nameof(MaxMp), value);
                 }
             }
         }

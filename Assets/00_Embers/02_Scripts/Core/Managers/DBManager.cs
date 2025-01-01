@@ -457,11 +457,11 @@ namespace STARTING
                                 `current_position_x`, `current_position_y`, `current_position_z`, 
                                 `mapCode`
                             FROM `character`
-                            WHERE `name` = @username;";
+                            WHERE `name` = @name;";
 
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@name", username);
 
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
@@ -551,7 +551,6 @@ namespace STARTING
                         command.Parameters.AddWithValue("@name", username);
 
                         int rowsAffected = command.ExecuteNonQuery();
-                        Debug.Log($"Position updated successfully. Rows affected: {rowsAffected}");
                     }
                 }
                 else
@@ -565,7 +564,6 @@ namespace STARTING
                         command.Parameters.AddWithValue("@name", username);
 
                         int rowsAffected = command.ExecuteNonQuery();
-                        Debug.Log($"Database updated successfully. Rows affected: {rowsAffected}");
                     }
                 }
             }

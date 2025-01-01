@@ -86,6 +86,17 @@ namespace STARTING
 
         private void OnLoadCharacterInfoResultReceived(CharacterInfoLoadResponseMessage msg)
         {
+            var firstChapter = TitleUIManager.chapterManager.chapters[0];
+
+            if (msg.characterData == null || msg.characterData.Count == 0)
+            {
+                TitleUIManager.chapterManager.chapters.Clear();
+                TitleUIManager.chapterManager.chapters.Add(firstChapter);
+                TitleUIManager.chapterManager.currentChapterIndex = 0;
+                TitleUIManager.chapterManager.InitializeChapters();
+                return;
+            }
+
             //데이터 가공
             foreach (var character in msg.characterData)
             {
@@ -115,16 +126,19 @@ namespace STARTING
                     });
 
                 }
-                
+
                 if (character.onDelete == null)
                 {
                     character.onDelete = new UnityEvent();
                     character.onDelete.AddListener(() =>
                     {
-                        //해당 캐릭터를 정말 삭제할건지 묻는 팝업의 Confirm에 삭제 이벤트를 붙이고 해당 팝업을 열음
+                        //캐릭터를 정말 삭제할건지 묻는 팝업을 띄우고 해당 팝업의 Confirm에 삭제 리스너
+                        //삭제가 완료된 뒤 창을 닫고, 리스너를 제거함
                         _view.DeleteCharacterPopup.onConfirm.AddListener(() =>
                         {
                             DeleteCharacter(character.title);
+                            _view.DeleteCharacterPopup.CloseWindow();
+                            _view.DeleteCharacterPopup.onConfirm.RemoveAllListeners();
                         });
                         _view.DeleteCharacterPopup.OpenWindow();
                     });
@@ -135,7 +149,6 @@ namespace STARTING
             // 첫 번째 요소(캐릭터 생성창)를 제외하고 리스트 초기화 후 받아온 정보 추가함.
             if (TitleUIManager.chapterManager.chapters.Count > 1)
             {
-                var firstChapter = TitleUIManager.chapterManager.chapters[0];
                 TitleUIManager.chapterManager.chapters.Clear();
                 TitleUIManager.chapterManager.chapters.Add(firstChapter);
             }
@@ -163,6 +176,9 @@ namespace STARTING
 
         private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
         {
+            //캐릭터의 정보를 처음 받아올 때는 서버로 다시 전송할 필요 없음
+            Managers.Game.suppressDataChangeEvents = false;
+
             Managers.Game.playerData.Username = msg.Username;
             Managers.Game.playerData.Level = msg.Level;
             Managers.Game.playerData.Hp = msg.Hp;
@@ -177,10 +193,11 @@ namespace STARTING
             Managers.Game.playerData.Gender = msg.Gender;
             Managers.Game.playerData.Position = msg.Position;
             Managers.Game.playerData.MapCode = msg.MapCode;
-            Managers.Log.Log($"Player data loaded: {Managers.Game.playerData.Username}");
 
-            //클라이언트 정보를 받아오는걸 성공하면 클라이언트 데이터가 업데이트 될 때마다 서버 DB 업데이트하는 이벤트 등록
-            Managers.Game.SelectCharacterAfterDataUpdateEventRegister();
+            //캐릭터 정보 로드가 모두 완료된 이후에는 값의 변화가 생기면 다시 서버로 전송필요
+            Managers.Game.suppressDataChangeEvents = true;
+
+            Managers.Log.Log($"Player data loaded: {Managers.Game.playerData.Username}");
         }
 
 

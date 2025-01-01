@@ -205,7 +205,6 @@ namespace STARTING
         /// <param name="message"></param>
         private void OnUpdatePlayerDataMessageReceived(NetworkConnectionToClient conn, UpdatePlayerDataMessage message)
         {
-            Managers.Log.Log($"Updating {message.fieldName} to {message.newValue} in the database.");
             Managers.DB.UpdateDatabase(message.username, message.fieldName, message.newValue);
         }
 
