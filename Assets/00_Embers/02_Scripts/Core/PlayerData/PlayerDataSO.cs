@@ -1,80 +1,215 @@
 using UnityEngine;
+using System;
 
 namespace STARTING
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/Player Data", order = 1)]
     public class PlayerDataSO : ScriptableObject
     {
+        public event Action<string, object> OnDataChanged;
+
         // Account-related data
         public string AccountID;
         public string Email;
         public string CreatedDate;
 
         // Character-related data
-        public string Username;
-        public int Level;
-        public int Hp;
-        public int Mp;
-        public int Exp;
-        public int Gold;
-        public int MaxHp;
-        public int MaxMp;
-        public int Attack;
-        public string Class;
-        public int Sp;
-        public string Gender;
+        [SerializeField] private string username;
+        public string Username
+        {
+            get => username;
+            set
+            {
+                if (username != value)
+                {
+                    username = value;
+                    OnDataChanged?.Invoke(nameof(Username), value);
+                }
+            }
+        }
+
+        [SerializeField] private int level;
+        public int Level
+        {
+            get => level;
+            set
+            {
+                if (level != value)
+                {
+                    level = value;
+                    OnDataChanged?.Invoke(nameof(Level), value);
+                }
+            }
+        }
+
+        [SerializeField] private int hp;
+        public int Hp
+        {
+            get => hp;
+            set
+            {
+                if (hp != value)
+                {
+                    hp = value;
+                    OnDataChanged?.Invoke(nameof(Hp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int mp;
+        public int Mp
+        {
+            get => mp;
+            set
+            {
+                if (mp != value)
+                {
+                    mp = value;
+                    OnDataChanged?.Invoke(nameof(Mp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int exp;
+        public int Exp
+        {
+            get => exp;
+            set
+            {
+                if (exp != value)
+                {
+                    exp = value;
+                    OnDataChanged?.Invoke(nameof(Exp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int gold;
+        public int Gold
+        {
+            get => gold;
+            set
+            {
+                if (gold != value)
+                {
+                    gold = value;
+                    OnDataChanged?.Invoke(nameof(Gold), value);
+                }
+            }
+        }
+
+        [SerializeField] private int maxHp;
+        public int MaxHp
+        {
+            get => maxHp;
+            set
+            {
+                if (maxHp != value)
+                {
+                    maxHp = value;
+                    OnDataChanged?.Invoke(nameof(MaxHp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int maxMp;
+        public int MaxMp
+        {
+            get => maxMp;
+            set
+            {
+                if (maxMp != value)
+                {
+                    maxMp = value;
+                    OnDataChanged?.Invoke(nameof(MaxMp), value);
+                }
+            }
+        }
+
+        [SerializeField] private int attack;
+        public int Attack
+        {
+            get => attack;
+            set
+            {
+                if (attack != value)
+                {
+                    attack = value;
+                    OnDataChanged?.Invoke(nameof(Attack), value);
+                }
+            }
+        }
+
+        [SerializeField] private string classType;
+        public string Class
+        {
+            get => classType;
+            set
+            {
+                if (classType != value)
+                {
+                    classType = value;
+                    OnDataChanged?.Invoke(nameof(Class), value);
+                }
+            }
+        }
+
+        [SerializeField] private int sp;
+        public int Sp
+        {
+            get => sp;
+            set
+            {
+                if (sp != value)
+                {
+                    sp = value;
+                    OnDataChanged?.Invoke(nameof(Sp), value);
+                }
+            }
+        }
+
+        [SerializeField] private string gender;
+        public string Gender
+        {
+            get => gender;
+            set
+            {
+                if (gender != value)
+                {
+                    gender = value;
+                    OnDataChanged?.Invoke(nameof(Gender), value);
+                }
+            }
+        }
 
         // World-related data
-        public Vector3 Position;
-        public string MapCode;
-
-        /// <summary>
-        /// Initializes character-related data.
-        /// </summary>
-        /// <param name="username">Character's name</param>
-        /// <param name="level">Character's level</param>
-        /// <param name="hp">Current HP</param>
-        /// <param name="mp">Current MP</param>
-        /// <param name="exp">Current experience</param>
-        /// <param name="gold">Current gold</param>
-        /// <param name="maxHp">Maximum HP</param>
-        /// <param name="maxMp">Maximum MP</param>
-        /// <param name="attack">Attack power</param>
-        /// <param name="classType">Class name</param>
-        /// <param name="sp">Skill points</param>
-        /// <param name="gender">Gender</param>
-        /// <param name="position">World position</param>
-        /// <param name="mapCode">Current map code</param>
-        public void Initialize(
-            string username,
-            int level,
-            int hp,
-            int mp,
-            int exp,
-            int gold,
-            int maxHp,
-            int maxMp,
-            int attack,
-            string classType,
-            int sp,
-            string gender,
-            Vector3 position,
-            string mapCode)
+        [SerializeField] private Vector3 position;
+        public Vector3 Position
         {
-            Username = username;
-            Level = level;
-            Hp = hp;
-            Mp = mp;
-            Exp = exp;
-            Gold = gold;
-            MaxHp = maxHp;
-            MaxMp = maxMp;
-            Attack = attack;
-            Class = classType;
-            Sp = sp;
-            Gender = gender;
-            Position = position;
-            MapCode = mapCode;
+            get => position;
+            set
+            {
+                if (position != value)
+                {
+                    position = value;
+                    string positionJson = JsonUtility.ToJson(position);
+                    OnDataChanged?.Invoke(nameof(Position), positionJson);
+                }
+            }
+        }
+
+        [SerializeField] private string mapCode;
+        public string MapCode
+        {
+            get => mapCode;
+            set
+            {
+                if (mapCode != value)
+                {
+                    mapCode = value;
+                    OnDataChanged?.Invoke(nameof(MapCode), value);
+                }
+            }
         }
     }
 }

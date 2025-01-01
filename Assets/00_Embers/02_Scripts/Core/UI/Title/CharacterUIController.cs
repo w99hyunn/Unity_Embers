@@ -64,6 +64,10 @@ namespace STARTING
             }
         }
 
+        /// <summary>
+        /// 캐릭터 리스트를 받아와서 구성하는 부분
+        /// </summary>
+        /// <param name="msg"></param>
         public void LoadCharacterInfo()
         {
             LoadCharacterInfoRequest();
@@ -102,7 +106,15 @@ namespace STARTING
                     character.onCreate = new UnityEvent();
 
                 if (character.onPlay == null)
-                    character.onPlay = new UnityEvent();//TODO 여기에 해당 캐릭터 실행 로직 추가해야함
+                {
+                    character.onPlay = new UnityEvent();
+                    character.onPlay.AddListener(() =>
+                    {
+                        //해당 캐릭터에 대한 정보 받아오는 이벤트
+                        SelectCharacter(character.title);
+                    });
+
+                }
 
                 if (character.onDelete == null)
                     character.onDelete = new UnityEvent(); //TODO 캐릭터 삭제 실행 로직 추가 요함
@@ -120,6 +132,45 @@ namespace STARTING
             // 새로운 데이터 추가
             TitleUIManager.chapterManager.chapters.AddRange(msg.characterData);
             TitleUIManager.chapterManager.InitializeChapters();
+        }
+
+        //캐릭터 선택시 해당 캐릭터에 대한 정보를 받아옴
+        public void SelectCharacter(string characterName)
+        {
+            CharacterDataRequest(characterName);
+        }
+
+        private void CharacterDataRequest(string characterName)
+        {
+            CharacterDataRequestMessage characterDataRequestMessage = new CharacterDataRequestMessage
+            {
+                username = characterName
+            };
+
+            NetworkClient.ReplaceHandler<CharacterDataResponseMessage>(OnCharacterDataReceived);
+            NetworkClient.Send(characterDataRequestMessage);
+        }
+
+        private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
+        {
+            Managers.Game.playerData.Username = msg.Username;
+            Managers.Game.playerData.Level = msg.Level;
+            Managers.Game.playerData.Hp = msg.Hp;
+            Managers.Game.playerData.Mp = msg.Mp;
+            Managers.Game.playerData.Exp = msg.Exp;
+            Managers.Game.playerData.Gold = msg.Gold;
+            Managers.Game.playerData.MaxHp = msg.MaxHp;
+            Managers.Game.playerData.MaxMp = msg.MaxMp;
+            Managers.Game.playerData.Attack = msg.Attack;
+            Managers.Game.playerData.Class = msg.Class;
+            Managers.Game.playerData.Sp = msg.Sp;
+            Managers.Game.playerData.Gender = msg.Gender;
+            Managers.Game.playerData.Position = msg.Position;
+            Managers.Game.playerData.MapCode = msg.MapCode;
+            Managers.Log.Log($"Player data loaded: {Managers.Game.playerData.Username}");
+
+            //클라이언트 정보를 받아오는걸 성공하면 클라이언트 데이터가 업데이트 될 때마다 서버 DB 업데이트하는 이벤트 등록
+            Managers.Game.SelectCharacterAfterDataUpdateEventRegister();
         }
     }
 }

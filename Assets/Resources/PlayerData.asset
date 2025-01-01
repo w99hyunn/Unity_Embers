@@ -12,12 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f592e5bf96ab2047b4dc7924ff8d6d1, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  AccountID: 
-  Username: 
-  Level: 0
-  Hp: 0
-  Mp: 0
-  Exp: 0
-  Gold: 0
-  Position: {x: 0, y: 0, z: 0}
-  MapCode: 
+  AccountID: admin2
+  Email: admin@naver.com
+  CreatedDate: 2024-12-28 20:28:15
+  username: test1
+  level: 0
+  hp: 3792
+  mp: 0
+  exp: 0
+  gold: 0
+  maxHp: 0
+  maxMp: 0
+  attack: 0
+  classType: 
+  sp: 0
+  gender: 
+  position: {x: 3, y: 4, z: 6}
+  mapCode: 

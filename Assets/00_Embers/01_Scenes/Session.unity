@@ -128,9 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 390157418}
+  - component: {fileID: 390157422}
   - component: {fileID: 390157421}
   - component: {fileID: 390157419}
-  - component: {fileID: 390157422}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390157417}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 390961615}
   - component: {fileID: 390961616}
+  - component: {fileID: 390961617}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -288,6 +289,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 4f0975df5fafc2c46a85d65111fc42c6, type: 2}
+  testCharacterName: "\uAE40\uD574\uCC2C\uAF2C\uCD94\uBE68\uACE0\uC2F6\uB2E4"
+  testHP: 600
+  testMaxHP: 800
+  testMP: 500
+  testMaxMP: 600
+  testPosition: {x: 50, y: 30, z: 10}
+--- !u!114 &390961617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390961614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: f1ade482195c0114592363bc730c6d7a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Test
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &444089120
 GameObject:
   m_ObjectHideFlags: 0

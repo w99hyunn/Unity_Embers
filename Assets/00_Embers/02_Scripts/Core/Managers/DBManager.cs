@@ -347,9 +347,9 @@ namespace STARTING
                 // 3. character 생성 쿼리
                 string characterQuery = @"
                                         INSERT INTO `character`
-                                        (account_id, name, faction, class, gender, current_map_code) 
+                                        (account_id, name, faction, class, gender, mapCode) 
                                         VALUES 
-                                        (@account_id, @name, @faction, @class, @gender, @current_map_code)";
+                                        (@account_id, @name, @faction, @class, @gender, @mapCode)";
 
                 using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, connection))
                 {
@@ -358,7 +358,7 @@ namespace STARTING
                     characterCmd.Parameters.AddWithValue("@faction", faction);
                     characterCmd.Parameters.AddWithValue("@class", characterClass);
                     characterCmd.Parameters.AddWithValue("@gender", gender);
-                    characterCmd.Parameters.AddWithValue("@current_map_code", mapCode);
+                    characterCmd.Parameters.AddWithValue("@mapCode", mapCode);
 
                     int rowsAffected = characterCmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -380,6 +380,11 @@ namespace STARTING
             }
         }
 
+        /// <summary>
+        /// 클라이언트가 로그인 했을 때 해당 accountID에 있는 모든 캐릭터 정보를 캐릭터 리스트에 띄울 정보만 가져옴.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public List<ChapterItem> GetCharactersByUsername(string username)
         {
             List<ChapterItem> characters = new List<ChapterItem>();
@@ -436,6 +441,113 @@ namespace STARTING
             return characters;
         }
 
+        /// <summary>
+        /// 클라이언트가 캐릭터를 선택했을 때 해당 캐릭터의 모든 정보 불러오기
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public PlayerDataSO FetchPlayerDataFromDB(string username)
+        {
+            PlayerDataSO playerData = ScriptableObject.CreateInstance<PlayerDataSO>();
+
+            string query = @"
+                            SELECT 
+                                `name`, `level`, `hp`, `mp`, `exp`, `gold`, `maxhp`, `maxmp`, 
+                                `attack`, `class`, `sp`, `gender`, 
+                                `current_position_x`, `current_position_y`, `current_position_z`, 
+                                `mapCode`
+                            FROM `character`
+                            WHERE `name` = @username;";
+
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@username", username);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        playerData.Username = reader.GetString("name");
+                        playerData.Level = reader.GetInt32("level");
+                        playerData.Hp = reader.GetInt32("hp");
+                        playerData.Mp = reader.GetInt32("mp");
+                        playerData.Exp = reader.GetInt32("exp");
+                        playerData.Gold = reader.GetInt32("gold");
+                        playerData.MaxHp = reader.GetInt32("maxhp");
+                        playerData.MaxMp = reader.GetInt32("maxmp");
+                        playerData.Attack = reader.GetInt32("attack");
+                        playerData.Class = reader.GetString("class");
+                        playerData.Sp = reader.GetInt32("sp");
+                        playerData.Gender = reader.GetString("gender");
+
+                        float posX = reader.GetFloat("current_position_x");
+                        float posY = reader.GetFloat("current_position_y");
+                        float posZ = reader.GetFloat("current_position_z");
+                        playerData.Position = new Vector3(posX, posY, posZ);
+
+                        playerData.MapCode = reader.GetString("mapCode");
+                    }
+                }
+            }
+
+            return playerData;
+        }
+
+        /// <summary>
+        /// 클라이언트의 데이터에 변화가 있을 때 해당 캐릭터의 정보 업데이트
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="newValue"></param>
+        public void UpdateDatabase(string username, string fieldName, string newValue)
+        {
+            try
+            {
+                if (fieldName == nameof(PlayerDataSO.Position))
+                {
+                    // Position 값을 처리하는 로직
+                    Vector3 position = JsonUtility.FromJson<Vector3>(newValue);
+
+                    Debug.Log("받은 값 " + position);
+
+                    string query = @"
+                                    UPDATE `character` 
+                                    SET `current_position_x` = @posX, 
+                                        `current_position_y` = @posY, 
+                                        `current_position_z` = @posZ 
+                                    WHERE `name` = @name;";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@posX", position.x);
+                        command.Parameters.AddWithValue("@posY", position.y);
+                        command.Parameters.AddWithValue("@posZ", position.z);
+                        command.Parameters.AddWithValue("@name", username);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        Debug.Log($"Position updated successfully. Rows affected: {rowsAffected}");
+                    }
+                }
+                else
+                {
+                    string query = $"UPDATE `character` SET `{fieldName}` = @newValue WHERE `name` = @name;";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        // 파라미터 바인딩
+                        command.Parameters.AddWithValue("@newValue", newValue);
+                        command.Parameters.AddWithValue("@name", username);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        Debug.Log($"Database updated successfully. Rows affected: {rowsAffected}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error updating database: {ex.Message}");
+            }
+        }
 
 
 

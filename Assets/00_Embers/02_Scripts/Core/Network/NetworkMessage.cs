@@ -1,7 +1,6 @@
 using Mirror;
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
@@ -66,7 +65,6 @@ namespace STARTING
     }
 
     //캐릭터 정보 로드
-
     public struct CharacterInfoLoadRequestMessage : NetworkMessage
     {
         public string username;
@@ -77,4 +75,36 @@ namespace STARTING
         public List<ChapterItem> characterData;
     }
 
+    //캐릭터 선택
+    public struct CharacterDataRequestMessage : NetworkMessage
+    {
+        public string username;
+    }
+
+    public struct CharacterDataResponseMessage : NetworkMessage
+    {
+        public string Username;
+        public int Level;
+        public int Hp;
+        public int Mp;
+        public int Exp;
+        public int Gold;
+        public int MaxHp;
+        public int MaxMp;
+        public int Attack;
+        public string Class;
+        public int Sp;
+        public string Gender;
+        public Vector3 Position;
+        public string MapCode;
+    }
+
+
+    //PlayerDataSO update
+    public struct UpdatePlayerDataMessage : NetworkMessage
+    {
+        public string username;
+        public string fieldName;
+        public string newValue;
+    }
 }

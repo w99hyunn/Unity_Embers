@@ -38,14 +38,23 @@ namespace STARTING
         {
             base.OnStartServer();
 
+            //DB Connect
+            bool dbserver = Managers.DB.ConnectDB();
+            Managers.Log.Log($"DB Connect? : {dbserver}");
+
+            //Network Message Register
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
             NetworkServer.ReplaceHandler<SignUpRequestMessage>(OnRegisterRequest);
             NetworkServer.ReplaceHandler<ProfileUpdateRequestMessage>(OnProfileUpdateRequest);
             NetworkServer.ReplaceHandler<CreateCharacterRequestMessage>(OnCreateCharacterRequest);
             NetworkServer.ReplaceHandler<CharacterInfoLoadRequestMessage>(OnLoadCharacterInfoRequest);
 
-            bool dbserver = Managers.DB.ConnectDB();
-            Managers.Log.Log($"DB Connect? : {dbserver}");
+            NetworkServer.ReplaceHandler<CharacterDataRequestMessage>(OnCharacterDataRequest);
+
+            //Player Data Update
+            NetworkServer.ReplaceHandler<UpdatePlayerDataMessage>(OnUpdatePlayerDataMessageReceived);
+
+
         }
 
         /// <summary>
@@ -103,7 +112,11 @@ namespace STARTING
             conn.Send(response);
         }
 
-
+        /// <summary>
+        /// 클라이언트 캐릭터 생성 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
         private void OnCreateCharacterRequest(NetworkConnectionToClient conn, CreateCharacterRequestMessage msg)
         {
             CreateCharacterResult result = Managers.DB.CreateCharacter(
@@ -121,6 +134,11 @@ namespace STARTING
             conn.Send(response);
         }
         
+        /// <summary>
+        /// 클라이언트가 로그인 했을 때 || 캐릭터를 새로 생성했을 때, 해당 계정의 캐릭터 정보 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
         private void OnLoadCharacterInfoRequest(NetworkConnectionToClient conn, CharacterInfoLoadRequestMessage msg)
         {
             List<ChapterItem> characterData = Managers.DB.GetCharactersByUsername(msg.username);
@@ -132,6 +150,48 @@ namespace STARTING
             conn.Send(response);
         }
 
+        /// <summary>
+        /// 클라이언트가 캐릭터 선택했을 때 해당 캐릭터에 대한 모든 정보 전달
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
+        public void OnCharacterDataRequest(NetworkConnectionToClient conn, CharacterDataRequestMessage msg)
+        {
+            PlayerDataSO playerData = Managers.DB.FetchPlayerDataFromDB(msg.username);
+
+            CharacterDataResponseMessage message = new CharacterDataResponseMessage
+            {
+                Username = playerData.Username,
+                Level = playerData.Level,
+                Hp = playerData.Hp,
+                Mp = playerData.Mp,
+                Exp = playerData.Exp,
+                Gold = playerData.Gold,
+                MaxHp = playerData.MaxHp,
+                MaxMp = playerData.MaxMp,
+                Attack = playerData.Attack,
+                Class = playerData.Class,
+                Sp = playerData.Sp,
+                Gender = playerData.Gender,
+                Position = playerData.Position,
+                MapCode = playerData.MapCode
+            };
+
+            conn.Send(message);
+        }
+
+
+
+        /// <summary>
+        /// 클라이언트 데이터 변경시 DB 데이터 변경 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="message"></param>
+        private void OnUpdatePlayerDataMessageReceived(NetworkConnectionToClient conn, UpdatePlayerDataMessage message)
+        {
+            Managers.Log.Log($"Updating {message.fieldName} to {message.newValue} in the database.");
+            Managers.DB.UpdateDatabase(message.username, message.fieldName, message.newValue);
+        }
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)
         //{
