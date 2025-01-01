@@ -6,7 +6,6 @@ namespace STARTING
 {
     public class GeneralUIView : MonoBehaviour
     {
-        [Space(20)]
         [Header("Splash Screen")]
         [Header("Connecting")]
         public GameObject Connecting;

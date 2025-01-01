@@ -6,10 +6,13 @@ namespace STARTING
 {
     public class CharacterUIView : MonoBehaviour
     {
+        [Header("Character Select - Class Background")]
         public Sprite warriorBackground;
         public Sprite mageBackground;
-        public ModalWindowManager deleteCharacterPopup;
 
+        [Space(20)]
+        [Header("Character Select - Character Delete Popup")]
+        public ModalWindowManager deleteCharacterPopup;
 
         [Space(20)]
         public ModeSelector classSelector;
@@ -21,6 +24,7 @@ namespace STARTING
         public Gender Gender => (Gender)genderSelector.index;
         public int Faction => factionSelector.index;
         public string Name => nameInputField.text;
+        public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
 
 
         public void CreateCharacterSuccess()

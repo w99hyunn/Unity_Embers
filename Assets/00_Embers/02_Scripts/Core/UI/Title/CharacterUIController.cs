@@ -122,11 +122,11 @@ namespace STARTING
                     character.onDelete.AddListener(() =>
                     {
                         //해당 캐릭터를 정말 삭제할건지 묻는 팝업의 Confirm에 삭제 이벤트를 붙이고 해당 팝업을 열음
-                        _view.deleteCharacterPopup.onConfirm.AddListener(() =>
+                        _view.DeleteCharacterPopup.onConfirm.AddListener(() =>
                         {
                             DeleteCharacter(character.title);
                         });
-                        _view.deleteCharacterPopup.OpenWindow();
+                        _view.DeleteCharacterPopup.OpenWindow();
                     });
                 }
 
