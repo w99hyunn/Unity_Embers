@@ -33,13 +33,16 @@ namespace Mirror
         /// <summary>Should the server auto-start when 'Server Build' is checked in build settings</summary>
         [Header("Auto-Start Options")]
 
+        [HideInInspector]
         [Tooltip("Choose whether Server or Client should auto-start in headless builds")]
         public HeadlessStartOptions headlessStartMode = HeadlessStartOptions.DoNothing;
 
+        [HideInInspector]
         [Tooltip("Headless Start Mode in Editor\nwhen enabled, headless start mode will be used in editor as well.")]
-        public bool editorAutoStart;
+        public bool editorAutoStart = false;
 
         /// <summary>Server Update frequency, per second. Use around 60Hz for fast paced games like Counter-Strike to minimize latency. Use around 30Hz for games like WoW to minimize computations. Use around 1-10Hz for slow paced games like EVE.</summary>
+        [HideInInspector]
         [Tooltip("Server / Client send rate per second.\nUse 60-100Hz for fast paced games like Counter-Strike to minimize latency.\nUse around 30Hz for games like WoW to minimize computations.\nUse around 1-10Hz for slow paced games like EVE.")]
         [FormerlySerializedAs("serverTickRate")]
         public int sendRate = 60;
@@ -64,6 +67,7 @@ namespace Mirror
         [Tooltip("Scene that Mirror will switch to when the server is started. Clients will recieve a Scene Message to load the server's current scene when they connect.")]
         public string onlineScene = "";
 
+        [HideInInspector]
         [Range(0, 60), Tooltip("Optional delay that can be used after disconnecting to show a 'Connection lost...' message or similar before loading the offline scene, which may take a long time in big projects.")]
         public float offlineSceneLoadDelay = 0;
 
@@ -86,11 +90,13 @@ namespace Mirror
         // Mirror global disconnect inactive option, independent of Transport.
         // not all Transports do this properly, and it's easiest to configure this just once.
         // this is very useful for some projects, keep it.
+        [HideInInspector]
         [Tooltip("When enabled, the server automatically disconnects inactive connections after the configured timeout.")]
-        public bool disconnectInactiveConnections;
+        public bool disconnectInactiveConnections = false;
 
+        [HideInInspector]
         [Tooltip("Timeout in seconds for server to automatically disconnect inactive connections if 'disconnectInactiveConnections' is enabled.")]
-        public float disconnectInactiveTimeout = 60f;
+        public float disconnectInactiveTimeout = 6000f;
 
         [HideInInspector]
         [Header("Authentication")]
@@ -106,14 +112,15 @@ namespace Mirror
         public GameObject playerPrefab;
 
         /// <summary>Enable to automatically create player objects on connect and on scene change.</summary>
+        [HideInInspector]
         [FormerlySerializedAs("m_AutoCreatePlayer")]
         [Tooltip("Should Mirror automatically spawn the player after scene change?")]
-        public bool autoCreatePlayer = true;
+        public bool autoCreatePlayer = false;
 
         /// <summary>Where to spawn players.</summary>
         [FormerlySerializedAs("m_PlayerSpawnMethod")]
         [Tooltip("Round Robin or Random order of Start Position selection")]
-        public PlayerSpawnMethod playerSpawnMethod;
+        public PlayerSpawnMethod playerSpawnMethod = PlayerSpawnMethod.Random;
 
         /// <summary>Prefabs that can be spawned over the network need to be registered here.</summary>
         [FormerlySerializedAs("m_SpawnPrefabs"), HideInInspector]
@@ -123,17 +130,21 @@ namespace Mirror
         public static List<Transform> startPositions = new List<Transform>();
         public static int startPositionIndex;
 
+        [HideInInspector]
         [Header("Security")]
         [Tooltip("For security, it is recommended to disconnect a player if a networked action triggers an exception\nThis could prevent components being accessed in an undefined state, which may be an attack vector for exploits.\nHowever, some games may want to allow exceptions in order to not interrupt the player's experience.")]
         public bool exceptionsDisconnect = true; // security by default
 
+        [HideInInspector]
         [Header("Snapshot Interpolation")]
         public SnapshotInterpolationSettings snapshotSettings = new SnapshotInterpolationSettings();
 
+        [HideInInspector]
         [Header("Connection Quality")]
         [Tooltip("Method to use for connection quality evaluation.\nSimple: based on rtt and jitter.\nPragmatic: based on snapshot interpolation adjustment.")]
-        public ConnectionQualityMethod evaluationMethod;
+        public ConnectionQualityMethod evaluationMethod = ConnectionQualityMethod.Simple;
 
+        [HideInInspector]
         [Tooltip("Interval in seconds to evaluate connection quality.\nSet to 0 to disable connection quality evaluation.")]
         [Range(0, 60)]
         [FormerlySerializedAs("connectionQualityInterval")]

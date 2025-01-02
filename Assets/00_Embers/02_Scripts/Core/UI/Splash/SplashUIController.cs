@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
 using UnityEngine.InputSystem;
 
 namespace STARTING
@@ -18,11 +17,11 @@ namespace STARTING
             TryGetComponent<SplashUIView>(out _view);
             _model = new SplashUIModel();
 
-            LoadSceneAsync().Forget();
-            SwitchCanvasAndLoadScene().Forget();
+            LoadSceneAsync();
+            SwitchCanvasAndLoadScene();
         }
 
-        private async UniTask LoadSceneAsync()
+        private async Awaitable LoadSceneAsync()
         {
             _asyncLoad = SceneManager.LoadSceneAsync(_model.nextSceneName);
             _asyncLoad.allowSceneActivation = false;
@@ -30,17 +29,17 @@ namespace STARTING
             _asyncLoad2 = SceneManager.LoadSceneAsync(_model.sessionSceneName, LoadSceneMode.Additive);
             _asyncLoad2.allowSceneActivation = false;
 
-            await _asyncLoad.ToUniTask();
+            await _asyncLoad;
         }
 
-        private async UniTask SwitchCanvasAndLoadScene()
+        private async Awaitable SwitchCanvasAndLoadScene()
         {
             Cursor.visible = false;
-            await UniTask.Delay(4000);
+            await Awaitable.WaitForSecondsAsync(4f);
             _view.StartingLogo(true);
-            await UniTask.Delay(4000);
+            await Awaitable.WaitForSecondsAsync(4f);
             _view.EmbersLogo(true);
-            await UniTask.Delay(4000);
+            await Awaitable.WaitForSecondsAsync(4f);
 
             Cursor.visible = true;
             _asyncLoad.allowSceneActivation = true;

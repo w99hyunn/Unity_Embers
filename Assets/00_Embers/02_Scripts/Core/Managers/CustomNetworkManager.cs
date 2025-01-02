@@ -10,10 +10,20 @@ namespace STARTING
         [Header("Server Info")]
         public string IP;
         public ushort PORT;
+        public bool _SERVER_AUTO_RUN = false;
 
         public override void Start()
         {
-#if UNITY_SERVER || UNITY_EDITOR
+#if UNITY_EDITOR
+            if (true == _SERVER_AUTO_RUN)
+            {
+                if (!NetworkServer.active)
+                {
+                    StartServer();
+                }
+            }
+#endif
+#if UNITY_SERVER
             if (!NetworkServer.active)
             {
                 StartServer();

@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Mirror;
 using UnityEngine;
 
@@ -22,14 +21,14 @@ namespace STARTING
         public async void ServerConnect()
         {
             await WaitForNetworkInitialization();
-            CheckConnectionAsync().Forget();
+            CheckConnectionAsync();
         }
 
-        private async UniTask WaitForNetworkInitialization()
+        private async Awaitable WaitForNetworkInitialization()
         {
             while (Managers.Network == null)
             {
-                await UniTask.Yield();
+                await Awaitable.NextFrameAsync();
             }
         }
 
@@ -37,7 +36,7 @@ namespace STARTING
         /// 접속시 서버 연결
         /// </summary>
         /// <returns></returns>
-        private async UniTask CheckConnectionAsync()
+        private async Awaitable CheckConnectionAsync()
         {
             int attemptCount = 0;
             bool connected = false;
@@ -52,19 +51,19 @@ namespace STARTING
                 //연결됐는지 확인
                 while (NetworkClient.active && !NetworkClient.isConnected)
                 {
-                    await UniTask.Yield();
+                    await Awaitable.NextFrameAsync();
                 }
 
                 // 연결 성공
                 if (NetworkClient.isConnected)
                 {
                     _view.ConnectingSuccess();
-                    CheckServerConnectionLoop().Forget();
+                    CheckServerConnectionLoop();
                     connected = true;
                 }
                 else
                 {
-                    await UniTask.Delay(2000);
+                    await Awaitable.WaitForSecondsAsync(2f);
                 }
             }
 
@@ -78,14 +77,14 @@ namespace STARTING
         }
 
 
-        private async UniTaskVoid CheckServerConnectionLoop()
+        private async Awaitable CheckServerConnectionLoop()
         {
             Managers.Log.Log("서버 연결상태 확인 시작");
             isCheckingConnection = true;
 
             while (isCheckingConnection)
             {
-                await UniTask.Delay(15000); // 15초 대기
+                await Awaitable.WaitForSecondsAsync(15f); // 15초 대기
 
                 // 서버 연결 상태 확인
                 if (!NetworkClient.isConnected)
