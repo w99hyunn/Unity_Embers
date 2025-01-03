@@ -15,8 +15,7 @@ namespace STARTING
 
         // Character-related data
         public string Username;
-
-
+        
         [SerializeField] private int level;
         public int Level
         {

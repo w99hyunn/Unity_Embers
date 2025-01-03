@@ -2,7 +2,7 @@ namespace STARTING
 {
     public class SplashUIModel
     {
-        public string nextSceneName { get; private set; } = "Title";
-        public string sessionSceneName { get; private set; } = "Session";
+        public string NextSceneName { get; private set; } = "Title";
+        public string SessionSceneName { get; private set; } = "Session";
     }
 }

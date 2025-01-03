@@ -8,7 +8,7 @@ namespace STARTING
 
         private static SceneDataManager _instance;
 
-        public static SceneDataManager Instance
+        private static SceneDataManager Instance
         {
             get
             {

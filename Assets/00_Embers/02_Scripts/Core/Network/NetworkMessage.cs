@@ -8,77 +8,77 @@ namespace STARTING
     // 로그인
     public struct LoginRequestMessage : NetworkMessage
     {
-        public string username;
-        public string password;
+        public string Username;
+        public string Password;
     }
 
     public struct LoginResponseMessage : NetworkMessage
     {
-        public string username;
-        public string email;
-        public string createdDate;
-        public LoginResult result;
+        public string Username;
+        public string Email;
+        public string CreatedDate;
+        public LoginResult Result;
     }
 
     // 회원가입
     public struct SignUpRequestMessage : NetworkMessage
     {
-        public string username;
-        public string password;
-        public string email;
+        public string Username;
+        public string Password;
+        public string Email;
     }
 
     public struct SignUpResponseMessage : NetworkMessage
     {
-        public SignUpResult result;
+        public SignUpResult Result;
     }
 
     //프로필 정보 업데이트
     public struct ProfileUpdateRequestMessage : NetworkMessage
     {
-        public string username;
-        public string email;
-        public string password;
+        public string Username;
+        public string Email;
+        public string Password;
     }
 
     public struct ProfileUpdateResponseMessage : NetworkMessage
     {
-        public string email;
-        public bool success;
+        public string Email;
+        public bool Success;
     }
 
     
     //캐릭터 생성
     public struct CreateCharacterRequestMessage : NetworkMessage
     {
-        public string username;
-        public string characterName;
-        public int faction;
-        public int characterClass;
-        public int gender;
-        public int mapCode;
+        public string Username;
+        public string CharacterName;
+        public int Faction;
+        public int CharacterClass;
+        public int Gender;
+        public int MapCode;
     }
 
     public struct CreateCharacterResponsetMessage : NetworkMessage
     {
-        public CreateCharacterResult result;
+        public CreateCharacterResult Result;
     }
 
     //캐릭터 정보 로드
     public struct CharacterInfoLoadRequestMessage : NetworkMessage
     {
-        public string username;
+        public string Username;
     }
 
     public struct CharacterInfoLoadResponseMessage : NetworkMessage
     {
-        public List<ChapterItem> characterData;
+        public List<ChapterItem> CharacterData;
     }
 
     //캐릭터 선택
     public struct CharacterDataRequestMessage : NetworkMessage
     {
-        public string username;
+        public string Username;
     }
 
     public struct CharacterDataResponseMessage : NetworkMessage
@@ -102,19 +102,19 @@ namespace STARTING
     //캐릭터 삭제
     public struct DeleteCharacterRequestMessage : NetworkMessage
     {
-        public string username;
+        public string Username;
     }
 
     public struct DeleteCharacterResponseMessage : NetworkMessage
     {
-        public bool result;
+        public bool Result;
     }
 
     //PlayerDataSO update
     public struct UpdatePlayerDataMessage : NetworkMessage
     {
-        public string username;
-        public string fieldName;
-        public string newValue;
+        public string Username;
+        public string FieldName;
+        public string NewValue;
     }
 }

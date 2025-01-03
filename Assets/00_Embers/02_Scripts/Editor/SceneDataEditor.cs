@@ -7,8 +7,8 @@ namespace STARTING
 {
     public class SceneDataEditor : EditorWindow
     {
-        private SceneData sceneData;
-        private const string sceneFolderPath = "Assets/00_Embers/01_Scenes/";
+        private SceneData _sceneData;
+        private const string SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
 
         [MenuItem("STARTING/Scene Data Wizard")]
         public static void ShowWindow()
@@ -18,16 +18,16 @@ namespace STARTING
 
         private void OnEnable()
         {
-            sceneData = Resources.Load<SceneData>("SceneData");
+            _sceneData = Resources.Load<SceneData>("SceneData");
             Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/00_Embers/04_Images/Editor/GameLevel Icon.png");
             titleContent = new GUIContent("Scene Data Wizard", icon);
         }
 
         private void OnGUI()
         {
-            sceneData = (SceneData)EditorGUILayout.ObjectField("Scene Data", sceneData, typeof(SceneData), false);
+            _sceneData = (SceneData)EditorGUILayout.ObjectField("Scene Data", _sceneData, typeof(SceneData), false);
 
-            if (sceneData == null)
+            if (_sceneData == null)
             {
                 EditorGUILayout.HelpBox("Scene Data not found at specified path!", MessageType.Error);
                 return;
@@ -35,11 +35,11 @@ namespace STARTING
 
             GUILayout.Label("\n¾À ÀüÈ¯ :", EditorStyles.boldLabel);
 
-            foreach (var sceneInfo in sceneData.scenes)
+            foreach (var sceneInfo in _sceneData.scenes)
             {
                 if (GUILayout.Button(sceneInfo.sceneIdentifier))
                 {
-                    string scenePath = sceneFolderPath + sceneInfo.sceneName + ".unity";
+                    string scenePath = SCENE_FOLDER_PATH + sceneInfo.sceneName + ".unity";
 
                     if (Application.isPlaying)
                     {
@@ -65,10 +65,10 @@ namespace STARTING
 
             if (GUILayout.Button("ºôµå ¼¼ÆÃÀÇ ¾À ºÒ·¯¿À±â"))
             {
-                if (sceneData != null)
+                if (_sceneData != null)
                 {
-                    sceneData.LoadScenesFromBuildSettings();
-                    EditorUtility.SetDirty(sceneData);
+                    _sceneData.LoadScenesFromBuildSettings();
+                    EditorUtility.SetDirty(_sceneData);
                     Debug.Log("Scenes loaded from build settings.");
                 }
                 else

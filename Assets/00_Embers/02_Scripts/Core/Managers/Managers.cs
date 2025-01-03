@@ -4,7 +4,7 @@ namespace STARTING
 {
     public class Managers : MonoBehaviour
     {
-        public static Managers Instance { get; private set; }
+        private static Managers Instance { get; set; }
 
         //Manager
         public static GameManager Game { get; private set; }

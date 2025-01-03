@@ -23,10 +23,10 @@ namespace STARTING
 
         private async Awaitable LoadSceneAsync()
         {
-            _asyncLoad = SceneManager.LoadSceneAsync(_model.nextSceneName);
+            _asyncLoad = SceneManager.LoadSceneAsync(_model.NextSceneName);
             _asyncLoad.allowSceneActivation = false;
 
-            _asyncLoad2 = SceneManager.LoadSceneAsync(_model.sessionSceneName, LoadSceneMode.Additive);
+            _asyncLoad2 = SceneManager.LoadSceneAsync(_model.SessionSceneName, LoadSceneMode.Additive);
             _asyncLoad2.allowSceneActivation = false;
 
             await _asyncLoad;
@@ -53,8 +53,8 @@ namespace STARTING
         private void OnSkip(InputValue value)
         {
             Cursor.visible = true;
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.nextSceneName));
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.sessionSceneName), LoadSceneMode.Additive);
+            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.NextSceneName));
+            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.SessionSceneName), LoadSceneMode.Additive);
         }
     }
 }

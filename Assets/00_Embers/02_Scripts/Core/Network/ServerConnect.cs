@@ -4,7 +4,7 @@ namespace STARTING
 {
     public class ServerConnect : MonoBehaviour
     {
-        public GeneralUIController _controller;
+        public GeneralUIController controller;
 
         private void OnEnable()
         {
@@ -13,7 +13,7 @@ namespace STARTING
 
         public void TryConnect()
         {
-            _controller.ServerConnect();
+            controller.ServerConnect();
         }
     }
 }

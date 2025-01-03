@@ -7,7 +7,7 @@ namespace STARTING
     public class CharacterUIController : MonoBehaviour
     {
         [Header("Title UI - Manager")]
-        public TitleUIManager TitleUIManager;
+        public TitleUIManager titleUIManager;
 
         private CharacterUIView _view;
         private CharacterUIModel _model;
@@ -32,12 +32,12 @@ namespace STARTING
         {
             CreateCharacterRequestMessage createChracterRequestMessage = new CreateCharacterRequestMessage
             {
-                username = username,
-                characterName = characterName,
-                faction = faction,
-                characterClass = (int)characterClass,
-                gender = (int)gender,
-                mapCode = _model.MapCode,
+                Username = username,
+                CharacterName = characterName,
+                Faction = faction,
+                CharacterClass = (int)characterClass,
+                Gender = (int)gender,
+                MapCode = _model.MapCode,
             };
 
             NetworkClient.ReplaceHandler<CreateCharacterResponsetMessage>(OnCreateCharacterResultReceived);
@@ -46,20 +46,20 @@ namespace STARTING
 
         private void OnCreateCharacterResultReceived(CreateCharacterResponsetMessage msg)
         {
-            switch (msg.result)
+            switch (msg.Result)
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    TitleUIManager.Alert("SUCCESS", "The character creation has been completed.");
+                    titleUIManager.Alert("SUCCESS", "The character creation has been completed.");
                     LoadCharacterInfo();
-                    TitleUIManager.OpenPanel("GameStart");
+                    titleUIManager.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    TitleUIManager.Alert("DUPLICATE", "This is a character name that already exists.");
+                    titleUIManager.Alert("DUPLICATE", "This is a character name that already exists.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    TitleUIManager.Alert("ERROR", "Error occurred. Error code 101");
+                    titleUIManager.Alert("ERROR", "Error occurred. Error code 101");
                     break;
             }
         }
@@ -77,7 +77,7 @@ namespace STARTING
         {
             CharacterInfoLoadRequestMessage loadCharacterRequestMessage = new CharacterInfoLoadRequestMessage
             {
-                username = Managers.Game.playerData.AccountID
+                Username = Managers.Game.playerData.AccountID
             };
 
             NetworkClient.ReplaceHandler<CharacterInfoLoadResponseMessage>(OnLoadCharacterInfoResultReceived);
@@ -86,19 +86,19 @@ namespace STARTING
 
         private void OnLoadCharacterInfoResultReceived(CharacterInfoLoadResponseMessage msg)
         {
-            var firstChapter = TitleUIManager.chapterManager.chapters[0];
+            var firstChapter = titleUIManager.chapterManager.chapters[0];
 
-            if (msg.characterData == null || msg.characterData.Count == 0)
+            if (msg.CharacterData == null || msg.CharacterData.Count == 0)
             {
-                TitleUIManager.chapterManager.chapters.Clear();
-                TitleUIManager.chapterManager.chapters.Add(firstChapter);
-                TitleUIManager.chapterManager.currentChapterIndex = 0;
-                TitleUIManager.chapterManager.InitializeChapters();
+                titleUIManager.chapterManager.chapters.Clear();
+                titleUIManager.chapterManager.chapters.Add(firstChapter);
+                titleUIManager.chapterManager.currentChapterIndex = 0;
+                titleUIManager.chapterManager.InitializeChapters();
                 return;
             }
 
             //데이터 가공
-            foreach (var character in msg.characterData)
+            foreach (var character in msg.CharacterData)
             {
                 Debug.Log($"Name: {character.title}, Level: {character.description}");
 
@@ -147,14 +147,14 @@ namespace STARTING
             }
 
             // 첫 번째 요소(캐릭터 생성창)를 제외하고 리스트 초기화 후 받아온 정보 추가함.
-            if (TitleUIManager.chapterManager.chapters.Count > 1)
+            if (titleUIManager.chapterManager.chapters.Count > 1)
             {
-                TitleUIManager.chapterManager.chapters.Clear();
-                TitleUIManager.chapterManager.chapters.Add(firstChapter);
+                titleUIManager.chapterManager.chapters.Clear();
+                titleUIManager.chapterManager.chapters.Add(firstChapter);
             }
 
-            TitleUIManager.chapterManager.chapters.AddRange(msg.characterData);
-            TitleUIManager.chapterManager.InitializeChapters();
+            titleUIManager.chapterManager.chapters.AddRange(msg.CharacterData);
+            titleUIManager.chapterManager.InitializeChapters();
         }
 
         //캐릭터 선택시 해당 캐릭터에 대한 정보를 받아옴
@@ -167,7 +167,7 @@ namespace STARTING
         {
             CharacterDataRequestMessage characterDataRequestMessage = new CharacterDataRequestMessage
             {
-                username = characterName
+                Username = characterName
             };
 
             NetworkClient.ReplaceHandler<CharacterDataResponseMessage>(OnCharacterDataReceived);
@@ -211,7 +211,7 @@ namespace STARTING
         {
             DeleteCharacterRequestMessage deleteCharacterRequestMessage = new DeleteCharacterRequestMessage
             {
-                username = characterName
+                Username = characterName
             };
 
             NetworkClient.ReplaceHandler<DeleteCharacterResponseMessage>(OnDeleteCharacterReceived);
@@ -220,7 +220,7 @@ namespace STARTING
 
         private void OnDeleteCharacterReceived(DeleteCharacterResponseMessage msg)
         {
-            if (true == msg.result)
+            if (true == msg.Result)
             {
                 LoadCharacterInfo();
             }

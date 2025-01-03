@@ -11,8 +11,8 @@ namespace STARTING
         public PanelManager panelManager;
         public ChapterManager chapterManager;
 
-        public GeneralUIController GeneralUIController;
-        public CharacterUIController CharacterUIController;
+        public GeneralUIController generalUIController;
+        public CharacterUIController characterUIController;
 
         /// <summary>
         /// General
@@ -42,7 +42,7 @@ namespace STARTING
         public void LoginSuccess()
         {
             menuManager.DisableSplashScreen();
-            CharacterUIController.LoadCharacterInfo();
+            characterUIController.LoadCharacterInfo();
         }
     }
 }

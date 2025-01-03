@@ -79,14 +79,14 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnLoginRequest(NetworkConnectionToClient conn, LoginRequestMessage msg)
         {
-            LoginResponse result = Managers.DB.Login(msg.username, msg.password);
+            LoginResponse result = Managers.DB.Login(msg.Username, msg.Password);
 
             LoginResponseMessage response = new LoginResponseMessage
             {
-                username = msg.username,
-                email = result.Email,
-                createdDate = result.CreatedAt,
-                result = result.Result,
+                Username = msg.Username,
+                Email = result.Email,
+                CreatedDate = result.CreatedAt,
+                Result = result.Result,
             };
             
             conn.Send(response);
@@ -100,11 +100,11 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnRegisterRequest(NetworkConnectionToClient conn, SignUpRequestMessage msg)
         {
-            SignUpResult result = Managers.DB.SignUp(msg.username, msg.password, msg.email);
+            SignUpResult result = Managers.DB.SignUp(msg.Username, msg.Password, msg.Email);
 
             SignUpResponseMessage response = new SignUpResponseMessage
             {
-                result = result
+                Result = result
             };
             conn.Send(response);
         }
@@ -116,12 +116,12 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnProfileUpdateRequest(NetworkConnectionToClient conn, ProfileUpdateRequestMessage msg)
         {
-            bool result = Managers.DB.UpdateUserInfo(msg.username, msg.password, msg.email);
+            bool result = Managers.DB.UpdateUserInfo(msg.Username, msg.Password, msg.Email);
 
             ProfileUpdateResponseMessage response = new ProfileUpdateResponseMessage
             {
-                email = msg.email,
-                success = result
+                Email = msg.Email,
+                Success = result
             };
             conn.Send(response);
         }
@@ -134,16 +134,16 @@ namespace STARTING
         private void OnCreateCharacterRequest(NetworkConnectionToClient conn, CreateCharacterRequestMessage msg)
         {
             CreateCharacterResult result = Managers.DB.CreateCharacter(
-                msg.username,
-                msg.characterName,
-                msg.faction,
-                msg.characterClass,
-                msg.gender,
-                msg.mapCode);
+                msg.Username,
+                msg.CharacterName,
+                msg.Faction,
+                msg.CharacterClass,
+                msg.Gender,
+                msg.MapCode);
 
             CreateCharacterResponsetMessage response = new CreateCharacterResponsetMessage
             {
-                result = result
+                Result = result
             };
             conn.Send(response);
         }
@@ -155,11 +155,11 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnLoadCharacterInfoRequest(NetworkConnectionToClient conn, CharacterInfoLoadRequestMessage msg)
         {
-            List<ChapterItem> characterData = Managers.DB.GetCharactersByUsername(msg.username);
+            List<ChapterItem> characterData = Managers.DB.GetCharactersByUsername(msg.Username);
 
             CharacterInfoLoadResponseMessage response = new CharacterInfoLoadResponseMessage
             {
-                characterData = characterData
+                CharacterData = characterData
             };
             conn.Send(response);
         }
@@ -171,7 +171,7 @@ namespace STARTING
         /// <param name="msg"></param>
         public void OnCharacterDataRequest(NetworkConnectionToClient conn, CharacterDataRequestMessage msg)
         {
-            PlayerDataSO playerData = Managers.DB.FetchPlayerDataFromDB(msg.username);
+            PlayerDataSO playerData = Managers.DB.FetchPlayerDataFromDB(msg.Username);
 
             CharacterDataResponseMessage message = new CharacterDataResponseMessage
             {
@@ -201,11 +201,11 @@ namespace STARTING
         /// <param name="msg"></param>
         public void OnDeleteCharacterRequest(NetworkConnectionToClient conn, DeleteCharacterRequestMessage msg)
         {
-            bool result = Managers.DB.DeleteCharacter(msg.username);
+            bool result = Managers.DB.DeleteCharacter(msg.Username);
 
             DeleteCharacterResponseMessage message = new DeleteCharacterResponseMessage
             {
-                result = result
+                Result = result
             };
 
             conn.Send(message);
@@ -219,7 +219,7 @@ namespace STARTING
         /// <param name="message"></param>
         private void OnUpdatePlayerDataMessageReceived(NetworkConnectionToClient conn, UpdatePlayerDataMessage message)
         {
-            Managers.DB.UpdateDatabase(message.username, message.fieldName, message.newValue);
+            Managers.DB.UpdateDatabase(message.Username, message.FieldName, message.NewValue);
         }
 
 

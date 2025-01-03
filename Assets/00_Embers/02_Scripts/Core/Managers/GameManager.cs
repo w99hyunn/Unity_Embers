@@ -13,19 +13,19 @@ namespace STARTING
 
         [Header("K를 누르면 아래에 해당 정보를 업데이트하는용으로 테스트할 수 있음.")]
         public string testCharacterName;
-        public int testHP;
-        public int testMaxHP;
-        public int testMP;
-        public int testMaxMP;
+        public int testHp;
+        public int testMaxHp;
+        public int testMp;
+        public int testMaxMp;
         public Vector3 testPosition; 
 
         private void OnTest1(InputValue input)
         {
             playerData.Username = testCharacterName;
-            playerData.Hp = testHP;
-            playerData.MaxHp = testMaxHP;
-            playerData.Mp = testMP;
-            playerData.MaxMp = testMaxMP;
+            playerData.Hp = testHp;
+            playerData.MaxHp = testMaxHp;
+            playerData.Mp = testMp;
+            playerData.MaxMp = testMaxMp;
             playerData.Position = testPosition;
         }
 
@@ -62,9 +62,9 @@ namespace STARTING
         {
             UpdatePlayerDataMessage message = new UpdatePlayerDataMessage
             {
-                username = playerData.Username,
-                fieldName = fieldName,
-                newValue = newValue.ToString()
+                Username = playerData.Username,
+                FieldName = fieldName,
+                NewValue = newValue.ToString()
             };
 
             NetworkClient.Send(message);

@@ -1,4 +1,3 @@
-using Michsky.UI.Reach;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -8,19 +7,18 @@ namespace STARTING
 {
     public class ChangeInputField : MonoBehaviour
     {
-        EventSystem system;
+        private EventSystem _system;
         public Selectable firstInput;
-
-
+        
         void Start()
         {
-            system = EventSystem.current;
+            _system = EventSystem.current;
             firstInput.Select();
         }
 
         void OnNextInputField(InputValue input)
         {
-            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            Selectable next = _system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
             if (next != null)
             {
                 next.Select();

@@ -6,7 +6,7 @@ namespace STARTING
     public class GeneralUIController : MonoBehaviour
     {
         [Header("Title UI - Manager")]
-        public TitleUIManager TitleUIManager;
+        public TitleUIManager titleUIManager;
 
         private GeneralUIView _view;
 
@@ -71,7 +71,7 @@ namespace STARTING
             if (!connected)
             {
                 _view.ConnectingFail();
-                TitleUIManager.Alert("CONNECTING FAIL",
+                titleUIManager.Alert("CONNECTING FAIL",
                 "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
             }
         }
@@ -100,7 +100,7 @@ namespace STARTING
         /// </summary>
         private void HandleServerDisconnection()
         {
-            TitleUIManager.Alert("CONNECTING LOST",
+            titleUIManager.Alert("CONNECTING LOST",
                 "The connection to the server is lost, and the game is terminated.", true);
             _isCheckingConnection = false;
         }
@@ -112,7 +112,7 @@ namespace STARTING
         {
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
+                titleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -123,9 +123,9 @@ namespace STARTING
         {
             SignUpRequestMessage signUpRequestMessage = new SignUpRequestMessage
             {
-                username = username,
-                password = password,
-                email = email
+                Username = username,
+                Password = password,
+                Email = email
             };
 
             NetworkClient.ReplaceHandler<SignUpResponseMessage>(OnSignUpResultReceived);
@@ -137,7 +137,7 @@ namespace STARTING
             string title;
             string message;
 
-            switch (msg.result)
+            switch (msg.Result)
             {
                 case SignUpResult.SUCCESS:
                     title = "SUCCESS";
@@ -155,7 +155,7 @@ namespace STARTING
                     break;
             }
 
-            TitleUIManager.Alert(title, message);
+            titleUIManager.Alert(title, message);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace STARTING
         {
             LoginRequestMessage loginRequestMessage = new LoginRequestMessage
             {
-                username = username,
-                password = password
+                Username = username,
+                Password = password
             };
 
             NetworkClient.ReplaceHandler<LoginResponseMessage>(OnLoginResultReceived);
@@ -183,11 +183,11 @@ namespace STARTING
             string title;
             string message;
 
-            switch (msg.result)
+            switch (msg.Result)
             {
                 case LoginResult.SUCCESS:
-                    Managers.Game.LoginSuccess(msg.username, msg.email, msg.createdDate);
-                    TitleUIManager.LoginSuccess();
+                    Managers.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
+                    titleUIManager.LoginSuccess();
                     _view.TopPanelProfileUpdate();
                     return;
                 case LoginResult.IDWRONG:
@@ -205,7 +205,7 @@ namespace STARTING
                     break;
             }
 
-            TitleUIManager.Alert(title, message);
+            titleUIManager.Alert(title, message);
         }
 
         public void EditProfilePopupOpen()
@@ -218,7 +218,7 @@ namespace STARTING
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
+                titleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -235,9 +235,9 @@ namespace STARTING
         {
             ProfileUpdateRequestMessage profileUpdateRequestMessage = new ProfileUpdateRequestMessage
             {
-                username = Managers.Game.playerData.AccountID,
-                email = email,
-                password = password
+                Username = Managers.Game.playerData.AccountID,
+                Email = email,
+                Password = password
             };
 
             NetworkClient.ReplaceHandler<ProfileUpdateResponseMessage>(OnProfileUpdateResultReceived);
@@ -246,15 +246,15 @@ namespace STARTING
 
         private void OnProfileUpdateResultReceived(ProfileUpdateResponseMessage msg)
         {
-            if (true == msg.success)
+            if (true == msg.Success)
             {
-                Managers.Game.UserInfoUpdate(msg.email);
-                TitleUIManager.Alert("SUCCESS", "User information update successful.");
+                Managers.Game.UserInfoUpdate(msg.Email);
+                titleUIManager.Alert("SUCCESS", "User information update successful.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                TitleUIManager.Alert("FAIL", "Failed to update user information.");
+                titleUIManager.Alert("FAIL", "Failed to update user information.");
             }
         }
 
