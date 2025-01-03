@@ -5,16 +5,16 @@ namespace STARTING
 {
     public class ClassBackgroundChanger : MonoBehaviour
     {
-        private Image backgroundImage;
+        private Image _backgroundImage;
 
         private void Awake()
         {
-            TryGetComponent<Image>(out backgroundImage);
+            TryGetComponent<Image>(out _backgroundImage);
         }
 
         public void BackgroundChange(Sprite sprite)
         {
-            backgroundImage.sprite = sprite;
+            _backgroundImage.sprite = sprite;
         }
     }
 }
