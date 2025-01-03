@@ -44,7 +44,7 @@ namespace STARTING
         public string DBHOST = "orbit-readonly";
         public string DBPW = "orbitreadonlyohmygodpassword!!@";
 
-        private MySqlConnection connection;
+        private MySqlConnection _connection;
 
         //[Header("클라이언트가 각자 가지고 있는 자신의 정보")]
         ////public GameData clientGameData;
@@ -61,11 +61,11 @@ namespace STARTING
         {
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Allow Zero Datetime=True;Convert Zero Datetime=True;";
 
-            connection = new MySqlConnection(connectionString);
+            _connection = new MySqlConnection(connectionString);
 
             try
             {
-                connection.Open();
+                _connection.Open();
                 return true;
             }
             catch
@@ -76,7 +76,7 @@ namespace STARTING
 
         public void CloseDBServer()
         {
-            connection?.Close();
+            _connection?.Close();
         }
 
         private void OnApplicationQuit()
@@ -126,7 +126,7 @@ namespace STARTING
             var (passwordHash, salt) = GeneratePasswordHashAndSalt(password);
             string query = "INSERT INTO account (username, password_hash, password_salt, email) VALUES (@username, @passwordHash, @salt, @email)";
 
-            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@passwordHash", passwordHash);
             cmd.Parameters.AddWithValue("@salt", salt);
@@ -153,7 +153,7 @@ namespace STARTING
         private bool IsUsernameDuplicate(string username)
         {
             string query = "SELECT COUNT(*) FROM account WHERE username = @username";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@username", username);
 
             try
@@ -178,7 +178,7 @@ namespace STARTING
         public LoginResponse Login(string username, string password)
         {
             string query = "SELECT password_hash, password_salt, email, created_at FROM account WHERE username = @username";
-            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@username", username);
 
             try
@@ -201,7 +201,7 @@ namespace STARTING
                             reader.Close();
 
                             string updateQuery = "UPDATE account SET is_online = TRUE WHERE username = @username";
-                            MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection);
+                            MySqlCommand updateCmd = new MySqlCommand(updateQuery, _connection);
                             updateCmd.Parameters.AddWithValue("@username", username);
                             updateCmd.ExecuteNonQuery();
 
@@ -263,7 +263,7 @@ namespace STARTING
                            (passwordHash != null ? ", password_hash = @passwordHash, password_salt = @salt" : "") +
                            " WHERE username = @username";
 
-            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@email", newEmail);
 
@@ -314,7 +314,7 @@ namespace STARTING
                 string accountQuery = "SELECT account_id FROM account WHERE username = @username";
                 int accountId;
 
-                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, connection))
+                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, _connection))
                 {
                     accountCmd.Parameters.AddWithValue("@username", username);
 
@@ -330,7 +330,7 @@ namespace STARTING
 
                 // 2. 캐릭터 이름 중복 검사
                 string nameCheckQuery = "SELECT COUNT(*) FROM `character` WHERE name = @name";
-                using (MySqlCommand nameCheckCmd = new MySqlCommand(nameCheckQuery, connection))
+                using (MySqlCommand nameCheckCmd = new MySqlCommand(nameCheckQuery, _connection))
                 {
                     nameCheckCmd.Parameters.AddWithValue("@name", characterName);
 
@@ -348,7 +348,7 @@ namespace STARTING
                                         VALUES 
                                         (@account_id, @name, @faction, @class, @gender, @mapCode)";
 
-                using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, connection))
+                using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, _connection))
                 {
                     characterCmd.Parameters.AddWithValue("@account_id", accountId);
                     characterCmd.Parameters.AddWithValue("@name", characterName);
@@ -392,7 +392,7 @@ namespace STARTING
                 string accountQuery = "SELECT account_id FROM account WHERE username = @username";
                 int accountId;
 
-                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, connection))
+                using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, _connection))
                 {
                     accountCmd.Parameters.AddWithValue("@username", username);
 
@@ -409,7 +409,7 @@ namespace STARTING
                 // 2. account_id로 캐릭터 목록 가져오기
                 string characterQuery = "SELECT name, class, level, attack FROM `character` WHERE account_id = @account_id";
 
-                using (MySqlCommand cmd = new MySqlCommand(characterQuery, connection))
+                using (MySqlCommand cmd = new MySqlCommand(characterQuery, _connection))
                 {
                     cmd.Parameters.AddWithValue("@account_id", accountId);
 
@@ -456,7 +456,7 @@ namespace STARTING
                             FROM `character`
                             WHERE `name` = @name;";
 
-            using (MySqlCommand command = new MySqlCommand(query, connection))
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
                 command.Parameters.AddWithValue("@name", username);
 
@@ -500,7 +500,7 @@ namespace STARTING
             {
                 string query = "DELETE FROM `character` WHERE `name` = @name;";
 
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                using (MySqlCommand command = new MySqlCommand(query, _connection))
                 {
                     command.Parameters.AddWithValue("@name", username);
 
@@ -540,7 +540,7 @@ namespace STARTING
                                         `current_position_z` = @posZ 
                                     WHERE `name` = @name;";
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
                         command.Parameters.AddWithValue("@posX", position.x);
                         command.Parameters.AddWithValue("@posY", position.y);
@@ -554,7 +554,7 @@ namespace STARTING
                 {
                     string query = $"UPDATE `character` SET `{fieldName}` = @newValue WHERE `name` = @name;";
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
                         // 파라미터 바인딩
                         command.Parameters.AddWithValue("@newValue", newValue);
