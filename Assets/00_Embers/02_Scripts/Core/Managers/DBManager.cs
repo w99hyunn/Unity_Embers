@@ -57,7 +57,7 @@ namespace STARTING
             return success;
         }
 
-        public bool ConnectToDatabase(string server, string database, string uid, string password, string port)
+        private bool ConnectToDatabase(string server, string database, string uid, string password, string port)
         {
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Allow Zero Datetime=True;Convert Zero Datetime=True;";
 
@@ -547,7 +547,7 @@ namespace STARTING
                         command.Parameters.AddWithValue("@posZ", position.z);
                         command.Parameters.AddWithValue("@name", username);
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                 }
                 else
@@ -560,7 +560,7 @@ namespace STARTING
                         command.Parameters.AddWithValue("@newValue", newValue);
                         command.Parameters.AddWithValue("@name", username);
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                 }
             }
