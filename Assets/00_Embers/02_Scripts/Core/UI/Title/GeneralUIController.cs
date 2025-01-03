@@ -10,8 +10,8 @@ namespace STARTING
 
         private GeneralUIView _view;
 
-        private int serverConnectMaxRetry = 10;
-        private bool isCheckingConnection;
+        private const int SERVER_CONNECT_MAX_RETRY = 10;
+        private bool _isCheckingConnection;
 
         private void Start()
         {
@@ -21,7 +21,7 @@ namespace STARTING
         public async void ServerConnect()
         {
             await WaitForNetworkInitialization();
-            CheckConnectionAsync();
+            await CheckConnectionAsync();
         }
 
         private async Awaitable WaitForNetworkInitialization()
@@ -38,15 +38,15 @@ namespace STARTING
         /// <returns></returns>
         private async Awaitable CheckConnectionAsync()
         {
-            int attemptCount = 0;
-            bool connected = false;
+            var attemptCount = 0;
+            var connected = false;
 
-            while (attemptCount < serverConnectMaxRetry && !connected)
+            while (attemptCount < SERVER_CONNECT_MAX_RETRY && !connected)
             {
                 Managers.Network.StartClient();
                 attemptCount++;
 
-                _view.ConnectingMessageUpdate($"Try {attemptCount} / {serverConnectMaxRetry}");
+                _view.ConnectingMessageUpdate($"Try {attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
 
                 //연결됐는지 확인
                 while (NetworkClient.active && !NetworkClient.isConnected)
@@ -80,9 +80,9 @@ namespace STARTING
         private async Awaitable CheckServerConnectionLoop()
         {
             Managers.Log.Log("서버 연결상태 확인 시작");
-            isCheckingConnection = true;
+            _isCheckingConnection = true;
 
-            while (isCheckingConnection)
+            while (_isCheckingConnection)
             {
                 await Awaitable.WaitForSecondsAsync(15f); // 15초 대기
 
@@ -102,7 +102,7 @@ namespace STARTING
         {
             TitleUIManager.Alert("CONNECTING LOST",
                 "The connection to the server is lost, and the game is terminated.", true);
-            isCheckingConnection = false;
+            _isCheckingConnection = false;
         }
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace STARTING
         /// </summary>
         public void SignUp()
         {
-            if (_view.SignUpPW != _view.SignUpPWConfirm)
+            if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
                 TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
-            SignUpRequest(_view.SignUpID, _view.SignUpPW, _view.SignUpEmail);
+            SignUpRequest(_view.SignUpID, _view.SignUpPw, _view.SignUpEmail);
         }
 
         private void SignUpRequest(string username, string password, string email)
@@ -163,7 +163,7 @@ namespace STARTING
         /// </summary>
         public void Login()
         {
-            LoginRequest(_view.LoginID, _view.LoginPW);
+            LoginRequest(_view.LoginID, _view.LoginPw);
         }
 
         private void LoginRequest(string username, string password)
@@ -215,14 +215,14 @@ namespace STARTING
 
         public void EditProfileConfirm()
         {
-            if (_view.EditProfilePW != _view.EditProfilePWConfirm)
+            if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
                 TitleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
-            EditProfileUpdate(_view.EditProfilePW, _view.EditProfileEmail);
+            EditProfileUpdate(_view.EditProfilePw, _view.EditProfileEmail);
 
         }
 

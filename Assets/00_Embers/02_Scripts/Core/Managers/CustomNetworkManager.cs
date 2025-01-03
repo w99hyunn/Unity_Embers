@@ -63,8 +63,12 @@ namespace STARTING
 
             //Player Data Update
             NetworkServer.ReplaceHandler<UpdatePlayerDataMessage>(OnUpdatePlayerDataMessageReceived);
+        }
 
-
+        public override void OnStopServer()
+        {
+            Managers.DB.CloseDBServer();
+            base.OnStopServer();
         }
 
         /// <summary>

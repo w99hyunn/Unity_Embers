@@ -76,10 +76,7 @@ namespace STARTING
 
         public void CloseDBServer()
         {
-            if (connection != null)
-            {
-                connection.Close();
-            }
+            connection?.Close();
         }
 
         private void OnApplicationQuit()

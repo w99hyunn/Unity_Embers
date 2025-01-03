@@ -36,15 +36,15 @@ namespace STARTING
         public TMP_InputField editProfileCreatedInputField;
 
         public string SignUpID => signUpIdInputField.text;
-        public string SignUpPW => signUpPwInputField.text;
-        public string SignUpPWConfirm => signUpPwConfirmInputField.text;
+        public string SignUpPw => signUpPwInputField.text;
+        public string SignUpPwConfirm => signUpPwConfirmInputField.text;
         public string SignUpEmail => signUpEmailInputField.text;
 
         public string LoginID => loginIdInputField.text;
-        public string LoginPW => loginPwInputField.text;
+        public string LoginPw => loginPwInputField.text;
 
-        public string EditProfilePW => editProfilePWInputField.text;
-        public string EditProfilePWConfirm => editProfilePWConfirmInputField.text;
+        public string EditProfilePw => editProfilePWInputField.text;
+        public string EditProfilePwConfirm => editProfilePWConfirmInputField.text;
         public string EditProfileEmail => editProfileEmailInputField.text;
 
         private void Update()
