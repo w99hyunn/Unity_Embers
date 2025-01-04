@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,8 @@ namespace STARTING
     public class SceneDataEditor : EditorWindow
     {
         private SceneData _sceneData;
-        private const string SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
+
+        private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
 
         [MenuItem("STARTING/Scene Data Wizard")]
         public static void ShowWindow()
@@ -39,22 +41,22 @@ namespace STARTING
             {
                 if (GUILayout.Button(sceneInfo.sceneIdentifier))
                 {
-                    string scenePath = SCENE_FOLDER_PATH + sceneInfo.sceneName + ".unity";
+                    string scenePath = FindScenePath(sceneInfo.sceneName);
 
-                    if (Application.isPlaying)
+                    if (!string.IsNullOrEmpty(scenePath))
                     {
-                        SceneManager.LoadScene(sceneInfo.sceneName);
-                    }
-                    else
-                    {
-                        if (System.IO.File.Exists(scenePath))
+                        if (Application.isPlaying)
                         {
-                            EditorSceneManager.OpenScene(scenePath);
+                            SceneManager.LoadScene(sceneInfo.sceneName);
                         }
                         else
                         {
-                            Debug.LogError($"Scene file not found: {scenePath}");
+                            EditorSceneManager.OpenScene(scenePath);
                         }
+                    }
+                    else
+                    {
+                        Debug.LogError($"Scene file not found for: {sceneInfo.sceneName}");
                     }
                 }
                 GUILayout.Space(10);
@@ -76,6 +78,22 @@ namespace STARTING
                     Debug.LogError("Scene Data is not assigned!");
                 }
             }
+        }
+
+        private string FindScenePath(string sceneName)
+        {
+            string[] allScenePaths = AssetDatabase.FindAssets("t:Scene", new[] { BASE_SCENE_FOLDER_PATH });
+
+            foreach (string guid in allScenePaths)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (Path.GetFileNameWithoutExtension(path) == sceneName)
+                {
+                    return path;
+                }
+            }
+
+            return null;
         }
     }
 }
