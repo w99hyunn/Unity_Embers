@@ -8,9 +8,10 @@ namespace STARTING
 
         //Manager
         public static GameManager Game { get; private set; }
-        public static CustomNetworkManager Network { get; private set; }
+        public static MapManager Map { get; private set; }
+        public static UIManager UI { get; private set; }
+        public static EmbersNetworkManager Network { get; private set; }
         public static DBManager DB { get; private set; }
-        public static LogManager Log { get; private set; }
 
         private void Awake()
         {
@@ -23,9 +24,10 @@ namespace STARTING
             Instance = this;
 
             Game = GetComponentInChildren<GameManager>();
-            Network = GetComponentInChildren<CustomNetworkManager>();
+            Map = GetComponentInChildren<MapManager>();
+            UI = GetComponentInChildren<UIManager>();
+            Network = GetComponentInChildren<EmbersNetworkManager>();
             DB = GetComponentInChildren<DBManager>();
-            Log = GetComponentInChildren<LogManager>();
         }
     }
 }

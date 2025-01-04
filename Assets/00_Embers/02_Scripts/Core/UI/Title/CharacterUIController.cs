@@ -7,7 +7,7 @@ namespace STARTING
     public class CharacterUIController : MonoBehaviour
     {
         [Header("Title UI - Manager")]
-        public TitleUIManager titleUIManager;
+        public TitleUI titleUI;
 
         private CharacterUIView _view;
         private CharacterUIModel _model;
@@ -50,16 +50,16 @@ namespace STARTING
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    titleUIManager.Alert("SUCCESS", "The character creation has been completed.");
+                    Managers.UI.Alert("SUCCESS", "The character creation has been completed.");
                     LoadCharacterInfo();
-                    titleUIManager.OpenPanel("GameStart");
+                    titleUI.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    titleUIManager.Alert("DUPLICATE", "This is a character name that already exists.");
+                    Managers.UI.Alert("DUPLICATE", "This is a character name that already exists.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    titleUIManager.Alert("ERROR", "Error occurred. Error code 101");
+                    Managers.UI.Alert("ERROR", "Error occurred. Error code 101");
                     break;
             }
         }
@@ -86,14 +86,14 @@ namespace STARTING
 
         private void OnLoadCharacterInfoResultReceived(CharacterInfoLoadResponseMessage msg)
         {
-            var firstChapter = titleUIManager.chapterManager.chapters[0];
+            var firstChapter = titleUI.chapterManager.chapters[0];
 
             if (msg.CharacterData == null || msg.CharacterData.Count == 0)
             {
-                titleUIManager.chapterManager.chapters.Clear();
-                titleUIManager.chapterManager.chapters.Add(firstChapter);
-                titleUIManager.chapterManager.currentChapterIndex = 0;
-                titleUIManager.chapterManager.InitializeChapters();
+                titleUI.chapterManager.chapters.Clear();
+                titleUI.chapterManager.chapters.Add(firstChapter);
+                titleUI.chapterManager.currentChapterIndex = 0;
+                titleUI.chapterManager.InitializeChapters();
                 return;
             }
 
@@ -147,14 +147,14 @@ namespace STARTING
             }
 
             // 첫 번째 요소(캐릭터 생성창)를 제외하고 리스트 초기화 후 받아온 정보 추가함.
-            if (titleUIManager.chapterManager.chapters.Count > 1)
+            if (titleUI.chapterManager.chapters.Count > 1)
             {
-                titleUIManager.chapterManager.chapters.Clear();
-                titleUIManager.chapterManager.chapters.Add(firstChapter);
+                titleUI.chapterManager.chapters.Clear();
+                titleUI.chapterManager.chapters.Add(firstChapter);
             }
 
-            titleUIManager.chapterManager.chapters.AddRange(msg.CharacterData);
-            titleUIManager.chapterManager.InitializeChapters();
+            titleUI.chapterManager.chapters.AddRange(msg.CharacterData);
+            titleUI.chapterManager.InitializeChapters();
         }
 
         //캐릭터 선택시 해당 캐릭터에 대한 정보를 받아옴
@@ -197,7 +197,10 @@ namespace STARTING
             //캐릭터 정보 로드가 모두 완료된 이후에는 값의 변화가 생기면 다시 서버로 전송필요
             Managers.Game.suppressDataChangeEvents = true;
 
-            Managers.Log.Log($"Player data loaded: {Managers.Game.playerData.Username}");
+            DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
+            
+            //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
+            
         }
 
 

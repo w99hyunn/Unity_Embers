@@ -40,9 +40,9 @@ namespace STARTING
     public class DBManager : MonoBehaviour
     {
         [Header("DB Server Info")]
-        public string DBSERVER_IP = "35.184.161.253";
-        public string DBHOST = "orbit-readonly";
-        public string DBPW = "orbitreadonlyohmygodpassword!!@";
+        public string dbServerIP = "localhost";
+        public string dbHost = "root";
+        public string dbPw = "root";
 
         private MySqlConnection _connection;
 
@@ -53,7 +53,7 @@ namespace STARTING
 
         public bool ConnectDB()
         {
-            bool success = ConnectToDatabase(DBSERVER_IP, "embers", DBHOST, DBPW, "3306");
+            bool success = ConnectToDatabase(dbServerIP, "embers", dbHost, dbPw, "3306");
             return success;
         }
 
@@ -135,12 +135,12 @@ namespace STARTING
             try
             {
                 cmd.ExecuteNonQuery();
-                Managers.Log.Log($"Sign Up New User : {username}");
+                DebugUtils.Log($"Sign Up New User : {username}");
                 return SignUpResult.SUCCESS;
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError($"Sign Up New User Failed : {username} / Exception : {ex}");
+                DebugUtils.LogError($"Sign Up New User Failed : {username} / Exception : {ex}");
                 return SignUpResult.ERROR;
             }
         }
@@ -163,7 +163,7 @@ namespace STARTING
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError("Duplicate Error: " + ex.Message);
+                DebugUtils.LogError("Duplicate Error: " + ex.Message);
                 return false;
             }
         }
@@ -205,7 +205,7 @@ namespace STARTING
                             updateCmd.Parameters.AddWithValue("@username", username);
                             updateCmd.ExecuteNonQuery();
 
-                            Managers.Log.Log($"User Login : {username}");
+                            DebugUtils.Log($"User Login : {username}");
                             return new LoginResponse
                             {
                                 Result = LoginResult.SUCCESS,
@@ -232,7 +232,7 @@ namespace STARTING
             }
             catch (Exception ex)
             {
-                Managers.Log.Log($"User Login Error: {username}, Exception : {ex}");
+                DebugUtils.Log($"User Login Error: {username}, Exception : {ex}");
                 return new LoginResponse
                 {
                     Result = LoginResult.ERROR
@@ -280,18 +280,18 @@ namespace STARTING
 
                 if (rowsAffected > 0)
                 {
-                    Managers.Log.Log($"User Info Updated : {username}");
+                    DebugUtils.Log($"User Info Updated : {username}");
                     return true;
                 }
                 else
                 {
-                    Managers.Log.LogError($"User not found or no changes made : {username}");
+                    DebugUtils.LogError($"User not found or no changes made : {username}");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError($"Error Updating User Info : {username} / Exception : {ex}");
+                DebugUtils.LogError($"Error Updating User Info : {username} / Exception : {ex}");
                 return false;
             }
         }
@@ -321,7 +321,7 @@ namespace STARTING
                     object result = accountCmd.ExecuteScalar();
                     if (result == null)
                     {
-                        Managers.Log.Log("CreateCharacter Error: Username not found.");
+                        DebugUtils.Log("CreateCharacter Error: Username not found.");
                         return CreateCharacterResult.ERROR;
                     }
 
@@ -360,19 +360,19 @@ namespace STARTING
                     int rowsAffected = characterCmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        Managers.Log.Log("Character created successfully. : " + characterName);
+                        DebugUtils.Log("Character created successfully. : " + characterName);
                         return CreateCharacterResult.SUCCESS;
                     }
                     else
                     {
-                        Managers.Log.Log("Character creation failed.");
+                        DebugUtils.Log("Character creation failed.");
                         return CreateCharacterResult.ERROR;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Managers.Log.Log("Error creating character: " + ex.Message);
+                DebugUtils.Log("Error creating character: " + ex.Message);
                 return CreateCharacterResult.ERROR;
             }
         }
@@ -505,13 +505,13 @@ namespace STARTING
                     command.Parameters.AddWithValue("@name", username);
 
                     int rowsAffected = command.ExecuteNonQuery();
-                    Managers.Log.Log($"Character deleted successfully. Rows affected: {rowsAffected}");
+                    DebugUtils.Log($"Character deleted successfully. Rows affected: {rowsAffected}");
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                Managers.Log.LogError($"Error deleting character: {ex.Message}");
+                DebugUtils.LogError($"Error deleting character: {ex.Message}");
                 return false;
             }
         }

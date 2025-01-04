@@ -6,7 +6,7 @@ namespace STARTING
     public class GeneralUIController : MonoBehaviour
     {
         [Header("Title UI - Manager")]
-        public TitleUIManager titleUIManager;
+        public TitleUI titleUI;
 
         private GeneralUIView _view;
 
@@ -71,7 +71,7 @@ namespace STARTING
             if (!connected)
             {
                 _view.ConnectingFail();
-                titleUIManager.Alert("CONNECTING FAIL",
+                Managers.UI.Alert("CONNECTING FAIL",
                 "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
             }
         }
@@ -79,7 +79,7 @@ namespace STARTING
 
         private async Awaitable CheckServerConnectionLoop()
         {
-            Managers.Log.Log("서버 연결상태 확인 시작");
+            DebugUtils.Log("서버 연결상태 확인 시작");
             _isCheckingConnection = true;
 
             while (_isCheckingConnection)
@@ -100,8 +100,8 @@ namespace STARTING
         /// </summary>
         private void HandleServerDisconnection()
         {
-            titleUIManager.Alert("CONNECTING LOST",
-                "The connection to the server is lost, and the game is terminated.", true);
+            Managers.UI.Alert("CONNECTING LOST",
+                "The connection to the server is lost, and the game is terminated.", 1);
             _isCheckingConnection = false;
         }
 
@@ -110,14 +110,30 @@ namespace STARTING
         /// </summary>
         public void SignUp()
         {
-            if (_view.SignUpPw != _view.SignUpPwConfirm)
+            //아이디 길이 확인
+            if (_view.SignUpID.Length < 5)
             {
-                titleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
+                Managers.UI.Alert("FAIL", "ID must be at least 5 characters long.");
                 return;
             }
-
+            
+            //비밀번호 길이 확인
+            if (_view.SignUpPw.Length < 5)
+            {
+                Managers.UI.Alert("FAIL", "Password must be at least 5 characters long.");
+                return;
+            }
+            
+            //비밀번호 제대로 입력했는지 체크
+            if (_view.SignUpPw != _view.SignUpPwConfirm)
+            {
+                Managers.UI.Alert("FAIL", "Invalid password input, please enter the same value.");
+                return;
+            }
+            
             SignUpRequest(_view.SignUpID, _view.SignUpPw, _view.SignUpEmail);
         }
+
 
         private void SignUpRequest(string username, string password, string email)
         {
@@ -155,7 +171,7 @@ namespace STARTING
                     break;
             }
 
-            titleUIManager.Alert(title, message);
+            Managers.UI.Alert(title, message);
         }
 
         /// <summary>
@@ -187,7 +203,7 @@ namespace STARTING
             {
                 case LoginResult.SUCCESS:
                     Managers.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
-                    titleUIManager.LoginSuccess();
+                    titleUI.LoginSuccess();
                     _view.TopPanelProfileUpdate();
                     return;
                 case LoginResult.IDWRONG:
@@ -205,7 +221,7 @@ namespace STARTING
                     break;
             }
 
-            titleUIManager.Alert(title, message);
+            Managers.UI.Alert(title, message);
         }
 
         public void EditProfilePopupOpen()
@@ -218,7 +234,7 @@ namespace STARTING
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                titleUIManager.Alert("FAIL", "Invalid password input, please enter the same value.");
+                Managers.UI.Alert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -249,12 +265,12 @@ namespace STARTING
             if (true == msg.Success)
             {
                 Managers.Game.UserInfoUpdate(msg.Email);
-                titleUIManager.Alert("SUCCESS", "User information update successful.");
+                Managers.UI.Alert("SUCCESS", "User information update successful.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                titleUIManager.Alert("FAIL", "Failed to update user information.");
+                Managers.UI.Alert("FAIL", "Failed to update user information.");
             }
         }
 

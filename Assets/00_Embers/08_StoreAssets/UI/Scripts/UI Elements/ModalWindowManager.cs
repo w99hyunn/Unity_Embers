@@ -83,10 +83,23 @@ namespace Michsky.UI.Reach
             CheckForEventButtons();
         }
         
-        public void ExitButtonSet(bool index)
+        public void ExitButtonSet(int buttonState)
         {
-            confirmButton.gameObject.SetActive(!index);
-            cancelButton.gameObject.SetActive(index);
+            switch (buttonState)
+            {
+                case 0:
+                    confirmButton.gameObject.SetActive(true);
+                    cancelButton.gameObject.SetActive(false);
+                    break;
+                case 1:
+                    confirmButton.gameObject.SetActive(false);
+                    cancelButton.gameObject.SetActive(true);
+                    break;
+                case 2:
+                    confirmButton.gameObject.SetActive(false);
+                    cancelButton.gameObject.SetActive(false);
+                    break;
+            }
         }
 
         void InitModalWindow()

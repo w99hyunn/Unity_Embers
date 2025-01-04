@@ -30,7 +30,7 @@ namespace STARTING
         }
 
 
-
+        #region #PlayerDataUpdate Logic
         public void OnEnable()
         {
             if (playerData != null)
@@ -53,8 +53,7 @@ namespace STARTING
             {
                 return;
             }
-
-            Debug.Log($"Field {fieldName} changed to {newValue}");
+            
             SendDataToServer(fieldName, newValue);
         }
 
@@ -81,6 +80,6 @@ namespace STARTING
         {
             playerData.Email = email;
         }
-
+        #endregion
     }
 }

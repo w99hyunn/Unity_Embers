@@ -19,5 +19,9 @@ MonoBehaviour:
     sceneIdentifier: Title
   - sceneName: Session
     sceneIdentifier: Session
-  - sceneName: HUD
-    sceneIdentifier: HUD
+  - sceneName: InGame
+    sceneIdentifier: InGame
+  - sceneName: Maps_1
+    sceneIdentifier: Maps_1
+  - sceneName: Maps_2
+    sceneIdentifier: Maps_2
