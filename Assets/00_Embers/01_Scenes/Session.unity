@@ -691,6 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertModal: {fileID: 2109387334}
+  initPanel: {fileID: 542269194}
 --- !u!1 &356478088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1198,7 @@ MonoBehaviour:
   timeInterpolationGui: 0
   IP: 172.30.1.67
   PORT: 8484
-  _SERVER_AUTO_RUN: 1
+  _SERVER_AUTO_RUN: 0
 --- !u!1 &390961614
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ namespace STARTING
             if (!connected)
             {
                 _view.ConnectingFail();
-                Managers.UI.Alert("CONNECTING FAIL",
+                Managers.UI.OpenAlert("CONNECTING FAIL",
                 "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
             }
         }
@@ -100,7 +100,7 @@ namespace STARTING
         /// </summary>
         private void HandleServerDisconnection()
         {
-            Managers.UI.Alert("CONNECTING LOST",
+            Managers.UI.OpenAlert("CONNECTING LOST",
                 "The connection to the server is lost, and the game is terminated.", 1);
             _isCheckingConnection = false;
         }
@@ -113,21 +113,21 @@ namespace STARTING
             //아이디 길이 확인
             if (_view.SignUpID.Length < 5)
             {
-                Managers.UI.Alert("FAIL", "ID must be at least 5 characters long.");
+                Managers.UI.OpenAlert("FAIL", "ID must be at least 5 characters long.");
                 return;
             }
             
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
-                Managers.UI.Alert("FAIL", "Password must be at least 5 characters long.");
+                Managers.UI.OpenAlert("FAIL", "Password must be at least 5 characters long.");
                 return;
             }
             
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                Managers.UI.Alert("FAIL", "Invalid password input, please enter the same value.");
+                Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
             
@@ -171,7 +171,7 @@ namespace STARTING
                     break;
             }
 
-            Managers.UI.Alert(title, message);
+            Managers.UI.OpenAlert(title, message);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace STARTING
                     break;
             }
 
-            Managers.UI.Alert(title, message);
+            Managers.UI.OpenAlert(title, message);
         }
 
         public void EditProfilePopupOpen()
@@ -234,7 +234,7 @@ namespace STARTING
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                Managers.UI.Alert("FAIL", "Invalid password input, please enter the same value.");
+                Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -265,12 +265,12 @@ namespace STARTING
             if (true == msg.Success)
             {
                 Managers.Game.UserInfoUpdate(msg.Email);
-                Managers.UI.Alert("SUCCESS", "User information update successful.");
+                Managers.UI.OpenAlert("SUCCESS", "User information update successful.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                Managers.UI.Alert("FAIL", "Failed to update user information.");
+                Managers.UI.OpenAlert("FAIL", "Failed to update user information.");
             }
         }
 

@@ -50,16 +50,16 @@ namespace STARTING
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    Managers.UI.Alert("SUCCESS", "The character creation has been completed.");
+                    Managers.UI.OpenAlert("SUCCESS", "The character creation has been completed.");
                     LoadCharacterInfo();
                     titleUI.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    Managers.UI.Alert("DUPLICATE", "This is a character name that already exists.");
+                    Managers.UI.OpenAlert("DUPLICATE", "This is a character name that already exists.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    Managers.UI.Alert("ERROR", "Error occurred. Error code 101");
+                    Managers.UI.OpenAlert("ERROR", "Error occurred. Error code 101");
                     break;
             }
         }
@@ -200,9 +200,14 @@ namespace STARTING
             DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
-            
+            InitInGame();
         }
 
+        private void InitInGame()
+        {
+            Managers.UI.OpenAlert("LOADING", "Ingame loading...", 2);
+            Managers.Map.LoadInGame();
+        }
 
         //캐릭터 삭제
         public void DeleteCharacter(string characterName)

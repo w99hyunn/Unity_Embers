@@ -53,8 +53,8 @@ namespace STARTING
         private void OnSkip(InputValue value)
         {
             Cursor.visible = true;
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.NextSceneName));
-            SceneManager.LoadScene(SceneDataManager.GetSceneName(_model.SessionSceneName), LoadSceneMode.Additive);
+            SceneManager.LoadScene(_model.NextSceneName);
+            SceneManager.LoadScene(_model.SessionSceneName, LoadSceneMode.Additive);
         }
     }
 }
