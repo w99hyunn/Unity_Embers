@@ -543,7 +543,7 @@ namespace STARTING
                     using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
                         command.Parameters.AddWithValue("@posX", position.x);
-                        command.Parameters.AddWithValue("@posY", position.y);
+                        command.Parameters.AddWithValue("@posY", (position.y + 1f));
                         command.Parameters.AddWithValue("@posZ", position.z);
                         command.Parameters.AddWithValue("@name", username);
 

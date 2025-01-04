@@ -56,7 +56,7 @@ namespace STARTING
             // 필요한 UI 처리 완료
             Managers.UI.CloseAlert();
 
-            FindAnyObjectByType<TitleUI>().LoadCharacterInfo();
+            FindAnyObjectByType<TitleUIController>().InitCharacterData();
         }
         
         public void LoadInGame()

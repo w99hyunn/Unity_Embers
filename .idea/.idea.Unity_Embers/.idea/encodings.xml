@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Assets/00_Embers/02_Scripts/Core/Managers/DBManager.cs" charset="EUC-KR" />
-    <file url="file://$PROJECT_DIR$/Assets/00_Embers/02_Scripts/Core/UI/Title/TitleGeneralUIController.cs" charset="EUC-KR" />
-    <file url="file://$PROJECT_DIR$/Assets/00_Embers/02_Scripts/Core/UI/Title/TitleGeneralUIView.cs" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/Assets/00_Embers/02_Scripts/Core/UI/Title/TitleUIController.cs" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/Assets/00_Embers/02_Scripts/Core/UI/Title/TitleUIView.cs" charset="EUC-KR" />
   </component>
 </project>

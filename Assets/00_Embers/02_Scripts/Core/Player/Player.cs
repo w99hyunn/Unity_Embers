@@ -6,27 +6,21 @@ namespace STARTING
 {
     public class Player : NetworkBehaviour
     {
-        private void Start()
+        public override async void OnStartLocalPlayer()
         {
-            //Managers.UI.FadeOut();
+            base.OnStartLocalPlayer();
+
             if (isLocalPlayer)
             {
                 InitPosition();
             }
         }
-
-        private void InitPosition()
+        
+        private async void InitPosition()
         {
-            if (Managers.Game != null && Managers.Game.playerData != null)
-            {
-                transform.position = Managers.Game.playerData.Position;
-                SavePosition();
-                Debug.Log($"초기 위치 설정: {transform.position}");
-            }
-            else
-            {
-                Debug.LogError("플레이어 데이터가 초기화되지 않았습니다.");
-            }
+            transform.position = Managers.Game.playerData.Position;
+            SavePosition();
+            Debug.Log($"초기 위치 설정: {transform.position}");
         }
 
         private async Awaitable SavePosition()
