@@ -11,6 +11,7 @@ namespace STARTING
         private SceneData _sceneData;
 
         private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
+        private bool _loadAdditively = false;
 
         [MenuItem("STARTING/Scene Data Wizard")]
         public static void ShowWindow()
@@ -37,6 +38,9 @@ namespace STARTING
 
             GUILayout.Label("\n씬 전환 :", EditorStyles.boldLabel);
 
+            // Additive 로드 옵션
+            _loadAdditively = EditorGUILayout.Toggle("Additive로 불러오기", _loadAdditively);
+            GUILayout.Space(10);
             foreach (var sceneInfo in _sceneData.scenes)
             {
                 if (GUILayout.Button(sceneInfo.sceneIdentifier))
@@ -47,11 +51,29 @@ namespace STARTING
                     {
                         if (Application.isPlaying)
                         {
-                            SceneManager.LoadScene(sceneInfo.sceneName);
+                            if (_loadAdditively)
+                            {
+                                SceneManager.LoadScene(sceneInfo.sceneName, LoadSceneMode.Additive);
+                                Debug.Log($"Loaded scene (Additive): {sceneInfo.sceneName}");
+                            }
+                            else
+                            {
+                                SceneManager.LoadScene(sceneInfo.sceneName);
+                                Debug.Log($"Loaded scene: {sceneInfo.sceneName}");
+                            }
                         }
                         else
                         {
-                            EditorSceneManager.OpenScene(scenePath);
+                            if (_loadAdditively)
+                            {
+                                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                                Debug.Log($"Opened scene (Additive): {scenePath}");
+                            }
+                            else
+                            {
+                                EditorSceneManager.OpenScene(scenePath);
+                                Debug.Log($"Opened scene: {scenePath}");
+                            }
                         }
                     }
                     else
