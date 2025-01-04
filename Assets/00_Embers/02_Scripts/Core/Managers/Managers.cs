@@ -10,7 +10,7 @@ namespace STARTING
         public static GameManager Game { get; private set; }
         public static MapManager Map { get; private set; }
         public static UIManager UI { get; private set; }
-        public static EmbersNetworkManager Network { get; private set; }
+        public static CustomNetworkManager Network { get; private set; }
         public static DBManager DB { get; private set; }
 
         private void Awake()
@@ -26,7 +26,7 @@ namespace STARTING
             Game = GetComponentInChildren<GameManager>();
             Map = GetComponentInChildren<MapManager>();
             UI = GetComponentInChildren<UIManager>();
-            Network = GetComponentInChildren<EmbersNetworkManager>();
+            Network = GetComponentInChildren<CustomNetworkManager>();
             DB = GetComponentInChildren<DBManager>();
         }
     }

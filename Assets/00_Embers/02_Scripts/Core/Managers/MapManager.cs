@@ -7,6 +7,58 @@ namespace STARTING
 {
     public class MapManager : MonoBehaviour
     {
+
+        public void ReturnTitle()
+        {
+            // 타이틀 로드를 위한 코루틴 시작
+            StartCoroutine(ReturnTitleCoroutine());
+        }
+
+        private IEnumerator ReturnTitleCoroutine()
+        {
+            // 현재 활성화된 InGame 씬 확인
+            string inGameScene = "InGame";
+            if (SceneManager.GetSceneByName(inGameScene).isLoaded)
+            {
+                // InGame 씬 언로드
+                AsyncOperation inGameUnloadOperation = SceneManager.UnloadSceneAsync(inGameScene);
+                while (!inGameUnloadOperation.isDone)
+                {
+                    yield return null; // 기다리는 동안 대기
+                }
+            }
+
+            // Managers.Game.playerData.MapCode를 사용하여 로드된 맵 씬 확인 및 언로드
+            string mapCode = Managers.Game.playerData.MapCode;
+            string mapSceneName = $"Maps_{mapCode}";
+
+            if (SceneManager.GetSceneByName(mapSceneName).isLoaded)
+            {
+                AsyncOperation mapUnloadOperation = SceneManager.UnloadSceneAsync(mapSceneName);
+                while (!mapUnloadOperation.isDone)
+                {
+                    yield return null; // 맵 언로드 대기
+                }
+                Debug.Log($"{mapSceneName} 씬 언로드 완료");
+            }
+
+            // 타이틀 씬 로드
+            string titleScene = "Title";
+            AsyncOperation titleLoadOperation = SceneManager.LoadSceneAsync(titleScene, LoadSceneMode.Additive);
+            while (!titleLoadOperation.isDone)
+            {
+                yield return null; // 로딩 대기
+            }
+
+            // 타이틀 씬 활성화
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(titleScene));
+
+            // 필요한 UI 처리 완료
+            Managers.UI.CloseAlert();
+
+            FindAnyObjectByType<TitleUI>().LoadCharacterInfo();
+        }
+        
         public void LoadInGame()
         {
             // Title 씬 언로드 및 InGame 씬 로드 시작
@@ -62,9 +114,18 @@ namespace STARTING
             Managers.UI.CloseAlert();
         }
 
-        private void SpawnNetworkPlayer()
+        private async void SpawnNetworkPlayer()
         {
             NetworkClient.AddPlayer();
+            await PlayerPositionSetting();
+        }
+
+        private async Awaitable PlayerPositionSetting()
+        {
+            while (NetworkClient.localPlayer == null)
+            {
+                await Awaitable.NextFrameAsync();
+            }
         }
     }
     

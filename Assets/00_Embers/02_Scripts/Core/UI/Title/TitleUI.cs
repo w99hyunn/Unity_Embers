@@ -10,7 +10,7 @@ namespace STARTING
         public PanelManager panelManager;
         public ChapterManager chapterManager;
         
-        public CharacterUIController characterUIController;
+        public TitleCharacterUIController titleCharacterUIController;
         
         public void OpenPanel(string panelName)
         {
@@ -20,7 +20,12 @@ namespace STARTING
         public void LoginSuccess()
         {
             menuManager.DisableSplashScreen();
-            characterUIController.LoadCharacterInfo();
+            titleCharacterUIController.LoadCharacterInfo();
+        }
+
+        public void LoadCharacterInfo()
+        {
+            titleCharacterUIController.LoadCharacterInfo();
         }
     }
 }

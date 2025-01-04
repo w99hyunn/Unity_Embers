@@ -30,7 +30,7 @@ namespace STARTING
             playerCamera.transform.position = cameraTarget.position + offset;
         }
 
-        void LateUpdate()
+        void Update()
         {
             // 로컬 플레이어가 아니면 동작하지 않음
             if (!isLocalPlayer || playerCamera == null) return;

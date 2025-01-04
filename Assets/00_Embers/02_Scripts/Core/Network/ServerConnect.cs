@@ -4,7 +4,7 @@ namespace STARTING
 {
     public class ServerConnect : MonoBehaviour
     {
-        public GeneralUIController controller;
+        public TitleGeneralUIController controller;
 
         private void OnEnable()
         {
