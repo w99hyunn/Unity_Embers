@@ -1,13 +1,24 @@
-using System;
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace STARTING
 {
     public class Player : NetworkBehaviour
     {
         public CharacterController characterController;
-        
+        public GameObject camera;
+        public PlayerInput playerInput;
+
+        private void Start()
+        {
+            if (false == isLocalPlayer)
+            {
+                camera.SetActive(false);
+                playerInput.enabled = false;
+            }
+        }
+
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
@@ -22,9 +33,12 @@ namespace STARTING
             Debug.Log($"Position set to {transform.position}");
             
             characterController.enabled = true;
-            
-            // 위치 지속적으로 저장
-            SavePosition();
+
+            if (false == isLocalPlayer)
+            {
+                // 위치 지속적으로 저장
+                SavePosition();
+            }
         }
 
         private async Awaitable SavePosition()

@@ -180,6 +180,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   characterController: {fileID: 8325213744329699467}
+  camera: {fileID: 5739541575569296721}
+  playerInput: {fileID: 1404161977285172797}
 --- !u!143 &8325213744329699467
 CharacterController:
   m_ObjectHideFlags: 0
@@ -231,7 +233,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: KeyboardMouse
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -447,5 +449,10 @@ PrefabInstance:
 --- !u!4 &5739541575569296558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 5988544029212361686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5739541575569296721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_PrefabInstance: {fileID: 5988544029212361686}
   m_PrefabAsset: {fileID: 0}
