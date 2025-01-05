@@ -16,6 +16,7 @@ namespace STARTING
             // 로컬 플레이어인지 확인
             if (!isLocalPlayer)
             {
+                playerCamera.gameObject.SetActive(false);
                 return; // 로컬 플레이어가 아니라면 카메라를 비활성화
             }
 

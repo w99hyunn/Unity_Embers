@@ -1,3 +1,4 @@
+using Mirror;
 using UnityEngine;
 
 public class PlayerMoveDemo : MonoBehaviour
@@ -21,6 +22,9 @@ public class PlayerMoveDemo : MonoBehaviour
 
     void Update()
     {
+        if (!NetworkClient.localPlayer)
+            return;
+        
         // 땅에 닿아 있는지 확인
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
