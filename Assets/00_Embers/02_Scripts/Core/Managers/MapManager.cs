@@ -56,7 +56,7 @@ namespace STARTING
             // 필요한 UI 처리 완료
             Managers.UI.CloseAlert();
 
-            FindAnyObjectByType<TitleUIController>().InitCharacterData();
+            FindAnyObjectByType<TitleUIController>().ReturnBackTitle();
         }
         
         public void LoadInGame()
@@ -84,9 +84,6 @@ namespace STARTING
             // InGame 씬 활성화
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("InGame"));
 
-            // 네트워크 플레이어 스폰
-            SpawnNetworkPlayer();
-
             // 맵 씬 로드
             LoadMapScene();
         }
@@ -98,23 +95,38 @@ namespace STARTING
             string mapSceneName = $"Maps_{mapCode}";
 
             // 맵 씬 Additive로 로드
-            StartCoroutine(LoadMapSceneCoroutine(mapSceneName));
+            LoadMapSceneCoroutine(mapSceneName);
         }
-
-        private IEnumerator LoadMapSceneCoroutine(string mapSceneName)
+        
+        private async Awaitable LoadMapSceneCoroutine(string mapSceneName)
         {
+            // 맵 씬 Additive로 로드
             AsyncOperation mapLoadOperation = SceneManager.LoadSceneAsync(mapSceneName, LoadSceneMode.Additive);
             while (!mapLoadOperation.isDone)
             {
-                yield return null; // 맵 로딩 대기
+                await Awaitable.NextFrameAsync(); // 맵 로딩 대기
             }
 
-            // 맵 로드 완료 후 추가 작업 필요 시 여기에 작성
+            // 맵 로드 완료 후 씬 활성화
+            Scene mapScene = SceneManager.GetSceneByName(mapSceneName);
+            if (mapScene.IsValid()) // 로드된 씬이 유효한지 확인
+            {
+                SceneManager.SetActiveScene(mapScene); // 로드된 씬 활성화
+                Debug.Log($"{mapScene.name} 씬 활성화 완료");
+            }
+            else
+            {
+                Debug.LogError($"씬 활성화 실패: {mapSceneName} 이 유효하지 않음.");
+            }
+
+            // 추가 작업
             Debug.Log($"{mapSceneName} 로드 완료");
+            // 네트워크 플레이어 스폰
+            await SpawnNetworkPlayer();
             Managers.UI.CloseAlert();
         }
 
-        private async void SpawnNetworkPlayer()
+        private async Awaitable SpawnNetworkPlayer()
         {
             NetworkClient.AddPlayer();
             await PlayerPositionSetting();

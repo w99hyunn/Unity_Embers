@@ -6,26 +6,23 @@ namespace STARTING
 {
     public class Player : NetworkBehaviour
     {
-        public override async void OnStartLocalPlayer()
+        private bool isDestroyed = false;
+        
+        public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
-
-            if (isLocalPlayer)
-            {
-                InitPosition();
-            }
+            InitializePlayerPosition();
         }
-        
-        private async Awaitable InitPosition()
-        {
-            while (false == gameObject.activeInHierarchy)
-            {
-                await Awaitable.NextFrameAsync();
-            }
 
+        private async void InitializePlayerPosition()
+        {
+            // 동기화된 데이터 기반으로 위치 초기화
+            CmdUpdateServerPosition(Managers.Game.playerData.Position);
             transform.position = Managers.Game.playerData.Position;
+            Debug.Log($"Position set to {transform.position}");
+            
+            // 위치 지속적으로 저장
             SavePosition();
-            Debug.Log($"초기 위치 설정: {transform.position}");
         }
 
         private async Awaitable SavePosition()
@@ -36,10 +33,18 @@ namespace STARTING
                 Managers.Game.playerData.Position = transform.position;
             }
         }
-        
+
+        [Command(requiresAuthority = false)]
+        private void CmdUpdateServerPosition(Vector3 position)
+        {
+            // 서버에서 클라이언트 위치 업데이트
+            transform.position = position;
+        }
+
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
+            // 플레이어 삭제 요청
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
         }
     }

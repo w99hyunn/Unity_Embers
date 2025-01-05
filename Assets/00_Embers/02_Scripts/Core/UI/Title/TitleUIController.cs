@@ -205,7 +205,8 @@ namespace STARTING
                 case LoginResult.SUCCESS:
                     Managers.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
                     _view.menuManager.DisableSplashScreen();
-                    InitCharacterData();
+                    _view.TopPanelProfileUpdate();
+                    LoadCharacterInfo();
                     return;
                 case LoginResult.IDWRONG:
                     title = "ID WRONG";
@@ -224,11 +225,12 @@ namespace STARTING
 
             Managers.UI.OpenAlert(title, message);
         }
-
-        public void InitCharacterData()
+        
+        public void ReturnBackTitle()
         {
             _view.TopPanelProfileUpdate();
             LoadCharacterInfo();
+            _view.OpenPanel("GameStart");
         }
         
         public void EditProfilePopupOpen()

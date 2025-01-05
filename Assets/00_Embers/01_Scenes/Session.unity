@@ -692,6 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alertModal: {fileID: 2109387334}
   initPanel: {fileID: 542269194}
+  _currentCharacterPage: 0
 --- !u!1 &356478088
 GameObject:
   m_ObjectHideFlags: 0
