@@ -16,8 +16,13 @@ namespace STARTING
             }
         }
         
-        private async void InitPosition()
+        private async Awaitable InitPosition()
         {
+            while (false == gameObject.activeInHierarchy)
+            {
+                await Awaitable.NextFrameAsync();
+            }
+
             transform.position = Managers.Game.playerData.Position;
             SavePosition();
             Debug.Log($"초기 위치 설정: {transform.position}");
