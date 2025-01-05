@@ -692,7 +692,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alertModal: {fileID: 2109387334}
   initPanel: {fileID: 542269194}
-  _currentCharacterPage: 0
 --- !u!1 &356478088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  port: 8484
+  port: 8585
   DualMode: 1
   NoDelay: 1
   Interval: 10
@@ -1198,7 +1197,7 @@ MonoBehaviour:
   evaluationInterval: 3
   timeInterpolationGui: 0
   IP: 172.30.1.67
-  PORT: 8484
+  PORT: 8585
   _SERVER_AUTO_RUN: 0
 --- !u!1 &390961614
 GameObject:

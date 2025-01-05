@@ -179,6 +179,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  characterController: {fileID: 8325213744329699467}
 --- !u!143 &8325213744329699467
 CharacterController:
   m_ObjectHideFlags: 0
