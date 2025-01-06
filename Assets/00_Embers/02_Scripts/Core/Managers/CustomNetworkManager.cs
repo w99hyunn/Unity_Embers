@@ -69,21 +69,7 @@ namespace STARTING
             Managers.DB.CloseDBServer();
             base.OnStopServer();
         }
-
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-        {
-            Vector3 spawnPosition = Vector3.zero;
-            
-            if (conn.authenticationData is Vector3 clientPosition)
-            {
-                spawnPosition = clientPosition;
-            }
-
-            // 플레이어 스폰
-            GameObject player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            NetworkServer.AddPlayerForConnection(conn, player);
-        }
-
+        
         /// <summary>
         /// 클라이언트로부터 받은 로그인 요청 메시지
         /// 처리 결과에 따라 결과값 반환

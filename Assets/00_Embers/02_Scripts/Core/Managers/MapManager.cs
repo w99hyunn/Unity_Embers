@@ -129,15 +129,6 @@ namespace STARTING
         private async Awaitable SpawnNetworkPlayer()
         {
             NetworkClient.AddPlayer();
-            await PlayerPositionSetting();
-        }
-
-        private async Awaitable PlayerPositionSetting()
-        {
-            while (NetworkClient.localPlayer == null)
-            {
-                await Awaitable.NextFrameAsync();
-            }
         }
     }
     

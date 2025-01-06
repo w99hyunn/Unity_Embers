@@ -14,6 +14,7 @@ namespace STARTING
         
         private void Awake()
         {
+            Debug.Log("플레이어 생성됐?" + gameObject.name);
             TryGetComponent<CharacterController>(out _characterController);
         }
         
@@ -33,11 +34,8 @@ namespace STARTING
             
             _characterController.enabled = true;
             
-            if (false == isLocalPlayer)
-            {
-                // 위치 지속적으로 저장
-                SavePosition();
-            }
+            // 위치 지속적으로 저장
+            SavePosition();
         }
 
         private async Awaitable SavePosition()
@@ -57,8 +55,9 @@ namespace STARTING
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
-            // 플레이어 삭제 요청
+            // 플레이어 삭제 요청.
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
+            NetworkServer.RemovePlayerForConnection(connectionToClient);
         }
 
         private void OnNicknameChanged(string oldNickname, string newNickname)
