@@ -1,24 +1,22 @@
 using Mirror;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace STARTING
 {
     public class Player : NetworkBehaviour
     {
-        public CharacterController characterController;
-        public GameObject camera;
-        public PlayerInput playerInput;
-
-        private void Start()
+        private CharacterController _characterController;
+        
+        [SyncVar(hook = nameof(OnNicknameChanged))]
+        public string playerNickname;
+        public TMP_Text nicknameText;
+        
+        private void Awake()
         {
-            if (false == isLocalPlayer)
-            {
-                camera.SetActive(false);
-                playerInput.enabled = false;
-            }
+            TryGetComponent<CharacterController>(out _characterController);
         }
-
+        
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
@@ -27,13 +25,14 @@ namespace STARTING
 
         private async void InitializePlayerPosition()
         {
-            characterController.enabled = false;
-
+            InitNickName();
+            
+            _characterController.enabled = false;
             transform.position = Managers.Game.playerData.Position;
             Debug.Log($"Position set to {transform.position}");
             
-            characterController.enabled = true;
-
+            _characterController.enabled = true;
+            
             if (false == isLocalPlayer)
             {
                 // 위치 지속적으로 저장
@@ -50,11 +49,36 @@ namespace STARTING
             }
         }
 
+        private void InitNickName()
+        {
+            CmdSetNickname(Managers.Game.playerData.Username);
+        }
+        
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
             // 플레이어 삭제 요청
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
         }
+
+        private void OnNicknameChanged(string oldNickname, string newNickname)
+        {
+            UpdateNicknameUI(newNickname);
+        }
+        
+        [Command]
+        private void CmdSetNickname(string nickname)
+        {
+            playerNickname = nickname;
+        }
+        
+        private void UpdateNicknameUI(string nickname)
+        {
+            if (nicknameText != null)
+            {
+                nicknameText.text = nickname;
+            }
+        }
+
     }
 }
