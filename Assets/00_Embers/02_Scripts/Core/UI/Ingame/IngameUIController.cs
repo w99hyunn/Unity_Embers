@@ -27,6 +27,8 @@ namespace STARTING
         public void ReturnTitle()
         {
             localPlayer.GetComponent<Player>().CmdRemovePlayer();
+            NetworkClient.NotReady();
+
             Managers.Map.ReturnTitle();
         }
     }

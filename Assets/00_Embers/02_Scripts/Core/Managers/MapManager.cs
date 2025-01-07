@@ -128,6 +128,7 @@ namespace STARTING
 
         private async Awaitable SpawnNetworkPlayer()
         {
+            NetworkClient.Ready();
             NetworkClient.AddPlayer();
         }
     }

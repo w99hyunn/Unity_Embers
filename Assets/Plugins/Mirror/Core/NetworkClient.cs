@@ -1050,6 +1050,28 @@ namespace Mirror
             connection.Send(new ReadyMessage());
             return true;
         }
+        
+        public static bool NotReady()
+        {
+            if (!ready)
+            {
+                Debug.LogError("NetworkClient is already ready. It shouldn't be called twice.");
+                return false;
+            }
+            // need a valid connection to become ready
+            if (connection == null)
+            {
+                Debug.LogError("Ready() called with invalid connection object: conn=null");
+                return false;
+            }
+            
+            ready = false;
+            connection.isReady = false;
+
+            // Tell server we're ready to have a player object spawned
+            connection.Send(new NotReadyMessage());
+            return true;
+        }
 
         // add player //////////////////////////////////////////////////////////
         // called from message handler for Owner message

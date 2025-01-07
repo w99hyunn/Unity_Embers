@@ -308,6 +308,7 @@ namespace Mirror
         internal static void RegisterMessageHandlers()
         {
             RegisterHandler<ReadyMessage>(OnClientReadyMessage);
+            RegisterHandler<NotReadyMessage>(OnClientNotReadyMessage);
             RegisterHandler<CommandMessage>(OnCommandMessage);
             RegisterHandler<NetworkPingMessage>(NetworkTime.OnServerPing, false);
             RegisterHandler<NetworkPongMessage>(NetworkTime.OnServerPong, false);
@@ -323,6 +324,12 @@ namespace Mirror
         {
             // Debug.Log($"Default handler for ready message from {conn}");
             SetClientReady(conn);
+        }
+        
+        static void OnClientNotReadyMessage(NetworkConnectionToClient conn, NotReadyMessage msg)
+        {
+            // Debug.Log($"Default handler for ready message from {conn}");
+            SetClientNotReady(conn);
         }
 
         static void OnCommandMessage(NetworkConnectionToClient conn, CommandMessage msg, int channelId)
