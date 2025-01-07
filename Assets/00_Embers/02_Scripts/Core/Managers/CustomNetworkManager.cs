@@ -1,5 +1,6 @@
 using Mirror;
 using System.Collections.Generic;
+using Unity.Multiplayer.Playmode;
 using UnityEngine;
 using static Michsky.UI.Reach.ChapterManager;
 
@@ -15,6 +16,16 @@ namespace STARTING
         public override void Start()
         {
 #if UNITY_EDITOR
+            try
+            {
+                if (CurrentPlayer.ReadOnlyTags()[0] == "Server")
+                    StartServer();
+            }
+            catch
+            {
+                DebugUtils.Log("Client 동작 실행");
+            }
+            
             if (true == _SERVER_AUTO_RUN)
             {
                 if (!NetworkServer.active)
