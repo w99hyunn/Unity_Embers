@@ -12,7 +12,7 @@ namespace Verpha.HierarchyDesigner
     {
         #region Properties
         #region General
-        public enum CurrentWindow { Home, About, Folders, Separators, Tools, Presets, GeneralSettings, DesignSettings, ShortcutSettings, AdvancedSettings }
+        public enum CurrentWindow { Home, About, Folders, Separators, Tools, Presets, PresetCreator, GeneralSettings, DesignSettings, ShortcutSettings, AdvancedSettings }
         private static CurrentWindow currentWindow;
         private static string cachedCurrentWindowLabel;
         private Vector2 headerButtonsScroll;
@@ -51,6 +51,10 @@ namespace Verpha.HierarchyDesigner
         private const string separatorText =
             "Separators are visual dividers; they are meant to organize your scenes and provide clarity.\n\n" +
             "Separators are editor-only and will NOT be included in your game's build. Therefore, do not use them as GameObject parents; instead, use folders.\n";
+
+        private const string savedDataText =
+            "Settings and Custom Presets are saved in the 'Saved Data' folder (located at: Assets/.../Hierarchy Designer/Editor/Saved Data) as .json files.\n\n" +
+            "To export Hierarchy Designer's data to another project, simply copy and paste the .json files into the other project's saved data folder, and then restart the editor.\n";
 
         private const string additionalNotesText =
             "Hierarchy Designer is currently in development, and more features and improvements are coming soon.\n\n" +
@@ -131,6 +135,42 @@ namespace Verpha.HierarchyDesigner
         private bool applyToFolderDefaultValues = true;
         private bool applyToSeparatorDefaultValues = true;
         private bool applyToLock = true;
+        #endregion
+
+        #region Preset Creator
+        private Vector2 presetCreatorMainScroll;
+        private Vector2 presetCreatorListScroll;
+        private const int customPresetsSpacing = 10;
+        private const float customPresetsLabelWidth = 185;
+        private string customPresetName = string.Empty;
+        private Color customPresetFolderTextColor = Color.white;
+        private int customPresetFolderFontSize = 12;
+        private FontStyle customPresetFolderFontStyle = FontStyle.Normal;
+        private Color customPresetFolderColor = Color.white;
+        private HierarchyDesigner_Configurable_Folders.FolderImageType customPresetFolderImageType = HierarchyDesigner_Configurable_Folders.FolderImageType.Default;
+        private Color customPresetSeparatorTextColor = Color.white;
+        private bool customPresetSeparatorIsGradientBackground = false;
+        private Color customPresetSeparatorBackgroundColor = Color.gray;
+        private Gradient customPresetSeparatorBackgroundGradient = new();
+        private int customPresetSeparatorFontSize = 12;
+        private FontStyle customPresetSeparatorFontStyle = FontStyle.Normal;
+        private TextAnchor customPresetSeparatorTextAlignment = TextAnchor.MiddleCenter;
+        private HierarchyDesigner_Configurable_Separators.SeparatorImageType customPresetSeparatorBackgroundImageType = HierarchyDesigner_Configurable_Separators.SeparatorImageType.Default;
+        private Color customPresetTagTextColor = Color.gray;
+        private FontStyle customPresetTagFontStyle = FontStyle.BoldAndItalic;
+        private int customPresetTagFontSize = 10;
+        private TextAnchor customPresetTagTextAnchor = TextAnchor.MiddleRight;
+        private Color customPresetLayerTextColor = Color.gray;
+        private FontStyle customPresetLayerFontStyle = FontStyle.Bold;
+        private int customPresetLayerFontSize = 10;
+        private TextAnchor customPresetLayerTextAnchor = TextAnchor.MiddleLeft;
+        private Color customPresetTreeColor = Color.white;
+        private Color customPresetHierarchyLineColor = HierarchyDesigner_Shared_Color.HexToColor("00000080");
+        private Color customPresetLockColor = Color.white;
+        private int customPresetLockFontSize = 11;
+        private FontStyle customPresetLockFontStyle = FontStyle.BoldAndItalic;
+        private TextAnchor customPresetLockTextAnchor = TextAnchor.MiddleCenter;
+        private List<HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset> customPresets;
         #endregion
 
         #region General Settings
@@ -219,6 +259,7 @@ namespace Verpha.HierarchyDesigner
             "Hierarchy Designer/Open Separator Panel",
             "Hierarchy Designer/Open Tools Panel",
             "Hierarchy Designer/Open Presets Panel",
+            "Hierarchy Designer/Open Preset Creator Panel",
             "Hierarchy Designer/Open General Settings Panel",
             "Hierarchy Designer/Open Design Settings Panel",
             "Hierarchy Designer/Open Shortcut Settings Panel",
@@ -299,7 +340,8 @@ namespace Verpha.HierarchyDesigner
                 utilitiesMenuItems = new()
                 {
                     { "Tools", () => { SelectToolsWindow(); } },
-                    { "Presets", () => { SelectPresetsWindow(); } }
+                    { "Presets", () => { SelectPresetsWindow(); } },
+                    { "Preset Creator", () => { SelectPresetCreatorWindow(); } }
                 };
             }
 
@@ -384,6 +426,9 @@ namespace Verpha.HierarchyDesigner
                     break;
                 case CurrentWindow.Presets:
                     DrawPresetsTab();
+                    break;
+                case CurrentWindow.PresetCreator:
+                    DrawPresetCreatorTab();
                     break;
                 case CurrentWindow.GeneralSettings:
                     DrawGeneralSettingsTab();
@@ -470,6 +515,11 @@ namespace Verpha.HierarchyDesigner
         private void SelectPresetsWindow()
         {
             SwitchWindow(CurrentWindow.Presets);
+        }
+
+        private void SelectPresetCreatorWindow()
+        {
+            SwitchWindow(CurrentWindow.PresetCreator);
         }
 
         private void SelectGeneralSettingsWindow()
@@ -620,6 +670,9 @@ namespace Verpha.HierarchyDesigner
             GUILayout.Label("Separators", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
             GUILayout.Label(separatorText, HierarchyDesigner_Shared_GUI.RegularLabelStyle);
 
+            GUILayout.Label("Saved Data", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Label(savedDataText, HierarchyDesigner_Shared_GUI.RegularLabelStyle);
+
             GUILayout.Label("Additional Notes", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
             GUILayout.Label(additionalNotesText, HierarchyDesigner_Shared_GUI.RegularLabelStyle);
 
@@ -665,25 +718,6 @@ namespace Verpha.HierarchyDesigner
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(10);
             GUILayout.Label("An image editor, map generator and screenshot tool.", HierarchyDesigner_Shared_GUI.RegularLabelCenterStyle);
-            EditorGUILayout.EndVertical();
-            #endregion
-
-            GUILayout.Space(20);
-
-            #region PicEase Lite
-            EditorGUILayout.BeginVertical(GUILayout.Width(200));
-            GUILayout.Label("PicEase Lite", HierarchyDesigner_Shared_GUI.MiniBoldLabelCenterStyle);
-            GUILayout.Space(5);
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button(string.Empty, HierarchyDesigner_Shared_GUI.PromotionalPicEaseLiteStyle))
-            {
-                Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/picease-lite-302896");
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(10);
-            GUILayout.Label("The free, simplified version of PicEase.", HierarchyDesigner_Shared_GUI.RegularLabelCenterStyle);
             EditorGUILayout.EndVertical();
             #endregion
 
@@ -1662,7 +1696,16 @@ namespace Verpha.HierarchyDesigner
 
         private void LoadPresets()
         {
-            presetNames = HierarchyDesigner_Configurable_Presets.GetPresetNames();
+            List<string> combinedPresetNames = new();
+            combinedPresetNames.AddRange(HierarchyDesigner_Configurable_Presets.GetPresetNames());
+            customPresets = HierarchyDesigner_Configurable_Presets.CustomPresets;
+            combinedPresetNames.AddRange(HierarchyDesigner_Configurable_Presets.CustomPresets.ConvertAll(p => p.presetName));
+            presetNames = combinedPresetNames.ToArray();
+
+            if (selectedPresetIndex >= presetNames.Length)
+            {
+                selectedPresetIndex = 0;
+            }
         }
 
         private void ShowPresetPopup()
@@ -1684,14 +1727,32 @@ namespace Verpha.HierarchyDesigner
         private void OnPresetSelected(object presetNameObj)
         {
             string presetName = (string)presetNameObj;
-            selectedPresetIndex = Array.IndexOf(presetNames, presetName);
+            int newIndex = Array.IndexOf(presetNames, presetName);
+
+            if (newIndex >= 0 && newIndex < presetNames.Length)
+            {
+                selectedPresetIndex = newIndex;
+            }
+            else
+            {
+                selectedPresetIndex = 0;
+            }
         }
 
         private void ApplySelectedPreset()
         {
             if (selectedPresetIndex < 0 || selectedPresetIndex >= presetNames.Length) return;
 
-            HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset selectedPreset = HierarchyDesigner_Configurable_Presets.Presets[selectedPresetIndex];
+            HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset selectedPreset;
+            if (selectedPresetIndex < HierarchyDesigner_Configurable_Presets.DefaultPresets.Count)
+            {
+                selectedPreset = HierarchyDesigner_Configurable_Presets.DefaultPresets[selectedPresetIndex];
+            }
+            else
+            {
+                int customIndex = selectedPresetIndex - HierarchyDesigner_Configurable_Presets.DefaultPresets.Count;
+                selectedPreset = HierarchyDesigner_Configurable_Presets.CustomPresets[customIndex];
+            }
 
             string message = "Are you sure you want to override your current values for: ";
             List<string> changesList = new();
@@ -1774,6 +1835,257 @@ namespace Verpha.HierarchyDesigner
             applyToFolderDefaultValues = enable;
             applyToSeparatorDefaultValues = enable;
             applyToLock = enable;
+        }
+        #endregion
+
+        #region Preset Creator
+        private void DrawPresetCreatorTab()
+        {
+            CustomPresetList();
+            DrawPresetCreatorFields();
+
+            EditorGUILayout.BeginVertical();
+            if (GUILayout.Button("Create Custom Preset", GUILayout.Height(primaryButtonsHeight)))
+            {
+                CreateCustomPreset();
+            }
+            if (GUILayout.Button("Reset All Fields", GUILayout.Height(primaryButtonsHeight)))
+            {
+                ResetCustomPresetFields();
+            }
+            EditorGUILayout.EndVertical();
+        }
+        
+        private void DrawPresetCreatorFields() 
+        {
+            EditorGUILayout.BeginVertical(HierarchyDesigner_Shared_GUI.SecondaryPanelStyle);
+            EditorGUILayout.LabelField("Custom Preset Creation", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
+            GUILayout.Space(defaultMarginSpacing);
+
+            presetCreatorMainScroll = EditorGUILayout.BeginScrollView(presetCreatorMainScroll, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+            #region General
+            GUILayout.Label("General", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetName = HierarchyDesigner_Shared_GUI.DrawTextField("Custom Preset Name", customPresetsLabelWidth, string.Empty, customPresetName, true, "The name of your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Folder
+            GUILayout.Label("Folder", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetFolderTextColor = HierarchyDesigner_Shared_GUI.DrawColorField("Text Color", customPresetsLabelWidth, "#FFFFFF", customPresetFolderTextColor, true, "The folder text color value in your custom preset.");
+            customPresetFolderFontSize = HierarchyDesigner_Shared_GUI.DrawIntSlider("Font Size", customPresetsLabelWidth, customPresetFolderFontSize, 12, 7, 21, true, "The folder font size value in your custom preset.");
+            customPresetFolderFontStyle = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Font Style", customPresetsLabelWidth, customPresetFolderFontStyle, FontStyle.Normal, true, "The folder font style value in your custom preset.");
+            customPresetFolderColor = HierarchyDesigner_Shared_GUI.DrawColorField("Color", customPresetsLabelWidth, "#FFFFFF", customPresetFolderColor, true, "The folder color value in your custom preset.");
+            customPresetFolderImageType = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Image Type", customPresetsLabelWidth, customPresetFolderImageType, HierarchyDesigner_Configurable_Folders.FolderImageType.Default, true, "The folder image type value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Separator
+            GUILayout.Label("Separator", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetSeparatorTextColor = HierarchyDesigner_Shared_GUI.DrawColorField("Text Color", customPresetsLabelWidth, "#FFFFFF", customPresetSeparatorTextColor, true, "The separator text color value in your custom preset.");
+            customPresetSeparatorIsGradientBackground = HierarchyDesigner_Shared_GUI.DrawToggle("Is Gradient Background", customPresetsLabelWidth, customPresetSeparatorIsGradientBackground, false, true, "The separator is gradient value in your custom preset.");
+            customPresetSeparatorBackgroundColor = HierarchyDesigner_Shared_GUI.DrawColorField("Background Color", customPresetsLabelWidth, "#808080", customPresetSeparatorBackgroundColor, true, "The separator background color value in your custom preset.");
+            customPresetSeparatorBackgroundGradient = HierarchyDesigner_Shared_GUI.DrawGradientField("Background Gradient", customPresetsLabelWidth, new Gradient(), customPresetSeparatorBackgroundGradient, true, "The separator background gradient color value in your custom preset.");
+            customPresetSeparatorFontStyle = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Font Style", customPresetsLabelWidth, customPresetSeparatorFontStyle, FontStyle.Normal, true, "The separator font style value in your custom preset.");
+            customPresetSeparatorFontSize = HierarchyDesigner_Shared_GUI.DrawIntSlider("Font Size", customPresetsLabelWidth, customPresetSeparatorFontSize, 12, 7, 21, true, "The separator font size value in your custom preset.");
+            customPresetSeparatorTextAlignment = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Text Alignment", customPresetsLabelWidth, customPresetSeparatorTextAlignment, TextAnchor.MiddleCenter, true, "The separator text alignment value in your custom preset.");
+            customPresetSeparatorBackgroundImageType = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Image Type", customPresetsLabelWidth, customPresetSeparatorBackgroundImageType, HierarchyDesigner_Configurable_Separators.SeparatorImageType.Default, true, "The separator background image type value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Tag
+            GUILayout.Label("Tag", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetTagTextColor = HierarchyDesigner_Shared_GUI.DrawColorField("Text Color", customPresetsLabelWidth, "#808080", customPresetTagTextColor, true, "The tag text color value in your custom preset.");
+            customPresetTagFontStyle = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Font Style", customPresetsLabelWidth, customPresetTagFontStyle, FontStyle.Bold, true, "The tag font style value in your custom preset.");
+            customPresetTagFontSize = HierarchyDesigner_Shared_GUI.DrawIntSlider("Font Size", customPresetsLabelWidth, customPresetTagFontSize, 10, 7, 21, true, "The tag font size value in your custom preset.");
+            customPresetTagTextAnchor = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Text Anchor", customPresetsLabelWidth, customPresetTagTextAnchor, TextAnchor.MiddleRight, true, "The tag text anchor value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Layer
+            GUILayout.Label("Layer", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetLayerTextColor = HierarchyDesigner_Shared_GUI.DrawColorField("Text Color", customPresetsLabelWidth, "#808080", customPresetLayerTextColor, true, "The layer text color value in your custom preset.");
+            customPresetLayerFontStyle = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Font Style", customPresetsLabelWidth, customPresetLayerFontStyle, FontStyle.Bold, true, "The layer font style value in your custom preset.");
+            customPresetLayerFontSize = HierarchyDesigner_Shared_GUI.DrawIntSlider("Font Size", customPresetsLabelWidth, customPresetLayerFontSize, 10, 7, 21, true, "The layer font size value in your custom preset.");
+            customPresetLayerTextAnchor = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Text Anchor", customPresetsLabelWidth, customPresetLayerTextAnchor, TextAnchor.MiddleLeft, true, "The layer text anchor value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Tree
+            GUILayout.Label("Tree", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetTreeColor = HierarchyDesigner_Shared_GUI.DrawColorField("Tree Color", customPresetsLabelWidth, "#FFFFFF", customPresetTreeColor, true, "The hierarchy tree color value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Lines
+            GUILayout.Label("Lines", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetHierarchyLineColor = HierarchyDesigner_Shared_GUI.DrawColorField("Hierarchy Line Color", customPresetsLabelWidth, "#808080", customPresetHierarchyLineColor, true, "The hierarchy lines color value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
+            #region Lock Label
+            GUILayout.Label("Lock Label", HierarchyDesigner_Shared_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetLockColor = HierarchyDesigner_Shared_GUI.DrawColorField("Color", customPresetsLabelWidth, "#FFFFFF", customPresetLockColor, true, "The lock label color value in your custom preset.");
+            customPresetLockFontSize = HierarchyDesigner_Shared_GUI.DrawIntSlider("Font Size", customPresetsLabelWidth, customPresetLockFontSize, 12, 7, 21, true, "The lock label font size value in your custom preset.");
+            customPresetLockFontStyle = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Font Style", customPresetsLabelWidth, customPresetLockFontStyle, FontStyle.Normal, true, "The lock label font style value in your custom preset.");
+            customPresetLockTextAnchor = HierarchyDesigner_Shared_GUI.DrawEnumPopup("Text Anchor", customPresetsLabelWidth, customPresetLockTextAnchor, TextAnchor.MiddleCenter, true, "The lock label text anchor value in your custom preset.");
+            #endregion
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();        
+        }
+
+        private void CustomPresetList()
+        {
+            if (customPresets.Count < 1) return;
+
+            EditorGUILayout.BeginVertical(HierarchyDesigner_Shared_GUI.SecondaryPanelStyle);
+            presetCreatorListScroll = EditorGUILayout.BeginScrollView(presetCreatorListScroll, GUILayout.MinHeight(80), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+            EditorGUILayout.LabelField("Custom Presets' List", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
+            GUILayout.Space(defaultMarginSpacing);
+
+            if (customPresets.Count > 0)
+            {
+                List<string> presetNames = customPresets.ConvertAll(preset => preset.presetName);
+                float customPresetsLabelWidth = HierarchyDesigner_Shared_GUI.CalculateMaxLabelWidth(presetNames);
+
+                for (int i = 0; i < customPresets.Count; i++)
+                {
+                    HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset customPreset = customPresets[i];
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(customPreset.presetName, HierarchyDesigner_Shared_GUI.LayoutLabelStyle, GUILayout.Width(customPresetsLabelWidth));
+                    if (GUILayout.Button("Delete", GUILayout.Height(secondaryButtonsHeight)))
+                    {
+                        bool delete = EditorUtility.DisplayDialog("Delete Preset", $"Are you sure you want to delete the custom preset '{customPreset.presetName}'?", "Yes", "No");
+                        if (delete)
+                        {
+                            HierarchyDesigner_Configurable_Presets.CustomPresets.RemoveAt(i);
+                            HierarchyDesigner_Configurable_Presets.SaveCustomPresets();
+                            LoadPresets();
+                            Repaint();
+                            EditorGUILayout.EndHorizontal();
+                            break;
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("No custom presets found.", HierarchyDesigner_Shared_GUI.UnassignedLabelLeftStyle);
+            }
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
+        }
+
+        private void CreateCustomPreset()
+        {
+            if (IsPresetNameValid(customPresetName))
+            {
+                HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset newPreset = new(
+                    customPresetName,
+                    customPresetFolderTextColor, customPresetFolderFontSize, customPresetFolderFontStyle, customPresetFolderColor, customPresetFolderImageType,
+                    customPresetSeparatorTextColor, customPresetSeparatorIsGradientBackground, customPresetSeparatorBackgroundColor, customPresetSeparatorBackgroundGradient,
+                    customPresetSeparatorFontStyle, customPresetSeparatorFontSize, customPresetSeparatorTextAlignment, customPresetSeparatorBackgroundImageType,
+                    customPresetTagTextColor, customPresetTagFontStyle, customPresetTagFontSize, customPresetTagTextAnchor,
+                    customPresetLayerTextColor, customPresetLayerFontStyle, customPresetLayerFontSize, customPresetLayerTextAnchor,
+                    customPresetTreeColor, customPresetHierarchyLineColor,
+                    customPresetLockColor, customPresetLockFontSize, customPresetLockFontStyle, customPresetLockTextAnchor
+                );
+
+                HierarchyDesigner_Configurable_Presets.CustomPresets.Add(newPreset);
+                HierarchyDesigner_Configurable_Presets.SaveCustomPresets();
+                LoadPresets();
+
+                EditorUtility.DisplayDialog("Success", $"Preset '{customPresetName}' created successfully.", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Invalid Preset Name", "Preset name is either duplicate or invalid.", "OK");
+            }
+        }
+
+        private void ResetCustomPresetFields()
+        {
+            customPresetName = string.Empty;
+
+            customPresetFolderTextColor = Color.white;
+            customPresetFolderFontSize = 12;
+            customPresetFolderFontStyle = FontStyle.Normal;
+            customPresetFolderColor = Color.white;
+            customPresetFolderImageType = HierarchyDesigner_Configurable_Folders.FolderImageType.Default;
+
+            customPresetSeparatorTextColor = Color.white;
+            customPresetSeparatorIsGradientBackground = false;
+            customPresetSeparatorBackgroundColor = Color.gray;
+            customPresetSeparatorBackgroundGradient = new Gradient();
+            customPresetSeparatorFontSize = 12;
+            customPresetSeparatorFontStyle = FontStyle.Normal;
+            customPresetSeparatorTextAlignment = TextAnchor.MiddleCenter;
+            customPresetSeparatorBackgroundImageType = HierarchyDesigner_Configurable_Separators.SeparatorImageType.Default;
+
+            customPresetTagTextColor = Color.gray;
+            customPresetTagFontStyle = FontStyle.BoldAndItalic;
+            customPresetTagFontSize = 10;
+            customPresetTagTextAnchor = TextAnchor.MiddleRight;
+
+            customPresetLayerTextColor = Color.gray;
+            customPresetLayerFontStyle = FontStyle.Bold;
+            customPresetLayerFontSize = 10;
+            customPresetLayerTextAnchor = TextAnchor.MiddleLeft;
+
+            customPresetTreeColor = Color.white;
+            customPresetHierarchyLineColor = HierarchyDesigner_Shared_Color.HexToColor("00000080");
+
+            customPresetLockColor = Color.white;
+            customPresetLockFontSize = 11;
+            customPresetLockFontStyle = FontStyle.BoldAndItalic;
+            customPresetLockTextAnchor = TextAnchor.MiddleCenter;
+
+            Repaint();
+        }
+
+        private bool IsPresetNameValid(string presetName)
+        {
+            if (string.IsNullOrWhiteSpace(presetName)) return false;
+
+            foreach (HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset preset in HierarchyDesigner_Configurable_Presets.DefaultPresets)
+            {
+                if (preset.presetName == presetName) return false;
+            }
+
+            foreach (HierarchyDesigner_Configurable_Presets.HierarchyDesigner_Preset preset in HierarchyDesigner_Configurable_Presets.CustomPresets)
+            {
+                if (preset.presetName == presetName) return false;
+            }
+
+            return true;
         }
         #endregion
 
@@ -1864,7 +2176,7 @@ namespace Verpha.HierarchyDesigner
             #region Layer
             string[] layers = UnityEditorInternal.InternalEditorUtility.layers;
             int layerMask = GetMaskFromList(tempExcludedLayers, layers);
-            layerMask = HierarchyDesigner_Shared_GUI.DrawMaskField("Excluded Layers", maskFieldLabelWidth, layerMask, 1, layers, true, "Excludes selected layers from being displayed in the GameObject's Layer\nfeature.");
+            layerMask = HierarchyDesigner_Shared_GUI.DrawMaskField("Excluded Layers", maskFieldLabelWidth, layerMask, 1, layers, true, "Excludes selected layers from being displayed in the GameObject's Layer feature.");
             EditorGUI.BeginChangeCheck();
             tempExcludedLayers = GetListFromMask(layerMask, layers);
             if (EditorGUI.EndChangeCheck()) { generalSettingsHasModifiedChanges = true; }
@@ -2360,7 +2672,7 @@ namespace Verpha.HierarchyDesigner
         private void DrawAdvancedMainIconFeatures()
         {
             EditorGUILayout.BeginVertical(HierarchyDesigner_Shared_GUI.SecondaryPanelStyle);
-            EditorGUILayout.LabelField("GameObject's Main Icon", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
+            EditorGUILayout.LabelField("Main Icon", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
 
             EditorGUI.BeginChangeCheck();
             tempEnableDynamicBackgroundForGameObjectMainIcon = HierarchyDesigner_Shared_GUI.DrawToggle("Enable Dynamic Background", advancedSettingsToggleLabelWidth, tempEnableDynamicBackgroundForGameObjectMainIcon, true, true, "The background of the main icon will match the background color of the Hierarchy window (i.e., Editor Light, Dark Mode, GameObject Selected, Focused, Unfocused).");
@@ -2372,7 +2684,7 @@ namespace Verpha.HierarchyDesigner
         private void DrawAdvancedComponentIconsFeatures()
         {
             EditorGUILayout.BeginVertical(HierarchyDesigner_Shared_GUI.SecondaryPanelStyle);
-            EditorGUILayout.LabelField("GameObject's Component Icons", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
+            EditorGUILayout.LabelField("Component Icons", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
 
             EditorGUI.BeginChangeCheck();
             tempEnableCustomizationForGameObjectComponentIcons = HierarchyDesigner_Shared_GUI.DrawToggle("Enable Design Customization For Component Icons", advancedSettingsToggleLabelWidth, tempEnableCustomizationForGameObjectComponentIcons, true, true, "Enables calculation of component icon design settings (e.g., Component Icon Size, Offset, and Spacing).\n\nNote: If you are using the default values, you may turn this off to reduce extra calculations in the component icon logic.");

@@ -96,6 +96,17 @@ namespace Verpha.HierarchyDesigner
         });
         public static GUIStyle UnassignedLabelStyle => _unassignedLabelStyle.Value;
 
+        private static readonly Lazy<GUIStyle> _unassignedLabelLeftStyle = new(() => new()
+        {
+            font = HierarchyDesigner_Shared_Resources.Fonts.Regular,
+            fontSize = 14,
+            fontStyle = FontStyle.Italic,
+            alignment = TextAnchor.MiddleLeft,
+            wordWrap = false,
+            normal = { textColor = HierarchyDesigner_Shared_Color.GetPrimaryFontColorFaded() }
+        });
+        public static GUIStyle UnassignedLabelLeftStyle => _unassignedLabelLeftStyle.Value;
+
         private static readonly Lazy<GUIStyle> _fieldsCategoryLabelStyle = new(() => new()
         {
             font = HierarchyDesigner_Shared_Resources.Fonts.Bold,
@@ -192,7 +203,6 @@ namespace Verpha.HierarchyDesigner
         {
             font = HierarchyDesigner_Shared_Resources.Fonts.Regular,
             fontSize = 13,
-            fontStyle = FontStyle.Italic,
             alignment = TextAnchor.MiddleLeft,
             wordWrap = false,
             normal = { textColor = HierarchyDesigner_Shared_Color.GetPrimaryFontColorFaded() }
@@ -361,14 +371,6 @@ namespace Verpha.HierarchyDesigner
             normal = { background = HierarchyDesigner_Shared_Resources.Promotional.PicEasePromotionalIcon }
         });
         public static GUIStyle PromotionalPicEaseStyle => _promotionalPicEaseStyle.Value;
-
-        private static readonly Lazy<GUIStyle> _promotionalPicEaseLiteStyle = new(() => new()
-        {
-            fixedHeight = 68,
-            fixedWidth = 68,
-            normal = { background = HierarchyDesigner_Shared_Resources.Promotional.PicEaseLitePromotionalIcon }
-        });
-        public static GUIStyle PromotionalPicEaseLiteStyle => _promotionalPicEaseLiteStyle.Value;
 
         private static readonly Lazy<GUIStyle> _tooltipButtonStyle = new(() => new(GUI.skin.button)
         {
@@ -745,23 +747,22 @@ namespace Verpha.HierarchyDesigner
                 Vector2 size = LayoutLabelStyle.CalcSize(content);
                 if (size.x > labelWidth) labelWidth = size.x;
             }
-            return labelWidth + 35f;
+            return labelWidth + 25f;
         }
 
         public static float CalculateMaxLabelWidth(Transform parent)
         {
             float maxWidth = 0;
             GatherChildNamesAndCalculateMaxWidth(parent, ref maxWidth);
-            return maxWidth + 30f;
+            return maxWidth + 10f;
         }
 
         private static void GatherChildNamesAndCalculateMaxWidth(Transform parent, ref float maxWidth)
         {
-            GUIStyle labelStyle = GUI.skin.label;
             foreach (Transform child in parent)
             {
                 GUIContent content = new(child.name);
-                Vector2 size = labelStyle.CalcSize(content);
+                Vector2 size = InspectorFolderActiveLabelStyle.CalcSize(content);
                 if (size.x > maxWidth) maxWidth = size.x;
                 GatherChildNamesAndCalculateMaxWidth(child, ref maxWidth);
             }

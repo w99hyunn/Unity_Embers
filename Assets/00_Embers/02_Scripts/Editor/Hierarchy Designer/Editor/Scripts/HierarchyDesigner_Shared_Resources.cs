@@ -25,7 +25,6 @@ namespace Verpha.HierarchyDesigner
 
             #region Promotional
             internal const string PromotionalPicEase = "Hierarchy Designer Promotional PicEase";
-            internal const string PromotionalPicEaseLite = "Hierarchy Designer Promotional PicEase Lite";
             #endregion
         }
 
@@ -61,9 +60,6 @@ namespace Verpha.HierarchyDesigner
         {
             private static readonly Lazy<Texture2D> _picEasePromotionalIcon = new(() => HierarchyDesigner_Shared_Texture.LoadTexture(ResourceNames.PromotionalPicEase));
             public static Texture2D PicEasePromotionalIcon => _picEasePromotionalIcon.Value;
-
-            private static readonly Lazy<Texture2D> _picEaseLitePromotionalIcon = new(() => HierarchyDesigner_Shared_Texture.LoadTexture(ResourceNames.PromotionalPicEaseLite));
-            public static Texture2D PicEaseLitePromotionalIcon => _picEaseLitePromotionalIcon.Value;
         }
         #endregion
 
@@ -213,6 +209,8 @@ namespace Verpha.HierarchyDesigner
         private static readonly string separatorBackgroundImageNeoIIName = "Hierarchy Designer Separator Background Image Neo II";
         private static readonly string separatorBackgroundImageNextGenIName = "Hierarchy Designer Separator Background Image Next-Gen I";
         private static readonly string separatorBackgroundImageNextGenIIName = "Hierarchy Designer Separator Background Image Next-Gen II";
+        private static readonly string separatorBackgroundImagePostmodernIName = "Hierarchy Designer Separator Background Image Postmodern I";
+        private static readonly string separatorBackgroundImagePostmodernIIName = "Hierarchy Designer Separator Background Image Postmodern II";
         private static readonly string separatorInspectorIconName = "Hierarchy Designer Separator Icon Inspector";
 
         public static readonly Texture2D SeparatorBackgroundImageDefault = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImageDefaultName);
@@ -230,6 +228,8 @@ namespace Verpha.HierarchyDesigner
         public static readonly Texture2D SeparatorBackgroundImageNeoII = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImageNeoIIName);
         public static readonly Texture2D SeparatorBackgroundImageNextGenI = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImageNextGenIName);
         public static readonly Texture2D SeparatorBackgroundImageNextGenII = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImageNextGenIIName);
+        public static readonly Texture2D SeparatorBackgroundImagePostmodernI = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImagePostmodernIName);
+        public static readonly Texture2D SeparatorBackgroundImagePostmodernII = HierarchyDesigner_Shared_Texture.LoadTexture(separatorBackgroundImagePostmodernIIName);
         public static readonly Texture2D SeparatorInspectorIcon = HierarchyDesigner_Shared_Texture.LoadTexture(separatorInspectorIconName);
 
         public static Texture2D SeparatorImageType(HierarchyDesigner_Configurable_Separators.SeparatorImageType separatorImageType)
@@ -250,6 +250,8 @@ namespace Verpha.HierarchyDesigner
                 HierarchyDesigner_Configurable_Separators.SeparatorImageType.NeoII => SeparatorBackgroundImageNeoII,
                 HierarchyDesigner_Configurable_Separators.SeparatorImageType.NextGenI => SeparatorBackgroundImageNextGenI,
                 HierarchyDesigner_Configurable_Separators.SeparatorImageType.NextGenII => SeparatorBackgroundImageNextGenII,
+                HierarchyDesigner_Configurable_Separators.SeparatorImageType.PostmodernI => SeparatorBackgroundImagePostmodernI,
+                HierarchyDesigner_Configurable_Separators.SeparatorImageType.PostmodernII => SeparatorBackgroundImagePostmodernII,
                 _ => SeparatorBackgroundImageDefault,
             };
         }

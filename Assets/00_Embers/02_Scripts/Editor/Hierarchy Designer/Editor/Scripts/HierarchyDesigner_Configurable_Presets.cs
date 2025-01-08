@@ -1,6 +1,8 @@
 #if UNITY_EDITOR
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 
 namespace Verpha.HierarchyDesigner
 {
@@ -100,52 +102,45 @@ namespace Verpha.HierarchyDesigner
             }
         }
 
-        private static List<HierarchyDesigner_Preset> presets;
+        private static List<HierarchyDesigner_Preset> defaultPresets;
+        private static List<HierarchyDesigner_Preset> customPresets;
+
+        [System.Serializable]
+        private class PresetListWrapper
+        {
+            public List<HierarchyDesigner_Preset> presets;
+        }
         #endregion
 
         #region Initialization
         public static void Initialize()
         {
-            LoadPresets();
-        }
-
-        private static void LoadPresets()
-        {
-            presets = new()
-            {
-                AgeOfEnlightenmentPreset(),
-                AzureDreamscapePreset(),
-                BlackAndGoldPreset(),
-                BlackAndWhitePreset(),
-                BloodyMaryPreset(),
-                BlueHarmonyPreset(),
-                DeepOceanPreset(),
-                DunesPreset(),
-                FreshSwampPreset(),
-                FrostyFogPreset(),
-                HoHoHoPreset(),
-                IronCinderPreset(),
-                JadeLakePreset(),
-                LittleRedPreset(),
-                MinimalBlackPreset(),
-                MinimalWhitePreset(),
-                NaturePreset(),
-                NavyBlueLightPreset(),
-                OldSchoolPreset(),
-                PrettyPinkPreset(),
-                PrismaticPreset(),
-                RedDawnPreset(),
-                SnowPreset(),
-                StrawberrySalmonPreset(),
-                SunflowerPreset(),
-                TheTwoRealmsPreset(),
-                WildcatsPreset(),
-                YoungMonarchPreset(),
-            };
+            LoadDefaultPresets();
+            LoadCustomPresets();
         }
         #endregion
 
-        #region Presets
+        #region Accessors
+        public static List<HierarchyDesigner_Preset> DefaultPresets
+        {
+            get
+            {
+                if (defaultPresets == null) LoadDefaultPresets();
+                return defaultPresets;
+            }
+        }
+
+        public static List<HierarchyDesigner_Preset> CustomPresets
+        {
+            get
+            {
+                if (customPresets == null) LoadCustomPresets();
+                return customPresets;
+            }
+        }
+        #endregion
+
+        #region Default Presets
         private static HierarchyDesigner_Preset AgeOfEnlightenmentPreset()
         {
             return new(
@@ -505,8 +500,8 @@ namespace Verpha.HierarchyDesigner
                 new Gradient(),
                 FontStyle.Bold,
                 12,
-                TextAnchor.LowerCenter,
-                HierarchyDesigner_Configurable_Separators.SeparatorImageType.ModernI,
+                TextAnchor.UpperCenter,
+                HierarchyDesigner_Configurable_Separators.SeparatorImageType.ModernII,
                 HierarchyDesigner_Shared_Color.HexToColor("#FFFFFF"),
                 FontStyle.Bold,
                 10,
@@ -1111,19 +1106,75 @@ namespace Verpha.HierarchyDesigner
         }
         #endregion
 
-        #region Methods
-        public static List<HierarchyDesigner_Preset> Presets
+        #region Save and Load
+        public static void SaveCustomPresets()
         {
-            get
+            string filePath = HierarchyDesigner_Shared_File.GetSavedDataFilePath(HierarchyDesigner_Shared_Constants.CustomPresetsTextFileName);
+            PresetListWrapper wrapper = new() { presets = customPresets };
+            string json = JsonUtility.ToJson(wrapper, true);
+            File.WriteAllText(filePath, json);
+            AssetDatabase.Refresh();
+        }
+
+        private static void LoadDefaultPresets()
+        {
+            defaultPresets = new()
             {
-                if (presets == null) LoadPresets();
-                return presets;
+                AgeOfEnlightenmentPreset(),
+                AzureDreamscapePreset(),
+                BlackAndGoldPreset(),
+                BlackAndWhitePreset(),
+                BloodyMaryPreset(),
+                BlueHarmonyPreset(),
+                DeepOceanPreset(),
+                DunesPreset(),
+                FreshSwampPreset(),
+                FrostyFogPreset(),
+                HoHoHoPreset(),
+                IronCinderPreset(),
+                JadeLakePreset(),
+                LittleRedPreset(),
+                MinimalBlackPreset(),
+                MinimalWhitePreset(),
+                NaturePreset(),
+                NavyBlueLightPreset(),
+                OldSchoolPreset(),
+                PrettyPinkPreset(),
+                PrismaticPreset(),
+                RedDawnPreset(),
+                SnowPreset(),
+                StrawberrySalmonPreset(),
+                SunflowerPreset(),
+                TheTwoRealmsPreset(),
+                WildcatsPreset(),
+                YoungMonarchPreset(),
+            };
+        }
+
+        private static void LoadCustomPresets()
+        {
+            string filePath = HierarchyDesigner_Shared_File.GetSavedDataFilePath(HierarchyDesigner_Shared_Constants.CustomPresetsTextFileName);
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                customPresets = JsonUtility.FromJson<PresetListWrapper>(json).presets;
+            }
+            else
+            {
+                SetCustomPresetsSettings();
             }
         }
 
+        private static void SetCustomPresetsSettings()
+        {
+            customPresets = new();
+        }
+        #endregion
+
+        #region Operations
         public static string[] GetPresetNames()
         {
-            List<HierarchyDesigner_Preset> presetList = Presets;
+            List<HierarchyDesigner_Preset> presetList = DefaultPresets;
             string[] presetNames = new string[presetList.Count];
             for (int i = 0; i < presetList.Count; i++)
             {
@@ -1134,17 +1185,20 @@ namespace Verpha.HierarchyDesigner
 
         public static Dictionary<string, List<string>> GetPresetNamesGrouped()
         {
-            List<HierarchyDesigner_Preset> presetList = Presets;
+            List<HierarchyDesigner_Preset> defaultPresetList = DefaultPresets;
+            List<HierarchyDesigner_Preset> customPresetList = CustomPresets;
+
             Dictionary<string, List<string>> groupedPresets = new()
             {
                 { "A-E", new() },
                 { "F-J", new() },
                 { "K-O", new() },
                 { "P-T", new() },
-                { "U-Z", new() }
+                { "U-Z", new() },
+                { "Custom", new() }
             };
 
-            foreach (HierarchyDesigner_Preset preset in presetList)
+            foreach (HierarchyDesigner_Preset preset in defaultPresetList)
             {
                 char firstChar = preset.presetName.ToUpper()[0];
                 if (firstChar >= 'A' && firstChar <= 'E') { groupedPresets["A-E"].Add(preset.presetName); }
@@ -1153,6 +1207,15 @@ namespace Verpha.HierarchyDesigner
                 else if (firstChar >= 'P' && firstChar <= 'T') { groupedPresets["P-T"].Add(preset.presetName); }
                 else if (firstChar >= 'U' && firstChar <= 'Z') { groupedPresets["U-Z"].Add(preset.presetName); }
             }
+
+            List<string> customPresetNames = new();
+            foreach (HierarchyDesigner_Preset customPreset in customPresetList)
+            {
+                customPresetNames.Add(customPreset.presetName);
+            }
+            customPresetNames.Sort();
+            groupedPresets["Custom"].AddRange(customPresetNames);
+
             return groupedPresets;
         }
         #endregion

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4724f3b6006a28f4ca8f7de7bf926d39
+guid: f758af7ec13b7c141bbbdce4a94876f2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,9 +70,9 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 32
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,5 +118,5 @@ AssetOrigin:
   packageName: Hierarchy Designer
   packageVersion: 1.2.0
   assetPath: Assets/00_Embers/02_Scripts/Editor/Hierarchy Designer/Editor/Resources/Hierarchy
-    Designer Separator Icon Inspector.png
+    Designer Separator Background Image Postmodern II.png
   uploadId: 721736

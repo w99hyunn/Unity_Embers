@@ -6,7 +6,7 @@ namespace Verpha.HierarchyDesigner
         #region Properties
         #region Asset Info
         public const string AssetName = "Hierarchy Designer";
-        public const string AssetVersion = "VERSION 1.1.9.1";
+        public const string AssetVersion = "VERSION 1.2.0";
         public const string AssetLocation = "Tools/Hierarchy Designer";
         #endregion
 
@@ -175,12 +175,13 @@ namespace Verpha.HierarchyDesigner
 
         #region File Names
         public const string PatchNotesTextFileName = "Hierarchy Designer Patch Notes.txt";
-        public const string AdvancedSettingsTextFileName = "HierarchyDesigner_SavedData_AdvancedSettings.json";
-        public const string DesignSettingsTextFileName = "HierarchyDesigner_SavedData_DesignSettings.json";
         public const string FolderSettingsTextFileName = "HierarchyDesigner_SavedData_Folders.json";
-        public const string GeneralSettingsTextFileName = "HierarchyDesigner_SavedData_GeneralSettings.json";
         public const string SeparatorSettingsTextFileName = "HierarchyDesigner_SavedData_Separators.json";
+        public const string CustomPresetsTextFileName = "HierarchyDesigner_SavedData_CustomPresets.json";
+        public const string GeneralSettingsTextFileName = "HierarchyDesigner_SavedData_GeneralSettings.json";
+        public const string DesignSettingsTextFileName = "HierarchyDesigner_SavedData_DesignSettings.json";
         public const string ShortcutSettingsTextFileName = "HierarchyDesigner_SavedData_ShortcutsSettings.json";
+        public const string AdvancedSettingsTextFileName = "HierarchyDesigner_SavedData_AdvancedSettings.json";
         #endregion
         #endregion
     }

@@ -162,6 +162,13 @@ namespace Verpha.HierarchyDesigner
             HierarchyDesigner_Window_Main.OpenWindow();
         }
 
+        [Shortcut("Hierarchy Designer/Open Preset Creator Panel")]
+        private static void OpenPresetCreatorPanel()
+        {
+            HierarchyDesigner_Window_Main.SwitchWindow(HierarchyDesigner_Window_Main.CurrentWindow.PresetCreator);
+            HierarchyDesigner_Window_Main.OpenWindow();
+        }
+
         [Shortcut("Hierarchy Designer/Open General Settings Panel")]
         private static void OpenGeneralSettingsPanel()
         {

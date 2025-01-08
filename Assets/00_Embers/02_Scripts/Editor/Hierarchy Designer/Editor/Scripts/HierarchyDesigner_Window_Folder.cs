@@ -11,8 +11,8 @@ namespace Verpha.HierarchyDesigner
         #region Properties
         #region GUI
         private const int defaultGUISpace = 2;
-        private const float labelFieldWidth = 125;
-        private const int minButtonWidth = 55;
+        private const int labelFieldWidth = 100;
+        private const int minButtonWidth = 25;
         private const int maxButtonWidth = 100;
         private const string toggle = "Toggle";
         private const string select = "Select";
@@ -122,7 +122,7 @@ namespace Verpha.HierarchyDesigner
                 }
 
                 EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("(Editor-Only)", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
+                EditorGUILayout.LabelField("Editor-Only", HierarchyDesigner_Shared_GUI.FieldsCategoryLabelStyle);
                 EditorGUILayout.Space(defaultGUISpace);
 
                 EditorGUILayout.Space(defaultGUISpace);

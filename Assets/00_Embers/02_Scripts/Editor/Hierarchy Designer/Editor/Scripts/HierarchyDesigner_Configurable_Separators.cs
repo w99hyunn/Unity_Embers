@@ -44,6 +44,8 @@ namespace Verpha.HierarchyDesigner
             NeoII,
             NextGenI,
             NextGenII,
+            PostmodernI,
+            PostmodernII,
         }
         private static Dictionary<string, HierarchyDesigner_SeparatorData> separators = new();
         #endregion
@@ -185,7 +187,14 @@ namespace Verpha.HierarchyDesigner
                     {
                         "Next-Gen I",
                         "Next-Gen II"
-
+                    }
+                },
+                {
+                    "Postmodern",
+                    new()
+                    {
+                        "Postmodern I",
+                        "Postmodern II",
                     }
                 }
             };
@@ -210,6 +219,8 @@ namespace Verpha.HierarchyDesigner
                 "Neo II" => SeparatorImageType.NeoII,
                 "Next-Gen I" => SeparatorImageType.NextGenI,
                 "Next-Gen II" => SeparatorImageType.NextGenII,
+                "Postmodern I" => SeparatorImageType.PostmodernI,
+                "Postmodern II" => SeparatorImageType.PostmodernII,
                 _ => SeparatorImageType.Default,
             };
         }
@@ -233,6 +244,8 @@ namespace Verpha.HierarchyDesigner
                 SeparatorImageType.NeoII => "Neo II",
                 SeparatorImageType.NextGenI => "Next-Gen I",
                 SeparatorImageType.NextGenII => "Next-Gen II",
+                SeparatorImageType.PostmodernI => "Postmodern I",
+                SeparatorImageType.PostmodernII => "Postmodern II",
                 _ => imageType.ToString(),
             };
         }
