@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections.Generic;
 using Unity.Multiplayer.Playmode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
@@ -19,7 +20,10 @@ namespace STARTING
             try
             {
                 if (CurrentPlayer.ReadOnlyTags()[0] == "Server")
+                {
+                    SceneManager.UnloadSceneAsync("Title");
                     StartServer();
+                }
             }
             catch
             {

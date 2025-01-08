@@ -33,7 +33,6 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			Debug.Log("มกวม");
 			JumpInput(value.isPressed);
 		}
 

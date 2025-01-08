@@ -295,7 +295,7 @@ Camera:
   field of view: 40
   orthographic: 0
   orthographic size: 10
-  m_Depth: -1
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -825,8 +825,8 @@ GameObject:
   - component: {fileID: 2335158289475618646}
   - component: {fileID: 7874477546998626344}
   - component: {fileID: 6169272011256463271}
-  m_Layer: 0
-  m_Name: Canvas - World
+  m_Layer: 8
+  m_Name: Canvas - World(noAA)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 1898339064876043799}
   - component: {fileID: 3454272389113970305}
   - component: {fileID: 7933490761019396018}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1984,7 +1984,7 @@ GameObject:
   - component: {fileID: 1531190177035553297}
   - component: {fileID: 8312868008397272763}
   - component: {fileID: 7774746740097677464}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2413,7 +2413,7 @@ GameObject:
   - component: {fileID: 5048810483537378181}
   - component: {fileID: 6385379236129032325}
   - component: {fileID: 4945640383653049851}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Notification
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2613,7 +2613,7 @@ GameObject:
   - component: {fileID: 5802161351677761783}
   - component: {fileID: 7675173477479142412}
   - component: {fileID: 1261693033395227270}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: playerNameTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2969,7 +2969,7 @@ GameObject:
   - component: {fileID: 5550532670716764636}
   - component: {fileID: 7868797168668297641}
   - component: {fileID: 7368866048486882996}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Filled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3630,7 +3630,7 @@ GameObject:
   - component: {fileID: 3289408306934391695}
   - component: {fileID: 5704494592803050290}
   - component: {fileID: 6632549915377392212}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Mask Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
