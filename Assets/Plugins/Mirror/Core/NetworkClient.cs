@@ -1055,13 +1055,13 @@ namespace Mirror
         {
             if (!ready)
             {
-                Debug.LogError("NetworkClient is already ready. It shouldn't be called twice.");
+                Debug.LogError("NetworkClient is already Unready. It shouldn't be called twice.");
                 return false;
             }
             // need a valid connection to become ready
             if (connection == null)
             {
-                Debug.LogError("Ready() called with invalid connection object: conn=null");
+                Debug.LogError("NotReady() called with invalid connection object: conn=null");
                 return false;
             }
             

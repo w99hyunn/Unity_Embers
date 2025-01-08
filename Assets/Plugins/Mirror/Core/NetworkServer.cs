@@ -308,7 +308,7 @@ namespace Mirror
         internal static void RegisterMessageHandlers()
         {
             RegisterHandler<ReadyMessage>(OnClientReadyMessage);
-            RegisterHandler<NotReadyMessage>(OnClientNotReadyMessage);
+            RegisterHandler<NotReadyMessage>(OnClientNotReadyMessage); //NotReady 기능 추가
             RegisterHandler<CommandMessage>(OnCommandMessage);
             RegisterHandler<NetworkPingMessage>(NetworkTime.OnServerPing, false);
             RegisterHandler<NetworkPongMessage>(NetworkTime.OnServerPong, false);
