@@ -198,7 +198,7 @@ namespace STARTING
                 Level = playerData.Level,
                 Hp = playerData.Hp,
                 Mp = playerData.Mp,
-                Exp = playerData.Exp,
+                Hxp = playerData.Hxp,
                 Gold = playerData.Gold,
                 MaxHp = playerData.MaxHp,
                 MaxMp = playerData.MaxMp,

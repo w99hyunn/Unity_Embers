@@ -86,16 +86,16 @@ namespace STARTING
             }
         }
 
-        [SerializeField] private int exp;
-        public int Exp
+        [SerializeField] private int hxp;
+        public int Hxp
         {
-            get => exp;
+            get => hxp;
             set
             {
-                if (exp != value)
+                if (hxp != value)
                 {
-                    exp = value;
-                    OnDataChanged?.Invoke(nameof(Exp), value);
+                    hxp = value;
+                    OnDataChanged?.Invoke(nameof(Hxp), value);
                 }
             }
         }

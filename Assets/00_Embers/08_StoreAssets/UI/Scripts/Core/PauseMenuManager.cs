@@ -53,6 +53,9 @@ namespace Michsky.UI.Reach
 
             pauseMenuCanvas.SetActive(false);
             hotkey.Enable();
+            
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void Update()

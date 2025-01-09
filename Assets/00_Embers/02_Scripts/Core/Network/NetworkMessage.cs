@@ -87,7 +87,7 @@ namespace STARTING
         public int Level;
         public int Hp;
         public int Mp;
-        public int Exp;
+        public int Hxp;
         public int Gold;
         public int MaxHp;
         public int MaxMp;

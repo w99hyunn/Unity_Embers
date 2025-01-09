@@ -450,7 +450,7 @@ namespace STARTING
             Managers.Game.playerData.Level = msg.Level;
             Managers.Game.playerData.Hp = msg.Hp;
             Managers.Game.playerData.Mp = msg.Mp;
-            Managers.Game.playerData.Exp = msg.Exp;
+            Managers.Game.playerData.Hxp = msg.Hxp;
             Managers.Game.playerData.Gold = msg.Gold;
             Managers.Game.playerData.MaxHp = msg.MaxHp;
             Managers.Game.playerData.MaxMp = msg.MaxMp;

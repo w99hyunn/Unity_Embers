@@ -449,7 +449,7 @@ namespace STARTING
 
             string query = @"
                             SELECT 
-                                `name`, `level`, `hp`, `mp`, `exp`, `gold`, `maxhp`, `maxmp`, 
+                                `name`, `level`, `hp`, `mp`, `hxp`, `gold`, `maxhp`, `maxmp`, 
                                 `attack`, `class`, `sp`, `gender`, 
                                 `current_position_x`, `current_position_y`, `current_position_z`, 
                                 `mapCode`
@@ -468,7 +468,7 @@ namespace STARTING
                         playerData.Level = reader.GetInt32("level");
                         playerData.Hp = reader.GetInt32("hp");
                         playerData.Mp = reader.GetInt32("mp");
-                        playerData.Exp = reader.GetInt32("exp");
+                        playerData.Hxp = reader.GetInt32("hxp");
                         playerData.Gold = reader.GetInt32("gold");
                         playerData.MaxHp = reader.GetInt32("maxhp");
                         playerData.MaxMp = reader.GetInt32("maxmp");
