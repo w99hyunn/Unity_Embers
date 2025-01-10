@@ -443,9 +443,6 @@ namespace STARTING
 
         private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
         {
-            //캐릭터의 정보를 처음 받아올 때는 서버로 다시 전송할 필요 없음
-            Managers.Game.suppressDataChangeEvents = false;
-
             Managers.Game.playerData.Username = msg.Username;
             Managers.Game.playerData.Level = msg.Level;
             Managers.Game.playerData.Hp = msg.Hp;
@@ -460,10 +457,7 @@ namespace STARTING
             Managers.Game.playerData.Gender = msg.Gender;
             Managers.Game.playerData.Position = msg.Position;
             Managers.Game.playerData.MapCode = msg.MapCode;
-
-            //캐릭터 정보 로드가 모두 완료된 이후에는 값의 변화가 생기면 다시 서버로 전송필요
-            Managers.Game.suppressDataChangeEvents = true;
-
+            
             DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작

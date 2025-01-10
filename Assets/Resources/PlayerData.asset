@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f592e5bf96ab2047b4dc7924ff8d6d1, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  hxpTable: {fileID: 11400000, guid: 38ec5a302ca560a499965799409e56fd, type: 2}
+  suppressEvents: 0
   AccountID: admin
   Email: admin@naver.com
   CreatedDate: 2024-12-28 20:28:10
   Username: "\uD5EC\uB85C\uBA54\uC774\uD50C"
-  level: 1
-  hp: 1202
-  maxHp: 6020
-  mp: 609
-  maxMp: 4503
-  hxp: 100
+  level: 5
+  maxHp: 7270
+  hp: 1000
+  maxMp: 5678
+  mp: 3000
+  hxp: 200
   gold: 0
-  attack: 10
+  attack: 95
   classType: 1
   sp: 0
   gender: 0
-  position: {x: 159.72679, y: 17.242739, z: 147.30763}
+  position: {x: 69.4281, y: 16.8866, z: 131.891}
   mapCode: 1

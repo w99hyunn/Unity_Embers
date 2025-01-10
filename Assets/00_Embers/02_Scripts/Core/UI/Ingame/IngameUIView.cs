@@ -1,5 +1,6 @@
 using System;
 using Michsky.UI.Reach;
+using TMPro;
 using UnityEngine;
 
 namespace STARTING
@@ -8,19 +9,18 @@ namespace STARTING
     {
         [Header("Fade In")]
         public ImageFading initPanel;
-        
-        [Header("Player HUD")]
-        [Header("Stats")]
-        public ProgressBar playerHP;
-        public ProgressBar playerMP;
+
+        [Header("Player HUD")] [Header("Stats")]
+        public TMP_Text playerLevel;
+        public ProgressBar playerHp;
+        public ProgressBar playerMp;
         public ProgressBar playerHxp;
 
         private void Awake()
         {
             if (initPanel != null) { initPanel.gameObject.SetActive(true); }
         }
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        
         void Start()
         {
             _ = StartInitialize();
@@ -39,17 +39,27 @@ namespace STARTING
         
         private void HandleDataChanged(string fieldName, object newValue)
         {
-            if (fieldName == "Hp")
+            switch (fieldName)
             {
-                playerHP.SetValue(Convert.ToInt32(newValue));
-            }
-            else if (fieldName == "Mp")
-            {
-                playerMP.SetValue(Convert.ToInt32(newValue));
-            }
-            else if (fieldName == "Exp")
-            {
-                playerHxp.SetValue(Convert.ToInt32(newValue));
+                case "Level":
+                    playerLevel.text = Convert.ToString(newValue);
+                    MaxHxpSet();
+                    break;
+                case "Hxp":
+                    playerHxp.SetValue(Convert.ToInt32(newValue));
+                    break;
+                case "MaxHp":
+                    playerHp.maxValue = Convert.ToInt32(newValue);
+                    break;
+                case "MaxMp":
+                    playerMp.maxValue = Convert.ToInt32(newValue);
+                    break;
+                case "Hp":
+                    playerHp.SetValue(Convert.ToInt32(newValue));
+                    break;
+                case "Mp":
+                    playerMp.SetValue(Convert.ToInt32(newValue));
+                    break;
             }
         }
         
@@ -61,19 +71,22 @@ namespace STARTING
         
         private void StartHUDInit()
         {
-            //HP, MP Init
-            playerHP.maxValue = Managers.Game.playerData.MaxHp;
-            playerMP.maxValue = Managers.Game.playerData.MaxMp;
-            playerHxp.maxValue = Managers.Game.playerData.Hxp;
-            playerHP.SetValue(Managers.Game.playerData.Hp);
-            playerMP.SetValue(Managers.Game.playerData.Mp);
+            //Level Init
+            playerLevel.text = Managers.Game.playerData.Level.ToString();
             playerHxp.SetValue(Managers.Game.playerData.Hxp);
+            MaxHxpSet();
+            
+            //HP, MP Init
+            playerHp.maxValue = Managers.Game.playerData.MaxHp;
+            playerMp.maxValue = Managers.Game.playerData.MaxMp;
+            playerHp.SetValue(Managers.Game.playerData.Hp);
+            playerMp.SetValue(Managers.Game.playerData.Mp);
         }
-        
-        // Update is called once per frame
-        void Update()
-        {
 
+        private void MaxHxpSet()
+        {
+            playerHxp.maxValue =
+                Managers.Game.playerData.hxpTable.GetExperienceForNextLevel((Managers.Game.playerData.Level));
         }
     }
 }

@@ -1245,13 +1245,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 4f0975df5fafc2c46a85d65111fc42c6, type: 2}
-  suppressDataChangeEvents: 1
-  testCharacterName: test1
-  testHp: 600
-  testMaxHp: 700
-  testMp: 500
-  testMaxMp: 600
-  testPosition: {x: 50, y: 30, z: 10}
 --- !u!114 &390961617
 MonoBehaviour:
   m_ObjectHideFlags: 0

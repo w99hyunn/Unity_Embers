@@ -464,14 +464,17 @@ namespace STARTING
                 {
                     if (reader.Read())
                     {
+                        //데이터 set이벤트 중지
+                        playerData.suppressEvents = true;
+                        
                         playerData.Username = reader.GetString("name");
                         playerData.Level = reader.GetInt32("level");
+                        playerData.MaxHp = reader.GetInt32("maxhp");
                         playerData.Hp = reader.GetInt32("hp");
+                        playerData.MaxMp = reader.GetInt32("maxmp");
                         playerData.Mp = reader.GetInt32("mp");
                         playerData.Hxp = reader.GetInt32("hxp");
                         playerData.Gold = reader.GetInt32("gold");
-                        playerData.MaxHp = reader.GetInt32("maxhp");
-                        playerData.MaxMp = reader.GetInt32("maxmp");
                         playerData.Attack = reader.GetInt32("attack");
                         playerData.Class = reader.GetString("class");
                         playerData.Sp = reader.GetInt32("sp");
@@ -481,8 +484,10 @@ namespace STARTING
                         float posY = reader.GetFloat("current_position_y");
                         float posZ = reader.GetFloat("current_position_z");
                         playerData.Position = new Vector3(posX, posY, posZ);
-
                         playerData.MapCode = reader.GetString("mapCode");
+                        
+                        //데이터 set이벤트 재개
+                        playerData.suppressEvents = false;
                     }
                 }
             }
