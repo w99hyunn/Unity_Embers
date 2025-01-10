@@ -251,7 +251,7 @@ namespace STARTING
 
         }
 
-        public void EditProfileUpdate(string password, string email)
+        private void EditProfileUpdate(string password, string email)
         {
             EditProfileRequest(password, email);
         }
@@ -334,8 +334,7 @@ namespace STARTING
         /// <summary>
         /// 캐릭터 리스트를 받아와서 구성하는 부분
         /// </summary>
-        /// <param name="msg"></param>
-        public void LoadCharacterInfo()
+        private void LoadCharacterInfo()
         {
             LoadCharacterInfoRequest();
         }
@@ -425,7 +424,7 @@ namespace STARTING
         }
 
         //캐릭터 선택시 해당 캐릭터에 대한 정보를 받아옴
-        public void SelectCharacter(string characterName)
+        private void SelectCharacter(string characterName)
         {
             CharacterDataRequest(characterName);
         }
@@ -471,7 +470,7 @@ namespace STARTING
         }
 
         //캐릭터 삭제
-        public void DeleteCharacter(string characterName)
+        private void DeleteCharacter(string characterName)
         {
             DeleteCharacterRequest(characterName);
         }

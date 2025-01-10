@@ -63,8 +63,8 @@ namespace STARTING
             base.OnStartServer();
 
             //DB Connect
-            bool dbserver = Managers.DB.ConnectDB();
-            DebugUtils.Log($"DB Connect? : {dbserver}");
+            bool dbServer = Managers.DB.ConnectDB();
+            DebugUtils.Log($"DB Connect? : {dbServer}");
 
             //Network Message Register
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
@@ -188,7 +188,7 @@ namespace STARTING
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
-        public void OnCharacterDataRequest(NetworkConnectionToClient conn, CharacterDataRequestMessage msg)
+        private void OnCharacterDataRequest(NetworkConnectionToClient conn, CharacterDataRequestMessage msg)
         {
             PlayerDataSO playerData = Managers.DB.FetchPlayerDataFromDB(msg.Username);
 
@@ -218,7 +218,7 @@ namespace STARTING
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
-        public void OnDeleteCharacterRequest(NetworkConnectionToClient conn, DeleteCharacterRequestMessage msg)
+        private void OnDeleteCharacterRequest(NetworkConnectionToClient conn, DeleteCharacterRequestMessage msg)
         {
             bool result = Managers.DB.DeleteCharacter(msg.Username);
 

@@ -5,7 +5,6 @@ namespace STARTING
 {
     public class IngameUIController : MonoBehaviour
     {
-
         public GameObject localPlayer;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -14,7 +14,7 @@ namespace STARTING
         
         private void Awake()
         {
-            Debug.Log("플레이어 생성됐?" + gameObject.name);
+            DebugUtils.Log("플레이어 생성됐?" + gameObject.name);
             TryGetComponent<CharacterController>(out _characterController);
         }
         
@@ -24,13 +24,13 @@ namespace STARTING
             InitializePlayerPosition();
         }
 
-        private async void InitializePlayerPosition()
+        private void InitializePlayerPosition()
         {
             InitNickName();
             
             _characterController.enabled = false;
             transform.position = Managers.Game.playerData.Position;
-            Debug.Log($"Position set to {transform.position}");
+            DebugUtils.Log($"Position set to {transform.position}");
             
             _characterController.enabled = true;
             

@@ -9,15 +9,37 @@ namespace STARTING
         public event Action<string, object> OnDataChanged;
 
         public HxpTableSO hxpTable;
-        public bool suppressEvents = false; //플래그가 true면 네트워크 전송을 멈춤
+        public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
         
         // Account-related data
-        public string AccountID;
-        public string Email;
-        public string CreatedDate;
+        [SerializeField] private string accountID;
+        public string AccountID
+        {
+            get => accountID;
+            set => accountID = value;
+        }
+        
+        [SerializeField] private string email;
+        public string Email
+        {
+            get => email;
+            set => email = value;
+        }
+        
+        [SerializeField] private string createdDate;
+        public string CreatedDate
+        {
+            get => createdDate;
+            set => createdDate = value;
+        }
 
         // Character-related data
-        public string Username;
+        [SerializeField] private string username;
+        public string Username
+        {
+            get => username;
+            set => username = value;
+        }
         
         [SerializeField] private int level;
         public int Level

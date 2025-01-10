@@ -14,10 +14,10 @@ namespace STARTING
         private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
         private bool _loadAdditively = false;
         
-        private int selectedIndex = 0;
-        private string[] options = { "HP +500", "MP +500", "HXP +450", "HP -500", "MP -500" };
+        private int _selectedIndex = 0;
+        private readonly string[] _options = { "HP +500", "MP +500", "HXP +450", "HP -500", "MP -500" };
 
-        private Vector2 scrollPosition;
+        private Vector2 _scrollPosition;
 
         [MenuItem("STARTING/Debug Panel")]
         public static void ShowWindow()
@@ -45,15 +45,15 @@ namespace STARTING
 
         private void OnGUI()
         {
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             GUILayout.Label("캐릭터 디버그 :", EditorStyles.boldLabel);
-            selectedIndex = EditorGUILayout.Popup("Option:", selectedIndex, options);
+            _selectedIndex = EditorGUILayout.Popup("Option:", _selectedIndex, _options);
 
             // Button to execute selected option
             if (GUILayout.Button("Execute"))
             {
-                ExecuteOption(selectedIndex);
+                ExecuteOption(_selectedIndex);
             }
 
             GUILayout.Space(10);
