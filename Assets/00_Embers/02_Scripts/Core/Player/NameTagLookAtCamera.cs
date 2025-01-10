@@ -9,7 +9,7 @@ namespace STARTING
 
         private void Start()
         {
-            FindLocalPlayer();
+            _ = FindLocalPlayer();
         }
 
         private async Awaitable FindLocalPlayer()

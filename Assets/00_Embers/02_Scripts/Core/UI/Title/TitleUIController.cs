@@ -59,7 +59,7 @@ namespace STARTING
                 if (NetworkClient.isConnected)
                 {
                     _view.ConnectingSuccess();
-                    CheckServerConnectionLoop();
+                    _ = CheckServerConnectionLoop();
                     connected = true;
                 }
                 else

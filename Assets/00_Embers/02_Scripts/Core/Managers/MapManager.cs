@@ -95,10 +95,10 @@ namespace STARTING
             string mapSceneName = $"Maps_{mapCode}";
 
             // 맵 씬 Additive로 로드
-            LoadMapSceneCoroutine(mapSceneName);
+            _ = LoadMapScene(mapSceneName);
         }
         
-        private async Awaitable LoadMapSceneCoroutine(string mapSceneName)
+        private async Awaitable LoadMapScene(string mapSceneName)
         {
             // 맵 씬 Additive로 로드
             AsyncOperation mapLoadOperation = SceneManager.LoadSceneAsync(mapSceneName, LoadSceneMode.Additive);
@@ -122,11 +122,11 @@ namespace STARTING
             // 추가 작업
             Debug.Log($"{mapSceneName} 로드 완료");
             // 네트워크 플레이어 스폰
-            await SpawnNetworkPlayer();
+            SpawnNetworkPlayer();
             Managers.UI.CloseAlert();
         }
 
-        private async Awaitable SpawnNetworkPlayer()
+        private void SpawnNetworkPlayer()
         {
             NetworkClient.Ready();
             NetworkClient.AddPlayer();

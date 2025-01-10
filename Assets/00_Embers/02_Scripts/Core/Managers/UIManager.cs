@@ -32,7 +32,7 @@ namespace STARTING
 
         public void FadeOut()
         {
-            StartInitialize();
+            _ = StartInitialize();
         }
         
         private async Awaitable StartInitialize()

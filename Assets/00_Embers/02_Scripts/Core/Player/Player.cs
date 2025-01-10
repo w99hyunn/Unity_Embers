@@ -35,7 +35,7 @@ namespace STARTING
             _characterController.enabled = true;
             
             // 위치 지속적으로 저장
-            SavePosition();
+            _ = SavePosition();
         }
 
         private async Awaitable SavePosition()

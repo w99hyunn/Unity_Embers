@@ -17,8 +17,8 @@ namespace STARTING
             TryGetComponent<SplashUIView>(out _view);
             _model = new SplashUIModel();
 
-            LoadSceneAsync();
-            SwitchCanvasAndLoadScene();
+            _ = LoadSceneAsync();
+            _ = SwitchCanvasAndLoadScene();
         }
 
         private async Awaitable LoadSceneAsync()
