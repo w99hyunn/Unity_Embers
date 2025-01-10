@@ -1,11 +1,11 @@
-using Mirror;
+ï»¿using Mirror;
 using UnityEngine;
 
 namespace STARTING
 {
     public class GameManager : MonoBehaviour
     {
-        //Managers.Game.playerDataÀÇ Á¤º¸°¡ ¾÷µ¥ÀÌÆ®µÇ¸é ÀÚµ¿À¸·Î ³×Æ®¿öÅ© ¸Ş½ÃÁö¸¦ º¸³» DB ¾÷µ¥ÀÌÆ®
+        //Managers.Game.playerDataì˜ ì •ë³´ê°€ ì—…ë°ì´íŠ¸ë˜ë©´ ìë™ìœ¼ë¡œ ë„¤íŠ¸ì›Œí¬ ë©”ì‹œì§€ë¥¼ ë³´ë‚´ DB ì—…ë°ì´íŠ¸
         public PlayerDataSO playerData;
 
         #region #PlayerDataUpdate Logic

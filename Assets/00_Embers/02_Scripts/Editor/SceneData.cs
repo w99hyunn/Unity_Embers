@@ -1,4 +1,4 @@
-using UnityEditor;
+ï»¿using UnityEditor;
 using UnityEngine;
 
 namespace STARTING
@@ -9,10 +9,10 @@ namespace STARTING
         [System.Serializable]
         public class SceneInfo
         {
-            [Header("½ÇÁ¦ ¾À ÀÌ¸§")]
+            [Header("ì‹¤ì œ ì”¬ ì´ë¦„")]
             public string sceneName;
 
-            [Header("º¯¼ö ÀÌ¸§")]
+            [Header("ë³€ìˆ˜ ì´ë¦„")]
             public string sceneIdentifier;
         }
 
@@ -30,7 +30,7 @@ namespace STARTING
             return null;
         }
 
-//¿¡µğÅÍ¿¡¼­ ºôµå ¼¼ÆÃ¿¡ ÀÖ´Â ¾ÀÀ» ¸ğµÎ ºÒ·¯¿Í¼­ SceneData asset¿¡ Ãß°¡ÇÏ´Â ÄÚµå
+//ì—ë””í„°ì—ì„œ ë¹Œë“œ ì„¸íŒ…ì— ìˆëŠ” ì”¬ì„ ëª¨ë‘ ë¶ˆëŸ¬ì™€ì„œ SceneData assetì— ì¶”ê°€í•˜ëŠ” ì½”ë“œ
 #if UNITY_EDITOR
         public void LoadScenesFromBuildSettings()
         {

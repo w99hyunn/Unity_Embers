@@ -1,4 +1,4 @@
-using Mirror;
+ï»¿using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,7 +34,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Á¢¼Ó½Ã ¼­¹ö ¿¬°á
+        /// ì ‘ì†ì‹œ ì„œë²„ ì—°ê²°
         /// </summary>
         /// <returns></returns>
         private async Awaitable CheckConnectionAsync()
@@ -49,13 +49,13 @@ namespace STARTING
 
                 _view.ConnectingMessageUpdate($"Try {attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
 
-                //¿¬°áµÆ´ÂÁö È®ÀÎ
+                //ì—°ê²°ëëŠ”ì§€ í™•ì¸
                 while (NetworkClient.active && !NetworkClient.isConnected)
                 {
                     await Awaitable.NextFrameAsync();
                 }
 
-                // ¿¬°á ¼º°ø
+                // ì—°ê²° ì„±ê³µ
                 if (NetworkClient.isConnected)
                 {
                     _view.ConnectingSuccess();
@@ -68,7 +68,7 @@ namespace STARTING
                 }
             }
 
-            // 10¹ø Àç½Ãµµ ÈÄ¿¡µµ ¿¬°áµÇÁö ¾ÊÀ¸¸é ½ÇÆĞ
+            // 10ë²ˆ ì¬ì‹œë„ í›„ì—ë„ ì—°ê²°ë˜ì§€ ì•Šìœ¼ë©´ ì‹¤íŒ¨
             if (!connected)
             {
                 _view.ConnectingFail();
@@ -80,24 +80,24 @@ namespace STARTING
 
         private async Awaitable CheckServerConnectionLoop()
         {
-            DebugUtils.Log("¼­¹ö ¿¬°á»óÅÂ È®ÀÎ ½ÃÀÛ");
+            DebugUtils.Log("ì„œë²„ ì—°ê²°ìƒíƒœ í™•ì¸ ì‹œì‘");
             _isCheckingConnection = true;
 
             while (_isCheckingConnection)
             {
-                await Awaitable.WaitForSecondsAsync(15f); // 15ÃÊ ´ë±â
+                await Awaitable.WaitForSecondsAsync(15f); // 15ì´ˆ ëŒ€ê¸°
 
-                // ¼­¹ö ¿¬°á »óÅÂ È®ÀÎ
+                // ì„œë²„ ì—°ê²° ìƒíƒœ í™•ì¸
                 if (!NetworkClient.isConnected)
                 {
                     HandleServerDisconnection();
-                    break; // ¿¬°áÀÌ ²÷±â¸é ·çÇÁ Á¾·á
+                    break; // ì—°ê²°ì´ ëŠê¸°ë©´ ë£¨í”„ ì¢…ë£Œ
                 }
             }
         }
 
         /// <summary>
-        /// ¼­¹ö ¿¬°á ²÷±è Ã³¸®
+        /// ì„œë²„ ì—°ê²° ëŠê¹€ ì²˜ë¦¬
         /// </summary>
         private void HandleServerDisconnection()
         {
@@ -107,25 +107,25 @@ namespace STARTING
         }
 
         /// <summary>
-        /// È¸¿ø°¡ÀÔ
+        /// íšŒì›ê°€ì…
         /// </summary>
         public void SignUp()
         {
-            //¾ÆÀÌµğ ±æÀÌ È®ÀÎ
+            //ì•„ì´ë”” ê¸¸ì´ í™•ì¸
             if (_view.SignUpID.Length < 5)
             {
                 Managers.UI.OpenAlert("FAIL", "ID must be at least 5 characters long.");
                 return;
             }
             
-            //ºñ¹Ğ¹øÈ£ ±æÀÌ È®ÀÎ
+            //ë¹„ë°€ë²ˆí˜¸ ê¸¸ì´ í™•ì¸
             if (_view.SignUpPw.Length < 5)
             {
                 Managers.UI.OpenAlert("FAIL", "Password must be at least 5 characters long.");
                 return;
             }
             
-            //ºñ¹Ğ¹øÈ£ Á¦´ë·Î ÀÔ·ÂÇß´ÂÁö Ã¼Å©
+            //ë¹„ë°€ë²ˆí˜¸ ì œëŒ€ë¡œ ì…ë ¥í–ˆëŠ”ì§€ ì²´í¬
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
                 Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
@@ -176,7 +176,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// ·Î±×ÀÎ
+        /// ë¡œê·¸ì¸
         /// </summary>
         public void Login()
         {
@@ -242,7 +242,7 @@ namespace STARTING
         {
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
-                //¹¹¶óµµ °ªÀÌ ÀÔ·ÂµÆ´Âµ¥ µÎ°³ ÇÊµå°¡ ´Ù¸£¸é ¾È³»
+                //ë­ë¼ë„ ê°’ì´ ì…ë ¥ëëŠ”ë° ë‘ê°œ í•„ë“œê°€ ë‹¤ë¥´ë©´ ì•ˆë‚´
                 Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
@@ -332,7 +332,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Ä³¸¯ÅÍ ¸®½ºÆ®¸¦ ¹Ş¾Æ¿Í¼­ ±¸¼ºÇÏ´Â ºÎºĞ
+        /// ìºë¦­í„° ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ì•„ì™€ì„œ êµ¬ì„±í•˜ëŠ” ë¶€ë¶„
         /// </summary>
         private void LoadCharacterInfo()
         {
@@ -363,7 +363,7 @@ namespace STARTING
                 return;
             }
 
-            //µ¥ÀÌÅÍ °¡°ø
+            //ë°ì´í„° ê°€ê³µ
             foreach (var character in msg.CharacterData)
             {
                 Debug.Log($"Name: {character.title}, Level: {character.description}");
@@ -378,7 +378,7 @@ namespace STARTING
                         break;
                 }
 
-                //UnityEvent ÃÊ±âÈ­
+                //UnityEvent ì´ˆê¸°í™”
                 if (character.onCreate == null)
                     character.onCreate = new UnityEvent();
 
@@ -387,7 +387,7 @@ namespace STARTING
                     character.onPlay = new UnityEvent();
                     character.onPlay.AddListener(() =>
                     {
-                        //ÇØ´ç Ä³¸¯ÅÍ¿¡ ´ëÇÑ Á¤º¸ ¹Ş¾Æ¿À´Â ÀÌº¥Æ®
+                        //í•´ë‹¹ ìºë¦­í„°ì— ëŒ€í•œ ì •ë³´ ë°›ì•„ì˜¤ëŠ” ì´ë²¤íŠ¸
                         SelectCharacter(character.title);
                     });
 
@@ -398,8 +398,8 @@ namespace STARTING
                     character.onDelete = new UnityEvent();
                     character.onDelete.AddListener(() =>
                     {
-                        //Ä³¸¯ÅÍ¸¦ Á¤¸» »èÁ¦ÇÒ°ÇÁö ¹¯´Â ÆË¾÷À» ¶ç¿ì°í ÇØ´ç ÆË¾÷ÀÇ Confirm¿¡ »èÁ¦ ¸®½º³Ê
-                        //»èÁ¦°¡ ¿Ï·áµÈ µÚ Ã¢À» ´İ°í, ¸®½º³Ê¸¦ Á¦°ÅÇÔ
+                        //ìºë¦­í„°ë¥¼ ì •ë§ ì‚­ì œí• ê±´ì§€ ë¬»ëŠ” íŒì—…ì„ ë„ìš°ê³  í•´ë‹¹ íŒì—…ì˜ Confirmì— ì‚­ì œ ë¦¬ìŠ¤ë„ˆ
+                        //ì‚­ì œê°€ ì™„ë£Œëœ ë’¤ ì°½ì„ ë‹«ê³ , ë¦¬ìŠ¤ë„ˆë¥¼ ì œê±°í•¨
                         _view.DeleteCharacterPopup.onConfirm.AddListener(() =>
                         {
                             DeleteCharacter(character.title);
@@ -412,7 +412,7 @@ namespace STARTING
 
             }
 
-            // Ã¹ ¹øÂ° ¿ä¼Ò(Ä³¸¯ÅÍ »ı¼ºÃ¢)¸¦ Á¦¿ÜÇÏ°í ¸®½ºÆ® ÃÊ±âÈ­ ÈÄ ¹Ş¾Æ¿Â Á¤º¸ Ãß°¡ÇÔ.
+            // ì²« ë²ˆì§¸ ìš”ì†Œ(ìºë¦­í„° ìƒì„±ì°½)ë¥¼ ì œì™¸í•˜ê³  ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™” í›„ ë°›ì•„ì˜¨ ì •ë³´ ì¶”ê°€í•¨.
             if (_view.ChapterManager.chapters.Count > 1)
             {
                 _view.ChapterManager.chapters.Clear();
@@ -423,7 +423,7 @@ namespace STARTING
             _view.ChapterManager.InitializeChapters();
         }
 
-        //Ä³¸¯ÅÍ ¼±ÅÃ½Ã ÇØ´ç Ä³¸¯ÅÍ¿¡ ´ëÇÑ Á¤º¸¸¦ ¹Ş¾Æ¿È
+        //ìºë¦­í„° ì„ íƒì‹œ í•´ë‹¹ ìºë¦­í„°ì— ëŒ€í•œ ì •ë³´ë¥¼ ë°›ì•„ì˜´
         private void SelectCharacter(string characterName)
         {
             CharacterDataRequest(characterName);
@@ -459,7 +459,7 @@ namespace STARTING
             
             DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
             
-            //Ä³¸¯ÅÍ Á¤º¸¸¦ ¸ğµÎ ¹Ş¾Æ¿ÔÀ¸¸é ÀÎ°ÔÀÓÀ¸·Î ¾À ÀüÈ¯À» ½ÃÀÛ
+            //ìºë¦­í„° ì •ë³´ë¥¼ ëª¨ë‘ ë°›ì•„ì™”ìœ¼ë©´ ì¸ê²Œì„ìœ¼ë¡œ ì”¬ ì „í™˜ì„ ì‹œì‘
             InitInGame();
         }
 
@@ -469,7 +469,7 @@ namespace STARTING
             Managers.Map.LoadInGame();
         }
 
-        //Ä³¸¯ÅÍ »èÁ¦
+        //ìºë¦­í„° ì‚­ì œ
         private void DeleteCharacter(string characterName)
         {
             DeleteCharacterRequest(characterName);

@@ -1,4 +1,4 @@
-using Michsky.UI.Reach;
+ï»¿using Michsky.UI.Reach;
 using UnityEngine;
 
 namespace STARTING
@@ -12,10 +12,10 @@ namespace STARTING
         public ImageFading initPanel;
         
         /// <summary>
-        /// ÆË¾÷
+        /// íŒì—…
         /// </summary>
-        /// <param name="title">Á¦¸ñ</param>
-        /// <param name="message">³»¿ë</param>
+        /// <param name="title">ì œëª©</param>
+        /// <param name="message">ë‚´ìš©</param>
         /// <param name="buttonState">0 = Confirm, 1 = Exit Only(Cancel), 2 = No Buttons</param>
         public void OpenAlert(string title, string message, int buttonState = 0)
         {

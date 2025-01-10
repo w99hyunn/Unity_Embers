@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -27,7 +27,7 @@ namespace STARTING
 
         //void OnPrevInputField(InputValue input)
         //{
-        //    Debug.Log("¿Ã¿¸");
+        //    Debug.Log("Ïù¥Ï†Ñ");
         //    Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
         //    if (next != null)
         //    {

@@ -1,4 +1,4 @@
-namespace STARTING
+﻿namespace STARTING
 {
     public enum Class
     {

@@ -1,4 +1,4 @@
-using System.IO;
+ï»¿using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -28,7 +28,7 @@ namespace STARTING
         [DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            // Ã¢ÀÌ ¿­·Á ÀÖ´Â °æ¿ì °­Á¦·Î ´Ù½Ã ±×¸®±â
+            // ì°½ì´ ì—´ë ¤ ìˆëŠ” ê²½ìš° ê°•ì œë¡œ ë‹¤ì‹œ ê·¸ë¦¬ê¸°
             var window = GetWindow<DebugPanel>();
             if (window != null)
             {
@@ -47,7 +47,7 @@ namespace STARTING
         {
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
-            GUILayout.Label("Ä³¸¯ÅÍ µğ¹ö±× :", EditorStyles.boldLabel);
+            GUILayout.Label("ìºë¦­í„° ë””ë²„ê·¸ :", EditorStyles.boldLabel);
             _selectedIndex = EditorGUILayout.Popup("Option:", _selectedIndex, _options);
 
             // Button to execute selected option
@@ -57,7 +57,7 @@ namespace STARTING
             }
 
             GUILayout.Space(10);
-            GUILayout.Label("¾À ÀüÈ¯ :", EditorStyles.boldLabel);
+            GUILayout.Label("ì”¬ ì „í™˜ :", EditorStyles.boldLabel);
             _sceneData = (SceneData)EditorGUILayout.ObjectField("Scene Data", _sceneData, typeof(SceneData), false);
             
             if (_sceneData == null)
@@ -67,8 +67,8 @@ namespace STARTING
                 return;
             }
             
-            // Additive ·Îµå ¿É¼Ç
-            _loadAdditively = EditorGUILayout.Toggle("Additive·Î ºÒ·¯¿À±â", _loadAdditively);
+            // Additive ë¡œë“œ ì˜µì…˜
+            _loadAdditively = EditorGUILayout.Toggle("Additiveë¡œ ë¶ˆëŸ¬ì˜¤ê¸°", _loadAdditively);
             GUILayout.Space(10);
             foreach (var sceneInfo in _sceneData.scenes)
             {
@@ -114,9 +114,9 @@ namespace STARTING
             }
 
             GUILayout.Space(10);
-            GUILayout.Label("\nºôµå ¼¼ÆÃ¿¡ ¼¼ÆÃµÈ ¾ÀÀ» ¸ğµÎ ºÒ·¯¿É´Ï´Ù.", EditorStyles.boldLabel);
+            GUILayout.Label("\në¹Œë“œ ì„¸íŒ…ì— ì„¸íŒ…ëœ ì”¬ì„ ëª¨ë‘ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.", EditorStyles.boldLabel);
 
-            if (GUILayout.Button("ºôµå ¼¼ÆÃÀÇ ¾À ºÒ·¯¿À±â"))
+            if (GUILayout.Button("ë¹Œë“œ ì„¸íŒ…ì˜ ì”¬ ë¶ˆëŸ¬ì˜¤ê¸°"))
             {
                 if (_sceneData != null)
                 {

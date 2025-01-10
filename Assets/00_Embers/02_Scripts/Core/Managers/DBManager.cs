@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+ï»¿using MySql.Data.MySqlClient;
 
 using System;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace STARTING
 
         private MySqlConnection _connection;
 
-        //[Header("Å¬¶óÀÌ¾ğÆ®°¡ °¢ÀÚ °¡Áö°í ÀÖ´Â ÀÚ½ÅÀÇ Á¤º¸")]
+        //[Header("í´ë¼ì´ì–¸íŠ¸ê°€ ê°ì ê°€ì§€ê³  ìˆëŠ” ìì‹ ì˜ ì •ë³´")]
         ////public GameData clientGameData;
         //public string userName;
         //public int userId;
@@ -109,15 +109,15 @@ namespace STARTING
         }
 
         /// <summary>
-        /// È¸¿ø°¡ÀÔ
+        /// íšŒì›ê°€ì…
         /// </summary>
-        /// <param name="username">¾ÆÀÌµğ</param>
-        /// <param name="password">ºñ¹Ğ¹øÈ£</param>
-        /// <param name="email">ÀÌ¸ŞÀÏ</param>
+        /// <param name="username">ì•„ì´ë””</param>
+        /// <param name="password">ë¹„ë°€ë²ˆí˜¸</param>
+        /// <param name="email">ì´ë©”ì¼</param>
         /// <returns></returns>
         public SignUpResult SignUp(string username, string password, string email)
         {
-            // username Áßº¹ È®ÀÎ
+            // username ì¤‘ë³µ í™•ì¸
             if (IsUsernameDuplicate(username))
             {
                 return SignUpResult.DUPLICATE;
@@ -146,7 +146,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// È¸¿ø°¡ÀÔ ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+        /// íšŒì›ê°€ì… ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -170,10 +170,10 @@ namespace STARTING
 
 
         /// <summary>
-        /// ·Î±×ÀÎ
+        /// ë¡œê·¸ì¸
         /// </summary>
-        /// <param name="username">¾ÆÀÌµğ</param>
-        /// <param name="password">ºñ¹Ğ¹øÈ£</param>
+        /// <param name="username">ì•„ì´ë””</param>
+        /// <param name="password">ë¹„ë°€ë²ˆí˜¸</param>
         /// <returns></returns>
         public LoginResponse Login(string username, string password)
         {
@@ -241,11 +241,11 @@ namespace STARTING
         }
 
         /// <summary>
-        /// À¯Àú Á¤º¸ ¾÷µ¥ÀÌÆ®
+        /// ìœ ì € ì •ë³´ ì—…ë°ì´íŠ¸
         /// </summary>
-        /// <param name="username">¾ÆÀÌµğ</param>
-        /// <param name="newPassword">ºñ¹Ğ¹øÈ£</param>
-        /// <param name="newEmail">ÀÌ¸ŞÀÏ</param>
+        /// <param name="username">ì•„ì´ë””</param>
+        /// <param name="newPassword">ë¹„ë°€ë²ˆí˜¸</param>
+        /// <param name="newEmail">ì´ë©”ì¼</param>
         /// <returns></returns>
         public bool UpdateUserInfo(string username, string newPassword, string newEmail)
         {
@@ -267,7 +267,7 @@ namespace STARTING
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@email", newEmail);
 
-            // ºñ¹Ğ¹øÈ£°¡ ÀÖÀ¸¸é Ãß°¡
+            // ë¹„ë°€ë²ˆí˜¸ê°€ ìˆìœ¼ë©´ ì¶”ê°€
             if (passwordHash != null)
             {
                 cmd.Parameters.AddWithValue("@passwordHash", passwordHash);
@@ -297,20 +297,20 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Ä³¸¯ÅÍ »ı¼º
+        /// ìºë¦­í„° ìƒì„±
         /// </summary>
-        /// <param name="username">·Î±×ÀÎ ID</param>
-        /// <param name="characterName">Ä³¸¯ÅÍ¸í</param>
-        /// <param name="faction">int°ª Hope: 0, Fire: 1</param>
+        /// <param name="username">ë¡œê·¸ì¸ ID</param>
+        /// <param name="characterName">ìºë¦­í„°ëª…</param>
+        /// <param name="faction">intê°’ Hope: 0, Fire: 1</param>
         /// <param name="characterClass">Warrior, Mage, ...</param>
         /// <param name="gender">Male, Female, Other</param>
-        /// <param name="mapCode">ÀÎÆ®°ª</param>
+        /// <param name="mapCode">ì¸íŠ¸ê°’</param>
         /// <returns></returns>
         public CreateCharacterResult CreateCharacter(string username, string characterName, int faction, int characterClass, int gender, int mapCode)
         {
             try
             {
-                // 1. usernameÀ¸·Î account_id °¡Á®¿À±â
+                // 1. usernameìœ¼ë¡œ account_id ê°€ì ¸ì˜¤ê¸°
                 string accountQuery = "SELECT account_id FROM account WHERE username = @username";
                 int accountId;
 
@@ -328,7 +328,7 @@ namespace STARTING
                     accountId = Convert.ToInt32(result);
                 }
 
-                // 2. Ä³¸¯ÅÍ ÀÌ¸§ Áßº¹ °Ë»ç
+                // 2. ìºë¦­í„° ì´ë¦„ ì¤‘ë³µ ê²€ì‚¬
                 string nameCheckQuery = "SELECT COUNT(*) FROM `character` WHERE name = @name";
                 using (MySqlCommand nameCheckCmd = new MySqlCommand(nameCheckQuery, _connection))
                 {
@@ -341,7 +341,7 @@ namespace STARTING
                     }
                 }
 
-                // 3. character »ı¼º Äõ¸®
+                // 3. character ìƒì„± ì¿¼ë¦¬
                 string characterQuery = @"
                                         INSERT INTO `character`
                                         (account_id, name, faction, class, gender, mapCode) 
@@ -378,7 +378,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®°¡ ·Î±×ÀÎ ÇßÀ» ¶§ ÇØ´ç accountID¿¡ ÀÖ´Â ¸ğµç Ä³¸¯ÅÍ Á¤º¸¸¦ Ä³¸¯ÅÍ ¸®½ºÆ®¿¡ ¶ç¿ï Á¤º¸¸¸ °¡Á®¿È.
+        /// í´ë¼ì´ì–¸íŠ¸ê°€ ë¡œê·¸ì¸ í–ˆì„ ë•Œ í•´ë‹¹ accountIDì— ìˆëŠ” ëª¨ë“  ìºë¦­í„° ì •ë³´ë¥¼ ìºë¦­í„° ë¦¬ìŠ¤íŠ¸ì— ë„ìš¸ ì •ë³´ë§Œ ê°€ì ¸ì˜´.
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -388,7 +388,7 @@ namespace STARTING
 
             try
             {
-                // 1. usernameÀ¸·Î account_id °¡Á®¿À±â
+                // 1. usernameìœ¼ë¡œ account_id ê°€ì ¸ì˜¤ê¸°
                 string accountQuery = "SELECT account_id FROM account WHERE username = @username";
                 int accountId;
 
@@ -400,13 +400,13 @@ namespace STARTING
                     if (result == null)
                     {
                         Debug.LogError("GetCharactersByUsername Error: Username not found.");
-                        return characters; // ºó ¸®½ºÆ® ¹İÈ¯
+                        return characters; // ë¹ˆ ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
                     }
 
                     accountId = Convert.ToInt32(result);
                 }
 
-                // 2. account_id·Î Ä³¸¯ÅÍ ¸ñ·Ï °¡Á®¿À±â
+                // 2. account_idë¡œ ìºë¦­í„° ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
                 string characterQuery = "SELECT name, class, level, attack FROM `character` WHERE account_id = @account_id";
 
                 using (MySqlCommand cmd = new MySqlCommand(characterQuery, _connection))
@@ -439,7 +439,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®°¡ Ä³¸¯ÅÍ¸¦ ¼±ÅÃÇßÀ» ¶§ ÇØ´ç Ä³¸¯ÅÍÀÇ ¸ğµç Á¤º¸ ºÒ·¯¿À±â
+        /// í´ë¼ì´ì–¸íŠ¸ê°€ ìºë¦­í„°ë¥¼ ì„ íƒí–ˆì„ ë•Œ í•´ë‹¹ ìºë¦­í„°ì˜ ëª¨ë“  ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -464,7 +464,7 @@ namespace STARTING
                 {
                     if (reader.Read())
                     {
-                        //µ¥ÀÌÅÍ setÀÌº¥Æ® ÁßÁö
+                        //ë°ì´í„° setì´ë²¤íŠ¸ ì¤‘ì§€
                         playerData.suppressEvents = true;
                         
                         playerData.Username = reader.GetString("name");
@@ -486,7 +486,7 @@ namespace STARTING
                         playerData.Position = new Vector3(posX, posY, posZ);
                         playerData.MapCode = reader.GetString("mapCode");
                         
-                        //µ¥ÀÌÅÍ setÀÌº¥Æ® Àç°³
+                        //ë°ì´í„° setì´ë²¤íŠ¸ ì¬ê°œ
                         playerData.suppressEvents = false;
                     }
                 }
@@ -496,7 +496,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Ä³¸¯ÅÍ »èÁ¦
+        /// ìºë¦­í„° ì‚­ì œ
         /// </summary>
         /// <param name="username"></param>
         public bool DeleteCharacter(string username)
@@ -522,7 +522,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®ÀÇ µ¥ÀÌÅÍ¿¡ º¯È­°¡ ÀÖÀ» ¶§ ÇØ´ç Ä³¸¯ÅÍÀÇ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        /// í´ë¼ì´ì–¸íŠ¸ì˜ ë°ì´í„°ì— ë³€í™”ê°€ ìˆì„ ë•Œ í•´ë‹¹ ìºë¦­í„°ì˜ ì •ë³´ ì—…ë°ì´íŠ¸
         /// </summary>
         /// <param name="username"></param>
         /// <param name="fieldName"></param>
@@ -533,11 +533,9 @@ namespace STARTING
             {
                 if (fieldName == nameof(PlayerDataSO.Position))
                 {
-                    // Position °ªÀ» Ã³¸®ÇÏ´Â ·ÎÁ÷
+                    // Position ê°’ì„ ì²˜ë¦¬í•˜ëŠ” ë¡œì§
                     Vector3 position = JsonUtility.FromJson<Vector3>(newValue);
-
-                    Debug.Log("¹ŞÀº °ª " + position);
-
+                    
                     string query = @"
                                     UPDATE `character` 
                                     SET `current_position_x` = @posX, 
@@ -561,7 +559,7 @@ namespace STARTING
 
                     using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
-                        // ÆÄ¶ó¹ÌÅÍ ¹ÙÀÎµù
+                        // íŒŒë¼ë¯¸í„° ë°”ì¸ë”©
                         command.Parameters.AddWithValue("@newValue", newValue);
                         command.Parameters.AddWithValue("@name", username);
 

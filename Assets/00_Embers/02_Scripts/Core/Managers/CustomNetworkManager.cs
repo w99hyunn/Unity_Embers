@@ -1,4 +1,4 @@
-using Mirror;
+ï»¿using Mirror;
 using System.Collections.Generic;
 using Unity.Multiplayer.Playmode;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace STARTING
             }
             catch
             {
-                DebugUtils.Log("Client µ¿ÀÛ ½ÇÇà");
+                DebugUtils.Log("Client ë™ì‘ ì‹¤í–‰");
             }
             
             if (true == _SERVER_AUTO_RUN)
@@ -64,7 +64,7 @@ namespace STARTING
 
             //DB Connect
             bool dbServer = Managers.DB.ConnectDB();
-            DebugUtils.Log($"DB Connect? : {dbServer}");
+            DebugUtils.Log($"DB ì—°ê²° ìœ ë¬´ : {dbServer}");
 
             //Network Message Register
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
@@ -87,12 +87,12 @@ namespace STARTING
 
         public override void OnClientConnect()
         {
-            //±âÁ¸ÀÇ NetworkManagerÀÇ Ready()¿Í AddPlayer()¸¦ µû·Î ÇØÁÖ±â ¶§¹®¿¡ °ø¶õ
+            //ê¸°ì¡´ì˜ NetworkManagerì˜ Ready()ì™€ AddPlayer()ë¥¼ ë”°ë¡œ í•´ì£¼ê¸° ë•Œë¬¸ì— ê³µë€
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®·ÎºÎÅÍ ¹ŞÀº ·Î±×ÀÎ ¿äÃ» ¸Ş½ÃÁö
-        /// Ã³¸® °á°ú¿¡ µû¶ó °á°ú°ª ¹İÈ¯
+        /// í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ë°›ì€ ë¡œê·¸ì¸ ìš”ì²­ ë©”ì‹œì§€
+        /// ì²˜ë¦¬ ê²°ê³¼ì— ë”°ë¼ ê²°ê³¼ê°’ ë°˜í™˜
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -112,8 +112,8 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®·ÎºÎÅÍ ¹ŞÀº È¸¿ø°¡ÀÔ ¿äÃ» ¸Ş½ÃÁö
-        /// Ã³¸® °á°ú¿¡ µû¶ó °á°ú°ª ¹İÈ¯
+        /// í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ë°›ì€ íšŒì›ê°€ì… ìš”ì²­ ë©”ì‹œì§€
+        /// ì²˜ë¦¬ ê²°ê³¼ì— ë”°ë¼ ê²°ê³¼ê°’ ë°˜í™˜
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -129,7 +129,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®·ÎºÎÅÍ ¹ŞÀº ÇÁ·ÎÇÊ Á¤º¸ ¾÷µ¥ÀÌÆ® ¿äÃ» ¸Ş½ÃÁö
+        /// í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ë°›ì€ í”„ë¡œí•„ ì •ë³´ ì—…ë°ì´íŠ¸ ìš”ì²­ ë©”ì‹œì§€
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -146,7 +146,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ® Ä³¸¯ÅÍ »ı¼º ¿äÃ» ¸Ş½ÃÁö
+        /// í´ë¼ì´ì–¸íŠ¸ ìºë¦­í„° ìƒì„± ìš”ì²­ ë©”ì‹œì§€
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -168,7 +168,7 @@ namespace STARTING
         }
         
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®°¡ ·Î±×ÀÎ ÇßÀ» ¶§ || Ä³¸¯ÅÍ¸¦ »õ·Î »ı¼ºÇßÀ» ¶§, ÇØ´ç °èÁ¤ÀÇ Ä³¸¯ÅÍ Á¤º¸ ¿äÃ» ¸Ş½ÃÁö
+        /// í´ë¼ì´ì–¸íŠ¸ê°€ ë¡œê·¸ì¸ í–ˆì„ ë•Œ || ìºë¦­í„°ë¥¼ ìƒˆë¡œ ìƒì„±í–ˆì„ ë•Œ, í•´ë‹¹ ê³„ì •ì˜ ìºë¦­í„° ì •ë³´ ìš”ì²­ ë©”ì‹œì§€
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -184,7 +184,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ®°¡ Ä³¸¯ÅÍ ¼±ÅÃÇßÀ» ¶§ ÇØ´ç Ä³¸¯ÅÍ¿¡ ´ëÇÑ ¸ğµç Á¤º¸ Àü´Ş
+        /// í´ë¼ì´ì–¸íŠ¸ê°€ ìºë¦­í„° ì„ íƒí–ˆì„ ë•Œ í•´ë‹¹ ìºë¦­í„°ì— ëŒ€í•œ ëª¨ë“  ì •ë³´ ì „ë‹¬
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -214,7 +214,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Ä³¸¯ÅÍ »èÁ¦
+        /// ìºë¦­í„° ì‚­ì œ
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
@@ -232,7 +232,7 @@ namespace STARTING
 
 
         /// <summary>
-        /// Å¬¶óÀÌ¾ğÆ® µ¥ÀÌÅÍ º¯°æ½Ã DB µ¥ÀÌÅÍ º¯°æ ¿äÃ» ¸Ş½ÃÁö
+        /// í´ë¼ì´ì–¸íŠ¸ ë°ì´í„° ë³€ê²½ì‹œ DB ë°ì´í„° ë³€ê²½ ìš”ì²­ ë©”ì‹œì§€
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="message"></param>
@@ -248,7 +248,7 @@ namespace STARTING
         //    {
         //        return;
         //    }
-        //    ChatManager.Instance?.CmdSendChatMessage("ÅğÀå", $"{conn.identity.name}´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù.");
+        //    ChatManager.Instance?.CmdSendChatMessage("í‡´ì¥", $"{conn.identity.name}ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
         //    base.OnServerDisconnect(conn);
         //}
 

@@ -1,11 +1,11 @@
-using Mirror;
+ï»¿using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using static Michsky.UI.Reach.ChapterManager;
 
 namespace STARTING
 {
-    // ·Î±×ÀÎ
+    // ë¡œê·¸ì¸
     public struct LoginRequestMessage : NetworkMessage
     {
         public string Username;
@@ -20,7 +20,7 @@ namespace STARTING
         public LoginResult Result;
     }
 
-    // È¸¿ø°¡ÀÔ
+    // íšŒì›ê°€ì…
     public struct SignUpRequestMessage : NetworkMessage
     {
         public string Username;
@@ -33,7 +33,7 @@ namespace STARTING
         public SignUpResult Result;
     }
 
-    //ÇÁ·ÎÇÊ Á¤º¸ ¾÷µ¥ÀÌÆ®
+    //í”„ë¡œí•„ ì •ë³´ ì—…ë°ì´íŠ¸
     public struct ProfileUpdateRequestMessage : NetworkMessage
     {
         public string Username;
@@ -48,7 +48,7 @@ namespace STARTING
     }
 
     
-    //Ä³¸¯ÅÍ »ı¼º
+    //ìºë¦­í„° ìƒì„±
     public struct CreateCharacterRequestMessage : NetworkMessage
     {
         public string Username;
@@ -64,7 +64,7 @@ namespace STARTING
         public CreateCharacterResult Result;
     }
 
-    //Ä³¸¯ÅÍ Á¤º¸ ·Îµå
+    //ìºë¦­í„° ì •ë³´ ë¡œë“œ
     public struct CharacterInfoLoadRequestMessage : NetworkMessage
     {
         public string Username;
@@ -75,7 +75,7 @@ namespace STARTING
         public List<ChapterItem> CharacterData;
     }
 
-    //Ä³¸¯ÅÍ ¼±ÅÃ
+    //ìºë¦­í„° ì„ íƒ
     public struct CharacterDataRequestMessage : NetworkMessage
     {
         public string Username;
@@ -99,7 +99,7 @@ namespace STARTING
         public string MapCode;
     }
 
-    //Ä³¸¯ÅÍ »èÁ¦
+    //ìºë¦­í„° ì‚­ì œ
     public struct DeleteCharacterRequestMessage : NetworkMessage
     {
         public string Username;

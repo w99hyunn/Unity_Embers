@@ -1,4 +1,4 @@
-using Mirror;
+ï»¿using Mirror;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace STARTING
         
         private void Awake()
         {
-            DebugUtils.Log("ÇÃ·¹ÀÌ¾î »ı¼ºµÆ?" + gameObject.name);
+            DebugUtils.Log("í”Œë ˆì´ì–´ ìƒì„±ë?" + gameObject.name);
             TryGetComponent<CharacterController>(out _characterController);
         }
         
@@ -34,7 +34,7 @@ namespace STARTING
             
             _characterController.enabled = true;
             
-            // À§Ä¡ Áö¼ÓÀûÀ¸·Î ÀúÀå
+            // ìœ„ì¹˜ ì§€ì†ì ìœ¼ë¡œ ì €ì¥
             _ = SavePosition();
         }
 
@@ -55,7 +55,7 @@ namespace STARTING
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
-            // ÇÃ·¹ÀÌ¾î »èÁ¦ ¿äÃ».
+            // í”Œë ˆì´ì–´ ì‚­ì œ ìš”ì²­.
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
             NetworkServer.RemovePlayerForConnection(connectionToClient);
         }

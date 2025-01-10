@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,25 +10,25 @@ namespace STARTING
 
         public void ReturnTitle()
         {
-            // Å¸ÀÌÆ² ·Îµå¸¦ À§ÇÑ ÄÚ·çÆ¾ ½ÃÀÛ
+            // íƒ€ì´í‹€ ë¡œë“œë¥¼ ìœ„í•œ ì½”ë£¨í‹´ ì‹œì‘
             StartCoroutine(ReturnTitleCoroutine());
         }
 
         private IEnumerator ReturnTitleCoroutine()
         {
-            // ÇöÀç È°¼ºÈ­µÈ InGame ¾À È®ÀÎ
+            // í˜„ì¬ í™œì„±í™”ëœ InGame ì”¬ í™•ì¸
             string inGameScene = "InGame";
             if (SceneManager.GetSceneByName(inGameScene).isLoaded)
             {
-                // InGame ¾À ¾ğ·Îµå
+                // InGame ì”¬ ì–¸ë¡œë“œ
                 AsyncOperation inGameUnloadOperation = SceneManager.UnloadSceneAsync(inGameScene);
                 while (!inGameUnloadOperation.isDone)
                 {
-                    yield return null; // ±â´Ù¸®´Â µ¿¾È ´ë±â
+                    yield return null; // ê¸°ë‹¤ë¦¬ëŠ” ë™ì•ˆ ëŒ€ê¸°
                 }
             }
 
-            // Managers.Game.playerData.MapCode¸¦ »ç¿ëÇÏ¿© ·ÎµåµÈ ¸Ê ¾À È®ÀÎ ¹× ¾ğ·Îµå
+            // Managers.Game.playerData.MapCodeë¥¼ ì‚¬ìš©í•˜ì—¬ ë¡œë“œëœ ë§µ ì”¬ í™•ì¸ ë° ì–¸ë¡œë“œ
             string mapCode = Managers.Game.playerData.MapCode;
             string mapSceneName = $"Maps_{mapCode}";
 
@@ -37,23 +37,23 @@ namespace STARTING
                 AsyncOperation mapUnloadOperation = SceneManager.UnloadSceneAsync(mapSceneName);
                 while (!mapUnloadOperation.isDone)
                 {
-                    yield return null; // ¸Ê ¾ğ·Îµå ´ë±â
+                    yield return null; // ë§µ ì–¸ë¡œë“œ ëŒ€ê¸°
                 }
-                Debug.Log($"{mapSceneName} ¾À ¾ğ·Îµå ¿Ï·á");
+                Debug.Log($"{mapSceneName} ì”¬ ì–¸ë¡œë“œ ì™„ë£Œ");
             }
 
-            // Å¸ÀÌÆ² ¾À ·Îµå
+            // íƒ€ì´í‹€ ì”¬ ë¡œë“œ
             string titleScene = "Title";
             AsyncOperation titleLoadOperation = SceneManager.LoadSceneAsync(titleScene, LoadSceneMode.Additive);
             while (!titleLoadOperation.isDone)
             {
-                yield return null; // ·Îµù ´ë±â
+                yield return null; // ë¡œë”© ëŒ€ê¸°
             }
 
-            // Å¸ÀÌÆ² ¾À È°¼ºÈ­
+            // íƒ€ì´í‹€ ì”¬ í™œì„±í™”
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(titleScene));
 
-            // ÇÊ¿äÇÑ UI Ã³¸® ¿Ï·á
+            // í•„ìš”í•œ UI ì²˜ë¦¬ ì™„ë£Œ
             Managers.UI.CloseAlert();
 
             FindAnyObjectByType<TitleUIController>().ReturnBackTitle();
@@ -61,67 +61,67 @@ namespace STARTING
         
         public void LoadInGame()
         {
-            // Title ¾À ¾ğ·Îµå ¹× InGame ¾À ·Îµå ½ÃÀÛ
+            // Title ì”¬ ì–¸ë¡œë“œ ë° InGame ì”¬ ë¡œë“œ ì‹œì‘
             StartCoroutine(LoadInGameCoroutine());
         }
 
         private IEnumerator LoadInGameCoroutine()
         {
-            // Title ¾À ¾ğ·Îµå
+            // Title ì”¬ ì–¸ë¡œë“œ
             string titleScene = "Title";
             if (SceneManager.GetSceneByName(titleScene).isLoaded)
             {
                 yield return SceneManager.UnloadSceneAsync(titleScene);
             }
 
-            // InGame ¾À ·Îµå
+            // InGame ì”¬ ë¡œë“œ
             AsyncOperation inGameLoadOperation = SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
             while (!inGameLoadOperation.isDone)
             {
-                yield return null; // ·Îµù ´ë±â
+                yield return null; // ë¡œë”© ëŒ€ê¸°
             }
 
-            // InGame ¾À È°¼ºÈ­
+            // InGame ì”¬ í™œì„±í™”
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("InGame"));
 
-            // ¸Ê ¾À ·Îµå
+            // ë§µ ì”¬ ë¡œë“œ
             LoadMapScene();
         }
 
         private void LoadMapScene()
         {
-            // ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ¿¡¼­ ¸Ê ÄÚµå °¡Á®¿À±â
+            // í”Œë ˆì´ì–´ ë°ì´í„°ì—ì„œ ë§µ ì½”ë“œ ê°€ì ¸ì˜¤ê¸°
             string mapCode = Managers.Game.playerData.MapCode;
             string mapSceneName = $"Maps_{mapCode}";
 
-            // ¸Ê ¾À Additive·Î ·Îµå
+            // ë§µ ì”¬ Additiveë¡œ ë¡œë“œ
             _ = LoadMapScene(mapSceneName);
         }
         
         private async Awaitable LoadMapScene(string mapSceneName)
         {
-            // ¸Ê ¾À Additive·Î ·Îµå
+            // ë§µ ì”¬ Additiveë¡œ ë¡œë“œ
             AsyncOperation mapLoadOperation = SceneManager.LoadSceneAsync(mapSceneName, LoadSceneMode.Additive);
             while (!mapLoadOperation.isDone)
             {
-                await Awaitable.NextFrameAsync(); // ¸Ê ·Îµù ´ë±â
+                await Awaitable.NextFrameAsync(); // ë§µ ë¡œë”© ëŒ€ê¸°
             }
 
-            // ¸Ê ·Îµå ¿Ï·á ÈÄ ¾À È°¼ºÈ­
+            // ë§µ ë¡œë“œ ì™„ë£Œ í›„ ì”¬ í™œì„±í™”
             Scene mapScene = SceneManager.GetSceneByName(mapSceneName);
-            if (mapScene.IsValid()) // ·ÎµåµÈ ¾ÀÀÌ À¯È¿ÇÑÁö È®ÀÎ
+            if (mapScene.IsValid()) // ë¡œë“œëœ ì”¬ì´ ìœ íš¨í•œì§€ í™•ì¸
             {
-                SceneManager.SetActiveScene(mapScene); // ·ÎµåµÈ ¾À È°¼ºÈ­
-                Debug.Log($"{mapScene.name} ¾À È°¼ºÈ­ ¿Ï·á");
+                SceneManager.SetActiveScene(mapScene); // ë¡œë“œëœ ì”¬ í™œì„±í™”
+                Debug.Log($"{mapScene.name} ì”¬ í™œì„±í™” ì™„ë£Œ");
             }
             else
             {
-                Debug.LogError($"¾À È°¼ºÈ­ ½ÇÆĞ: {mapSceneName} ÀÌ À¯È¿ÇÏÁö ¾ÊÀ½.");
+                Debug.LogError($"ì”¬ í™œì„±í™” ì‹¤íŒ¨: {mapSceneName} ì´ ìœ íš¨í•˜ì§€ ì•ŠìŒ.");
             }
 
-            // Ãß°¡ ÀÛ¾÷
-            Debug.Log($"{mapSceneName} ·Îµå ¿Ï·á");
-            // ³×Æ®¿öÅ© ÇÃ·¹ÀÌ¾î ½ºÆù
+            // ì¶”ê°€ ì‘ì—…
+            Debug.Log($"{mapSceneName} ë¡œë“œ ì™„ë£Œ");
+            // ë„¤íŠ¸ì›Œí¬ í”Œë ˆì´ì–´ ìŠ¤í°
             SpawnNetworkPlayer();
             Managers.UI.CloseAlert();
         }

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using Michsky.UI.Reach;
 
@@ -109,7 +109,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// Connecting °ü·Ã
+        /// Connecting ê´€ë ¨
         /// </summary>
         /// <param name="text"></param>
         public void ConnectingMessageUpdate(string text)
@@ -147,7 +147,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// ½ºÇÃ·¡½Ã - ·Î±×ÀÎ È­¸é
+        /// ìŠ¤í”Œë˜ì‹œ - ë¡œê·¸ì¸ í™”ë©´
         /// </summary>
         public void OnSwitchOn()
         {

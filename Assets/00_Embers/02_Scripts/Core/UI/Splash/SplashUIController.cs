@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
@@ -47,7 +47,7 @@ namespace STARTING
         }
 
         /// <summary>
-        /// ESC´©¸£¸é ½ºÇÃ·¡½ÃÈ­¸é ½ºÅµ
+        /// ESCëˆ„ë¥´ë©´ ìŠ¤í”Œëž˜ì‹œí™”ë©´ ìŠ¤í‚µ
         /// </summary>
         /// <param name="value"></param>
         private void OnSkip(InputValue value)

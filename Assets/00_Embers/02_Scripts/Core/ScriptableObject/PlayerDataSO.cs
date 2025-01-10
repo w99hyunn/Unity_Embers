@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 
 namespace STARTING
@@ -9,7 +9,7 @@ namespace STARTING
         public event Action<string, object> OnDataChanged;
 
         public HxpTableSO hxpTable;
-        public bool suppressEvents; //ÇÃ·¡±×°¡ true¸é ³×Æ®¿öÅ© Àü¼ÛÀ» ¸ØÃã
+        public bool suppressEvents; //í”Œë˜ê·¸ê°€ trueë©´ ë„¤íŠ¸ì›Œí¬ ì „ì†¡ì„ ë©ˆì¶¤
         
         // Account-related data
         [SerializeField] private string accountID;
@@ -79,7 +79,7 @@ namespace STARTING
             get => hp;
             set
             {
-                int clampedValue = Mathf.Clamp(value, 0, MaxHp); // MaxHp¸¦ ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
+                int clampedValue = Mathf.Clamp(value, 0, MaxHp); // MaxHpë¥¼ ì´ˆê³¼í•˜ì§€ ì•Šë„ë¡ ì œí•œ
                 if (hp != clampedValue)
                 {
                     hp = clampedValue;
@@ -112,7 +112,7 @@ namespace STARTING
             get => mp;
             set
             {
-                int clampedValue = Mathf.Clamp(value, 0, MaxMp); // MaxHp¸¦ ÃÊ°úÇÏÁö ¾Êµµ·Ï Á¦ÇÑ
+                int clampedValue = Mathf.Clamp(value, 0, MaxMp); // MaxHpë¥¼ ì´ˆê³¼í•˜ì§€ ì•Šë„ë¡ ì œí•œ
                 if (mp != clampedValue)
                 {
                     mp = clampedValue;
@@ -248,7 +248,7 @@ namespace STARTING
         }
         
         
-        #region °¢ ÇÁ·ÎÆÛÆ¼ Ã³¸® Logic
+        #region ê° í”„ë¡œí¼í‹° ì²˜ë¦¬ Logic
         private void CheckLevelUp()
         {
             while (Level < hxpTable.MaxLevel && Hxp >= hxpTable.GetExperienceForNextLevel(Level))
