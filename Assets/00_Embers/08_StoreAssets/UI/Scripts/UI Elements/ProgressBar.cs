@@ -41,6 +41,9 @@ namespace Michsky.UI.Reach
 
         public enum BarDirection { Left, Right, Top, Bottom }
 
+        private readonly float _lerpDuration = 0.25f;
+        private float _targetValue;
+        
         void Start()
         {
             Initialize();
@@ -60,12 +63,34 @@ namespace Michsky.UI.Reach
 
         public void UpdateUI()
         {
-            if (barImage != null) { barImage.fillAmount = currentValue / maxValue; }
+            _targetValue = currentValue / maxValue;
+
+            if (barImage != null)
+            {
+                _ = SmoothUpdateFillAmount();
+            }
             if (iconObject != null) { iconObject.sprite = icon; }
             if (altIconObject != null) { altIconObject.sprite = icon; }
             if (textObject != null) { UpdateText(textObject); }
             if (altTextObject != null) { UpdateText(altTextObject); }
             if (eventSource != null) { eventSource.value = currentValue; }
+        }
+        
+        private async Awaitable SmoothUpdateFillAmount()
+        {
+            float startFill = barImage.fillAmount;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < _lerpDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / _lerpDuration;
+                barImage.fillAmount = Mathf.Lerp(startFill, _targetValue, t);
+                
+                await Awaitable.NextFrameAsync();
+            }
+            
+            barImage.fillAmount = _targetValue;
         }
 
         void UpdateText(TextMeshProUGUI txt)
