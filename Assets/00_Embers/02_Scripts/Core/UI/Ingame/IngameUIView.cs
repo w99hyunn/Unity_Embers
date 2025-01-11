@@ -49,10 +49,10 @@ namespace STARTING
                     playerHxp.SetValue(Convert.ToInt32(newValue));
                     break;
                 case "MaxHp":
-                    playerHp.maxValue = Convert.ToInt32(newValue);
+                    playerHp.SetMaxValue(Convert.ToInt32(newValue));
                     break;
                 case "MaxMp":
-                    playerMp.maxValue = Convert.ToInt32(newValue);
+                    playerMp.SetMaxValue(Convert.ToInt32(newValue));
                     break;
                 case "Hp":
                     playerHp.SetValue(Convert.ToInt32(newValue));
@@ -77,16 +77,16 @@ namespace STARTING
             MaxHxpSet();
             
             //HP, MP Init
-            playerHp.maxValue = Managers.Game.playerData.MaxHp;
-            playerMp.maxValue = Managers.Game.playerData.MaxMp;
+            playerHp.SetMaxValue(Managers.Game.playerData.MaxHp);
+            playerMp.SetMaxValue(Managers.Game.playerData.MaxMp);
             playerHp.SetValue(Managers.Game.playerData.Hp);
             playerMp.SetValue(Managers.Game.playerData.Mp);
         }
 
         private void MaxHxpSet()
         {
-            playerHxp.maxValue =
-                Managers.Game.playerData.hxpTable.GetExperienceForNextLevel((Managers.Game.playerData.Level));
+            playerHxp.SetMaxValue(
+                Managers.Game.playerData.hxpTable.GetExperienceForNextLevel((Managers.Game.playerData.Level)));
         }
     }
 }

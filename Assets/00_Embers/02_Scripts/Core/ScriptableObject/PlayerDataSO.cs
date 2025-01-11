@@ -249,6 +249,9 @@ namespace STARTING
         
         
         #region 각 프로퍼티 처리 Logic
+        /// <summary>
+        /// 경험치 상승시마다 레벨업하는지 체크
+        /// </summary>
         private void CheckLevelUp()
         {
             while (Level < hxpTable.MaxLevel && Hxp >= hxpTable.GetExperienceForNextLevel(Level))
@@ -261,11 +264,14 @@ namespace STARTING
 
         private void HandleLevelUp()
         {
+            //레벨업시 오르는 능력치 상승률
             MaxHp += 100;
             MaxMp += 100;
             Attack += 5;
-
-            Debug.Log($"Level Up! New Level: {Level}");
+            
+            //레벨업하면 현재 HP, MP를 모두 채워줌
+            Hp = MaxHp;
+            Mp = MaxMp;
         }
         #endregion
     }

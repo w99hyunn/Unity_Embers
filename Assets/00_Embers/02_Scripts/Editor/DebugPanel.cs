@@ -15,7 +15,7 @@ namespace STARTING
         private bool _loadAdditively = false;
         
         private int _selectedIndex = 0;
-        private readonly string[] _options = { "HP +500", "MP +500", "HXP +450", "HP -500", "MP -500" };
+        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450" };
 
         private Vector2 _scrollPosition;
 
@@ -23,17 +23,6 @@ namespace STARTING
         public static void ShowWindow()
         {
             GetWindow<DebugPanel>("Debug Panel");
-        }
-
-        [DidReloadScripts]
-        private static void OnScriptsReloaded()
-        {
-            // 창이 열려 있는 경우 강제로 다시 그리기
-            var window = GetWindow<DebugPanel>();
-            if (window != null)
-            {
-                window.Repaint();
-            }
         }
         
         private void OnEnable()
@@ -45,8 +34,19 @@ namespace STARTING
 
         private void OnGUI()
         {
+            Rect buttonRect = new Rect(0, 0, 75, 25);
+            
+            if (GUI.Button(buttonRect, "새로고침"))
+            {
+                var window = GetWindow<DebugPanel>();
+                if (window != null)
+                {
+                    window.Repaint();
+                }
+            }
+            
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-
+            GUILayout.Space(30);
             GUILayout.Label("캐릭터 디버그 :", EditorStyles.boldLabel);
             _selectedIndex = EditorGUILayout.Popup("Option:", _selectedIndex, _options);
 
@@ -157,24 +157,24 @@ namespace STARTING
             switch (index)
             {
                 case 0:
-                    Managers.Game.playerData.Hp += 500;
-                    Debug.Log("Managers.Game.playerData.Hp += 500");
+                    Managers.Game.playerData.Hp += 450;
+                    Debug.Log("Managers.Game.playerData.Hp += 450");
                     break;
                 case 1:
-                    Managers.Game.playerData.Mp += 500;
-                    Debug.Log("Managers.Game.playerData.Mp += 500;");
+                    Managers.Game.playerData.Mp += 450;
+                    Debug.Log("Managers.Game.playerData.Mp += 450;");
                     break;
                 case 2:
                     Managers.Game.playerData.Hxp += 450;
                     Debug.Log("Managers.Game.playerData.Hxp += 450;");
                     break;
                 case 3:
-                    Managers.Game.playerData.Hp -= 500;
-                    Debug.Log("Managers.Game.playerData.Hp -= 500;");
+                    Managers.Game.playerData.Hp -= 450;
+                    Debug.Log("Managers.Game.playerData.Hp -= 450;");
                     break;
                 case 4:
-                    Managers.Game.playerData.Mp -= 500;
-                    Debug.Log("Managers.Game.playerData.Mp -= 500;");
+                    Managers.Game.playerData.Mp -= 450;
+                    Debug.Log("Managers.Game.playerData.Mp -= 450;");
                     break;
                 default:
                     Debug.LogWarning("Invalid Option Selected");

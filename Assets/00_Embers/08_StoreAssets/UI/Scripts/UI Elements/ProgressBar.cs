@@ -129,5 +129,6 @@ namespace Michsky.UI.Reach
 
         public void ClearEvents() { eventSource.onValueChanged.RemoveAllListeners(); }
         public void SetValue(float newValue) { currentValue = newValue; UpdateUI(); }
+        public void SetMaxValue(float newMaxValue) { maxValue = newMaxValue; UpdateUI(); }
     }
 }
