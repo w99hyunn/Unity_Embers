@@ -2649,7 +2649,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 129.93, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &662192399974378561
 CanvasRenderer:
@@ -3271,6 +3271,7 @@ MonoBehaviour:
   syncInterval: 0
   playerNickname: 
   nicknameText: {fileID: 3956582941175031711}
+  lockCursor: 0
 --- !u!95 &8651318864330852816
 Animator:
   serializedVersion: 7
@@ -3280,7 +3281,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8820342126467287035}
   m_Enabled: 1
-  m_Avatar: {fileID: -7015762578403652589, guid: 08a340c46e6f4e145997ce35f6623e70, type: 3}
+  m_Avatar: {fileID: -7015762578403652589, guid: a6c143e07c56b9f4483ad068cc928da8, type: 3}
   m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -3369,6 +3370,7 @@ MonoBehaviour:
   _controller: {fileID: 4881109714093302404}
   _input: {fileID: 1325093965284912871}
   _mainCamera: {fileID: 1481781358197483695}
+  player: {fileID: 4299649713614812403}
 --- !u!114 &7709051569903528727
 MonoBehaviour:
   m_ObjectHideFlags: 0

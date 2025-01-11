@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Michsky.UI.Reach;
 using UnityEngine;
@@ -57,7 +55,7 @@ namespace Rito.InventorySystem
         [SerializeField] private int _verticalSlotCount = 8;      // 슬롯 세로 개수
         [SerializeField] private float _slotMargin = 8f;          // 한 슬롯의 상하좌우 여백
         [SerializeField] private float _contentAreaPadding = 20f; // 인벤토리 영역의 내부 여백
-        [Range(32, 64)]
+        [Range(32, 128)]
         [SerializeField] private float _slotSize = 64f;      // 각 슬롯의 크기
 
         [Space]
@@ -648,7 +646,9 @@ namespace Rito.InventorySystem
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
         private void EditorLog(object message)
         {
+#if UNITY_EDITOR
             if (!_showDebug) return;
+#endif
             UnityEngine.Debug.Log($"[InventoryUI] {message}");
         }
 

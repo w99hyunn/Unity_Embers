@@ -1,4 +1,5 @@
 ﻿ using Mirror;
+ using STARTING;
  using UnityEngine;
  using UnityEngine.InputSystem;
  
@@ -96,7 +97,9 @@ namespace StarterAssets
         public CharacterController _controller;
         public StarterAssetsInputs _input;
         public GameObject _mainCamera;
-
+        public Player player;
+        
+        
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -148,6 +151,9 @@ namespace StarterAssets
             if (!isLocalPlayer)
                 return;
 
+            if (player.lockCursor)
+                return;
+            
             CameraRotation();
         }
 

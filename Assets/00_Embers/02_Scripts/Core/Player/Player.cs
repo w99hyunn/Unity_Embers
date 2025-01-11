@@ -11,6 +11,8 @@ namespace STARTING
         [SyncVar(hook = nameof(OnNicknameChanged))]
         public string playerNickname;
         public TMP_Text nicknameText;
+
+        public bool lockCursor = false;
         
         private void Awake()
         {
