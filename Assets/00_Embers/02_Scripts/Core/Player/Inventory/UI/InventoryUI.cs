@@ -625,7 +625,7 @@ namespace STARTING
         /// <summary> 모든 슬롯 필터 상태 업데이트 </summary>
         public void UpdateAllSlotFilters()
         {
-            int capacity = _inventory.Capacity;
+            int capacity = Managers.Game.playerData.InventorySpace;
 
             for (int i = 0; i < capacity; i++)
             {

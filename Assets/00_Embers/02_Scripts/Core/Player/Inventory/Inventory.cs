@@ -53,27 +53,17 @@ namespace STARTING
     public class Inventory : MonoBehaviour
     {
         
-        /// <summary> 아이템 수용 한도 </summary>
-        public int Capacity { get; private set; }
 
         // /// <summary> 현재 아이템 개수 </summary>
         //public int ItemCount => _itemArray.Count;
-
-
-        // 초기 수용 한도
-        [SerializeField, Range(8, 64)]
-        private int _initalCapacity = 32;
-
-        // 최대 수용 한도(아이템 배열 크기)
-        [SerializeField, Range(8, 64)]
-        private int _maxCapacity = 64;
+        
 
         [SerializeField]
         private InventoryUI _inventoryUI; // 연결된 인벤토리 UI
 
         /// <summary> 아이템 목록 </summary>
-        [SerializeField]
-        private Item[] _items;
+        //[SerializeField]
+        //private Item[] Managers.Game.playerData.Items;
 
         /// <summary> 업데이트 할 인덱스 목록 </summary>
         private readonly HashSet<int> _indexSetForUpdate = new HashSet<int>();
@@ -100,57 +90,33 @@ namespace STARTING
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if(_initalCapacity > _maxCapacity)
-                _initalCapacity = _maxCapacity;
+
         }
 #endif
         private void Awake()
         {
-            _items = new Item[_maxCapacity];
-            Capacity = _initalCapacity;
+            //Managers.Game.playerData.Items = new Item[_maxCapacity];
+
             _inventoryUI.SetInventoryReference(this);
         }
 
         private void Start()
         {
             UpdateAccessibleStatesAll();
-            InitializeInventory(Managers.Game.playerData.InventoryItems);
-        }
-        
-        public void InitializeInventory(List<InventoryItem> inventoryItems)
-        {
-            foreach (var item in inventoryItems)
-            {
-                var itemData = Managers.DB.GetItemDataById(item.ItemId);
-                if (itemData != null)
-                {
-                    // 아이템 생성
-                    Item newItem = itemData.CreateItem();
-                    if (newItem is CountableItem countableItem)
-                    {
-                        countableItem.SetAmount(item.Amount);
-                    }
-
-                    // 위치에 맞게 추가
-                    _items[item.Position] = newItem;
-                }
-            }
-
             UpdateAllSlot();
         }
-
         
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
         private bool IsValidIndex(int index)
         {
-            return index >= 0 && index < Capacity;
+            return index >= 0 && index < Managers.Game.playerData.InventorySpace;
         }
 
         /// <summary> 앞에서부터 비어있는 슬롯 인덱스 탐색 </summary>
         private int FindEmptySlotIndex(int startIndex = 0)
         {
-            for (int i = startIndex; i < Capacity; i++)
-                if (_items[i] == null)
+            for (int i = startIndex; i < Managers.Game.playerData.InventorySpace; i++)
+                if (Managers.Game.playerData.Items[i] == null)
                     return i;
             return -1;
         }
@@ -158,9 +124,9 @@ namespace STARTING
         /// <summary> 앞에서부터 개수 여유가 있는 Countable 아이템의 슬롯 인덱스 탐색 </summary>
         private int FindCountableItemSlotIndex(CountableItemData target, int startIndex = 0)
         {
-            for (int i = startIndex; i < Capacity; i++)
+            for (int i = startIndex; i < Managers.Game.playerData.InventorySpace; i++)
             {
-                var current = _items[i];
+                var current = Managers.Game.playerData.Items[i];
                 if (current == null)
                     continue;
 
@@ -180,7 +146,7 @@ namespace STARTING
         {
             if (!IsValidIndex(index)) return;
 
-            Item item = _items[index];
+            Item item = Managers.Game.playerData.Items[index];
 
             // 1. 아이템이 슬롯에 존재하는 경우
             if (item != null)
@@ -194,7 +160,7 @@ namespace STARTING
                     // 1-1-1. 수량이 0인 경우, 아이템 제거
                     if (ci.IsEmpty)
                     {
-                        _items[index] = null;
+                        Managers.Game.playerData.Items[index] = null;
                         RemoveIcon();
                         return;
                     }
@@ -239,7 +205,7 @@ namespace STARTING
         /// <summary> 모든 슬롯들의 상태를 UI에 갱신 </summary>
         private void UpdateAllSlot()
         {
-            for (int i = 0; i < Capacity; i++)
+            for (int i = 0; i < Managers.Game.playerData.InventorySpace; i++)
             {
                 UpdateSlot(i);
             }
@@ -248,13 +214,13 @@ namespace STARTING
         /// <summary> 해당 슬롯이 아이템을 갖고 있는지 여부 </summary>
         public bool HasItem(int index)
         {
-            return IsValidIndex(index) && _items[index] != null;
+            return IsValidIndex(index) && Managers.Game.playerData.Items[index] != null;
         }
 
         /// <summary> 해당 슬롯이 셀 수 있는 아이템인지 여부 </summary>
         public bool IsCountableItem(int index)
         {
-            return HasItem(index) && _items[index] is CountableItem;
+            return HasItem(index) && Managers.Game.playerData.Items[index] is CountableItem;
         }
 
         /// <summary> 
@@ -266,9 +232,9 @@ namespace STARTING
         public int GetCurrentAmount(int index)
         {
             if (!IsValidIndex(index)) return -1;
-            if (_items[index] == null) return 0;
+            if (Managers.Game.playerData.Items[index] == null) return 0;
 
-            CountableItem ci = _items[index] as CountableItem;
+            CountableItem ci = Managers.Game.playerData.Items[index] as CountableItem;
             if (ci == null)
                 return 1;
 
@@ -279,18 +245,18 @@ namespace STARTING
         public ItemData GetItemData(int index)
         {
             if (!IsValidIndex(index)) return null;
-            if (_items[index] == null) return null;
+            if (Managers.Game.playerData.Items[index] == null) return null;
 
-            return _items[index].Data;
+            return Managers.Game.playerData.Items[index].Data;
         }
 
         /// <summary> 해당 슬롯의 아이템 이름 리턴 </summary>
         public string GetItemName(int index)
         {
             if (!IsValidIndex(index)) return "";
-            if (_items[index] == null) return "";
+            if (Managers.Game.playerData.Items[index] == null) return "";
 
-            return _items[index].Data.Name;
+            return Managers.Game.playerData.Items[index].Data.Name;
         }
         
         /// <summary> 인벤토리 UI 연결 </summary>
@@ -329,7 +295,7 @@ namespace STARTING
                         // 기존재 슬롯을 찾은 경우, 양 증가시키고 초과량 존재 시 amount에 초기화
                         else
                         {
-                            CountableItem ci = _items[index] as CountableItem;
+                            CountableItem ci = Managers.Game.playerData.Items[index] as CountableItem;
                             amount = ci.AddAmountAndGetExcess(amount);
 
                             UpdateSlot(index);
@@ -353,7 +319,7 @@ namespace STARTING
                             ci.SetAmount(amount);
 
                             // 슬롯에 추가
-                            _items[index] = ci;
+                            Managers.Game.playerData.Items[index] = ci;
 
                             // 남은 개수 계산
                             amount = (amount > ciData.MaxAmount) ? (amount - ciData.MaxAmount) : 0;
@@ -373,7 +339,7 @@ namespace STARTING
                     if (index != -1)
                     {
                         // 아이템을 생성하여 슬롯에 추가
-                        _items[index] = itemData.CreateItem();
+                        Managers.Game.playerData.Items[index] = itemData.CreateItem();
                         amount = 0;
 
                         UpdateSlot(index);
@@ -394,7 +360,7 @@ namespace STARTING
                     }
 
                     // 아이템을 생성하여 슬롯에 추가
-                    _items[index] = itemData.CreateItem();
+                    Managers.Game.playerData.Items[index] = itemData.CreateItem();
 
                     UpdateSlot(index);
                 }
@@ -408,7 +374,7 @@ namespace STARTING
         {
             if (!IsValidIndex(index)) return;
 
-            _items[index] = null;
+            Managers.Game.playerData.Items[index] = null;
             _inventoryUI.RemoveItem(index);
         }
 
@@ -418,8 +384,8 @@ namespace STARTING
             if (!IsValidIndex(indexA)) return;
             if (!IsValidIndex(indexB)) return;
 
-            Item itemA = _items[indexA];
-            Item itemB = _items[indexB];
+            Item itemA = Managers.Game.playerData.Items[indexA];
+            Item itemB = Managers.Game.playerData.Items[indexB];
 
             // 1. 셀 수 있는 아이템이고, 동일한 아이템일 경우
             //    indexA -> indexB로 개수 합치기
@@ -444,8 +410,8 @@ namespace STARTING
             // 2. 일반적인 경우 : 슬롯 교체
             else
             {
-                _items[indexA] = itemB;
-                _items[indexB] = itemA;
+                Managers.Game.playerData.Items[indexA] = itemB;
+                Managers.Game.playerData.Items[indexB] = itemA;
             }
 
             // 두 슬롯 정보 갱신
@@ -460,8 +426,8 @@ namespace STARTING
             if(!IsValidIndex(indexA)) return;
             if(!IsValidIndex(indexB)) return;
 
-            Item _itemA = _items[indexA];
-            Item _itemB = _items[indexB];
+            Item _itemA = Managers.Game.playerData.Items[indexA];
+            Item _itemB = Managers.Game.playerData.Items[indexB];
 
             CountableItem _ciA = _itemA as CountableItem;
 
@@ -469,7 +435,7 @@ namespace STARTING
             // 조건에 맞는 경우, 복제하여 슬롯 B에 추가
             if (_ciA != null && _itemB == null)
             {
-                _items[indexB] = _ciA.SeperateAndClone(amount);
+                Managers.Game.playerData.Items[indexB] = _ciA.SeperateAndClone(amount);
 
                 UpdateSlot(indexA, indexB);
             }
@@ -479,10 +445,10 @@ namespace STARTING
         public void Use(int index)
         {
             if (!IsValidIndex(index)) return;
-            if (_items[index] == null) return;
+            if (Managers.Game.playerData.Items[index] == null) return;
 
             // 사용 가능한 아이템인 경우
-            if (_items[index] is IUsableItem uItem)
+            if (Managers.Game.playerData.Items[index] is IUsableItem uItem)
             {
                 // 아이템 사용
                 bool succeeded = uItem.Use();
@@ -497,7 +463,7 @@ namespace STARTING
         /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
         public void UpdateAccessibleStatesAll()
         {
-            _inventoryUI.SetAccessibleSlotRange(Capacity);
+            _inventoryUI.SetAccessibleSlotRange(Managers.Game.playerData.InventorySpace);
         }
 
         /// <summary> 빈 슬롯 없이 앞에서부터 채우기 </summary>
@@ -516,21 +482,21 @@ namespace STARTING
             _indexSetForUpdate.Clear();
 
             int i = -1;
-            while (_items[++i] != null) ;
+            while (Managers.Game.playerData.Items[++i] != null) ;
             int j = i;
 
             while (true)
             {
-                while (++j < Capacity && _items[j] == null);
+                while (++j < Managers.Game.playerData.InventorySpace && Managers.Game.playerData.Items[j] == null);
 
-                if (j == Capacity)
+                if (j == Managers.Game.playerData.InventorySpace)
                     break;
 
                 _indexSetForUpdate.Add(i);
                 _indexSetForUpdate.Add(j);
 
-                _items[i] = _items[j];
-                _items[j] = null;
+                Managers.Game.playerData.Items[i] = Managers.Game.playerData.Items[j];
+                Managers.Game.playerData.Items[j] = null;
                 i++;
             }
 
@@ -546,23 +512,23 @@ namespace STARTING
         {
             // 1. Trim
             int i = -1;
-            while (_items[++i] != null) ;
+            while (Managers.Game.playerData.Items[++i] != null) ;
             int j = i;
 
             while (true)
             {
-                while (++j < Capacity && _items[j] == null) ;
+                while (++j < Managers.Game.playerData.InventorySpace && Managers.Game.playerData.Items[j] == null) ;
 
-                if (j == Capacity)
+                if (j == Managers.Game.playerData.InventorySpace)
                     break;
 
-                _items[i] = _items[j];
-                _items[j] = null;
+                Managers.Game.playerData.Items[i] = Managers.Game.playerData.Items[j];
+                Managers.Game.playerData.Items[j] = null;
                 i++;
             }
 
             // 2. Sort
-            Array.Sort(_items, 0, i, _itemComparer);
+            Array.Sort(Managers.Game.playerData.Items, 0, i, _itemComparer);
 
             // 3. Update
             UpdateAllSlot();

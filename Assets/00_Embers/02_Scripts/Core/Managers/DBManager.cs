@@ -455,7 +455,7 @@ namespace STARTING
             `character_id`, `name`, `level`, `hp`, `mp`, `hxp`, `gold`, `maxhp`, `maxmp`, 
             `attack`, `class`, `sp`, `gender`, 
             `current_position_x`, `current_position_y`, `current_position_z`, 
-            `mapCode`
+            `mapCode`, `inventory_space`
         FROM `character`
         WHERE `name` = @name;";
 
@@ -489,9 +489,9 @@ namespace STARTING
                         float posZ = reader.GetFloat("current_position_z");
                         playerData.Position = new Vector3(posX, posY, posZ);
                         playerData.MapCode = reader.GetString("mapCode");
-
-                        // 데이터 set 이벤트 재개
-                        playerData.suppressEvents = false;
+                        playerData.InventorySpace = reader.GetInt32("inventory_space");
+                        
+                        
 
                         // 인벤토리 데이터 가져오기
                         reader.Close(); // 기존 Reader 닫기
@@ -507,15 +507,48 @@ namespace STARTING
 
                         using (MySqlDataReader inventoryReader = command.ExecuteReader())
                         {
+                            // 기존 인벤토리 초기화
+                            playerData.Items = new Item[playerData.InventorySpace]; // 인벤토리 용량
+
                             while (inventoryReader.Read())
                             {
-                                InventoryItem inventoryItem = new InventoryItem
+                                int itemId = inventoryReader.GetInt32("item_id");
+                                int amount = inventoryReader.GetInt32("amount");
+                                int position = inventoryReader.GetInt32("position");
+
+                                // ItemDatabase에서 ItemData 가져오기
+                                ItemData itemData = GetItemDataById(itemId);
+                                if (itemData != null)
                                 {
-                                    ItemId = inventoryReader.GetInt32("item_id"),
-                                    Amount = inventoryReader.GetInt32("amount"),
-                                    Position = inventoryReader.GetInt32("position")
-                                };
-                                playerData.InventoryItems.Add(inventoryItem);
+                                    Item item = null;
+
+                                    // 아이템 종류에 따라 처리
+                                    if (itemData is ArmorItemData armorData)
+                                    {
+                                        item = new ArmorItem(armorData);
+                                    }
+                                    else if (itemData is WeaponItemData weaponData)
+                                    {
+                                        item = new WeaponItem(weaponData);
+                                    }
+                                    else if (itemData is PortionItemData portionData)
+                                    {
+                                        item = new PortionItem(portionData, amount);
+                                    }
+                                    else
+                                    {
+                                        item = itemData.CreateItem();
+                                    }
+
+                                    // Position에 따라 배열에 저장
+                                    if (position >= 0 && position < playerData.Items.Length)
+                                    {
+                                        playerData.Items[position] = item;
+                                    }
+                                }
+                                
+                                // 데이터 set 이벤트 재개
+                                playerData.suppressEvents = false;
                             }
                         }
                     }

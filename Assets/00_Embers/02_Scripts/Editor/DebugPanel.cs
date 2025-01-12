@@ -187,7 +187,7 @@ namespace STARTING
                     Debug.Log("1번 아이템 추가");
                     break;
                 case 7:
-                    int capacity = _inventory.Capacity;
+                    int capacity = Managers.Game.playerData.InventorySpace;
                     for(int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
                     Debug.Log("모두 제거");

@@ -444,30 +444,61 @@ namespace STARTING
         {
             Managers.Game.playerData.Username = msg.Username;
             Managers.Game.playerData.Level = msg.Level;
+            Managers.Game.playerData.MaxHp = msg.MaxHp;
             Managers.Game.playerData.Hp = msg.Hp;
+            Managers.Game.playerData.MaxMp = msg.MaxMp;
             Managers.Game.playerData.Mp = msg.Mp;
             Managers.Game.playerData.Hxp = msg.Hxp;
             Managers.Game.playerData.Gold = msg.Gold;
-            Managers.Game.playerData.MaxHp = msg.MaxHp;
-            Managers.Game.playerData.MaxMp = msg.MaxMp;
             Managers.Game.playerData.Attack = msg.Attack;
             Managers.Game.playerData.Class = msg.Class;
             Managers.Game.playerData.Sp = msg.Sp;
             Managers.Game.playerData.Gender = msg.Gender;
             Managers.Game.playerData.Position = msg.Position;
             Managers.Game.playerData.MapCode = msg.MapCode;
+            Managers.Game.playerData.InventorySpace = msg.InventorySpace;
             
-            Managers.Game.playerData.InventoryItems.Clear();
+            // 인벤토리 데이터 초기화
+            //Managers.Game.playerData.Items = new Item[playerData.InventoryCapacity];
+            Managers.Game.playerData.Items = new Item[Managers.Game.playerData.InventorySpace];
+
+            // 서버에서 받은 InventoryItems 처리
             foreach (var itemMessage in msg.InventoryItems)
             {
-                Managers.Game.playerData.InventoryItems.Add(new InventoryItem
+                ItemData itemData = Managers.DB.GetItemDataById(itemMessage.ItemId);
+                if (itemData != null)
                 {
-                    ItemId = itemMessage.ItemId,
-                    Amount = itemMessage.Amount,
-                    Position = itemMessage.Position
-                });
+                    Item item;
+                    
+                    if (itemData is ArmorItemData armorData)
+                    {
+                        item = new ArmorItem(armorData);
+                    }
+                    else if (itemData is WeaponItemData weaponData)
+                    {
+                        item = new WeaponItem(weaponData);
+                    }
+                    else if (itemData is PortionItemData portionData)
+                    {
+                        item = new PortionItem(portionData, itemMessage.Amount);
+                    }
+                    else
+                    {
+                        item = itemData.CreateItem();
+                    }
+
+                    // 서버에서 전달받은 position에 맞게 아이템 배열에 저장
+                    if (itemMessage.Position >= 0 && itemMessage.Position < Managers.Game.playerData.Items.Length)
+                    {
+                        Managers.Game.playerData.Items[itemMessage.Position] = item;
+                    }
+                }
+                else
+                {
+                    DebugUtils.LogWarning($"ItemData not found for ItemId: {itemMessage.ItemId}");
+                }
             }
-            
+
             DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작

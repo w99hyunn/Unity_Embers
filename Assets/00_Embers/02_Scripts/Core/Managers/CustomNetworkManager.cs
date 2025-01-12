@@ -208,19 +208,24 @@ namespace STARTING
                 Gender = playerData.Gender,
                 Position = playerData.Position,
                 MapCode = playerData.MapCode,
+                InventorySpace = playerData.InventorySpace,
                 InventoryItems = new List<InventoryItemMessage>(),
             };
             
-            // 인벤토리 데이터를 메시지에 추가
-            foreach (var item in playerData.InventoryItems)
+            for (int i = 0; i < playerData.Items.Length; i++)
             {
-                InventoryItemMessage itemMessage = new InventoryItemMessage
+                Item item = playerData.Items[i];
+                if (item != null)
                 {
-                    ItemId = item.ItemId,
-                    Amount = item.Amount,
-                    Position = item.Position
-                };
-                message.InventoryItems.Add(itemMessage);
+                    InventoryItemMessage itemMessage = new InventoryItemMessage
+                    {
+                        ItemId = item.Data.ID, // 아이템 ID
+                        Amount = (item is CountableItem countableItem) ? countableItem.Amount : 1, // CountableItem일 경우 수량, 아니면 기본 1
+                        Position = i // 배열에서의 인덱스(슬롯 위치)
+                    };
+
+                    message.InventoryItems.Add(itemMessage);
+                }
             }
 
             conn.Send(message);

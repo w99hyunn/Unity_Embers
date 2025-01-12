@@ -4,22 +4,28 @@ using System.Collections.Generic;
 
 namespace STARTING
 {
-    [System.Serializable]
-    public struct InventoryItem
-    {
-        public int ItemId;
-        public int Amount;
-        public int Position;
-    }
-    
     [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/Player Data", order = 1)]
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;
+        public event Action OnInventoryUpdated;
 
-        public List<InventoryItem> InventoryItems = new List<InventoryItem>();
+        public Item[] Items;
+        
         public HxpTableSO hxpTable;
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
+        
+
+        public void InitializeInventory(int capacity)
+        {
+            Items = new Item[capacity];
+        }
+
+        public void UpdateInventoryFromNetwork(Item[] items)
+        {
+            Items = items;
+            OnInventoryUpdated?.Invoke();
+        }
         
         // Account-related data
         [SerializeField] private string accountID;
@@ -257,6 +263,21 @@ namespace STARTING
             }
         }
         
+        [SerializeField] private int inventorySpace;
+        public int InventorySpace
+        {
+            get => inventorySpace;
+            set
+            {
+                if (inventorySpace != value)
+                {
+                    inventorySpace = value;
+                    InitializeInventory(value);
+                    if (false == suppressEvents)
+                        OnDataChanged?.Invoke(nameof(InventorySpace), value);
+                }
+            }
+        }
         
         #region 각 프로퍼티 처리 Logic
         /// <summary>

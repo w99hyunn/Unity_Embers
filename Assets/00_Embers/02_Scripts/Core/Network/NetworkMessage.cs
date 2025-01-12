@@ -97,6 +97,7 @@ namespace STARTING
         public string Gender;
         public Vector3 Position;
         public string MapCode;
+        public int InventorySpace;
         public List<InventoryItemMessage> InventoryItems;
     }
 
