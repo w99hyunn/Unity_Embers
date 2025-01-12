@@ -459,7 +459,6 @@ namespace STARTING
             Managers.Game.playerData.InventorySpace = msg.InventorySpace;
             
             // 인벤토리 데이터 초기화
-            //Managers.Game.playerData.Items = new Item[playerData.InventoryCapacity];
             Managers.Game.playerData.Items = new Item[Managers.Game.playerData.InventorySpace];
 
             // 서버에서 받은 InventoryItems 처리

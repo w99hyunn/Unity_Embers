@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections.Generic;
 
 namespace STARTING
 {
@@ -14,19 +13,15 @@ namespace STARTING
         
         public HxpTableSO hxpTable;
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
-        
 
-        public void InitializeInventory(int capacity)
-        {
-            Items = new Item[capacity];
-        }
 
-        public void UpdateInventoryFromNetwork(Item[] items)
-        {
-            Items = items;
-            OnInventoryUpdated?.Invoke();
-        }
+        #region #Inventory Data
+
+        //인벤토리 처리 로직
+
+        #endregion
         
+        #region #Character Data
         // Account-related data
         [SerializeField] private string accountID;
         public string AccountID
@@ -272,14 +267,15 @@ namespace STARTING
                 if (inventorySpace != value)
                 {
                     inventorySpace = value;
-                    InitializeInventory(value);
+                    //InitializeInventory(value);
                     if (false == suppressEvents)
                         OnDataChanged?.Invoke(nameof(InventorySpace), value);
                 }
             }
         }
+        #endregion
         
-        #region 각 프로퍼티 처리 Logic
+        #region #각 프로퍼티 처리 Logic
         /// <summary>
         /// 경험치 상승시마다 레벨업하는지 체크
         /// </summary>

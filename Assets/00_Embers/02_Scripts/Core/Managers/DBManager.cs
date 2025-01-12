@@ -17,14 +17,7 @@ namespace STARTING
     
     public class DBManager : MonoBehaviour
     {
-        [Header("DB Server Info")]
-        public string dbServerIP = "localhost";
-        public string dbHost = "root";
-        public string dbPw = "root";
-
-        private MySqlConnection _connection;
-
-        #region ItemDataBase
+        #region #ItemDataBase
 
         [SerializeField]
         private Dictionary<int, ItemData> itemDataCache = new Dictionary<int, ItemData>();
@@ -49,11 +42,18 @@ namespace STARTING
         }
         #endregion
         
+        [Header("DB Server Info")]
+        public string dbServerIP = "localhost";
+        public string dbHost = "root";
+        public string dbPw = "root";
+        private MySqlConnection _connection;
+        
         private void Start()
         {
-            InitializeItemData();
+            InitializeItemData(); //아이템 데이터베이스
         }
-        
+
+        #region #DB 서버 Open / Close
         public bool ConnectDB()
         {
             bool success = ConnectToDatabase(dbServerIP, "embers", dbHost, dbPw, "3306");
@@ -86,7 +86,9 @@ namespace STARTING
         {
             CloseDBServer();
         }
+        #endregion
 
+        #region #비밀번호 암호화 로직
         private (string, string) GeneratePasswordHashAndSalt(string password)
         {
             byte[] salt = new byte[32];
@@ -110,7 +112,9 @@ namespace STARTING
 
             return Convert.ToBase64String(hashBytes);
         }
-
+        #endregion
+        
+        #region #회원가입
         /// <summary>
         /// 회원가입
         /// </summary>
@@ -170,8 +174,9 @@ namespace STARTING
                 return false;
             }
         }
+        #endregion
 
-
+        #region #로그인
         /// <summary>
         /// 로그인
         /// </summary>
@@ -242,7 +247,9 @@ namespace STARTING
                 };
             }
         }
+        #endregion
 
+        #region #유저 정보 업데이트
         /// <summary>
         /// 유저 정보 업데이트
         /// </summary>
@@ -298,7 +305,9 @@ namespace STARTING
                 return false;
             }
         }
+        #endregion
 
+        #region #캐릭터 생성
         /// <summary>
         /// 캐릭터 생성
         /// </summary>
@@ -379,7 +388,9 @@ namespace STARTING
                 return CreateCharacterResult.ERROR;
             }
         }
+        #endregion
 
+        #region #캐릭터 리스트 && 선택
         /// <summary>
         /// 클라이언트가 로그인 했을 때 해당 accountID에 있는 모든 캐릭터 정보를 캐릭터 리스트에 띄울 정보만 가져옴.
         /// </summary>
@@ -491,13 +502,11 @@ namespace STARTING
                         playerData.MapCode = reader.GetString("mapCode");
                         playerData.InventorySpace = reader.GetInt32("inventory_space");
                         
+                        reader.Close();
                         
-
                         // 인벤토리 데이터 가져오기
-                        reader.Close(); // 기존 Reader 닫기
                         string inventoryQuery = @"
-                            SELECT 
-                                `item_id`, `amount`, `position`
+                            SELECT `item_id`, `amount`, `position`
                             FROM `inventory`
                             WHERE `character_id` = @characterId;";
 
@@ -507,7 +516,6 @@ namespace STARTING
 
                         using (MySqlDataReader inventoryReader = command.ExecuteReader())
                         {
-                            // 기존 인벤토리 초기화
                             playerData.Items = new Item[playerData.InventorySpace]; // 인벤토리 용량
 
                             while (inventoryReader.Read())
@@ -525,14 +533,17 @@ namespace STARTING
                                     // 아이템 종류에 따라 처리
                                     if (itemData is ArmorItemData armorData)
                                     {
+                                        Debug.Log("방어구 " + itemData.Name);
                                         item = new ArmorItem(armorData);
                                     }
                                     else if (itemData is WeaponItemData weaponData)
                                     {
+                                        Debug.Log("무기 " + itemData.Name);
                                         item = new WeaponItem(weaponData);
                                     }
                                     else if (itemData is PortionItemData portionData)
                                     {
+                                        Debug.Log("포션 " + itemData.Name);
                                         item = new PortionItem(portionData, amount);
                                     }
                                     else
@@ -557,7 +568,9 @@ namespace STARTING
 
             return playerData;
         }
+        #endregion
 
+        #region #캐릭터 삭제
         /// <summary>
         /// 캐릭터 삭제
         /// </summary>
@@ -583,7 +596,9 @@ namespace STARTING
                 return false;
             }
         }
+        #endregion
 
+        #region #캐릭터 업데이트 자동 업데이트 로직
         /// <summary>
         /// 클라이언트의 데이터에 변화가 있을 때 해당 캐릭터의 정보 업데이트
         /// </summary>
@@ -635,6 +650,6 @@ namespace STARTING
                 Debug.LogError($"Error updating database: {ex.Message}");
             }
         }
-
+        #endregion
     }
 }
