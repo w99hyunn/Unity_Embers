@@ -97,8 +97,16 @@ namespace STARTING
         public string Gender;
         public Vector3 Position;
         public string MapCode;
+        public List<InventoryItemMessage> InventoryItems;
     }
 
+    public struct InventoryItemMessage
+    {
+        public int ItemId;
+        public int Amount;
+        public int Position;
+    }
+    
     //캐릭터 삭제
     public struct DeleteCharacterRequestMessage : NetworkMessage
     {

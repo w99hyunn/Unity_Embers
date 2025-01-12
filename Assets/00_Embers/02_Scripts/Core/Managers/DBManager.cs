@@ -14,29 +14,7 @@ namespace STARTING
         public string Email { get; set; }
         public string CreatedAt { get; set; }
     }
-
-    public enum SignUpResult
-    {
-        SUCCESS,
-        DUPLICATE,
-        ERROR
-    }
-
-    public enum LoginResult
-    {
-        SUCCESS,
-        PWWRONG,
-        IDWRONG,
-        ERROR
-    }
-
-    public enum CreateCharacterResult
-    {
-        SUCCESS,
-        DUPLICATE,
-        ERROR
-    }
-
+    
     public class DBManager : MonoBehaviour
     {
         [Header("DB Server Info")]
@@ -46,11 +24,36 @@ namespace STARTING
 
         private MySqlConnection _connection;
 
-        //[Header("클라이언트가 각자 가지고 있는 자신의 정보")]
-        ////public GameData clientGameData;
-        //public string userName;
-        //public int userId;
+        #region ItemDataBase
 
+        [SerializeField]
+        private Dictionary<int, ItemData> itemDataCache = new Dictionary<int, ItemData>();
+        
+        private void InitializeItemData()
+        {
+            // 모든 ScriptableObject를 로드
+            var allItems = Resources.LoadAll<ItemData>("ItemData");
+            foreach (var item in allItems)
+            {
+                if (!itemDataCache.ContainsKey(item.ID))
+                {
+                    itemDataCache.Add(item.ID, item);
+                }
+            }
+        }
+
+        public ItemData GetItemDataById(int id)
+        {
+            itemDataCache.TryGetValue(id, out var itemData);
+            return itemData;
+        }
+        #endregion
+        
+        private void Start()
+        {
+            InitializeItemData();
+        }
+        
         public bool ConnectDB()
         {
             bool success = ConnectToDatabase(dbServerIP, "embers", dbHost, dbPw, "3306");
@@ -447,16 +450,16 @@ namespace STARTING
         {
             PlayerDataSO playerData = ScriptableObject.CreateInstance<PlayerDataSO>();
 
-            string query = @"
-                            SELECT 
-                                `name`, `level`, `hp`, `mp`, `hxp`, `gold`, `maxhp`, `maxmp`, 
-                                `attack`, `class`, `sp`, `gender`, 
-                                `current_position_x`, `current_position_y`, `current_position_z`, 
-                                `mapCode`
-                            FROM `character`
-                            WHERE `name` = @name;";
+            string characterQuery = @"
+        SELECT 
+            `character_id`, `name`, `level`, `hp`, `mp`, `hxp`, `gold`, `maxhp`, `maxmp`, 
+            `attack`, `class`, `sp`, `gender`, 
+            `current_position_x`, `current_position_y`, `current_position_z`, 
+            `mapCode`
+        FROM `character`
+        WHERE `name` = @name;";
 
-            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            using (MySqlCommand command = new MySqlCommand(characterQuery, _connection))
             {
                 command.Parameters.AddWithValue("@name", username);
 
@@ -464,9 +467,10 @@ namespace STARTING
                 {
                     if (reader.Read())
                     {
-                        //데이터 set이벤트 중지
+                        // 데이터 set 이벤트 중지
                         playerData.suppressEvents = true;
-                        
+
+                        int characterId = reader.GetInt32("character_id");
                         playerData.Username = reader.GetString("name");
                         playerData.Level = reader.GetInt32("level");
                         playerData.MaxHp = reader.GetInt32("maxhp");
@@ -485,9 +489,35 @@ namespace STARTING
                         float posZ = reader.GetFloat("current_position_z");
                         playerData.Position = new Vector3(posX, posY, posZ);
                         playerData.MapCode = reader.GetString("mapCode");
-                        
-                        //데이터 set이벤트 재개
+
+                        // 데이터 set 이벤트 재개
                         playerData.suppressEvents = false;
+
+                        // 인벤토리 데이터 가져오기
+                        reader.Close(); // 기존 Reader 닫기
+                        string inventoryQuery = @"
+                            SELECT 
+                                `item_id`, `amount`, `position`
+                            FROM `inventory`
+                            WHERE `character_id` = @characterId;";
+
+                        command.CommandText = inventoryQuery;
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@characterId", characterId);
+
+                        using (MySqlDataReader inventoryReader = command.ExecuteReader())
+                        {
+                            while (inventoryReader.Read())
+                            {
+                                InventoryItem inventoryItem = new InventoryItem
+                                {
+                                    ItemId = inventoryReader.GetInt32("item_id"),
+                                    Amount = inventoryReader.GetInt32("amount"),
+                                    Position = inventoryReader.GetInt32("position")
+                                };
+                                playerData.InventoryItems.Add(inventoryItem);
+                            }
+                        }
                     }
                 }
             }
@@ -572,8 +602,6 @@ namespace STARTING
                 Debug.LogError($"Error updating database: {ex.Message}");
             }
         }
-
-
 
     }
 }

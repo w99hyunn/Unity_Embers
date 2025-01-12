@@ -207,8 +207,21 @@ namespace STARTING
                 Sp = playerData.Sp,
                 Gender = playerData.Gender,
                 Position = playerData.Position,
-                MapCode = playerData.MapCode
+                MapCode = playerData.MapCode,
+                InventoryItems = new List<InventoryItemMessage>(),
             };
+            
+            // 인벤토리 데이터를 메시지에 추가
+            foreach (var item in playerData.InventoryItems)
+            {
+                InventoryItemMessage itemMessage = new InventoryItemMessage
+                {
+                    ItemId = item.ItemId,
+                    Amount = item.Amount,
+                    Position = item.Position
+                };
+                message.InventoryItems.Add(itemMessage);
+            }
 
             conn.Send(message);
         }

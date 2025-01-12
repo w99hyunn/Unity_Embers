@@ -15,7 +15,7 @@ namespace STARTING
         private bool _loadAdditively = false;
         
         private int _selectedIndex = 0;
-        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450" };
+        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "모두제거"};
 
         private Vector2 _scrollPosition;
 
@@ -154,6 +154,8 @@ namespace STARTING
             if (Managers.Game == null)
                 return;
             
+            var _inventory = FindAnyObjectByType<Inventory>();
+            
             switch (index)
             {
                 case 0:
@@ -175,6 +177,20 @@ namespace STARTING
                 case 4:
                     Managers.Game.playerData.Mp -= 450;
                     Debug.Log("Managers.Game.playerData.Mp -= 450;");
+                    break;
+                case 5:
+                    _inventory.Add(Managers.DB.GetItemDataById(0));
+                    Debug.Log("0번 아이템 추가");
+                    break;
+                case 6:
+                    _inventory.Add(Managers.DB.GetItemDataById(1));
+                    Debug.Log("1번 아이템 추가");
+                    break;
+                case 7:
+                    int capacity = _inventory.Capacity;
+                    for(int i = 0; i < capacity; i++)
+                        _inventory.Remove(i);
+                    Debug.Log("모두 제거");
                     break;
                 default:
                     Debug.LogWarning("Invalid Option Selected");

@@ -1,13 +1,23 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace STARTING
 {
+    [System.Serializable]
+    public struct InventoryItem
+    {
+        public int ItemId;
+        public int Amount;
+        public int Position;
+    }
+    
     [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/Player Data", order = 1)]
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;
 
+        public List<InventoryItem> InventoryItems = new List<InventoryItem>();
         public HxpTableSO hxpTable;
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
         

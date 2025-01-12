@@ -1,5 +1,8 @@
 ﻿namespace STARTING
 {
+    /// <summary>
+    /// 캐릭터
+    /// </summary>
     public enum Class
     {
         WARRIOR = 0,
@@ -11,4 +14,32 @@
         MALE = 0,
         FEMALE = 1,
     }
+    //
+    
+    /// <summary>
+    /// DBManager
+    /// </summary>
+    public enum SignUpResult
+    {
+        SUCCESS,
+        DUPLICATE,
+        ERROR
+    }
+
+    public enum LoginResult
+    {
+        SUCCESS,
+        PWWRONG,
+        IDWRONG,
+        ERROR
+    }
+
+    public enum CreateCharacterResult
+    {
+        SUCCESS,
+        DUPLICATE,
+        ERROR
+    }
+    //
+    
 }

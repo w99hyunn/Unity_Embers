@@ -457,6 +457,17 @@ namespace STARTING
             Managers.Game.playerData.Position = msg.Position;
             Managers.Game.playerData.MapCode = msg.MapCode;
             
+            Managers.Game.playerData.InventoryItems.Clear();
+            foreach (var itemMessage in msg.InventoryItems)
+            {
+                Managers.Game.playerData.InventoryItems.Add(new InventoryItem
+                {
+                    ItemId = itemMessage.ItemId,
+                    Amount = itemMessage.Amount,
+                    Position = itemMessage.Position
+                });
+            }
+            
             DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
