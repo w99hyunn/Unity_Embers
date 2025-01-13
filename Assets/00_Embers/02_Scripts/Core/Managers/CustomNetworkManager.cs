@@ -77,6 +77,9 @@ namespace STARTING
 
             //Player Data Update
             NetworkServer.ReplaceHandler<UpdatePlayerDataMessage>(OnUpdatePlayerDataMessageReceived);
+            
+            //Player Inventory Update
+            NetworkServer.ReplaceHandler<UpdateInventoryMessage>(OnUpdateInventoryMessageReceived);
         }
 
         public override void OnStopServer()
@@ -259,6 +262,16 @@ namespace STARTING
             Managers.DB.UpdateDatabase(message.Username, message.FieldName, message.NewValue);
         }
 
+        /// <summary>
+        /// 클라이언트의 인벤토리에 변화가 생겼을 때 DB 업데이트 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
+        private void OnUpdateInventoryMessageReceived(NetworkConnectionToClient conn, UpdateInventoryMessage msg)
+        {
+            // 슬롯 업데이트 요청 처리
+            Managers.DB.HandleSlotUpdateInDB(msg.CharacterName, msg.Index, msg.ItemId, msg.Amount);
+        }
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)
         //{
@@ -269,25 +282,5 @@ namespace STARTING
         //    ChatManager.Instance?.CmdSendChatMessage("퇴장", $"{conn.identity.name}님이 퇴장하셨습니다.");
         //    base.OnServerDisconnect(conn);
         //}
-
-
-        //private void OnGameDataRequest(NetworkConnection conn, GameDataRequestMessage msg)
-        //{
-        //    GameData gameData = DBManager.Instance.GetGameDataFromDB(msg.userId);
-
-        //    GameDataResponseMessage response = new GameDataResponseMessage
-        //    {
-        //        gameData = gameData
-        //    };
-
-        //    conn.Send(response);
-        //}
-
-        //private void OnGameDataUpdateRequest(NetworkConnection conn, GameDataUpdateRequestMessage msg)
-        //{
-        //    DBManager.Instance.UpdateGameDataInDB(msg.userId, msg.gameData);
-        //}
-
-
     }
 }

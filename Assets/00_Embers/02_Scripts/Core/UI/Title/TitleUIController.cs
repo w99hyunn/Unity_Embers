@@ -18,7 +18,7 @@ namespace STARTING
             TryGetComponent<TitleUIModel>(out _model);
         }
 
-        #region #General
+        #region # General
         public async void ServerConnect()
         {
             await WaitForNetworkInitialization();
@@ -284,7 +284,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #Character
+        #region # Character
         public void CreateCharacter()
         {
             CreateCharacterRequest(

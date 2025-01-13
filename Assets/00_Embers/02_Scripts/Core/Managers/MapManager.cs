@@ -112,15 +112,15 @@ namespace STARTING
             if (mapScene.IsValid()) // 로드된 씬이 유효한지 확인
             {
                 SceneManager.SetActiveScene(mapScene); // 로드된 씬 활성화
-                Debug.Log($"{mapScene.name} 씬 활성화 완료");
+                DebugUtils.Log($"{mapScene.name} 씬 활성화 완료");
             }
             else
             {
-                Debug.LogError($"씬 활성화 실패: {mapSceneName} 이 유효하지 않음.");
+                DebugUtils.LogError($"씬 활성화 실패: {mapSceneName} 이 유효하지 않음.");
             }
 
             // 추가 작업
-            Debug.Log($"{mapSceneName} 로드 완료");
+            DebugUtils.Log($"{mapSceneName} 로드 완료");
             // 네트워크 플레이어 스폰
             SpawnNetworkPlayer();
             Managers.UI.CloseAlert();

@@ -7,21 +7,22 @@ namespace STARTING
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;
-        public event Action OnInventoryUpdated;
 
-        public Item[] Items;
-        
         public HxpTableSO hxpTable;
+        
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
+        
+        #region # Inventory Data
+        [SerializeField] private Item[] items;
 
-
-        #region #Inventory Data
-
-        //인벤토리 처리 로직
-
+        public Item[] Items
+        {
+            get => items;
+            set => items = value;
+        }
         #endregion
         
-        #region #Character Data
+        #region # Character Data
         // Account-related data
         [SerializeField] private string accountID;
         public string AccountID
@@ -275,7 +276,7 @@ namespace STARTING
         }
         #endregion
         
-        #region #각 프로퍼티 처리 Logic
+        #region # 각 프로퍼티 처리 Logic
         /// <summary>
         /// 경험치 상승시마다 레벨업하는지 체크
         /// </summary>

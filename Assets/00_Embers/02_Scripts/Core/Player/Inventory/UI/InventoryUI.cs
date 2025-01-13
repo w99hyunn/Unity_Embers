@@ -649,7 +649,7 @@ namespace STARTING
 #if UNITY_EDITOR
             if (!_showDebug) return;
 #endif
-            UnityEngine.Debug.Log($"[InventoryUI] {message}");
+            DebugUtils.Log($"[InventoryUI] {message}");
         }
 
         #endregion

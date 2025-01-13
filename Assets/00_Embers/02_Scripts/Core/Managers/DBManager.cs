@@ -17,7 +17,7 @@ namespace STARTING
     
     public class DBManager : MonoBehaviour
     {
-        #region #ItemDataBase
+        #region # ItemDataBase
 
         [SerializeField]
         private Dictionary<int, ItemData> itemDataCache = new Dictionary<int, ItemData>();
@@ -53,7 +53,7 @@ namespace STARTING
             InitializeItemData(); //아이템 데이터베이스
         }
 
-        #region #DB 서버 Open / Close
+        #region # DB 서버 Open / Close
         public bool ConnectDB()
         {
             bool success = ConnectToDatabase(dbServerIP, "embers", dbHost, dbPw, "3306");
@@ -88,7 +88,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #비밀번호 암호화 로직
+        #region # 비밀번호 암호화 로직
         private (string, string) GeneratePasswordHashAndSalt(string password)
         {
             byte[] salt = new byte[32];
@@ -114,7 +114,7 @@ namespace STARTING
         }
         #endregion
         
-        #region #회원가입
+        #region # 회원가입
         /// <summary>
         /// 회원가입
         /// </summary>
@@ -131,13 +131,13 @@ namespace STARTING
             }
 
             var (passwordHash, salt) = GeneratePasswordHashAndSalt(password);
-            string query = "INSERT INTO account (username, password_hash, password_salt, email) VALUES (@username, @passwordHash, @salt, @email)";
+            string query = "INSERT INTO account (Username, Password_hash, Password_salt, Email) VALUES (@Username, @PasswordHash, @Salt, @Email)";
 
             MySqlCommand cmd = new MySqlCommand(query, _connection);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@passwordHash", passwordHash);
-            cmd.Parameters.AddWithValue("@salt", salt);
-            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+            cmd.Parameters.AddWithValue("@Salt", salt);
+            cmd.Parameters.AddWithValue("@Email", email);
 
             try
             {
@@ -159,9 +159,9 @@ namespace STARTING
         /// <returns></returns>
         private bool IsUsernameDuplicate(string username)
         {
-            string query = "SELECT COUNT(*) FROM account WHERE username = @username";
+            string query = "SELECT COUNT(*) FROM account WHERE Username = @Username";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
-            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@Username", username);
 
             try
             {
@@ -176,7 +176,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #로그인
+        #region # 로그인
         /// <summary>
         /// 로그인
         /// </summary>
@@ -185,9 +185,9 @@ namespace STARTING
         /// <returns></returns>
         public LoginResponse Login(string username, string password)
         {
-            string query = "SELECT password_hash, password_salt, email, created_at FROM account WHERE username = @username";
+            string query = "SELECT Password_hash, Password_salt, Email, Created_at FROM account WHERE Username = @Username";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
-            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@Username", username);
 
             try
             {
@@ -195,22 +195,22 @@ namespace STARTING
                 {
                     if (reader.Read())
                     {
-                        string storedPasswordHash = reader.GetString("password_hash");
-                        string storedSalt = reader.GetString("password_salt");
+                        string storedPasswordHash = reader.GetString("Password_hash");
+                        string storedSalt = reader.GetString("Password_salt");
 
                         string inputPasswordHash = GetHash(password, storedSalt);
 
                         if (inputPasswordHash == storedPasswordHash)
                         {
-                            string email = reader.GetString("email");
-                            DateTime createdAt = reader.GetDateTime("created_at");
+                            string email = reader.GetString("Email");
+                            DateTime createdAt = reader.GetDateTime("Created_at");
                             string createdAtString = createdAt.ToString("yyyy-MM-dd HH:mm:ss");
 
                             reader.Close();
 
-                            string updateQuery = "UPDATE account SET is_online = TRUE WHERE username = @username";
+                            string updateQuery = "UPDATE account SET Is_online = TRUE WHERE Username = @Username";
                             MySqlCommand updateCmd = new MySqlCommand(updateQuery, _connection);
-                            updateCmd.Parameters.AddWithValue("@username", username);
+                            updateCmd.Parameters.AddWithValue("@Username", username);
                             updateCmd.ExecuteNonQuery();
 
                             DebugUtils.Log($"User Login : {username}");
@@ -249,7 +249,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #유저 정보 업데이트
+        #region # 유저 정보 업데이트
         /// <summary>
         /// 유저 정보 업데이트
         /// </summary>
@@ -270,18 +270,18 @@ namespace STARTING
             }
 
             string query = "UPDATE account SET email = @email" +
-                           (passwordHash != null ? ", password_hash = @passwordHash, password_salt = @salt" : "") +
-                           " WHERE username = @username";
+                           (passwordHash != null ? ", Password_hash = @PasswordHash, Password_salt = @Salt" : "") +
+                           " WHERE Username = @Username";
 
             MySqlCommand cmd = new MySqlCommand(query, _connection);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@email", newEmail);
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@Email", newEmail);
 
             // 비밀번호가 있으면 추가
             if (passwordHash != null)
             {
-                cmd.Parameters.AddWithValue("@passwordHash", passwordHash);
-                cmd.Parameters.AddWithValue("@salt", salt);
+                cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+                cmd.Parameters.AddWithValue("@Salt", salt);
             }
 
             try
@@ -307,7 +307,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #캐릭터 생성
+        #region # 캐릭터 생성
         /// <summary>
         /// 캐릭터 생성
         /// </summary>
@@ -322,13 +322,13 @@ namespace STARTING
         {
             try
             {
-                // 1. username으로 account_id 가져오기
-                string accountQuery = "SELECT account_id FROM account WHERE username = @username";
+                // 1. username으로 Account_id 가져오기
+                string accountQuery = "SELECT Account_id FROM account WHERE Username = @Username";
                 int accountId;
 
                 using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, _connection))
                 {
-                    accountCmd.Parameters.AddWithValue("@username", username);
+                    accountCmd.Parameters.AddWithValue("@Username", username);
 
                     object result = accountCmd.ExecuteScalar();
                     if (result == null)
@@ -341,10 +341,10 @@ namespace STARTING
                 }
 
                 // 2. 캐릭터 이름 중복 검사
-                string nameCheckQuery = "SELECT COUNT(*) FROM `character` WHERE name = @name";
+                string nameCheckQuery = "SELECT COUNT(*) FROM `character` WHERE Name = @Name";
                 using (MySqlCommand nameCheckCmd = new MySqlCommand(nameCheckQuery, _connection))
                 {
-                    nameCheckCmd.Parameters.AddWithValue("@name", characterName);
+                    nameCheckCmd.Parameters.AddWithValue("@Name", characterName);
 
                     int nameCount = Convert.ToInt32(nameCheckCmd.ExecuteScalar());
                     if (nameCount > 0)
@@ -356,18 +356,18 @@ namespace STARTING
                 // 3. character 생성 쿼리
                 string characterQuery = @"
                                         INSERT INTO `character`
-                                        (account_id, name, faction, class, gender, mapCode) 
+                                        (Account_id, Name, Faction, Class, Gender, MapCode) 
                                         VALUES 
-                                        (@account_id, @name, @faction, @class, @gender, @mapCode)";
+                                        (@Account_id, @Name, @Faction, @Class, @Gender, @MapCode)";
 
                 using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, _connection))
                 {
-                    characterCmd.Parameters.AddWithValue("@account_id", accountId);
-                    characterCmd.Parameters.AddWithValue("@name", characterName);
-                    characterCmd.Parameters.AddWithValue("@faction", faction);
-                    characterCmd.Parameters.AddWithValue("@class", characterClass);
-                    characterCmd.Parameters.AddWithValue("@gender", gender);
-                    characterCmd.Parameters.AddWithValue("@mapCode", mapCode);
+                    characterCmd.Parameters.AddWithValue("@Account_id", accountId);
+                    characterCmd.Parameters.AddWithValue("@Name", characterName);
+                    characterCmd.Parameters.AddWithValue("@Faction", faction);
+                    characterCmd.Parameters.AddWithValue("@Class", characterClass);
+                    characterCmd.Parameters.AddWithValue("@Gender", gender);
+                    characterCmd.Parameters.AddWithValue("@MapCode", mapCode);
 
                     int rowsAffected = characterCmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -390,7 +390,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #캐릭터 리스트 && 선택
+        #region # 캐릭터 리스트 && 선택(데이터 불러오기)
         /// <summary>
         /// 클라이언트가 로그인 했을 때 해당 accountID에 있는 모든 캐릭터 정보를 캐릭터 리스트에 띄울 정보만 가져옴.
         /// </summary>
@@ -402,13 +402,13 @@ namespace STARTING
 
             try
             {
-                // 1. username으로 account_id 가져오기
-                string accountQuery = "SELECT account_id FROM account WHERE username = @username";
+                // 1. username으로 Account_id 가져오기
+                string accountQuery = "SELECT Account_id FROM account WHERE Username = @Username";
                 int accountId;
 
                 using (MySqlCommand accountCmd = new MySqlCommand(accountQuery, _connection))
                 {
-                    accountCmd.Parameters.AddWithValue("@username", username);
+                    accountCmd.Parameters.AddWithValue("@Username", username);
 
                     object result = accountCmd.ExecuteScalar();
                     if (result == null)
@@ -420,12 +420,12 @@ namespace STARTING
                     accountId = Convert.ToInt32(result);
                 }
 
-                // 2. account_id로 캐릭터 목록 가져오기
-                string characterQuery = "SELECT name, class, level, attack FROM `character` WHERE account_id = @account_id";
+                // 2. Account_id로 캐릭터 목록 가져오기
+                string characterQuery = "SELECT Name, Class, Level, Attack FROM `character` WHERE Account_id = @Account_id";
 
                 using (MySqlCommand cmd = new MySqlCommand(characterQuery, _connection))
                 {
-                    cmd.Parameters.AddWithValue("@account_id", accountId);
+                    cmd.Parameters.AddWithValue("@Account_id", accountId);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -433,10 +433,10 @@ namespace STARTING
                         {
                             ChapterItem character = new ChapterItem
                             {
-                                chapterID = reader.GetString("name"),
-                                title = reader.GetString("name"),
-                                characterClass = reader.GetInt32("class"),
-                                description = $"Level {reader.GetInt32("level")} | Attack {reader.GetInt32("attack")}",
+                                chapterID = reader.GetString("Name"),
+                                title = reader.GetString("Name"),
+                                characterClass = reader.GetInt32("Class"),
+                                description = $"Level {reader.GetInt32("Level")} | Attack {reader.GetInt32("Attack")}",
                                 defaultState = ChapterState.CharacterPlayAndDelete,
                             };
                             characters.Add(character);
@@ -463,12 +463,12 @@ namespace STARTING
 
             string characterQuery = @"
         SELECT 
-            `character_id`, `name`, `level`, `hp`, `mp`, `hxp`, `gold`, `maxhp`, `maxmp`, 
-            `attack`, `class`, `sp`, `gender`, 
-            `current_position_x`, `current_position_y`, `current_position_z`, 
-            `mapCode`, `inventory_space`
+            `Character_id`, `Name`, `Level`, `Hp`, `Mp`, `Hxp`, `Gold`, `MaxHp`, `MaxMp`, 
+            `Attack`, `Class`, `Sp`, `Gender`, 
+            `Current_position_x`, `Current_position_y`, `Current_position_z`, 
+            `MapCode`, `InventorySpace`
         FROM `character`
-        WHERE `name` = @name;";
+        WHERE `Name` = @Name;";
 
             using (MySqlCommand command = new MySqlCommand(characterQuery, _connection))
             {
@@ -481,38 +481,38 @@ namespace STARTING
                         // 데이터 set 이벤트 중지
                         playerData.suppressEvents = true;
 
-                        int characterId = reader.GetInt32("character_id");
-                        playerData.Username = reader.GetString("name");
-                        playerData.Level = reader.GetInt32("level");
-                        playerData.MaxHp = reader.GetInt32("maxhp");
-                        playerData.Hp = reader.GetInt32("hp");
-                        playerData.MaxMp = reader.GetInt32("maxmp");
-                        playerData.Mp = reader.GetInt32("mp");
-                        playerData.Hxp = reader.GetInt32("hxp");
-                        playerData.Gold = reader.GetInt32("gold");
-                        playerData.Attack = reader.GetInt32("attack");
-                        playerData.Class = reader.GetString("class");
-                        playerData.Sp = reader.GetInt32("sp");
-                        playerData.Gender = reader.GetString("gender");
+                        int characterId = reader.GetInt32("Character_id");
+                        playerData.Username = reader.GetString("Name");
+                        playerData.Level = reader.GetInt32("Level");
+                        playerData.MaxHp = reader.GetInt32("MaxHp");
+                        playerData.Hp = reader.GetInt32("Hp");
+                        playerData.MaxMp = reader.GetInt32("MaxMp");
+                        playerData.Mp = reader.GetInt32("Mp");
+                        playerData.Hxp = reader.GetInt32("Hxp");
+                        playerData.Gold = reader.GetInt32("Gold");
+                        playerData.Attack = reader.GetInt32("Attack");
+                        playerData.Class = reader.GetString("Class");
+                        playerData.Sp = reader.GetInt32("Sp");
+                        playerData.Gender = reader.GetString("Gender");
 
-                        float posX = reader.GetFloat("current_position_x");
-                        float posY = reader.GetFloat("current_position_y");
-                        float posZ = reader.GetFloat("current_position_z");
+                        float posX = reader.GetFloat("Current_position_x");
+                        float posY = reader.GetFloat("Current_position_y");
+                        float posZ = reader.GetFloat("Current_position_z");
                         playerData.Position = new Vector3(posX, posY, posZ);
-                        playerData.MapCode = reader.GetString("mapCode");
-                        playerData.InventorySpace = reader.GetInt32("inventory_space");
+                        playerData.MapCode = reader.GetString("MapCode");
+                        playerData.InventorySpace = reader.GetInt32("InventorySpace");
                         
                         reader.Close();
                         
                         // 인벤토리 데이터 가져오기
                         string inventoryQuery = @"
-                            SELECT `item_id`, `amount`, `position`
+                            SELECT `Item_id`, `Amount`, `Position`
                             FROM `inventory`
-                            WHERE `character_id` = @characterId;";
+                            WHERE `Character_id` = @CharacterId;";
 
                         command.CommandText = inventoryQuery;
                         command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@characterId", characterId);
+                        command.Parameters.AddWithValue("@CharacterId", characterId);
 
                         using (MySqlDataReader inventoryReader = command.ExecuteReader())
                         {
@@ -520,9 +520,9 @@ namespace STARTING
 
                             while (inventoryReader.Read())
                             {
-                                int itemId = inventoryReader.GetInt32("item_id");
-                                int amount = inventoryReader.GetInt32("amount");
-                                int position = inventoryReader.GetInt32("position");
+                                int itemId = inventoryReader.GetInt32("Item_id");
+                                int amount = inventoryReader.GetInt32("Amount");
+                                int position = inventoryReader.GetInt32("Position");
 
                                 // ItemDatabase에서 ItemData 가져오기
                                 ItemData itemData = GetItemDataById(itemId);
@@ -570,7 +570,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #캐릭터 삭제
+        #region # 캐릭터 삭제
         /// <summary>
         /// 캐릭터 삭제
         /// </summary>
@@ -579,11 +579,11 @@ namespace STARTING
         {
             try
             {
-                string query = "DELETE FROM `character` WHERE `name` = @name;";
+                string query = "DELETE FROM `character` WHERE `Name` = @Name;";
 
                 using (MySqlCommand command = new MySqlCommand(query, _connection))
                 {
-                    command.Parameters.AddWithValue("@name", username);
+                    command.Parameters.AddWithValue("@Name", username);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     DebugUtils.Log($"Character deleted successfully. Rows affected: {rowsAffected}");
@@ -598,7 +598,7 @@ namespace STARTING
         }
         #endregion
 
-        #region #캐릭터 업데이트 자동 업데이트 로직
+        #region # 캐릭터 업데이트 자동 업데이트 로직
         /// <summary>
         /// 클라이언트의 데이터에 변화가 있을 때 해당 캐릭터의 정보 업데이트
         /// </summary>
@@ -616,30 +616,30 @@ namespace STARTING
                     
                     string query = @"
                                     UPDATE `character` 
-                                    SET `current_position_x` = @posX, 
-                                        `current_position_y` = @posY, 
-                                        `current_position_z` = @posZ 
-                                    WHERE `name` = @name;";
+                                    SET `Current_position_x` = @PosX, 
+                                        `Current_position_y` = @PosY, 
+                                        `Current_position_z` = @PosZ 
+                                    WHERE `Name` = @Name;";
 
                     using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
-                        command.Parameters.AddWithValue("@posX", position.x);
-                        command.Parameters.AddWithValue("@posY", (position.y + 1f));
-                        command.Parameters.AddWithValue("@posZ", position.z);
-                        command.Parameters.AddWithValue("@name", username);
+                        command.Parameters.AddWithValue("@PosX", position.x);
+                        command.Parameters.AddWithValue("@PosY", (position.y + 1f));
+                        command.Parameters.AddWithValue("@PosZ", position.z);
+                        command.Parameters.AddWithValue("@Name", username);
 
                         command.ExecuteNonQuery();
                     }
                 }
                 else
                 {
-                    string query = $"UPDATE `character` SET `{fieldName}` = @newValue WHERE `name` = @name;";
+                    string query = $"UPDATE `character` SET `{fieldName}` = @NewValue WHERE `Name` = @Name;";
 
                     using (MySqlCommand command = new MySqlCommand(query, _connection))
                     {
                         // 파라미터 바인딩
-                        command.Parameters.AddWithValue("@newValue", newValue);
-                        command.Parameters.AddWithValue("@name", username);
+                        command.Parameters.AddWithValue("@NewValue", newValue);
+                        command.Parameters.AddWithValue("@Name", username);
 
                         command.ExecuteNonQuery();
                     }
@@ -650,6 +650,49 @@ namespace STARTING
                 Debug.LogError($"Error updating database: {ex.Message}");
             }
         }
+        #endregion
+
+        #region # 캐릭터 인벤토리 자동 업데이트 로직
+
+        public void HandleSlotUpdateInDB(string characterName, int index, int itemId, int amount)
+        {
+            string query;
+
+            // 슬롯 비우기
+            if (itemId == -1)
+            {
+                query = @"
+            DELETE FROM `inventory`
+            WHERE `Character_id` = (
+                SELECT `Character_id` FROM `character` WHERE `Name` = @CharacterName
+            ) AND `Position` = @Position;";
+            }
+            else
+            {
+                // 슬롯 업데이트 또는 삽입
+                query = @"
+            INSERT INTO `inventory` (`Character_id`, `Item_id`, `Amount`, `Position`)
+            VALUES (
+                (SELECT `Character_id` FROM `character` WHERE `Name` = @CharacterName),
+                @ItemId, @Amount, @Position
+            )
+            ON DUPLICATE KEY UPDATE
+                `Item_id` = VALUES(`Item_id`),
+                `Amount` = VALUES(`Amount`);";
+            }
+
+            using (var command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@CharacterName", characterName);
+                command.Parameters.AddWithValue("@ItemId", itemId);
+                command.Parameters.AddWithValue("@Amount", amount);
+                command.Parameters.AddWithValue("@Position", index);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+
         #endregion
     }
 }

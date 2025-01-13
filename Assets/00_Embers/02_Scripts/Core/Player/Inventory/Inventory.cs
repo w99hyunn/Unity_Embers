@@ -265,8 +265,16 @@ namespace STARTING
             _inventoryUI = inventoryUI;
             _inventoryUI.SetInventoryReference(this);
         }
+        
+        /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
+        public void UpdateAccessibleStatesAll()
+        {
+            _inventoryUI.SetAccessibleSlotRange(Managers.Game.playerData.InventorySpace);
+        }
+        
 
-        /// <summary> 인벤토리에 아이템 추가
+        #region # 인벤토리 아이템의 행동 (추가 / 삭제 / 스왑 / 삭제 / 수 나눔 / 사용)
+                /// <summary> 인벤토리에 아이템 추가
         /// <para/> 넣는 데 실패한 잉여 아이템 개수 리턴
         /// <para/> 리턴이 0이면 넣는데 모두 성공했다는 의미
         /// </summary>
@@ -299,6 +307,7 @@ namespace STARTING
                             amount = ci.AddAmountAndGetExcess(amount);
 
                             UpdateSlot(index);
+                            Managers.Game.SendSlotUpdateToServer(index);
                         }
                     }
                     // 1-2. 빈 슬롯 탐색
@@ -325,6 +334,7 @@ namespace STARTING
                             amount = (amount > ciData.MaxAmount) ? (amount - ciData.MaxAmount) : 0;
 
                             UpdateSlot(index);
+                            Managers.Game.SendSlotUpdateToServer(index);
                         }
                     }
                 }
@@ -343,6 +353,7 @@ namespace STARTING
                         amount = 0;
 
                         UpdateSlot(index);
+                        Managers.Game.SendSlotUpdateToServer(index);
                     }
                 }
 
@@ -363,12 +374,13 @@ namespace STARTING
                     Managers.Game.playerData.Items[index] = itemData.CreateItem();
 
                     UpdateSlot(index);
+                    Managers.Game.SendSlotUpdateToServer(index);
                 }
             }
 
             return amount;
         }
-
+        
         /// <summary> 해당 슬롯의 아이템 제거 </summary>
         public void Remove(int index)
         {
@@ -376,6 +388,8 @@ namespace STARTING
 
             Managers.Game.playerData.Items[index] = null;
             _inventoryUI.RemoveItem(index);
+            
+            Managers.Game.SendSlotUpdateToServer(index);
         }
 
         /// <summary> 두 인덱스의 아이템 위치를 서로 교체 </summary>
@@ -416,6 +430,8 @@ namespace STARTING
 
             // 두 슬롯 정보 갱신
             UpdateSlot(indexA, indexB);
+            Managers.Game.SendSlotUpdateToServer(indexA);
+            Managers.Game.SendSlotUpdateToServer(indexB);
         }
 
         /// <summary> 셀 수 있는 아이템의 수량 나누기(A -> B 슬롯으로) </summary>
@@ -438,6 +454,9 @@ namespace STARTING
                 Managers.Game.playerData.Items[indexB] = _ciA.SeperateAndClone(amount);
 
                 UpdateSlot(indexA, indexB);
+                
+                Managers.Game.SendSlotUpdateToServer(indexA);
+                Managers.Game.SendSlotUpdateToServer(indexB);
             }
         }
 
@@ -456,16 +475,15 @@ namespace STARTING
                 if (succeeded)
                 {
                     UpdateSlot(index);
+                    
+                    Managers.Game.SendSlotUpdateToServer(index);
                 }
             }
         }
+        #endregion
+        
 
-        /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
-        public void UpdateAccessibleStatesAll()
-        {
-            _inventoryUI.SetAccessibleSlotRange(Managers.Game.playerData.InventorySpace);
-        }
-
+        #region # 인벤토리 정렬
         /// <summary> 빈 슬롯 없이 앞에서부터 채우기 </summary>
         public void TrimAll()
         {
@@ -534,5 +552,8 @@ namespace STARTING
             UpdateAllSlot();
             _inventoryUI.UpdateAllSlotFilters(); // 필터 상태 업데이트
         }
+        #endregion
+        
+        
     }
 }
