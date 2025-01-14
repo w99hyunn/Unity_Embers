@@ -1,29 +1,31 @@
 using System;
+using Michsky.UI.Reach;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace STARTING
 {
-    /// <summary> 인벤토리 UI 위에 띄울 작은 팝업들 관리 </summary>
+    /// <summary>
+    /// 아이템을 버리거나 수량 나눌 때 띄우는 팝업
+    /// </summary>
     public class InventoryPopupUI : MonoBehaviour
     {
         // 1. 아이템 버리기 확인 팝업
         [Header("Confirmation Popup")]
-        [SerializeField] private GameObject _confirmationPopupObject;
-        [SerializeField] private Text   _confirmationItemNameText;
-        [SerializeField] private Text   _confirmationText;
-        [SerializeField] private Button _confirmationOkButton;     // Ok
-        [SerializeField] private Button _confirmationCancelButton; // Cancel
+        [SerializeField] private ModalWindowManager _confirmationPopupObject;
+        [SerializeField] private TMP_Text   _confirmationItemNameText;
+        [SerializeField] private ButtonManager _confirmationOkButton;     // Ok
+        [SerializeField] private ButtonManager _confirmationCancelButton; // Cancel
 
         // 2. 수량 입력 팝업
         [Header("Amount Input Popup")]
-        [SerializeField] private GameObject _amountInputPopupObject;
-        [SerializeField] private Text       _amountInputItemNameText;
-        [SerializeField] private InputField _amountInputField;
-        [SerializeField] private Button _amountPlusButton;        // +
-        [SerializeField] private Button _amountMinusButton;       // -
-        [SerializeField] private Button _amountInputOkButton;     // Ok
-        [SerializeField] private Button _amountInputCancelButton; // Cancel
+        [SerializeField] private ModalWindowManager _amountInputPopupObject;
+        [SerializeField] private TMP_Text       _amountInputItemNameText;
+        [SerializeField] private TMP_InputField _amountInputField;
+        [SerializeField] private ButtonManager _amountPlusButton;        // +
+        [SerializeField] private ButtonManager _amountMinusButton;       // -
+        [SerializeField] private ButtonManager _amountInputOkButton;     // Ok
+        [SerializeField] private ButtonManager _amountInputCancelButton; // Cancel
 
         // 확인 버튼 눌렀을 때 동작할 이벤트
         private event Action OnConfirmationOK;
@@ -35,74 +37,44 @@ namespace STARTING
         private void Awake()
         {
             InitUIEvents();
-            HidePanel();
             HideConfirmationPopup();
             HideAmountInputPopup();
         }
 
-        private void Update()
-        {
-            if (_confirmationPopupObject.activeSelf)
-            {
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    _confirmationOkButton.onClick?.Invoke();
-                }
-                else if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _confirmationCancelButton.onClick?.Invoke();
-                }
-            }
-            else if (_amountInputPopupObject.activeSelf)
-            {
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    _amountInputOkButton.onClick?.Invoke();
-                }
-                else if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _amountInputCancelButton.onClick?.Invoke();
-                }
-            }
-        }
-        
-        /// <summary> 확인/취소 팝업 띄우기 </summary>
+        /// <summary>
+        /// 버릴건지 팝업
+        /// </summary>
         public void OpenConfirmationPopup(Action okCallback, string itemName)
         {
-            ShowPanel();
             ShowConfirmationPopup(itemName);
             SetConfirmationOKEvent(okCallback);
         }
+        
         /// <summary> 수량 입력 팝업 띄우기 </summary>
         public void OpenAmountInputPopup(Action<int> okCallback, int currentAmount, string itemName)
         {
             _maxAmount = currentAmount - 1;
             _amountInputField.text = "1";
-
-            ShowPanel();
+            
             ShowAmountInputPopup(itemName);
             SetAmountInputOKEvent(okCallback);
         }
 
         private void InitUIEvents()
         {
-            // 1. 확인 취소 팝업
-            _confirmationOkButton.onClick.AddListener(HidePanel);
+            // 1. 버릴건지 팝업
             _confirmationOkButton.onClick.AddListener(HideConfirmationPopup);
             _confirmationOkButton.onClick.AddListener(() => OnConfirmationOK?.Invoke());
-
-            _confirmationCancelButton.onClick.AddListener(HidePanel);
+            
             _confirmationCancelButton.onClick.AddListener(HideConfirmationPopup);
 
             // 2. 수량 입력 팝업
-            _amountInputOkButton.onClick.AddListener(HidePanel);
             _amountInputOkButton.onClick.AddListener(HideAmountInputPopup);
             _amountInputOkButton.onClick.AddListener(() => OnAmountInputOK?.Invoke(int.Parse(_amountInputField.text)));
-
-            _amountInputCancelButton.onClick.AddListener(HidePanel);
+            
             _amountInputCancelButton.onClick.AddListener(HideAmountInputPopup);
 
-            // [-] 버튼 이벤트
+            // - 버튼
             _amountMinusButton.onClick.AddListener(() =>
             {
                 int.TryParse(_amountInputField.text, out int amount);
@@ -116,7 +88,7 @@ namespace STARTING
                 }
             });
 
-            // [+] 버튼 이벤트
+            // + 버튼
             _amountPlusButton.onClick.AddListener(() =>
             {
                 int.TryParse(_amountInputField.text, out int amount);
@@ -152,26 +124,22 @@ namespace STARTING
             });
         }
 
-        private void ShowPanel() => gameObject.SetActive(true);
-        private void HidePanel() => gameObject.SetActive(false);
-
         private void ShowConfirmationPopup(string itemName)
         {
             _confirmationItemNameText.text = itemName;
-            _confirmationPopupObject.SetActive(true);
+            _confirmationPopupObject.OpenWindow();
         }
-        private void HideConfirmationPopup() => _confirmationPopupObject.SetActive(false);
+        private void HideConfirmationPopup() => _confirmationPopupObject.CloseWindow();
 
         private void ShowAmountInputPopup(string itemName)
         {
             _amountInputItemNameText.text = itemName;
-            _amountInputPopupObject.SetActive(true);
+            _amountInputPopupObject.OpenWindow();
         }
-        private void HideAmountInputPopup() => _amountInputPopupObject.SetActive(false);
+
+        private void HideAmountInputPopup() => _amountInputPopupObject.CloseWindow();
 
         private void SetConfirmationOKEvent(Action handler) => OnConfirmationOK = handler;
         private void SetAmountInputOKEvent(Action<int> handler) => OnAmountInputOK = handler;
-
-
     }
 }

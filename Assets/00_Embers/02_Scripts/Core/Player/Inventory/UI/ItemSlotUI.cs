@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ namespace STARTING
         [SerializeField] private Image _iconImage;
 
         [Tooltip("아이템 개수 텍스트")]
-        [SerializeField] private Text _amountText;
+        [SerializeField] private TMP_Text _amountText;
 
         [Tooltip("슬롯이 포커스될 때 나타나는 하이라이트 이미지")]
         [SerializeField] private Image _highlightImage;
