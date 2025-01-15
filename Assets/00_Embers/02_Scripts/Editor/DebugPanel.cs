@@ -159,41 +159,32 @@ namespace STARTING
             {
                 case 0:
                     Managers.Game.playerData.Hp += 450;
-                    Debug.Log("Managers.Game.playerData.Hp += 450");
                     break;
                 case 1:
                     Managers.Game.playerData.Mp += 450;
-                    Debug.Log("Managers.Game.playerData.Mp += 450;");
                     break;
                 case 2:
                     Managers.Game.playerData.Hxp += 450;
-                    Debug.Log("Managers.Game.playerData.Hxp += 450;");
                     break;
                 case 3:
                     Managers.Game.playerData.Hp -= 450;
-                    Debug.Log("Managers.Game.playerData.Hp -= 450;");
                     break;
                 case 4:
                     Managers.Game.playerData.Mp -= 450;
-                    Debug.Log("Managers.Game.playerData.Mp -= 450;");
                     break;
                 case 5:
                     _inventory.Add(Managers.DB.GetItemDataById(0));
-                    Debug.Log("0번 아이템 추가");
                     break;
                 case 6:
                     _inventory.Add(Managers.DB.GetItemDataById(1));
-                    Debug.Log("1번 아이템 추가");
                     break;
                 case 7:
                     _inventory.Add(Managers.DB.GetItemDataById(4));
-                    Debug.Log("4번 아이템 추가");
                     break;
                 case 8:
                     int capacity = Managers.Game.playerData.InventorySpace;
                     for(int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
-                    Debug.Log("모두 제거");
                     break;
                 default:
                     Debug.LogWarning("Invalid Option Selected");
