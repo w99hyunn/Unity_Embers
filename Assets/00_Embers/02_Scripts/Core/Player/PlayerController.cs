@@ -215,7 +215,7 @@
             float currentHorizontalSpeed = new Vector3(controller.velocity.x, 0.0f, controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
+            float inputMagnitude = 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||

@@ -19,7 +19,7 @@ namespace STARTING
                 await Awaitable.NextFrameAsync();
             }
 
-            _cameraTransform = NetworkClient.localPlayer.GetComponentInChildren<Camera>().transform;
+            _cameraTransform = NetworkClient.localPlayer.GetComponent<PlayerController>().mainCamera.transform;
         }
         
         void Update()
