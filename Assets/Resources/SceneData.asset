@@ -21,7 +21,11 @@ MonoBehaviour:
     sceneIdentifier: Session
   - sceneName: InGame
     sceneIdentifier: InGame
-  - sceneName: Maps_1
-    sceneIdentifier: Maps_1
-  - sceneName: Maps_2
-    sceneIdentifier: Maps_2
+  - sceneName: Chunk_0_0
+    sceneIdentifier: Chunk_0_0
+  - sceneName: Chunk_0_1
+    sceneIdentifier: Chunk_0_1
+  - sceneName: Chunk_0_2
+    sceneIdentifier: Chunk_0_2
+  - sceneName: Chunk_0_3
+    sceneIdentifier: Chunk_0_3

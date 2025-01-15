@@ -3,7 +3,7 @@ using System;
 
 namespace STARTING
 {
-    [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/Player Data", order = 1)]
+    [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/PlayerData", order = 1)]
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;

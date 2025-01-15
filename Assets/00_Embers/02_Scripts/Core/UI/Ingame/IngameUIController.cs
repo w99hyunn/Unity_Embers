@@ -1,5 +1,4 @@
-﻿using System;
-using Michsky.UI.Reach;
+﻿using Michsky.UI.Reach;
 using Mirror;
 using UnityEngine;
 

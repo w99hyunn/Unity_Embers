@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2a67f48f2662640862cdbadc637ad6, type: 3}
+  m_Name: ChunkList
+  m_EditorClassIdentifier: 
+  chunkSceneNames:
+  - chunkDisplayName: "\uC2DC\uC791\uC9C0\uC810"
+    sceneName: Chunk_0_0
+  - chunkDisplayName: 1
+    sceneName: Chunk_0_1
+  - chunkDisplayName: 2
+    sceneName: Chunk_0_2
+  - chunkDisplayName: 3
+    sceneName: Chunk_0_3

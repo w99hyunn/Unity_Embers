@@ -4830,6 +4830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4b0009901c08441bdb665ed05990b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chunkList: {fileID: 11400000, guid: dd27b2ba12c24fa42b76d0768c4ccabd, type: 2}
+  chunkSize: 300
+  loadRange: 1
 --- !u!1 &2046058148
 GameObject:
   m_ObjectHideFlags: 0

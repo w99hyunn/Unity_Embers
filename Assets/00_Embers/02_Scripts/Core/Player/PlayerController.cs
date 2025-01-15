@@ -260,6 +260,10 @@
             controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+            //청크 로드
+            //TODO: Update에서 프레임단위로 호출되는 코드이므로, 좋은 방법을 생각해서 부하 줄이기
+            Managers.Map.UpdateChunks(this.transform.position);
+            
             // update animator if using character
             if (_hasAnimator)
             {

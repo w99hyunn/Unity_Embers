@@ -562,7 +562,7 @@ namespace STARTING
         /// <summary> 슬롯에 아이템 아이콘 등록 </summary>
         public void SetItemIcon(int index, Sprite icon)
         {
-            EditorLog($"Set Item Icon : Slot [{index}]");
+            //EditorLog($"Set Item Icon : Slot [{index}]");
 
             _slotUIList[index].SetItem(icon);
         }
@@ -570,7 +570,7 @@ namespace STARTING
         /// <summary> 해당 슬롯의 아이템 개수 텍스트 지정 </summary>
         public void SetItemAmountText(int index, int amount)
         {
-            EditorLog($"Set Item Amount Text : Slot [{index}], Amount [{amount}]");
+            //EditorLog($"Set Item Amount Text : Slot [{index}], Amount [{amount}]");
 
             // NOTE : amount가 1 이하일 경우 텍스트 미표시
             _slotUIList[index].SetItemAmount(amount);
@@ -579,7 +579,7 @@ namespace STARTING
         /// <summary> 해당 슬롯의 아이템 개수 텍스트 지정 </summary>
         public void HideItemAmountText(int index)
         {
-            EditorLog($"Hide Item Amount Text : Slot [{index}]");
+            //EditorLog($"Hide Item Amount Text : Slot [{index}]");
 
             _slotUIList[index].SetItemAmount(1);
         }
@@ -587,7 +587,7 @@ namespace STARTING
         /// <summary> 슬롯에서 아이템 아이콘 제거, 개수 텍스트 숨기기 </summary>
         public void RemoveItem(int index)
         {
-            EditorLog($"Remove Item : Slot [{index}]");
+            //EditorLog($"Remove Item : Slot [{index}]");
 
             _slotUIList[index].RemoveItem();
         }
