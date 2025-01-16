@@ -359,13 +359,13 @@ namespace STARTING
                                         (Account_id, Name, Faction, Class, Gender, MapCode) 
                                         VALUES 
                                         (@Account_id, @Name, @Faction, @Class, @Gender, @MapCode)";
-
+                
                 using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, _connection))
                 {
                     characterCmd.Parameters.AddWithValue("@Account_id", accountId);
                     characterCmd.Parameters.AddWithValue("@Name", characterName);
                     characterCmd.Parameters.AddWithValue("@Faction", faction);
-                    characterCmd.Parameters.AddWithValue("@Class", characterClass);
+                    characterCmd.Parameters.AddWithValue("@Class", characterClass.ToString());
                     characterCmd.Parameters.AddWithValue("@Gender", gender);
                     characterCmd.Parameters.AddWithValue("@MapCode", mapCode);
 

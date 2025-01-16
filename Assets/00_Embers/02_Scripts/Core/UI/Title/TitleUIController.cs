@@ -306,7 +306,7 @@ namespace STARTING
                 Gender = (int)gender,
                 MapCode = _model.MapCode,
             };
-
+            
             NetworkClient.ReplaceHandler<CreateCharacterResponsetMessage>(OnCreateCharacterResultReceived);
             NetworkClient.Send(createChracterRequestMessage);
         }
