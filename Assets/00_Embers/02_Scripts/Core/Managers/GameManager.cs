@@ -9,9 +9,9 @@ namespace STARTING
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
         
-        public GameObject GetAvatarPrefab()
+        public GameObject GetAvatarPrefab(Class playerClass)
         {
-            var avatarDataPrefab = avatarData.avatarList.FirstOrDefault(data => data.classType == playerData.Class);
+            var avatarDataPrefab = avatarData.avatarList.FirstOrDefault(data => data.classType == playerClass);
             
             if (avatarDataPrefab != null)
             {

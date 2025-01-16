@@ -3092,8 +3092,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   playerNickname: 
-  nicknameText: {fileID: 3956582941175031711}
+  playerClass: -1
   playerAvatarBind: {fileID: 6686823724019068726}
+  nicknameText: {fileID: 3956582941175031711}
   lockCursor: 0
 --- !u!114 &9183639639071689903
 MonoBehaviour:

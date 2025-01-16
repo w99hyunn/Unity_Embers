@@ -6,16 +6,20 @@ namespace STARTING
 {
     public class Player : NetworkBehaviour
     {        
-        private CharacterController _characterController;
-        private Animator _animator;
-        
         [SyncVar(hook = nameof(OnNicknameChanged))]
         public string playerNickname;
-        public TMP_Text nicknameText;
 
+        [SyncVar(hook = nameof(OnClassChanged))]
+        public Class playerClass = Class.NONE;
+        
         [Header("플레이어 아바타가 바인드될 곳")]
         public Transform playerAvatarBind;
+        [Header("캐릭터 닉네임")]
+        public TMP_Text nicknameText;
         
+        private CharacterController _characterController;
+        private Animator _animator;
+        [HideInInspector]
         public bool lockCursor = false;
 
         private void Awake()
@@ -23,19 +27,79 @@ namespace STARTING
             TryGetComponent<CharacterController>(out _characterController);
             TryGetComponent<Animator>(out _animator);
         }
-
-        #region # Player Position Setting && Save
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
+            
+            InitNickName();
             InitializePlayerPosition();
+            InitClass(); //Class SyncVar로 공유 후 Init Avatar 해줌.
+        }
+
+        #region # Sync Nickname / Class
+        //Sync Nickname
+        private void InitNickName()
+        {
+            CmdSetNickname(Managers.Game.playerData.Username);
+        }
+        
+        [Command]
+        private void CmdSetNickname(string nickname)
+        {
+            this.playerNickname = nickname;
+        }
+        
+        private void OnNicknameChanged(string oldNickname, string newNickname)
+        {
+            UpdateNicknameUI(newNickname);
+        }
+        
+        private void UpdateNicknameUI(string nickname)
+        {
+            if (nicknameText != null)
+            {
+                nicknameText.text = nickname;
+            }
+        }
+        
+        //Sync Class
+        private void InitClass()
+        {
+            CmdSetClass(Managers.Game.playerData.Class);
+        }
+        
+        [Command(requiresAuthority = false)]
+        public void CmdSetClass(Class playerClass)
+        {
+            this.playerClass = playerClass;
+        }
+
+        private void OnClassChanged(Class oldClass, Class newClass)
+        {
             InitializePlayerAvatar();
         }
         
+        public void InitializePlayerAvatar()
+        {
+            var avatarPrefab = Managers.Game.GetAvatarPrefab(this.playerClass);
+            
+            Debug.Log("InitializePlayerAvatar 실행 + " + this.playerClass);
+            
+            Debug.Log(avatarPrefab.name);
+            
+            GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
+            _currentAvatar.transform.localPosition = Vector3.zero;
+            _currentAvatar.transform.localRotation = Quaternion.identity;
+            
+            _animator.Rebind(); // Animator 초기화
+            _animator.Update(0);
+        }
+        #endregion
+        
+        #region # Player Position Setting && Save
+
         private void InitializePlayerPosition()
         {
-            InitNickName();
-            
             _characterController.enabled = false;
             transform.position = Managers.Game.playerData.Position;
             _characterController.enabled = true;
@@ -49,46 +113,6 @@ namespace STARTING
             {
                 await Awaitable.WaitForSecondsAsync(5f);
                 Managers.Game.playerData.Position = transform.position;
-            }
-        }
-        
-        public void InitializePlayerAvatar()
-        {
-            var avatarPrefab = Managers.Game.GetAvatarPrefab();
-            
-            Debug.Log(avatarPrefab.name);
-            
-            GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
-            _currentAvatar.transform.localPosition = Vector3.zero;
-            _currentAvatar.transform.localRotation = Quaternion.identity;
-            
-            _animator.Rebind(); // Animator 초기화
-            _animator.Update(0);
-        }
-        #endregion
-        
-        #region # Nickname Sync
-        private void InitNickName()
-        {
-            CmdSetNickname(Managers.Game.playerData.Username);
-        }
-        
-        [Command]
-        private void CmdSetNickname(string nickname)
-        {
-            playerNickname = nickname;
-        }
-        
-        private void OnNicknameChanged(string oldNickname, string newNickname)
-        {
-            UpdateNicknameUI(newNickname);
-        }
-        
-        private void UpdateNicknameUI(string nickname)
-        {
-            if (nicknameText != null)
-            {
-                nicknameText.text = nickname;
             }
         }
         #endregion
