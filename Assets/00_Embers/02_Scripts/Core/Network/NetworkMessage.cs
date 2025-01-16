@@ -56,7 +56,7 @@ namespace STARTING
         public string Username;
         public string CharacterName;
         public int Faction;
-        public int CharacterClass;
+        public Class CharacterClass;
         public int Gender;
         public int MapCode;
     }
@@ -96,7 +96,7 @@ namespace STARTING
         public int MaxHp;
         public int MaxMp;
         public int Attack;
-        public string Class;
+        public Class Class;
         public int Sp;
         public string Gender;
         public Vector3 Position;

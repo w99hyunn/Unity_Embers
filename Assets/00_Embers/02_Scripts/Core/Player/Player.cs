@@ -7,20 +7,21 @@ namespace STARTING
     public class Player : NetworkBehaviour
     {        
         private CharacterController _characterController;
+        private Animator _animator;
         
         [SyncVar(hook = nameof(OnNicknameChanged))]
         public string playerNickname;
         public TMP_Text nicknameText;
 
         [Header("플레이어 아바타가 바인드될 곳")]
-        public GameObject playerAvatarBind;
+        public Transform playerAvatarBind;
         
         public bool lockCursor = false;
-        
+
         private void Awake()
         {
-            DebugUtils.Log("생성된 플레이어: " + gameObject.name);
             TryGetComponent<CharacterController>(out _characterController);
+            TryGetComponent<Animator>(out _animator);
         }
 
         #region # Player Position Setting && Save
@@ -28,8 +29,9 @@ namespace STARTING
         {
             base.OnStartLocalPlayer();
             InitializePlayerPosition();
+            InitializePlayerAvatar();
         }
-
+        
         private void InitializePlayerPosition()
         {
             InitNickName();
@@ -38,8 +40,7 @@ namespace STARTING
             transform.position = Managers.Game.playerData.Position;
             _characterController.enabled = true;
             
-            // 위치 지속적으로 저장
-            _ = SavePosition();
+            _ = SavePosition(); // 위치 지속적으로 저장
         }
 
         private async Awaitable SavePosition()
@@ -49,6 +50,20 @@ namespace STARTING
                 await Awaitable.WaitForSecondsAsync(5f);
                 Managers.Game.playerData.Position = transform.position;
             }
+        }
+        
+        public void InitializePlayerAvatar()
+        {
+            var avatarPrefab = Managers.Game.GetAvatarPrefab();
+            
+            Debug.Log(avatarPrefab.name);
+            
+            GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
+            _currentAvatar.transform.localPosition = Vector3.zero;
+            _currentAvatar.transform.localRotation = Quaternion.identity;
+            
+            _animator.Rebind(); // Animator 초기화
+            _animator.Update(0);
         }
         #endregion
         

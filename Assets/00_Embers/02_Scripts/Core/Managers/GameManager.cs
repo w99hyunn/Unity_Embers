@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System.Linq;
+using Mirror;
 using UnityEngine;
 
 namespace STARTING
@@ -6,7 +7,20 @@ namespace STARTING
     public class GameManager : MonoBehaviour
     {
         public PlayerDataSO playerData;
-
+        public AvatarDataSO avatarData;
+        
+        public GameObject GetAvatarPrefab()
+        {
+            var avatarDataPrefab = avatarData.avatarList.FirstOrDefault(data => data.classType == playerData.Class);
+            
+            if (avatarDataPrefab != null)
+            {
+                return avatarDataPrefab.avatarPrefab;
+            }
+            
+            return null;
+        }
+        
         #region # 캐릭터 데이터 이벤트 등록
         //Managers.Game.playerData의 정보가 업데이트되면 자동으로 네트워크 메시지를 보내 DB 업데이트
         public void OnEnable()

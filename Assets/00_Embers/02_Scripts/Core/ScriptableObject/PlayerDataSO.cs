@@ -182,8 +182,8 @@ namespace STARTING
             }
         }
 
-        [SerializeField] private string classType;
-        public string Class
+        [SerializeField] private Class classType;
+        public Class Class
         {
             get => classType;
             set

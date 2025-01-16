@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine;
@@ -161,6 +160,13 @@ namespace STARTING
                 }
             }
 
+            //플레이어를 InGame씬으로 이동
+            if (NetworkClient.localPlayer != null)
+            {
+                Scene inGameScene = SceneManager.GetSceneByName("InGame");
+                SceneManager.MoveGameObjectToScene(NetworkClient.localPlayer.gameObject, inGameScene);
+            }
+            
             SceneManager.SetActiveScene(
                 SceneManager.GetSceneByName($"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}"));
         }

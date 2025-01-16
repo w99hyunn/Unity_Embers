@@ -5,6 +5,7 @@
     /// </summary>
     public enum Class
     {
+        NONE = -1,
         WARRIOR = 0,
         MAGE = 1,
     }

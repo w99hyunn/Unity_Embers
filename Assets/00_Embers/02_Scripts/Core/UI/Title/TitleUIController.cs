@@ -302,7 +302,7 @@ namespace STARTING
                 Username = username,
                 CharacterName = characterName,
                 Faction = faction,
-                CharacterClass = (int)characterClass,
+                CharacterClass = characterClass,
                 Gender = (int)gender,
                 MapCode = _model.MapCode,
             };
@@ -370,10 +370,10 @@ namespace STARTING
 
                 switch (character.characterClass)
                 {
-                    case 0:
+                    case Class.WARRIOR:
                         character.background = _view.warriorBackground;
                         break;
-                    case 1:
+                    case Class.MAGE:
                         character.background = _view.mageBackground;
                         break;
                 }

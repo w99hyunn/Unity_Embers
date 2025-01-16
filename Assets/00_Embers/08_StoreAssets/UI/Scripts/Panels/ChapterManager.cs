@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using STARTING;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -51,7 +52,7 @@ namespace Michsky.UI.Reach
         {
             public string chapterID;
             public string title;
-            public int characterClass;
+            public Class characterClass;
             public Sprite background = null;
             [TextArea] public string description;
             public ChapterState defaultState;
@@ -141,7 +142,7 @@ namespace Michsky.UI.Reach
                 }
 
                 // ClassName
-                if (useLocalization == false && chapters[i].characterClass != -1) { item.classNameObject.text = ((STARTING.Class)chapters[i].characterClass).ToString(); }
+                if (useLocalization == false && chapters[i].characterClass != Class.NONE) { item.classNameObject.text = ((STARTING.Class)chapters[i].characterClass).ToString(); }
                 else
                 {
                     //LocalizedObject tempLoc = item.descriptionObject.GetComponent<LocalizedObject>();

@@ -318,7 +318,7 @@ namespace STARTING
         /// <param name="gender">Male, Female, Other</param>
         /// <param name="mapCode">인트값</param>
         /// <returns></returns>
-        public CreateCharacterResult CreateCharacter(string username, string characterName, int faction, int characterClass, int gender, int mapCode)
+        public CreateCharacterResult CreateCharacter(string username, string characterName, int faction, Class characterClass, int gender, int mapCode)
         {
             try
             {
@@ -435,13 +435,20 @@ namespace STARTING
                             {
                                 chapterID = reader.GetString("Name"),
                                 title = reader.GetString("Name"),
-                                characterClass = reader.GetInt32("Class"),
                                 description = $"Level {reader.GetInt32("Level")} | Attack {reader.GetInt32("Attack")}",
                                 defaultState = ChapterState.CharacterPlayAndDelete,
                             };
+                            
+                            string classString = reader.GetString("Class");
+                            if (Enum.TryParse(classString, true, out Class characterClass))
+                            {
+                                character.characterClass = characterClass;
+                            }
+
                             characters.Add(character);
                         }
                     }
+
                 }
             }
             catch (Exception ex)
@@ -491,7 +498,11 @@ namespace STARTING
                         playerData.Hxp = reader.GetInt32("Hxp");
                         playerData.Gold = reader.GetInt32("Gold");
                         playerData.Attack = reader.GetInt32("Attack");
-                        playerData.Class = reader.GetString("Class");
+                        string classString = reader.GetString("Class");
+                        if (Enum.TryParse(classString, out Class characterClass))
+                        {
+                            playerData.Class = characterClass;
+                        }
                         playerData.Sp = reader.GetInt32("Sp");
                         playerData.Gender = reader.GetString("Gender");
 

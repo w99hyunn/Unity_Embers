@@ -1244,6 +1244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 4f0975df5fafc2c46a85d65111fc42c6, type: 2}
+  avatarData: {fileID: 11400000, guid: 46488b42bca6c8e41925b566a937a556, type: 2}
 --- !u!1 &409558270
 GameObject:
   m_ObjectHideFlags: 0
