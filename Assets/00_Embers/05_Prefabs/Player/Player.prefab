@@ -3091,8 +3091,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _characterController: {fileID: 4881109714093302404}
-  _animator: {fileID: 8651318864330852816}
   playerNickname: 
   nicknameText: {fileID: 3956582941175031711}
   playerAvatarBind: {fileID: 6686823724019068726}
