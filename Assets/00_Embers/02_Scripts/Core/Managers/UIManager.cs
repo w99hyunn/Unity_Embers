@@ -30,6 +30,11 @@ namespace STARTING
             alertModal.CloseWindow();
         }
 
+        public void FadeIn()
+        {
+            initPanel.FadeIn();
+        }
+        
         public void FadeOut()
         {
             _ = StartInitialize();

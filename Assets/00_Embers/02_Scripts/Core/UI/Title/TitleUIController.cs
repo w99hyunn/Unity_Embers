@@ -506,6 +506,7 @@ namespace STARTING
 
         private void InitInGame()
         {
+            Managers.UI.FadeIn();
             Managers.UI.OpenAlert("LOADING", "Ingame loading...", 2);
             Managers.Map.LoadInGame();
         }

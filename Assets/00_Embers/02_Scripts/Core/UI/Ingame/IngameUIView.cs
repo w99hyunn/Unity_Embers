@@ -7,23 +7,14 @@ namespace STARTING
 {
     public class IngameUIView : MonoBehaviour
     {
-        [Header("Fade In")]
-        public ImageFading initPanel;
-
         [Header("Player HUD")] [Header("Stats")]
         public TMP_Text playerLevel;
         public ProgressBar playerHp;
         public ProgressBar playerMp;
         public ProgressBar playerHxp;
-
-        private void Awake()
-        {
-            if (initPanel != null) { initPanel.gameObject.SetActive(true); }
-        }
         
         void Start()
         {
-            _ = StartInitialize();
             StartHUDInit();
         }
 
@@ -61,12 +52,6 @@ namespace STARTING
                     playerMp.SetValue(Convert.ToInt32(newValue));
                     break;
             }
-        }
-        
-        async Awaitable StartInitialize()
-        {
-            await Awaitable.WaitForSecondsAsync(0.5f);
-            if (initPanel != null) { initPanel.FadeOut(); }
         }
         
         private void StartHUDInit()
