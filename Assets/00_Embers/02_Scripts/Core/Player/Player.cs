@@ -5,7 +5,7 @@ using UnityEngine;
 namespace STARTING
 {
     public class Player : NetworkBehaviour
-    {        
+    {
         [SyncVar(hook = nameof(OnNicknameChanged))]
         public string playerNickname;
 
@@ -82,10 +82,6 @@ namespace STARTING
         public void InitializePlayerAvatar()
         {
             var avatarPrefab = Managers.Game.GetAvatarPrefab(this.playerClass);
-            
-            Debug.Log("InitializePlayerAvatar 실행 + " + this.playerClass);
-            
-            Debug.Log(avatarPrefab.name);
             
             GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
             _currentAvatar.transform.localPosition = Vector3.zero;

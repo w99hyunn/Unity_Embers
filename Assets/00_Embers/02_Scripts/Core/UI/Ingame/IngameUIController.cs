@@ -1,24 +1,22 @@
-﻿using Michsky.UI.Reach;
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 
 namespace STARTING
 {
     public class IngameUIController : MonoBehaviour
     {
-        public PauseMenuManager pauseMenuManager;
-        public GameObject localPlayer;
+        public IngameUIView _view;
+        private GameObject _localPlayer;
         
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         async void Start()
         {
             await PlayerBind();
-            pauseMenuManager.onPause += CursorLockState;
+            _view.pauseMenuManager.onPause += CursorLockState;
         }
 
         private void OnDisable()
         {
-            pauseMenuManager.onPause -= CursorLockState;
+            _view.pauseMenuManager.onPause -= CursorLockState;
         }
 
         private async Awaitable PlayerBind()
@@ -28,13 +26,17 @@ namespace STARTING
                 await Awaitable.NextFrameAsync();
             }
             
-            localPlayer = NetworkClient.localPlayer.gameObject;
+            _localPlayer = NetworkClient.localPlayer.gameObject;
         }
 
+        public void MapNameChange(string mapName)
+        {
+            _view.mapName.SetText(mapName);
+        }
         
         public void ReturnTitle()
         {
-            localPlayer.GetComponent<Player>().CmdRemovePlayer();
+            _localPlayer.GetComponent<Player>().CmdRemovePlayer();
             NetworkClient.NotReady();
 
             Managers.Map.ReturnTitle();
@@ -42,7 +44,7 @@ namespace STARTING
 
         public void CursorLockState(bool index)
         {
-            localPlayer.GetComponent<Player>().lockCursor = index;
+            _localPlayer.GetComponent<Player>().lockCursor = index;
         }
     }
 }

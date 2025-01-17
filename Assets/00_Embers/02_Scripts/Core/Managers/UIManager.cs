@@ -7,10 +7,14 @@ namespace STARTING
     {
         [Header("Common Alert Popup")]
         public ModalWindowManager alertModal;
+
+        [Header("Location Alert")]
+        public FeedNotification localtionNoti;
         
         [Header("Fade Screen")]
         public ImageFading initPanel;
-        
+
+        #region # Alert
         /// <summary>
         /// 팝업
         /// </summary>
@@ -29,7 +33,15 @@ namespace STARTING
         {
             alertModal.CloseWindow();
         }
+        #endregion
 
+        public void LocationNoti(string message)
+        {
+            localtionNoti.notificationText = message;
+            localtionNoti.ExpandNotification();
+        }
+        
+        #region # Fade In / Out
         public void FadeIn()
         {
             initPanel.FadeIn();
@@ -45,5 +57,6 @@ namespace STARTING
             await Awaitable.WaitForSecondsAsync(0.5f);
             if (initPanel != null) { initPanel.FadeOut(); }
         }
+        #endregion
     }
 }

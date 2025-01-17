@@ -203,7 +203,7 @@ namespace STARTING
             Debug.Log($"Unloaded chunk: {sceneName}");
         }
 
-        private Vector2Int GetChunkCoord(Vector3 position)
+        public Vector2Int GetChunkCoord(Vector3 position)
         {
             int x = Mathf.FloorToInt(position.x / chunkSize);
             int z = Mathf.FloorToInt(position.z / chunkSize);

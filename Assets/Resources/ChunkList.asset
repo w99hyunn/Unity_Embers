@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ChunkList
   m_EditorClassIdentifier: 
   chunkSceneNames:
-  - chunkDisplayName: "\uC2DC\uC791\uC9C0\uC810"
+  - chunkDisplayName: Avalon
     sceneName: Chunk_0_0
-  - chunkDisplayName: 1
+  - chunkDisplayName: Valhalla
     sceneName: Chunk_0_1
   - chunkDisplayName: 2
     sceneName: Chunk_0_2

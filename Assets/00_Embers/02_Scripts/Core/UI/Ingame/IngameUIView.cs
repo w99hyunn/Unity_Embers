@@ -7,11 +7,17 @@ namespace STARTING
 {
     public class IngameUIView : MonoBehaviour
     {
-        [Header("Player HUD")] [Header("Stats")]
+        public PauseMenuManager pauseMenuManager;
+        
+        [Header("Player HUD")]
+        [Header("Stats")]
         public TMP_Text playerLevel;
         public ProgressBar playerHp;
         public ProgressBar playerMp;
         public ProgressBar playerHxp;
+
+        [Header("Minimap")]
+        public ButtonManager mapName;
         
         void Start()
         {
