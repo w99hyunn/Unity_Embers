@@ -376,6 +376,9 @@ namespace STARTING
                     case Class.MAGE:
                         character.background = _view.mageBackground;
                         break;
+                    case Class.ROGUE:
+                        character.background = _view.rogueBackground;
+                        break;
                 }
 
                 //UnityEvent 초기화

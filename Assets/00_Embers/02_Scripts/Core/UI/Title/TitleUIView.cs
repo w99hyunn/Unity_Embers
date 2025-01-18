@@ -43,6 +43,7 @@ namespace STARTING
         [Header("Character Select - Class Background")]
         public Sprite warriorBackground;
         public Sprite mageBackground;
+        public Sprite rogueBackground;
 
         [Space(20)]
         [Header("Character Select - Character Delete Popup")]

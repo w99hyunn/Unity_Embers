@@ -8,6 +8,7 @@
         NONE = -1,
         WARRIOR = 0,
         MAGE = 1,
+        ROGUE,
     }
 
     public enum Gender
