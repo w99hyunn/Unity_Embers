@@ -10,10 +10,17 @@ namespace STARTING
     public class CustomNetworkManager : NetworkManager
     {
         [Header("Server Info")]
-        public string IP;
-        public ushort PORT;
-        public bool _SERVER_AUTO_RUN = false;
+        [SerializeField]
+        private string IP;
+        [SerializeField]
+        private ushort PORT;
+        [SerializeField]
+        private bool _SERVER_AUTO_RUN = false;
 
+        [SerializeField]
+        private ChatServer chatServer;
+        public ChatServer ChatServer => chatServer;
+        
         public override void Start()
         {
 #if UNITY_EDITOR

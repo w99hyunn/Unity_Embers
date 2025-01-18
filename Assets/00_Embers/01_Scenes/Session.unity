@@ -1292,6 +1292,7 @@ MonoBehaviour:
   IP: 172.30.1.67
   PORT: 8585
   _SERVER_AUTO_RUN: 0
+  chatServer: {fileID: 0}
 --- !u!1 &390961614
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,8 +4436,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB9F5 \uC774\uB984 \uD45C\uC2DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 92ec827d65cca504a94c1aa888dcd110, type: 2}
-  m_sharedMaterial: {fileID: -2969037259350684032, guid: 92ec827d65cca504a94c1aa888dcd110, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
+  m_sharedMaterial: {fileID: 7005715898997174795, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
