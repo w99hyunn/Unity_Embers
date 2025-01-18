@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: ChunkList
   m_EditorClassIdentifier: 
   chunkSceneNames:
-  - chunkDisplayName: Avalon
+  - chunkDisplayName: "\uC544\uBC1C\uB860 \uC11C\uCABD \uC678\uACFD"
+    sceneName: Chunk_-1_0
+  - chunkDisplayName: "\uC544\uD2C0\uB780\uD2F0\uC2A4"
+    sceneName: Chunk_0_-1
+  - chunkDisplayName: "\uC544\uBC1C\uB860"
     sceneName: Chunk_0_0
-  - chunkDisplayName: Valhalla
+  - chunkDisplayName: "\uC544\uBC1C\uB860 \uB3D9\uCABD \uC678\uACFD"
+    sceneName: Chunk_1_0
+  - chunkDisplayName: "\uBC1C\uD560\uB77C"
     sceneName: Chunk_0_1
-  - chunkDisplayName: 2
+  - chunkDisplayName: Chunk_0_2
     sceneName: Chunk_0_2
-  - chunkDisplayName: 3
-    sceneName: Chunk_0_3

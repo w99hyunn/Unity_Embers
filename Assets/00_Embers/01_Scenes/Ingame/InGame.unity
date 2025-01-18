@@ -18080,7 +18080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonIcon: {fileID: 21300000, guid: a6b9d1928f1b50648a7605aa0e5386fb, type: 3}
-  buttonText: MAPNAME
+  buttonText: "\uB9F5 \uC774\uB984"
   iconScale: 1.5
   textSize: 20
   normalCG: {fileID: 10498800}
@@ -18164,7 +18164,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 12, y: 50}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205120384
 MonoBehaviour:
@@ -21053,7 +21053,7 @@ MonoBehaviour:
   colorType: 0
   useCustomColor: 0
   useCustomAlpha: 1
-  useCustomFont: 0
+  useCustomFont: 1
 --- !u!222 &1293592577
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21082,10 +21082,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MAPNAME
+  m_text: "\uB9F5 \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
-  m_sharedMaterial: {fileID: 3055816025143138274, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: abb5075c067a324489e33caedd17d526, type: 2}
+  m_sharedMaterial: {fileID: -4517481854457645700, guid: abb5075c067a324489e33caedd17d526, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -21113,8 +21113,8 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -24192,7 +24192,7 @@ MonoBehaviour:
   colorType: 0
   useCustomColor: 0
   useCustomAlpha: 0
-  useCustomFont: 0
+  useCustomFont: 1
 --- !u!222 &1426416913
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24221,10 +24221,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MAPNAME
+  m_text: "\uB9F5 \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
-  m_sharedMaterial: {fileID: 3055816025143138274, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: abb5075c067a324489e33caedd17d526, type: 2}
+  m_sharedMaterial: {fileID: -4517481854457645700, guid: abb5075c067a324489e33caedd17d526, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -24252,8 +24252,8 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 15
+  m_fontSizeMax: 30
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -34028,7 +34028,7 @@ MonoBehaviour:
   colorType: 1
   useCustomColor: 0
   useCustomAlpha: 1
-  useCustomFont: 0
+  useCustomFont: 1
 --- !u!222 &1905512435
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34057,10 +34057,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MAPNAME
+  m_text: "\uB9F5 \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
-  m_sharedMaterial: {fileID: 3055816025143138274, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: abb5075c067a324489e33caedd17d526, type: 2}
+  m_sharedMaterial: {fileID: -4517481854457645700, guid: abb5075c067a324489e33caedd17d526, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34087,9 +34087,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

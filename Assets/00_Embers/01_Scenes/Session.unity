@@ -4412,7 +4412,7 @@ MonoBehaviour:
   colorType: 0
   useCustomColor: 0
   useCustomAlpha: 1
-  useCustomFont: 0
+  useCustomFont: 1
 --- !u!114 &1520943606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4433,10 +4433,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Notification Text Here
+  m_text: "\uB9F5 \uC774\uB984 \uD45C\uC2DC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e62ece968382eaf44897316c9daaf99e, type: 2}
-  m_sharedMaterial: {fileID: 7526820672995758586, guid: e62ece968382eaf44897316c9daaf99e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 92ec827d65cca504a94c1aa888dcd110, type: 2}
+  m_sharedMaterial: {fileID: -2969037259350684032, guid: 92ec827d65cca504a94c1aa888dcd110, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5724,7 +5724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chunkList: {fileID: 11400000, guid: dd27b2ba12c24fa42b76d0768c4ccabd, type: 2}
-  chunkSize: 300
+  chunkSize: 100
   loadRange: 1
 --- !u!1 &2031682399
 GameObject:

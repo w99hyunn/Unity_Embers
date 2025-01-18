@@ -13,6 +13,8 @@ namespace STARTING
                 
                 Vector2Int currentChunkCoord = Managers.Map.GetChunkCoord(other.transform.position);
                 
+                Debug.Log(currentChunkCoord.x + ", " + currentChunkCoord.y);
+                
                 var locationChunkInfo = Managers.Map.chunkList.chunkSceneNames
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
                 

@@ -25,7 +25,11 @@ MonoBehaviour:
     sceneIdentifier: Chunk_0_0
   - sceneName: Chunk_0_1
     sceneIdentifier: Chunk_0_1
+  - sceneName: Chunk_0_-1
+    sceneIdentifier: Chunk_0_-1
+  - sceneName: Chunk_1_0
+    sceneIdentifier: Chunk_1_0
+  - sceneName: Chunk_-1_0
+    sceneIdentifier: Chunk_-1_0
   - sceneName: Chunk_0_2
     sceneIdentifier: Chunk_0_2
-  - sceneName: Chunk_0_3
-    sceneIdentifier: Chunk_0_3
