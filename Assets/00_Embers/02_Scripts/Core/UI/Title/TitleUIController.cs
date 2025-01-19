@@ -27,7 +27,7 @@ namespace STARTING
 
         private async Awaitable WaitForNetworkInitialization()
         {
-            while (Managers.Network == null)
+            while (Singleton.Network == null)
             {
                 await Awaitable.NextFrameAsync();
             }
@@ -44,7 +44,7 @@ namespace STARTING
 
             while (attemptCount < SERVER_CONNECT_MAX_RETRY && !connected)
             {
-                Managers.Network.StartClient();
+                Singleton.Network.StartClient();
                 attemptCount++;
 
                 _view.ConnectingMessageUpdate($"Try {attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
@@ -72,7 +72,7 @@ namespace STARTING
             if (!connected)
             {
                 _view.ConnectingFail();
-                Managers.UI.OpenAlert("CONNECTING FAIL",
+                Singleton.UI.OpenAlert("CONNECTING FAIL",
                 "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
             }
         }
@@ -101,7 +101,7 @@ namespace STARTING
         /// </summary>
         private void HandleServerDisconnection()
         {
-            Managers.UI.OpenAlert("CONNECTING LOST",
+            Singleton.UI.OpenAlert("CONNECTING LOST",
                 "The connection to the server is lost, and the game is terminated.", 1);
             _isCheckingConnection = false;
         }
@@ -114,21 +114,21 @@ namespace STARTING
             //아이디 길이 확인
             if (_view.SignUpID.Length < 5)
             {
-                Managers.UI.OpenAlert("FAIL", "ID must be at least 5 characters long.");
+                Singleton.UI.OpenAlert("FAIL", "ID must be at least 5 characters long.");
                 return;
             }
             
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
-                Managers.UI.OpenAlert("FAIL", "Password must be at least 5 characters long.");
+                Singleton.UI.OpenAlert("FAIL", "Password must be at least 5 characters long.");
                 return;
             }
             
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
+                Singleton.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
             
@@ -172,7 +172,7 @@ namespace STARTING
                     break;
             }
 
-            Managers.UI.OpenAlert(title, message);
+            Singleton.UI.OpenAlert(title, message);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace STARTING
             switch (msg.Result)
             {
                 case LoginResult.SUCCESS:
-                    Managers.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
+                    Singleton.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
                     _view.menuManager.DisableSplashScreen();
                     _view.TopPanelProfileUpdate();
                     LoadCharacterInfo();
@@ -223,7 +223,7 @@ namespace STARTING
                     break;
             }
 
-            Managers.UI.OpenAlert(title, message);
+            Singleton.UI.OpenAlert(title, message);
         }
         
         public void ReturnBackTitle()
@@ -243,7 +243,7 @@ namespace STARTING
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                Managers.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
+                Singleton.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
                 return;
             }
 
@@ -260,7 +260,7 @@ namespace STARTING
         {
             ProfileUpdateRequestMessage profileUpdateRequestMessage = new ProfileUpdateRequestMessage
             {
-                Username = Managers.Game.playerData.AccountID,
+                Username = Singleton.Game.playerData.AccountID,
                 Email = email,
                 Password = password
             };
@@ -273,13 +273,13 @@ namespace STARTING
         {
             if (true == msg.Success)
             {
-                Managers.Game.UserInfoUpdate(msg.Email);
-                Managers.UI.OpenAlert("SUCCESS", "User information update successful.");
+                Singleton.Game.UserInfoUpdate(msg.Email);
+                Singleton.UI.OpenAlert("SUCCESS", "User information update successful.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                Managers.UI.OpenAlert("FAIL", "Failed to update user information.");
+                Singleton.UI.OpenAlert("FAIL", "Failed to update user information.");
             }
         }
         #endregion
@@ -288,7 +288,7 @@ namespace STARTING
         public void CreateCharacter()
         {
             CreateCharacterRequest(
-                Managers.Game.playerData.AccountID,
+                Singleton.Game.playerData.AccountID,
                 _view.Name,
                 _view.Faction,
                 _view.Class,
@@ -317,16 +317,16 @@ namespace STARTING
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    Managers.UI.OpenAlert("SUCCESS", "The character creation has been completed.");
+                    Singleton.UI.OpenAlert("SUCCESS", "The character creation has been completed.");
                     LoadCharacterInfo();
                     _view.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    Managers.UI.OpenAlert("DUPLICATE", "This is a character name that already exists.");
+                    Singleton.UI.OpenAlert("DUPLICATE", "This is a character name that already exists.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    Managers.UI.OpenAlert("ERROR", "Error occurred. Error code 101");
+                    Singleton.UI.OpenAlert("ERROR", "Error occurred. Error code 101");
                     break;
             }
         }
@@ -343,7 +343,7 @@ namespace STARTING
         {
             CharacterInfoLoadRequestMessage loadCharacterRequestMessage = new CharacterInfoLoadRequestMessage
             {
-                Username = Managers.Game.playerData.AccountID
+                Username = Singleton.Game.playerData.AccountID
             };
 
             NetworkClient.ReplaceHandler<CharacterInfoLoadResponseMessage>(OnLoadCharacterInfoResultReceived);
@@ -445,29 +445,29 @@ namespace STARTING
 
         private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
         {
-            Managers.Game.playerData.Username = msg.Username;
-            Managers.Game.playerData.Level = msg.Level;
-            Managers.Game.playerData.MaxHp = msg.MaxHp;
-            Managers.Game.playerData.Hp = msg.Hp;
-            Managers.Game.playerData.MaxMp = msg.MaxMp;
-            Managers.Game.playerData.Mp = msg.Mp;
-            Managers.Game.playerData.Hxp = msg.Hxp;
-            Managers.Game.playerData.Gold = msg.Gold;
-            Managers.Game.playerData.Attack = msg.Attack;
-            Managers.Game.playerData.Class = msg.Class;
-            Managers.Game.playerData.Sp = msg.Sp;
-            Managers.Game.playerData.Gender = msg.Gender;
-            Managers.Game.playerData.Position = msg.Position;
-            Managers.Game.playerData.MapCode = msg.MapCode;
-            Managers.Game.playerData.InventorySpace = msg.InventorySpace;
+            Singleton.Game.playerData.Username = msg.Username;
+            Singleton.Game.playerData.Level = msg.Level;
+            Singleton.Game.playerData.MaxHp = msg.MaxHp;
+            Singleton.Game.playerData.Hp = msg.Hp;
+            Singleton.Game.playerData.MaxMp = msg.MaxMp;
+            Singleton.Game.playerData.Mp = msg.Mp;
+            Singleton.Game.playerData.Hxp = msg.Hxp;
+            Singleton.Game.playerData.Gold = msg.Gold;
+            Singleton.Game.playerData.Attack = msg.Attack;
+            Singleton.Game.playerData.Class = msg.Class;
+            Singleton.Game.playerData.Sp = msg.Sp;
+            Singleton.Game.playerData.Gender = msg.Gender;
+            Singleton.Game.playerData.Position = msg.Position;
+            Singleton.Game.playerData.MapCode = msg.MapCode;
+            Singleton.Game.playerData.InventorySpace = msg.InventorySpace;
             
             // 인벤토리 데이터 초기화
-            Managers.Game.playerData.Items = new Item[Managers.Game.playerData.InventorySpace];
+            Singleton.Game.playerData.Items = new Item[Singleton.Game.playerData.InventorySpace];
 
             // 서버에서 받은 InventoryItems 처리
             foreach (var itemMessage in msg.InventoryItems)
             {
-                ItemData itemData = Managers.DB.GetItemDataById(itemMessage.ItemId);
+                ItemData itemData = Singleton.DB.GetItemDataById(itemMessage.ItemId);
                 if (itemData != null)
                 {
                     Item item;
@@ -490,9 +490,9 @@ namespace STARTING
                     }
 
                     // 서버에서 전달받은 position에 맞게 아이템 배열에 저장
-                    if (itemMessage.Position >= 0 && itemMessage.Position < Managers.Game.playerData.Items.Length)
+                    if (itemMessage.Position >= 0 && itemMessage.Position < Singleton.Game.playerData.Items.Length)
                     {
-                        Managers.Game.playerData.Items[itemMessage.Position] = item;
+                        Singleton.Game.playerData.Items[itemMessage.Position] = item;
                     }
                 }
                 else
@@ -501,7 +501,7 @@ namespace STARTING
                 }
             }
 
-            DebugUtils.Log($"Player data loaded: {Managers.Game.playerData.Username}");
+            DebugUtils.Log($"Player data loaded: {Singleton.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
             InitInGame();
@@ -509,9 +509,9 @@ namespace STARTING
 
         private void InitInGame()
         {
-            Managers.UI.FadeIn();
-            Managers.UI.OpenAlert("LOADING", "Ingame loading...", 2);
-            Managers.Map.LoadInGame();
+            Singleton.UI.FadeIn();
+            Singleton.UI.OpenAlert("LOADING", "Ingame loading...", 2);
+            Singleton.Map.LoadInGame();
         }
 
         //캐릭터 삭제

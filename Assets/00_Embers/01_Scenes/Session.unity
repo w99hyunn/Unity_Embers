@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 324171307}
   - component: {fileID: 324171308}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: UISingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 390157421}
   - component: {fileID: 390157419}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: NetworkSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1305,7 +1305,7 @@ GameObject:
   - component: {fileID: 390961615}
   - component: {fileID: 390961616}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1854,7 +1854,7 @@ GameObject:
   - component: {fileID: 739026195}
   - component: {fileID: 739026196}
   m_Layer: 0
-  m_Name: DBManager
+  m_Name: DBSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4094,7 +4094,7 @@ GameObject:
   - component: {fileID: 1358769804}
   - component: {fileID: 1358769803}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5757,7 +5757,7 @@ GameObject:
   - component: {fileID: 2018809870}
   - component: {fileID: 2018809871}
   m_Layer: 0
-  m_Name: MapManager
+  m_Name: MapSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

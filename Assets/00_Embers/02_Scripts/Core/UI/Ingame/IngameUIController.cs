@@ -12,12 +12,6 @@ namespace STARTING
         async void Start()
         {
             await PlayerBind();
-            _view.pauseMenuManager.onPause += CursorLockState;
-        }
-
-        private void OnDisable()
-        {
-            _view.pauseMenuManager.onPause -= CursorLockState;
         }
 
         private async Awaitable PlayerBind()
@@ -40,12 +34,7 @@ namespace STARTING
             _localPlayer.GetComponent<Player>().CmdRemovePlayer();
             NetworkClient.NotReady();
 
-            Managers.Map.ReturnTitle();
-        }
-
-        public void CursorLockState(bool index)
-        {
-            _localPlayer.GetComponent<Player>().lockCursor = index;
+            Singleton.Map.ReturnTitle();
         }
     }
 }

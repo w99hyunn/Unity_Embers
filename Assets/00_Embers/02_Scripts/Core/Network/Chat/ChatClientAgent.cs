@@ -28,12 +28,12 @@ namespace STARTING
 
         private void OnEnable()
         {
-            Managers.Network.ChatServer.OnMessageRecieved += AddChatMessage;
+            Singleton.Network.ChatServer.OnMessageRecieved += AddChatMessage;
         }
 
         private void OnDisable()
         {
-            Managers.Network.ChatServer.OnMessageRecieved -= AddChatMessage;
+            Singleton.Network.ChatServer.OnMessageRecieved -= AddChatMessage;
         }
 
         public void AddChatMessage(string playerName, string message)
@@ -61,7 +61,7 @@ namespace STARTING
         {
             if (!string.IsNullOrEmpty(chatInputField.text))
             {
-                Managers.Network.ChatServer.CmdSendChatMessage(
+                Singleton.Network.ChatServer.CmdSendChatMessage(
                     NetworkClient.localPlayer != null ? NetworkClient.localPlayer.gameObject.name : "Anonymous",
                     chatInputField.text
                 );

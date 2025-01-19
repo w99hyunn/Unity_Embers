@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,23 +17,17 @@ namespace Michsky.UI.Reach
         // Settings
         [SerializeField] private bool setTimeScale = true;
         [Range(0, 1)] public float inputBlockDuration = 0.2f;
-        public CursorLockMode menuCursorState = CursorLockMode.None;
-        public CursorLockMode gameCursorState = CursorLockMode.Locked;
-        public CursorVisibility menuCursorVisibility = CursorVisibility.Visible;
-        public CursorVisibility gameCursorVisibility = CursorVisibility.Default;
+
         [SerializeField] private InputAction hotkey;
 
         // Events
         public UnityEvent onOpen = new UnityEvent();
         public UnityEvent onClose = new UnityEvent();
-        public Action<bool> onPause;
-        
+
         // Helpers
         bool isOn = false;
         bool allowClosing = true;
         float disableAfter = 0.6f;
-
-        private bool isBlock = false;
 
         public enum CursorVisibility { Default, Invisible, Visible }
         
@@ -58,29 +51,11 @@ namespace Michsky.UI.Reach
             pauseMenuCanvas.SetActive(false);
             hotkey.Enable();
             
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void Update()
         {
-            if (hotkey.triggered && !isBlock) { AnimatePauseMenu(); }
-        }
-
-        public void OpenOtherWindows()
-        {
-            isBlock = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            onPause?.Invoke(true);
-        }
-        
-        public void CloseOtherWindows()
-        {
-            isBlock = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            onPause?.Invoke(false);
+            if (hotkey.triggered) { AnimatePauseMenu(); }
         }
 
         public void AnimatePauseMenu()
@@ -110,17 +85,11 @@ namespace Michsky.UI.Reach
 
             FadeInBackground();
 
-            Cursor.lockState = menuCursorState;
-
-            if (menuCursorVisibility == CursorVisibility.Visible) { Cursor.visible = true; }
-            else if (menuCursorVisibility != CursorVisibility.Default) { Cursor.visible = false; }
-
             if (continueButton != null && Gamepad.current != null)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
             }
-            onPause?.Invoke(true);
         }
 
         public void ClosePauseMenu()
@@ -132,16 +101,10 @@ namespace Michsky.UI.Reach
             StopCoroutine("DisablePauseCanvas");
             StartCoroutine("DisablePauseCanvas");
 
-            if (gameCursorVisibility == CursorVisibility.Visible) { Cursor.visible = true; }
-            else if (gameCursorVisibility != CursorVisibility.Default) { Cursor.visible = false; }
-
             isOn = false;
             onClose.Invoke();
 
             FadeOutBackground();
-
-            Cursor.lockState = gameCursorState;
-            onPause?.Invoke(false);
         }
 
         public void FadeInBackground()

@@ -11,14 +11,14 @@ namespace STARTING
             {
                 await Awaitable.WaitForSecondsAsync(1f);
                 
-                Vector2Int currentChunkCoord = Managers.Map.GetChunkCoord(other.transform.position);
+                Vector2Int currentChunkCoord = Singleton.Map.GetChunkCoord(other.transform.position);
                 
                 Debug.Log(currentChunkCoord.x + ", " + currentChunkCoord.y);
                 
-                var locationChunkInfo = Managers.Map.chunkList.chunkSceneNames
+                var locationChunkInfo = Singleton.Map.chunkList.chunkSceneNames
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
                 
-                Managers.UI.LocationNoti(locationChunkInfo.chunkDisplayName);
+                Singleton.UI.LocationNoti(locationChunkInfo.chunkDisplayName);
                 FindAnyObjectByType<IngameUIController>().MapNameChange(locationChunkInfo.chunkDisplayName);
             }
         }

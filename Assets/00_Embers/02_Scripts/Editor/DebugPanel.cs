@@ -150,7 +150,7 @@ namespace STARTING
         
         private void ExecuteOption(int index)
         {
-            if (Managers.Game == null)
+            if (Singleton.Game == null)
                 return;
             
             var _inventory = FindAnyObjectByType<Inventory>();
@@ -158,31 +158,31 @@ namespace STARTING
             switch (index)
             {
                 case 0:
-                    Managers.Game.playerData.Hp += 450;
+                    Singleton.Game.playerData.Hp += 450;
                     break;
                 case 1:
-                    Managers.Game.playerData.Mp += 450;
+                    Singleton.Game.playerData.Mp += 450;
                     break;
                 case 2:
-                    Managers.Game.playerData.Hxp += 450;
+                    Singleton.Game.playerData.Hxp += 450;
                     break;
                 case 3:
-                    Managers.Game.playerData.Hp -= 450;
+                    Singleton.Game.playerData.Hp -= 450;
                     break;
                 case 4:
-                    Managers.Game.playerData.Mp -= 450;
+                    Singleton.Game.playerData.Mp -= 450;
                     break;
                 case 5:
-                    _inventory.Add(Managers.DB.GetItemDataById(0));
+                    _inventory.Add(Singleton.DB.GetItemDataById(0));
                     break;
                 case 6:
-                    _inventory.Add(Managers.DB.GetItemDataById(1));
+                    _inventory.Add(Singleton.DB.GetItemDataById(1));
                     break;
                 case 7:
-                    _inventory.Add(Managers.DB.GetItemDataById(4));
+                    _inventory.Add(Singleton.DB.GetItemDataById(4));
                     break;
                 case 8:
-                    int capacity = Managers.Game.playerData.InventorySpace;
+                    int capacity = Singleton.Game.playerData.InventorySpace;
                     for(int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
                     break;

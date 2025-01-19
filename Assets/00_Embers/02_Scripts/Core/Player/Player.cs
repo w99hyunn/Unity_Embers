@@ -40,7 +40,7 @@ namespace STARTING
         //Sync Nickname
         private void InitNickName()
         {
-            CmdSetNickname(Managers.Game.playerData.Username);
+            CmdSetNickname(Singleton.Game.playerData.Username);
         }
         
         [Command]
@@ -67,7 +67,7 @@ namespace STARTING
         //Sync Class
         private void InitClass()
         {
-            CmdSetClass(Managers.Game.playerData.Class);
+            CmdSetClass(Singleton.Game.playerData.Class);
         }
         
         [Command(requiresAuthority = false)]
@@ -83,7 +83,7 @@ namespace STARTING
         
         public void InitializePlayerAvatar()
         {
-            var avatarPrefab = Managers.Game.GetAvatarPrefab(this.playerClass);
+            var avatarPrefab = Singleton.Game.GetAvatarPrefab(this.playerClass);
             
             GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
             _currentAvatar.transform.localPosition = Vector3.zero;
@@ -99,7 +99,7 @@ namespace STARTING
         private void InitializePlayerPosition()
         {
             _characterController.enabled = false;
-            transform.position = Managers.Game.playerData.Position;
+            transform.position = Singleton.Game.playerData.Position;
             _characterController.enabled = true;
             
             _ = SavePosition(); // 위치 지속적으로 저장
@@ -110,7 +110,7 @@ namespace STARTING
             while (true)
             {
                 await Awaitable.WaitForSecondsAsync(5f);
-                Managers.Game.playerData.Position = transform.position;
+                Singleton.Game.playerData.Position = transform.position;
             }
         }
         #endregion

@@ -144,7 +144,7 @@ namespace STARTING
 
         public void TopPanelProfileUpdate()
         {
-            profileEdit.buttonText = Managers.Game.playerData.AccountID;
+            profileEdit.buttonText = Singleton.Game.playerData.AccountID;
         }
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace STARTING
         {
             editProfilePWInputField.text = "";
             editProfilePWConfirmInputField.text = "";
-            editProfileEmailInputField.text = Managers.Game.playerData.Email;
-            editProfileCreatedInputField.text = Managers.Game.playerData.CreatedDate.ToString();
+            editProfileEmailInputField.text = Singleton.Game.playerData.Email;
+            editProfileCreatedInputField.text = Singleton.Game.playerData.CreatedDate.ToString();
             editProfilePopup.OpenWindow();
         }
     }
