@@ -16,9 +16,8 @@ namespace STARTING
         private ushort PORT;
         [SerializeField]
         private bool _SERVER_AUTO_RUN = false;
-
-        [SerializeField]
-        private ChatServer chatServer;
+        
+        [SerializeField] private ChatServer chatServer;
         public ChatServer ChatServer => chatServer;
         
         public override void Start()

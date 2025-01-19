@@ -47,6 +47,7 @@ namespace STARTING
         private void CmdSetNickname(string nickname)
         {
             this.playerNickname = nickname;
+            gameObject.name = nickname;
         }
         
         private void OnNicknameChanged(string oldNickname, string newNickname)
@@ -58,6 +59,7 @@ namespace STARTING
         {
             if (nicknameText != null)
             {
+                gameObject.name = nickname;
                 nicknameText.text = nickname;
             }
         }
