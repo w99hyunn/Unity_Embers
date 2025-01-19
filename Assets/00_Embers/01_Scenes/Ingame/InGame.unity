@@ -1329,6 +1329,37 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5443743427329021723, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
   m_PrefabInstance: {fileID: 5443743427321061068}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &61021043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 61021044}
+  m_Layer: 5
+  m_Name: ---------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &61021044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61021043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &87351389
 GameObject:
   m_ObjectHideFlags: 0
@@ -8363,11 +8394,11 @@ Transform:
   m_GameObject: {fileID: 534247252}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &534247255
 AudioSource:
@@ -9015,12 +9046,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594739429}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &594739432
 MonoBehaviour:
@@ -9035,7 +9066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 306596037}
-  continueButton: {fileID: 1775199008}
+  continueButton: {fileID: 0}
   panelManager: {fileID: 1579231287}
   background: {fileID: 2074549422}
   setTimeScale: 0
@@ -11668,11 +11699,11 @@ Transform:
   m_GameObject: {fileID: 755241262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &759860101
 GameObject:
@@ -11768,7 +11799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &772203190
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11835,9 +11866,9 @@ MonoBehaviour:
   onHotkeyPress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 594739432}
-        m_TargetAssemblyTypeName: Michsky.UI.Reach.PauseMenuManager, Michsky.UI.Reach.Core
-        m_MethodName: OpenPauseMenu
+      - m_Target: {fileID: 944067006}
+        m_TargetAssemblyTypeName: WindowManager, STARTING
+        m_MethodName: OpenPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13020,14 +13051,6 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Hotkey
       m_Flags: 0
-    - m_Name: 
-      m_Id: 63a1e0d6-1d98-47fa-bd50-b808e38da92a
-      m_Path: <Keyboard>/escape
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Hotkey
-      m_Flags: 0
     m_Flags: 0
   keyID: Escape
   hotkeyLabel: Exit
@@ -13044,7 +13067,32 @@ MonoBehaviour:
   fadingMultiplier: 8
   onHotkeyPress:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 944067006}
+        m_TargetAssemblyTypeName: WindowManager, STARTING
+        m_MethodName: CloseUI
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 119270382}
+          m_ObjectArgumentAssemblyTypeName: Michsky.UI.Reach.ModalWindowManager,
+            Michsky.UI.Reach.Core
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1468257178}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   useCooldown: 0
   showOutputOnEditor: 0
 --- !u!1 &812925333
@@ -15482,7 +15530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8a604e9df255c468be092e9087cfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuManager: {fileID: 594739432}
+  windowManager: {fileID: 944067006}
   playerLevel: {fileID: 324434029}
   playerHp: {fileID: 5443743427321061069}
   playerMp: {fileID: 1031903653}
@@ -15612,7 +15660,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1465802646}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &944067006
@@ -23341,11 +23390,11 @@ Transform:
   m_GameObject: {fileID: 1299258243}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311387463
 GameObject:
@@ -27849,7 +27898,7 @@ Transform:
   m_Children:
   - {fileID: 1781725945}
   - {fileID: 772203190}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 944067005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1466180198
 GameObject:
@@ -27994,7 +28043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1468257179
 Transform:
   m_ObjectHideFlags: 0
@@ -30370,6 +30419,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1727086544}
+  - {fileID: 594739430}
+  - {fileID: 534247253}
+  - {fileID: 755241264}
+  - {fileID: 1299258245}
   - {fileID: 958214003}
   - {fileID: 1234743701}
   - {fileID: 422542754}
@@ -32983,12 +33037,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727086542}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1732133873
 GameObject:
@@ -33739,6 +33793,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1468257178}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   useCooldown: 0
   showOutputOnEditor: 0
@@ -42398,6 +42464,34 @@ PrefabInstance:
       propertyPath: latestTabIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 944067006}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClosePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WindowManager, STARTING
+      objectReference: {fileID: 0}
+    - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7106819808268094257, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
       propertyPath: m_text
       value: Continue
@@ -43928,18 +44022,13 @@ SceneRoots:
   m_Roots:
   - {fileID: 916434126}
   - {fileID: 1982685042}
+  - {fileID: 1843134620}
+  - {fileID: 944067005}
   - {fileID: 1660565351}
   - {fileID: 1845251107}
-  - {fileID: 595090291}
-  - {fileID: 944067005}
-  - {fileID: 1843134620}
+  - {fileID: 61021044}
   - {fileID: 551717577}
-  - {fileID: 1465802646}
-  - {fileID: 1727086544}
-  - {fileID: 594739430}
-  - {fileID: 534247253}
-  - {fileID: 755241264}
-  - {fileID: 1299258245}
+  - {fileID: 595090291}
   - {fileID: 1597596557}
   - {fileID: 1696026621}
   - {fileID: 306596041}

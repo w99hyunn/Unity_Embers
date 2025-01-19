@@ -28,8 +28,6 @@ namespace Michsky.UI.Reach
         bool isOn = false;
         bool allowClosing = true;
         float disableAfter = 0.6f;
-
-        public enum CursorVisibility { Default, Invisible, Visible }
         
         void Awake()
         {
@@ -53,10 +51,10 @@ namespace Michsky.UI.Reach
             
         }
 
-        void Update()
-        {
-            if (hotkey.triggered) { AnimatePauseMenu(); }
-        }
+        // void Update()
+        // {
+        //     if (hotkey.triggered) { AnimatePauseMenu(); }
+        // }
 
         public void AnimatePauseMenu()
         {

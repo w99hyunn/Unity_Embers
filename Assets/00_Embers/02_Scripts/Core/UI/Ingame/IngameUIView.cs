@@ -7,7 +7,7 @@ namespace STARTING
 {
     public class IngameUIView : MonoBehaviour
     {
-        public PauseMenuManager pauseMenuManager;
+        public WindowManager windowManager;
         
         [Header("Player HUD")]
         [Header("Stats")]

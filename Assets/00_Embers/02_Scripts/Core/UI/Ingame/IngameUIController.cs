@@ -12,6 +12,12 @@ namespace STARTING
         async void Start()
         {
             await PlayerBind();
+            _view.windowManager.OnCursorState += CursorLockState;
+        }
+
+        private void OnDisable()
+        {
+            _view.windowManager.OnCursorState -= CursorLockState;
         }
 
         private async Awaitable PlayerBind()
@@ -35,6 +41,11 @@ namespace STARTING
             NetworkClient.NotReady();
 
             Singleton.Map.ReturnTitle();
+        }
+        
+        public void CursorLockState(bool index)
+        {
+            _localPlayer.GetComponent<Player>().lockCursor = index;
         }
     }
 }
