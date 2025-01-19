@@ -69,7 +69,7 @@ namespace STARTING
             base.OnStartServer();
 
             //DB Connect
-            bool dbServer = Managers.DB.ConnectDB();
+            bool dbServer = Singleton.DB.ConnectDB();
             DebugUtils.Log($"DB 연결 유무 : {dbServer}");
 
             //Network Message Register
@@ -90,7 +90,7 @@ namespace STARTING
 
         public override void OnStopServer()
         {
-            Managers.DB.CloseDBServer();
+            Singleton.DB.CloseDBServer();
             base.OnStopServer();
         }
 
@@ -107,7 +107,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnLoginRequest(NetworkConnectionToClient conn, LoginRequestMessage msg)
         {
-            LoginResponse result = Managers.DB.Login(msg.Username, msg.Password);
+            LoginResponse result = Singleton.DB.Login(msg.Username, msg.Password);
 
             LoginResponseMessage response = new LoginResponseMessage
             {
@@ -128,7 +128,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnRegisterRequest(NetworkConnectionToClient conn, SignUpRequestMessage msg)
         {
-            SignUpResult result = Managers.DB.SignUp(msg.Username, msg.Password, msg.Email);
+            SignUpResult result = Singleton.DB.SignUp(msg.Username, msg.Password, msg.Email);
 
             SignUpResponseMessage response = new SignUpResponseMessage
             {
@@ -144,7 +144,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnProfileUpdateRequest(NetworkConnectionToClient conn, ProfileUpdateRequestMessage msg)
         {
-            bool result = Managers.DB.UpdateUserInfo(msg.Username, msg.Password, msg.Email);
+            bool result = Singleton.DB.UpdateUserInfo(msg.Username, msg.Password, msg.Email);
 
             ProfileUpdateResponseMessage response = new ProfileUpdateResponseMessage
             {
@@ -161,7 +161,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnCreateCharacterRequest(NetworkConnectionToClient conn, CreateCharacterRequestMessage msg)
         {
-            CreateCharacterResult result = Managers.DB.CreateCharacter(
+            CreateCharacterResult result = Singleton.DB.CreateCharacter(
                 msg.Username,
                 msg.CharacterName,
                 msg.Faction,
@@ -183,7 +183,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnLoadCharacterInfoRequest(NetworkConnectionToClient conn, CharacterInfoLoadRequestMessage msg)
         {
-            List<ChapterItem> characterData = Managers.DB.GetCharactersByUsername(msg.Username);
+            List<ChapterItem> characterData = Singleton.DB.GetCharactersByUsername(msg.Username);
 
             CharacterInfoLoadResponseMessage response = new CharacterInfoLoadResponseMessage
             {
@@ -199,7 +199,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnCharacterDataRequest(NetworkConnectionToClient conn, CharacterDataRequestMessage msg)
         {
-            PlayerDataSO playerData = Managers.DB.FetchPlayerDataFromDB(msg.Username);
+            PlayerDataSO playerData = Singleton.DB.FetchPlayerDataFromDB(msg.Username);
 
             CharacterDataResponseMessage message = new CharacterDataResponseMessage
             {
@@ -247,7 +247,7 @@ namespace STARTING
         /// <param name="msg"></param>
         private void OnDeleteCharacterRequest(NetworkConnectionToClient conn, DeleteCharacterRequestMessage msg)
         {
-            bool result = Managers.DB.DeleteCharacter(msg.Username);
+            bool result = Singleton.DB.DeleteCharacter(msg.Username);
 
             DeleteCharacterResponseMessage message = new DeleteCharacterResponseMessage
             {
@@ -265,7 +265,7 @@ namespace STARTING
         /// <param name="message"></param>
         private void OnUpdatePlayerDataMessageReceived(NetworkConnectionToClient conn, UpdatePlayerDataMessage message)
         {
-            Managers.DB.UpdateDatabase(message.Username, message.FieldName, message.NewValue);
+            Singleton.DB.UpdateDatabase(message.Username, message.FieldName, message.NewValue);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace STARTING
         private void OnUpdateInventoryMessageReceived(NetworkConnectionToClient conn, UpdateInventoryMessage msg)
         {
             // 슬롯 업데이트 요청 처리
-            Managers.DB.HandleSlotUpdateInDB(msg.CharacterName, msg.Index, msg.ItemId, msg.Amount);
+            Singleton.DB.HandleSlotUpdateInDB(msg.CharacterName, msg.Index, msg.ItemId, msg.Amount);
         }
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)

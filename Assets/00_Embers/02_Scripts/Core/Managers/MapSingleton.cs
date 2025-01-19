@@ -38,14 +38,14 @@ namespace STARTING
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("InGame"));
 
-            await UpdateChunks(Managers.Game.playerData.Position);
+            await UpdateChunks(Singleton.Game.playerData.Position);
 
             NetworkClient.Ready();
             NetworkClient.AddPlayer();
             
             await Awaitable.WaitForSecondsAsync(0.5f);
-            Managers.UI.FadeOut();
-            Managers.UI.CloseAlert();
+            Singleton.UI.FadeOut();
+            Singleton.UI.CloseAlert();
         }
         #endregion
         
@@ -104,7 +104,7 @@ namespace STARTING
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(titleScene));
             
             chunkStates.Clear();
-            Managers.UI.CloseAlert();
+            Singleton.UI.CloseAlert();
             FindAnyObjectByType<TitleUIController>().ReturnBackTitle();
         }
         #endregion
