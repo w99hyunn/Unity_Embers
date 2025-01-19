@@ -7,6 +7,7 @@ namespace STARTING
     {
         public IngameUIView _view;
         private GameObject _localPlayer;
+        public GameObject LocalPlayer => _localPlayer;
         
         async void Start()
         {

@@ -1,5 +1,6 @@
+using System;
 using Mirror;
-using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ namespace STARTING
 {
     public class ChatClientAgent : MonoBehaviour
     {
+        public IngameUIController uiController;
+        
         public CanvasGroup chatCanvasGroup;
         public GameObject chatMessagePrefab;
         public Transform chatContentPanel;
@@ -15,12 +18,12 @@ namespace STARTING
         public ScrollRect scrollView;
 
         private bool _isInputFieldActive = false;
-        private Coroutine _fadeCoroutine;
+        private CancellationTokenSource _fadeCancellationTokenSource;
 
         private void Start()
         {
             chatInputField.interactable = false;
-            StartCoroutine(FadeOutChatCanvasGroup(5f));
+            _ = StartFadeOutChatCanvasGroup(5f);
         }
 
         private void OnEnable()
@@ -43,62 +46,79 @@ namespace STARTING
             Canvas.ForceUpdateCanvases();
             scrollView.verticalNormalizedPosition = 0f;
         }
-        
-        private void ToggleInputField()
+
+        public void OpenChat()
         {
-            _isInputFieldActive = !_isInputFieldActive;
-            chatInputField.interactable = _isInputFieldActive;
-            NetworkClient.localPlayer.gameObject.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = !_isInputFieldActive;
+            CancelFadeOut();
+            chatCanvasGroup.alpha = 1f;
+            chatInputField.interactable = true;
+            chatInputField.ActivateInputField();
 
-
-            if (_isInputFieldActive)
-            {
-                chatCanvasGroup.alpha = 1f;
-                chatInputField.ActivateInputField();
-
-                if (_fadeCoroutine != null)
-                {
-                    StopCoroutine(_fadeCoroutine);
-                    _fadeCoroutine = null;
-                }
-            }
-            else
-            {
-                _fadeCoroutine = StartCoroutine(FadeOutChatCanvasGroup(5f));
-            }
+            uiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
         }
-        
 
-        public void OnInputFieldSubmit()
+        public void SendChatMessage()
         {
-            if (_isInputFieldActive && !string.IsNullOrEmpty(chatInputField.text))
+            if (!string.IsNullOrEmpty(chatInputField.text))
             {
                 Managers.Network.ChatServer.CmdSendChatMessage(
                     NetworkClient.localPlayer != null ? NetworkClient.localPlayer.gameObject.name : "Anonymous",
                     chatInputField.text
                 );
                 chatInputField.text = "";
-                ToggleInputField();
+                CloseChat();
             }
             else
             {
-                ToggleInputField();
+                CloseChat();
             }
         }
         
-        private IEnumerator FadeOutChatCanvasGroup(float duration)
+        public void CloseChat()
         {
+            _ = StartFadeOutChatCanvasGroup(5f);
+            chatInputField.interactable = false;
+            
+            uiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+        }
+
+        private async Awaitable StartFadeOutChatCanvasGroup(float duration)
+        {
+            CancelFadeOut();
+            _fadeCancellationTokenSource = new CancellationTokenSource();
+            var token = _fadeCancellationTokenSource.Token;
+
             float startAlpha = chatCanvasGroup.alpha;
             float targetAlpha = 0.15f;
             float elapsed = 0f;
 
-            while (elapsed < duration)
+            try
             {
-                elapsed += Time.deltaTime;
-                chatCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
-                yield return null;
+                while (elapsed < duration)
+                {
+                    if (_isInputFieldActive) return;
+
+                    elapsed += Time.deltaTime;
+                    chatCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+                    await Awaitable.NextFrameAsync(token);
+                }
+
+                chatCanvasGroup.alpha = targetAlpha;
             }
-            chatCanvasGroup.alpha = targetAlpha;
+            catch (OperationCanceledException)
+            {
+                // cancel token. nothing
+            }
+        }
+
+        private void CancelFadeOut()
+        {
+            if (_fadeCancellationTokenSource != null)
+            {
+                _fadeCancellationTokenSource.Cancel();
+                _fadeCancellationTokenSource.Dispose();
+                _fadeCancellationTokenSource = null;
+            }
         }
     }
 }
