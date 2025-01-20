@@ -4833,12 +4833,12 @@ GameObject:
   - component: {fileID: 279091169}
   - component: {fileID: 279091170}
   m_Layer: 0
-  m_Name: SendChat
+  m_Name: CloseChat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &279091169
 Transform:
   m_ObjectHideFlags: 0
@@ -4909,9 +4909,9 @@ MonoBehaviour:
   onHotkeyPress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 594739432}
-        m_TargetAssemblyTypeName: Michsky.UI.Reach.PauseMenuManager, Michsky.UI.Reach.Core
-        m_MethodName: CloseOtherWindows
+      - m_Target: {fileID: 944067006}
+        m_TargetAssemblyTypeName: STARTING.WindowManager, STARTING
+        m_MethodName: EndChat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4920,42 +4920,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1982685043}
-        m_TargetAssemblyTypeName: STARTING.ChatClientAgent, STARTING
-        m_MethodName: SendChatMessage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 279091168}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1935667615}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   useCooldown: 0
   showOutputOnEditor: 1
@@ -11794,7 +11758,7 @@ GameObject:
   - component: {fileID: 772203190}
   - component: {fileID: 772203191}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: onESC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12996,7 +12960,7 @@ GameObject:
   - component: {fileID: 808154975}
   - component: {fileID: 808154976}
   m_Layer: 5
-  m_Name: Close
+  m_Name: CloseInventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13076,18 +13040,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 119270382}
           m_ObjectArgumentAssemblyTypeName: Michsky.UI.Reach.ModalWindowManager,
             Michsky.UI.Reach.Core
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1468257178}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15677,8 +15629,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuManager: {fileID: 594739432}
+  chatUIController: {fileID: 1982685043}
   openUIs: []
-  isChatting: 0
 --- !u!1 &947758361
 GameObject:
   m_ObjectHideFlags: 0
@@ -15926,38 +15878,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949825303}
   m_CullTransparentMesh: 1
---- !u!1 &958214002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 958214003}
-  m_Layer: 0
-  m_Name: Hotkeys
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &958214003
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958214002}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1280, y: -720, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1935667616}
-  m_Father: {fileID: 1597596557}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &967121515
 GameObject:
   m_ObjectHideFlags: 0
@@ -27896,8 +27816,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1781725945}
   - {fileID: 772203190}
+  - {fileID: 1935667616}
+  - {fileID: 1781725945}
   m_Father: {fileID: 944067005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1466180198
@@ -30424,7 +30345,6 @@ RectTransform:
   - {fileID: 534247253}
   - {fileID: 755241264}
   - {fileID: 1299258245}
-  - {fileID: 958214003}
   - {fileID: 1234743701}
   - {fileID: 422542754}
   - {fileID: 1639205757}
@@ -33709,7 +33629,7 @@ GameObject:
   - component: {fileID: 1781725945}
   - component: {fileID: 1781725946}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: OpenInventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33793,18 +33713,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1468257178}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   useCooldown: 0
   showOutputOnEditor: 0
@@ -37925,11 +37833,11 @@ Transform:
   m_GameObject: {fileID: 1935667615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 958214003}
+  m_Father: {fileID: 1465802646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1935667617
 MonoBehaviour:
@@ -37986,21 +37894,9 @@ MonoBehaviour:
   onHotkeyPress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1935667615}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 594739432}
-        m_TargetAssemblyTypeName: Michsky.UI.Reach.PauseMenuManager, Michsky.UI.Reach.Core
-        m_MethodName: OpenOtherWindows
+      - m_Target: {fileID: 944067006}
+        m_TargetAssemblyTypeName: STARTING.WindowManager, STARTING
+        m_MethodName: StartChat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38009,30 +37905,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1982685043}
-        m_TargetAssemblyTypeName: STARTING.ChatClientAgent, STARTING
-        m_MethodName: OpenChat
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 279091168}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   useCooldown: 0
   showOutputOnEditor: 1
@@ -38753,9 +38625,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1982685042}
+  - component: {fileID: 1982685045}
+  - component: {fileID: 1982685044}
   - component: {fileID: 1982685043}
   m_Layer: 0
-  m_Name: ChatClientAgent
+  m_Name: ChatUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38788,12 +38662,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f890a6d1a1925479b98bb15e81b6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 1982685045}
+  _view: {fileID: 1982685044}
   uiController: {fileID: 916434127}
+--- !u!114 &1982685044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982685041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4db06c1189c8242998bad176287031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openHotkey: {fileID: 1935667617}
+  closeHotkey: {fileID: 279091170}
   chatCanvasGroup: {fileID: 1639205758}
   chatMessagePrefab: {fileID: 3524096976823913215, guid: 7fa739c9508efd544a57eed912b8f325, type: 3}
   chatContentPanel: {fileID: 850099569}
   chatInputField: {fileID: 1175006767}
   scrollView: {fileID: 759860103}
+--- !u!114 &1982685045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982685041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a55dbe00e103545bd29d55f2b8c51f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1984559935
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,10 +7,15 @@ namespace STARTING
 {
     public class WindowManager : MonoBehaviour
     {
+        [Header("Windows 예외1 PauseMenu")]
         public PauseMenuManager pauseMenuManager;
 
-        [SerializeField] private List<ModalWindowManager> openUIs = new List<ModalWindowManager>(); // 현재 열려 있는 UI 리스트
-        [SerializeField] private bool isChatting = false; // 채팅 상태
+        [Header("Windows 예외2 Chat")]
+        public ChatUIController chatUIController;
+        
+        [SerializeField]
+        private List<ModalWindowManager> openUIs = new List<ModalWindowManager>();
+        private bool isChatting = false;
         private bool isPause = false;
 
         public Action<bool> OnCursorState;
@@ -20,31 +25,13 @@ namespace STARTING
             UpdateCursor();
         }
 
-        // void Update()
-        // {
-        //     HandleInput();
-        // }
-        //
-        // private void HandleInput()
-        // {
-        //     if (Input.GetKeyDown(KeyCode.Return)) // Enter 키로 채팅창 제어
-        //     {
-        //         if (!isChatting)
-        //         {
-        //             StartChat();
-        //         }
-        //         else
-        //         {
-        //             EndChat();
-        //         }
-        //     }
-        // }
-
         public void OpenUI(ModalWindowManager ui)
         {
+            if (true == isChatting)
+                return;
+            
             if (!openUIs.Contains(ui))
             {
-                Debug.Log("OpenUI");
                 openUIs.Add(ui);
                 ui.OpenWindow();
                 UpdateCursor();
@@ -53,7 +40,9 @@ namespace STARTING
 
         public void CloseUI(ModalWindowManager ui)
         {
-            Debug.Log("CloseUI");
+            if (true == isChatting)
+                return;
+            
             if (openUIs.Contains(ui))
             {
                 openUIs.Remove(ui);
@@ -70,27 +59,47 @@ namespace STARTING
                 ModalWindowManager topUI = openUIs[openUIs.Count - 1];
                 CloseUI(topUI);
             }
-            else
-            {
-                isPause = true;
-
-            }
         }
 
-        private void StartChat()
+        public void StartChat()
         {
+            if (true == isChatting)
+            {
+                return;
+            }
+            
+            chatUIController.OpenChat();
             isChatting = true;
             UpdateCursor();
+            
         }
 
-        private void EndChat()
+        public void EndChat()
         {
+            if (false == isChatting)
+            {
+                return;
+            }
+            
+            chatUIController.SendChatMessage();
             isChatting = false;
             UpdateCursor();
+
         }
 
+        /// <summary>
+        /// ESC에 이 함수를 할당하면 창이 열려있으면 먼저 닫을것이고, 채팅창이 열려있으면 채팅창을 먼저 닫는다.
+        /// </summary>
         public void OpenPause()
         {
+            if (true == isChatting)
+            {
+                chatUIController.CloseChat();
+                isChatting = false;
+                UpdateCursor();
+                return;
+            }
+            
             if (openUIs.Count > 0)
             {
                 CloseTopUI();
