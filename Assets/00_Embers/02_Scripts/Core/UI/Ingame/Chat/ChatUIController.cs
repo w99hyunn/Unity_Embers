@@ -8,7 +8,7 @@ namespace STARTING
         public ChatUIModel _model;
         public ChatUIView _view;
         
-        public IngameUIController uiController;
+        public HudUIController hudUiController;
         
         private void OnEnable()
         {
@@ -29,7 +29,7 @@ namespace STARTING
         public void OpenChat()
         {
             _view.ShowChat();
-            uiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
+            hudUiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
         }
         
         public void SendChatMessage()
@@ -52,7 +52,7 @@ namespace STARTING
         public void CloseChat()
         {
             _view.HideChat();
-            uiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+            hudUiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
         }
     }
 }

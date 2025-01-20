@@ -19,7 +19,7 @@ namespace STARTING
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
                 
                 Singleton.UI.LocationNoti(locationChunkInfo.chunkDisplayName);
-                FindAnyObjectByType<IngameUIController>().MapNameChange(locationChunkInfo.chunkDisplayName);
+                FindAnyObjectByType<HudUIController>().MapNameChange(locationChunkInfo.chunkDisplayName);
             }
         }
         

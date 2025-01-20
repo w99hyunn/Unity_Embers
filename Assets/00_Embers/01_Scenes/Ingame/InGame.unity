@@ -1329,37 +1329,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5443743427329021723, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
   m_PrefabInstance: {fileID: 5443743427321061068}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &61021043
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 61021044}
-  m_Layer: 5
-  m_Name: ---------------------
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &61021044
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 61021043}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &87351389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,9 +2557,8 @@ GameObject:
   m_Component:
   - component: {fileID: 119270374}
   - component: {fileID: 119270376}
-  - component: {fileID: 119270382}
   - component: {fileID: 119270381}
-  - component: {fileID: 119270379}
+  - component: {fileID: 119270382}
   - component: {fileID: 119270375}
   - component: {fileID: 119270378}
   - component: {fileID: 119270377}
@@ -2707,37 +2675,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &119270379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119270373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b81c692dc3d044483c3ae773ada1f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _horizontalSlotCount: 6
-  _verticalSlotCount: 7
-  _slotMargin: 8
-  _contentAreaPadding: 8
-  _slotSize: 72
-  _showTooltip: 1
-  _showHighlight: 1
-  _showRemovingPopup: 1
-  _contentAreaRT: {fileID: 310482291}
-  _slotUiPrefab: {fileID: 3900725664585546844, guid: b12167e0cf135fa45a2424bd3f112183, type: 3}
-  _itemTooltip: {fileID: 1475518327}
-  _popup: {fileID: 1746673396}
-  _trimButton: {fileID: 1878459919}
-  _sortButton: {fileID: 1833663982}
-  _toggleFilterAll: {fileID: 2110208759}
-  _toggleFilterEquipments: {fileID: 534935243}
-  _toggleFilterPortions: {fileID: 800572110}
-  _mouseReversed: 0
-  _showDebug: 1
 --- !u!114 &119270380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2766,7 +2703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd347083a75615f448ffa248fb2c97d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryUI: {fileID: 119270379}
+  _inventoryUI: {fileID: 1456859221}
 --- !u!114 &119270382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15436,7 +15373,7 @@ GameObject:
   - component: {fileID: 916434128}
   - component: {fileID: 916434127}
   m_Layer: 0
-  m_Name: IngameUI
+  m_Name: HudUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15482,7 +15419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8a604e9df255c468be092e9087cfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windowManager: {fileID: 944067006}
+  ingameWindowManager: {fileID: 0}
   playerLevel: {fileID: 324434029}
   playerHp: {fileID: 5443743427321061069}
   playerMp: {fileID: 1031903653}
@@ -15594,7 +15531,7 @@ GameObject:
   - component: {fileID: 944067005}
   - component: {fileID: 944067006}
   m_Layer: 0
-  m_Name: WindowManager
+  m_Name: IngameWindowManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27422,6 +27359,69 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1947747046578417177, guid: 890db13673ca6c440bd2c98811c3dbd3, type: 3}
   m_PrefabInstance: {fileID: 1693905355}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1456859220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1456859222}
+  - component: {fileID: 1456859221}
+  m_Layer: 0
+  m_Name: InventoryUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1456859221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456859220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b81c692dc3d044483c3ae773ada1f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _horizontalSlotCount: 6
+  _verticalSlotCount: 7
+  _slotMargin: 8
+  _contentAreaPadding: 8
+  _slotSize: 72
+  _showTooltip: 1
+  _showHighlight: 1
+  _showRemovingPopup: 1
+  _contentAreaRT: {fileID: 310482291}
+  _slotUiPrefab: {fileID: 3900725664585546844, guid: b12167e0cf135fa45a2424bd3f112183, type: 3}
+  _itemTooltip: {fileID: 1475518327}
+  _popup: {fileID: 1746673396}
+  _trimButton: {fileID: 1878459919}
+  _sortButton: {fileID: 1833663982}
+  _toggleFilterAll: {fileID: 2110208759}
+  _toggleFilterEquipments: {fileID: 534935243}
+  _toggleFilterPortions: {fileID: 800572110}
+  _mouseReversed: 0
+  _showDebug: 0
+--- !u!4 &1456859222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456859220}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1458212019
 GameObject:
   m_ObjectHideFlags: 0
@@ -38643,7 +38643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982685041}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38664,7 +38664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 1982685045}
   _view: {fileID: 1982685044}
-  uiController: {fileID: 916434127}
+  hudUiController: {fileID: 916434127}
 --- !u!114 &1982685044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43922,13 +43922,13 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 944067005}
+  - {fileID: 1843134620}
   - {fileID: 916434126}
   - {fileID: 1982685042}
-  - {fileID: 1843134620}
-  - {fileID: 944067005}
+  - {fileID: 1456859222}
   - {fileID: 1660565351}
   - {fileID: 1845251107}
-  - {fileID: 61021044}
   - {fileID: 551717577}
   - {fileID: 595090291}
   - {fileID: 1597596557}

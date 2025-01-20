@@ -5,6 +5,7 @@ namespace STARTING
 {
     public class ChatUIModel : MonoBehaviour
     {
+        [SerializeField] [Header(("채팅 메세지 기록 / 추후 Output 가능"))]
         private List<(string playerName, string message)> _chatMessages
             = new List<(string playerName, string message)>();
 
