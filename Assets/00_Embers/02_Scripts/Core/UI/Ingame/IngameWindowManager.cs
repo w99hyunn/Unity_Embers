@@ -95,6 +95,7 @@ namespace STARTING
             if (true == _isChatting)
             {
                 chatUIController.CloseChat();
+                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
                 _isChatting = false;
                 UpdateCursor();
                 return;
