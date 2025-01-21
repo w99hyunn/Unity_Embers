@@ -50,50 +50,34 @@ namespace STARTING
                 UpdateCursor();
             }
         }
-
-        private void CloseTopUI()
-        {
-            Debug.Log("CloseTopUI");
-            if (openUIs.Count > 0)
-            {
-                ModalWindowManager topUI = openUIs[openUIs.Count - 1];
-                CloseUI(topUI);
-            }
-        }
-
-        public void StartChat()
-        {
-            if (true == isChatting)
-            {
-                return;
-            }
-            
-            chatUIController.OpenChat();
-            isChatting = true;
-            UpdateCursor();
-            
-        }
-
-        public void EndChat()
+        
+        public void ToggleChat()
         {
             if (false == isChatting)
             {
-                return;
+                chatUIController.OpenChat();
+                isChatting = true;
+            }
+            else if (true == isChatting)
+            {
+                chatUIController.SendChatMessage();
+                isChatting = false;
             }
             
-            chatUIController.SendChatMessage();
-            isChatting = false;
+            Debug.Log(isChatting);
+
             UpdateCursor();
-
         }
-
+        
         /// <summary>
         /// ESC에 이 함수를 할당하면 창이 열려있으면 먼저 닫을것이고, 채팅창이 열려있으면 채팅창을 먼저 닫는다.
         /// </summary>
         public void OpenPause()
         {
+            Debug.Log("OpenPause");
             if (true == isChatting)
             {
+                Debug.Log("isChatting return");
                 chatUIController.CloseChat();
                 isChatting = false;
                 UpdateCursor();
@@ -102,6 +86,7 @@ namespace STARTING
             
             if (openUIs.Count > 0)
             {
+                Debug.Log("openUIs.Count > 0 return");
                 CloseTopUI();
                 return;
             }
@@ -109,6 +94,16 @@ namespace STARTING
             isPause = true;
             pauseMenuManager.OpenPauseMenu();
             UpdateCursor();
+        }
+        
+        private void CloseTopUI()
+        {
+            Debug.Log("CloseTopUI");
+            if (openUIs.Count > 0)
+            {
+                ModalWindowManager topUI = openUIs[openUIs.Count - 1];
+                CloseUI(topUI);
+            }
         }
 
         public void ClosePause()
@@ -123,12 +118,14 @@ namespace STARTING
             // 커서 표시 조건: UI가 열려 있거나 채팅 중일 때
             if (openUIs.Count > 0 || isChatting || isPause)
             {
+                Debug.Log("UpdateCursor true");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 OnCursorState?.Invoke(true);
             }
             else
             {
+                Debug.Log("UpdateCursor false");
                 // UI가 모두 닫히면 커서를 숨김
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;

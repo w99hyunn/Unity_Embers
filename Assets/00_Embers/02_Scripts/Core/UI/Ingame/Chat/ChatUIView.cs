@@ -9,10 +9,6 @@ namespace STARTING
 {
     public class ChatUIView : MonoBehaviour
     {
-        [Header("Hotkeys")]
-        public HotkeyEvent openHotkey;
-        public HotkeyEvent closeHotkey;
-        
         [Header("UI Elements")]
         public CanvasGroup chatCanvasGroup;
         public GameObject chatMessagePrefab;
@@ -41,8 +37,6 @@ namespace STARTING
 
         public void ShowChat()
         {
-            openHotkey.enabled = false;
-            closeHotkey.enabled = true;
             CancelFadeOut();
             chatCanvasGroup.alpha = 1f;
             chatInputField.interactable = true;
@@ -51,8 +45,6 @@ namespace STARTING
 
         public void HideChat()
         {
-            openHotkey.enabled = true;
-            closeHotkey.enabled = false;
             _ = StartFadeOutChatCanvasGroup(5f);
             chatInputField.interactable = false;
         }

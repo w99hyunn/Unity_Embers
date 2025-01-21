@@ -4759,107 +4759,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2da758493bb9a96409448335d0c59538, type: 3}
---- !u!1 &279091168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 279091169}
-  - component: {fileID: 279091170}
-  m_Layer: 0
-  m_Name: CloseChat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &279091169
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279091168}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 681865083}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &279091170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279091168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9972513674083a4e8366856a6a50999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hotkeyType: 1
-  controllerPreset: {fileID: 0}
-  hotkey:
-    m_Name: Hotkey
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5399b6ec-fe7c-46e4-a109-ab31ba51cb27
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 9564a74a-3f8f-4909-9cfc-8341b018a934
-      m_Path: <Keyboard>/enter
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Hotkey
-      m_Flags: 0
-    - m_Name: 
-      m_Id: cd81adb4-06a8-4b92-88ab-e912314144d4
-      m_Path: <Keyboard>/numpadEnter
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Hotkey
-      m_Flags: 0
-    m_Flags: 0
-  keyID: Escape
-  hotkeyLabel: Exit
-  iconParent: {fileID: 0}
-  textParent: {fileID: 0}
-  iconObj: {fileID: 0}
-  labelObj: {fileID: 0}
-  textObj: {fileID: 0}
-  normalCG: {fileID: 0}
-  highlightCG: {fileID: 0}
-  useSounds: 1
-  useLocalization: 1
-  normalOpacity: 0.5
-  fadingMultiplier: 8
-  onHotkeyPress:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 944067006}
-        m_TargetAssemblyTypeName: STARTING.WindowManager, STARTING
-        m_MethodName: EndChat
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  useCooldown: 0
-  showOutputOnEditor: 1
 --- !u!1 &280059235
 GameObject:
   m_ObjectHideFlags: 0
@@ -10525,38 +10424,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1947747046578417177, guid: 890db13673ca6c440bd2c98811c3dbd3, type: 3}
   m_PrefabInstance: {fileID: 1984559935}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &681865082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 681865083}
-  m_Layer: 0
-  m_Name: Hotkeys
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &681865083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681865082}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -375, y: -300, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 279091169}
-  m_Father: {fileID: 1639205757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &684003723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15419,7 +15286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8a604e9df255c468be092e9087cfe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingameWindowManager: {fileID: 0}
+  ingameWindowManager: {fileID: 944067006}
   playerLevel: {fileID: 324434029}
   playerHp: {fileID: 5443743427321061069}
   playerMp: {fileID: 1031903653}
@@ -15520,6 +15387,37 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7539475247283540564, guid: d1df5531f2279ca499321c7d9ca8dea0, type: 3}
   m_PrefabInstance: {fileID: 185038306}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &943290570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 943290571}
+  m_Layer: 5
+  m_Name: ---------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &943290571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943290570}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1280, y: -720, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1465802646}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &944067004
 GameObject:
   m_ObjectHideFlags: 0
@@ -25244,7 +25142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427605237576, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.69983
+      value: -39.699707
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427605237578, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: colorType
@@ -25288,7 +25186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427730655364, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.69983
+      value: -39.699707
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427730655366, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: colorType
@@ -25336,7 +25234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427932417363, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -16.69983
+      value: -16.699707
       objectReference: {fileID: 0}
     - target: {fileID: 5443743427932417388, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: colorType
@@ -25368,7 +25266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5443743428213227672, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -16.699951
+      value: -16.700195
       objectReference: {fileID: 0}
     - target: {fileID: 5443743428213227673, guid: f22ca2fec02a5de43931538fb8a25698, type: 3}
       propertyPath: colorType
@@ -27818,6 +27716,7 @@ Transform:
   m_Children:
   - {fileID: 772203190}
   - {fileID: 1935667616}
+  - {fileID: 943290571}
   - {fileID: 1781725945}
   m_Father: {fileID: 944067005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31269,7 +31168,6 @@ RectTransform:
   m_Children:
   - {fileID: 759860102}
   - {fileID: 1175006765}
-  - {fileID: 681865083}
   m_Father: {fileID: 1597596557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -37818,7 +37716,7 @@ GameObject:
   - component: {fileID: 1935667616}
   - component: {fileID: 1935667617}
   m_Layer: 0
-  m_Name: OpenChat
+  m_Name: onChat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37855,14 +37753,14 @@ MonoBehaviour:
   controllerPreset: {fileID: 0}
   hotkey:
     m_Name: Hotkey
-    m_Type: 0
-    m_ExpectedControlType: 
+    m_Type: 1
+    m_ExpectedControlType: Button
     m_Id: 5399b6ec-fe7c-46e4-a109-ab31ba51cb27
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 9564a74a-3f8f-4909-9cfc-8341b018a934
+      m_Id: 5c7d1a78-d0e6-4e61-9c03-b8f763ea63eb
       m_Path: <Keyboard>/enter
       m_Interactions: 
       m_Processors: 
@@ -37870,7 +37768,7 @@ MonoBehaviour:
       m_Action: Hotkey
       m_Flags: 0
     - m_Name: 
-      m_Id: cd81adb4-06a8-4b92-88ab-e912314144d4
+      m_Id: 9e8478e7-313a-4d1a-8d7f-75545d450c6a
       m_Path: <Keyboard>/numpadEnter
       m_Interactions: 
       m_Processors: 
@@ -37895,8 +37793,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 944067006}
-        m_TargetAssemblyTypeName: STARTING.WindowManager, STARTING
-        m_MethodName: StartChat
+        m_TargetAssemblyTypeName: STARTING.IngameWindowManager, STARTING
+        m_MethodName: ToggleChat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38677,8 +38575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4db06c1189c8242998bad176287031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openHotkey: {fileID: 1935667617}
-  closeHotkey: {fileID: 279091170}
   chatCanvasGroup: {fileID: 1639205758}
   chatMessagePrefab: {fileID: 3524096976823913215, guid: 7fa739c9508efd544a57eed912b8f325, type: 3}
   chatContentPanel: {fileID: 850099569}

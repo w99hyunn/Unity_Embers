@@ -89,7 +89,7 @@ namespace STARTING
                     {
                         await Awaitable.NextFrameAsync();
                     }
-                    Debug.Log($"{chunkScene.name} 청크 씬 언로드 완료");
+                    //Debug.Log($"{chunkScene.name} 청크 씬 언로드 완료");
                 }
             }
 
@@ -137,7 +137,7 @@ namespace STARTING
                     bool existsInList = chunkList.chunkSceneNames.Any(ci => ci.sceneName == sceneName);
                     if (!existsInList)
                     {
-                        Debug.Log($"청크 {sceneName} 는 등록되지 않아서 로드하지 않고 ChunkLoadState.LOADED처리해서 무한로드 방지");
+                        //Debug.Log($"청크 {sceneName} 는 등록되지 않아서 로드하지 않고 ChunkLoadState.LOADED처리해서 무한로드 방지");
                         chunkStates[coord] = ChunkLoadState.LOADED;
                         continue;
                     }
@@ -182,7 +182,7 @@ namespace STARTING
             }
 
             chunkStates[coord] = ChunkLoadState.LOADED;
-            Debug.Log($"Loaded chunk: {sceneName}");
+            //Debug.Log($"Loaded chunk: {sceneName}");
         }
 
         private async Awaitable UnloadChunk(string sceneName, Vector2Int coord)
@@ -200,7 +200,7 @@ namespace STARTING
             chunkStates.Remove(coord);
             //chunkStates[coord] = ChunkLoadState.None;
 
-            Debug.Log($"Unloaded chunk: {sceneName}");
+            //Debug.Log($"Unloaded chunk: {sceneName}");
         }
 
         public Vector2Int GetChunkCoord(Vector3 position)

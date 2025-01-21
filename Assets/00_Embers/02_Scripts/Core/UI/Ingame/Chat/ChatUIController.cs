@@ -28,6 +28,7 @@ namespace STARTING
 
         public void OpenChat()
         {
+            Debug.Log("Open Chat    ");
             _view.ShowChat();
             hudUiController.LocalPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
         }
@@ -41,12 +42,8 @@ namespace STARTING
                     _view.chatInputField.text
                 );
                 _view.chatInputField.text = "";
-                CloseChat();
             }
-            else
-            {
-                CloseChat();
-            }
+            CloseChat();
         }
 
         public void CloseChat()
