@@ -7,8 +7,6 @@ namespace STARTING
 {
     public class HudUIView : MonoBehaviour
     {
-        public IngameWindowManager ingameWindowManager;
-        
         [Header("Player HUD")]
         [Header("Stats")]
         public TMP_Text playerLevel;

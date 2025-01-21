@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Michsky.UI.Reach;
+using Mirror;
 using UnityEngine;
 
 namespace STARTING
@@ -15,19 +16,36 @@ namespace STARTING
         
         [SerializeField]
         private List<ModalWindowManager> openUIs = new List<ModalWindowManager>();
-        private bool isChatting = false;
-        private bool isPause = false;
+        private bool _isChatting = false;
+        private bool _isPause = false;
 
-        public Action<bool> OnCursorState;
+        private GameObject _localPlayer;
+        public GameObject LocalPlayer => _localPlayer;
 
-        private void Start()
+        async void Start()
         {
+            await PlayerBind();
             UpdateCursor();
+        }
+        
+        private async Awaitable PlayerBind()
+        {
+            while (NetworkClient.localPlayer == null)
+            {
+                await Awaitable.NextFrameAsync();
+            }
+            
+            _localPlayer = NetworkClient.localPlayer.gameObject;
+        }
+        
+        public void CursorLockState(bool index)
+        {
+            
         }
 
         public void OpenUI(ModalWindowManager ui)
         {
-            if (true == isChatting)
+            if (true == _isChatting)
                 return;
             
             if (!openUIs.Contains(ui))
@@ -40,7 +58,7 @@ namespace STARTING
 
         public void CloseUI(ModalWindowManager ui)
         {
-            if (true == isChatting)
+            if (true == _isChatting)
                 return;
             
             if (openUIs.Contains(ui))
@@ -53,19 +71,19 @@ namespace STARTING
         
         public void ToggleChat()
         {
-            if (false == isChatting)
+            if (false == _isChatting)
             {
                 chatUIController.OpenChat();
-                isChatting = true;
+                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
+                _isChatting = true;
             }
-            else if (true == isChatting)
+            else if (true == _isChatting)
             {
                 chatUIController.SendChatMessage();
-                isChatting = false;
+                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+                _isChatting = false;
             }
             
-            Debug.Log(isChatting);
-
             UpdateCursor();
         }
         
@@ -74,31 +92,27 @@ namespace STARTING
         /// </summary>
         public void OpenPause()
         {
-            Debug.Log("OpenPause");
-            if (true == isChatting)
+            if (true == _isChatting)
             {
-                Debug.Log("isChatting return");
                 chatUIController.CloseChat();
-                isChatting = false;
+                _isChatting = false;
                 UpdateCursor();
                 return;
             }
             
             if (openUIs.Count > 0)
             {
-                Debug.Log("openUIs.Count > 0 return");
                 CloseTopUI();
                 return;
             }
 
-            isPause = true;
+            _isPause = true;
             pauseMenuManager.OpenPauseMenu();
             UpdateCursor();
         }
         
         private void CloseTopUI()
         {
-            Debug.Log("CloseTopUI");
             if (openUIs.Count > 0)
             {
                 ModalWindowManager topUI = openUIs[openUIs.Count - 1];
@@ -108,7 +122,7 @@ namespace STARTING
 
         public void ClosePause()
         {
-            isPause = false;
+            _isPause = false;
             pauseMenuManager.ClosePauseMenu();
             UpdateCursor();
         }
@@ -116,21 +130,27 @@ namespace STARTING
         private void UpdateCursor()
         {
             // 커서 표시 조건: UI가 열려 있거나 채팅 중일 때
-            if (openUIs.Count > 0 || isChatting || isPause)
+            if (openUIs.Count > 0 || _isChatting || _isPause)
             {
-                Debug.Log("UpdateCursor true");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                OnCursorState?.Invoke(true);
+                _localPlayer.GetComponent<Player>().lockCursor = true;
             }
             else
             {
-                Debug.Log("UpdateCursor false");
                 // UI가 모두 닫히면 커서를 숨김
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                OnCursorState?.Invoke(false);
+                _localPlayer.GetComponent<Player>().lockCursor = false;
             }
+        }
+        
+        public void ReturnTitle()
+        {
+            _localPlayer.GetComponent<Player>().CmdRemovePlayer();
+            NetworkClient.NotReady();
+
+            Singleton.Map.ReturnTitle();
         }
     }
 }

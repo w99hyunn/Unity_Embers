@@ -35,11 +35,12 @@ namespace STARTING
             scrollView.verticalNormalizedPosition = 0f;
         }
 
-        public void ShowChat()
+        public async Awaitable ShowChat()
         {
             CancelFadeOut();
             chatCanvasGroup.alpha = 1f;
             chatInputField.interactable = true;
+            await Awaitable.NextFrameAsync();
             chatInputField.ActivateInputField();
         }
 
@@ -47,6 +48,7 @@ namespace STARTING
         {
             _ = StartFadeOutChatCanvasGroup(5f);
             chatInputField.interactable = false;
+            chatInputField.DeactivateInputField();
         }
 
         private async Awaitable StartFadeOutChatCanvasGroup(float duration)
