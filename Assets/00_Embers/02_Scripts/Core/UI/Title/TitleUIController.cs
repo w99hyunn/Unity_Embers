@@ -405,6 +405,7 @@ namespace STARTING
                         //삭제가 완료된 뒤 창을 닫고, 리스너를 제거함
                         _view.DeleteCharacterPopup.onConfirm.AddListener(() =>
                         {
+                            Debug.Log("삭제 눌림 " + character.title);
                             DeleteCharacter(character.title);
                             _view.DeleteCharacterPopup.CloseWindow();
                             _view.DeleteCharacterPopup.onConfirm.RemoveAllListeners();

@@ -27,14 +27,18 @@ namespace STARTING
 
         public void OpenChat()
         {
-            _view.ShowChat();
+            _ = _view.ShowChat();
         }
         
-        public void SendChatMessage()
+        public async Awaitable SendChatMessage()
         {
+            _view.chatInputField.MoveTextEnd(false);
+
+            await Awaitable.NextFrameAsync();
+            
             if (!string.IsNullOrEmpty(_view.chatInputField.text))
             {
-                _view.chatInputField.Select();
+                
                 Singleton.Network.ChatServer.CmdSendChatMessage(
                     NetworkClient.localPlayer != null ? NetworkClient.localPlayer.gameObject.name : "Anonymous",
                     _view.chatInputField.text

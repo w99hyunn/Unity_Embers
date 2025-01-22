@@ -13,7 +13,7 @@ namespace STARTING
         public CanvasGroup chatCanvasGroup;
         public GameObject chatMessagePrefab;
         public Transform chatContentPanel;
-        public TMP_InputField chatInputField;
+        public InputField chatInputField;
         public ScrollRect scrollView;
         
         private CancellationTokenSource _fadeCancellationTokenSource;
