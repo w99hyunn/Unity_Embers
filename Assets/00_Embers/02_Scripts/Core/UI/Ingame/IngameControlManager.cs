@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace STARTING
 {
-    public class IngameWindowManager : MonoBehaviour
+    public class IngameControlManager : MonoBehaviour
     {
         [Header("Windows 예외1 PauseMenu")]
         public PauseMenuManager pauseMenuManager;
@@ -38,11 +38,6 @@ namespace STARTING
             _localPlayer = NetworkClient.localPlayer.gameObject;
         }
         
-        public void CursorLockState(bool index)
-        {
-            
-        }
-
         public void OpenUI(ModalWindowManager ui)
         {
             if (true == _isChatting)

@@ -6,7 +6,6 @@ namespace STARTING
 {
     public class ChatUIController : MonoBehaviour
     {
-        public ChatUIModel _model;
         public ChatUIView _view;
         
         private void OnEnable()
@@ -21,7 +20,6 @@ namespace STARTING
 
         private void HandleMessageRecieved(string playerName, string msg)
         {
-            //_model.AddMessage(playerName, msg);
             _view.AddChatMessage(playerName, msg);
         }
 
