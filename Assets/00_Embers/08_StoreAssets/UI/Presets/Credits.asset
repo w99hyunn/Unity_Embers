@@ -71,7 +71,7 @@ MonoBehaviour:
   mentions:
   - ID: Logo Placeholder
     icon: {fileID: 21300000, guid: 56860a8ddd1654a4eb12272c7c176514, type: 3}
-    description: Copyright Woohyun Cho(STARTING). All rights Reserved.
+    description: Copyright Woohyun Cho(NOLDA). All rights Reserved.
     descriptionKey: CreditsLogoDescription
     descriptionSpacing: 30
     layoutSpacing: 160
