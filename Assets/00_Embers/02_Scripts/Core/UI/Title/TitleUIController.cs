@@ -366,7 +366,7 @@ namespace STARTING
             //데이터 가공
             foreach (var character in msg.CharacterData)
             {
-                Debug.Log($"Name: {character.title}, Level: {character.description}");
+                //Debug.Log($"Name: {character.title}, Level: {character.description}");
 
                 switch (character.characterClass)
                 {
@@ -501,8 +501,6 @@ namespace STARTING
                     DebugUtils.LogWarning($"ItemData not found for ItemId: {itemMessage.ItemId}");
                 }
             }
-
-            DebugUtils.Log($"Player data loaded: {Singleton.Game.playerData.Username}");
             
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
             InitInGame();
