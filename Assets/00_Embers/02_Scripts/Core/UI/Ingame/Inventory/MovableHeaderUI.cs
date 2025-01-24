@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace STARTING
+namespace NOLDA
 {
     public class MovableHeaderUI : MonoBehaviour, IPointerDownHandler, IDragHandler
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace STARTING
+namespace NOLDA
 {
     public class TitleUIController : MonoBehaviour
     {

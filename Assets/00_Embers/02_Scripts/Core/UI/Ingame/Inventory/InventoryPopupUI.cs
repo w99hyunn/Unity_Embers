@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using TMPro;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     /// <summary>
     /// 아이템을 버리거나 수량 나눌 때 띄우는 팝업

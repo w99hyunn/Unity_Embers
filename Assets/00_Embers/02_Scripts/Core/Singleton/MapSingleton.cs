@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace STARTING
+namespace NOLDA
 {
     public class MapSingleton : MonoBehaviour
     {

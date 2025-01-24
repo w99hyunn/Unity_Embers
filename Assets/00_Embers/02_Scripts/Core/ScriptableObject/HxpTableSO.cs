@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     [CreateAssetMenu(fileName = "ExperienceTable", menuName = "STARTING/Experience Table", order = 1)]
     public class HxpTableSO : ScriptableObject

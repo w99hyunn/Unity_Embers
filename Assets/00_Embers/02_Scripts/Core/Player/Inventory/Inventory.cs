@@ -48,7 +48,7 @@ using UnityEngine;
     - void SortAll() : 앞에서부터 아이템 슬롯 채우면서 정렬
 */
 
-namespace STARTING
+namespace NOLDA
 {
     public class Inventory : MonoBehaviour
     {

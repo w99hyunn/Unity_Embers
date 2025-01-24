@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace STARTING
+namespace NOLDA
 {
     public class ItemTooltipUI : MonoBehaviour
     {

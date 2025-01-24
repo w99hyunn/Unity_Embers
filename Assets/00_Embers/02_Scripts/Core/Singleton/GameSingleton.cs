@@ -2,7 +2,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     public class GameSingleton : MonoBehaviour
     {

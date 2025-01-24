@@ -2,7 +2,7 @@
 using TMPro;
 using Michsky.UI.Reach;
 
-namespace STARTING
+namespace NOLDA
 {
     public class TitleUIView : MonoBehaviour
     {

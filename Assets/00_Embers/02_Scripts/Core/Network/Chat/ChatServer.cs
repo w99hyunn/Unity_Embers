@@ -1,7 +1,7 @@
 using System;
 using Mirror;
 
-namespace STARTING
+namespace NOLDA
 {
     public class ChatServer : NetworkBehaviour
     {

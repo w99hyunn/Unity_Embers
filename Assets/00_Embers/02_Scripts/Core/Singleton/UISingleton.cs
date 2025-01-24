@@ -1,7 +1,7 @@
 ﻿using Michsky.UI.Reach;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     public class UISingleton : MonoBehaviour
     {

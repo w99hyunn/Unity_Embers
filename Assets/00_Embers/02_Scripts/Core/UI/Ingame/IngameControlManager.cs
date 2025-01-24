@@ -4,7 +4,7 @@ using Michsky.UI.Reach;
 using Mirror;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     public class IngameControlManager : MonoBehaviour
     {

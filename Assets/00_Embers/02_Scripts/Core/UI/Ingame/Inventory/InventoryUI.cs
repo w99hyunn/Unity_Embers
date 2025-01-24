@@ -40,7 +40,7 @@ using UnityEngine.EventSystems;
 // 날짜 : 2021-03-07 PM 7:34:31
 // 작성자 : Rito
 
-namespace STARTING
+namespace NOLDA
 {
     public class InventoryUI : MonoBehaviour
     {

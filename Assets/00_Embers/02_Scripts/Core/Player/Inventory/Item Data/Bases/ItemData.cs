@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     /*
         [상속 구조]

@@ -1,4 +1,4 @@
-namespace STARTING
+namespace NOLDA
 {
     /// <summary> 장비 아이템</summary>
     public abstract class EquipmentItem : Item

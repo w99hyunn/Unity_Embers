@@ -1,4 +1,4 @@
-namespace STARTING
+namespace NOLDA
 {
     /// <summary> 사용 가능한 아이템(착용/소모) </summary>
     public interface IUsableItem

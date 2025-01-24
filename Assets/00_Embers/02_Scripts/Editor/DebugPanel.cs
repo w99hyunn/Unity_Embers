@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 
-namespace STARTING
+namespace NOLDA
 {
     public class DebugPanel : EditorWindow
     {

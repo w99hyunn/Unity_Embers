@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using TMPro;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     public class HudUIView : MonoBehaviour
     {

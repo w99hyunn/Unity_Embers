@@ -1,4 +1,4 @@
-﻿namespace STARTING
+﻿namespace NOLDA
 {
     /// <summary>
     /// 캐릭터

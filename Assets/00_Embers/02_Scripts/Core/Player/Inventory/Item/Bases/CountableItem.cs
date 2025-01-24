@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     /// <summary> 수량을 셀 수 있는 아이템 </summary>
     public abstract class CountableItem : Item

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     [CreateAssetMenu(fileName = "SceneData", menuName = "STARTING/SceneData", order = 1)]
     public class SceneData : ScriptableObject

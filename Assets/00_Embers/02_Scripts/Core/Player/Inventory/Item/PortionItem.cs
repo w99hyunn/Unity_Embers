@@ -1,4 +1,4 @@
-namespace STARTING
+namespace NOLDA
 {
     /// <summary> 수량 아이템 - 포션 아이템 </summary>
     public class PortionItem : CountableItem, IUsableItem

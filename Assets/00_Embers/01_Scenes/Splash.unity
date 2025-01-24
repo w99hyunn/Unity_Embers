@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 633673826}
   - component: {fileID: 633673829}
   m_Layer: 5
-  m_Name: StartingLogo
+  m_Name: NOLDALogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Copyright Woohyun Cho(STARTING). All rights Reserved.
+  m_text: Copyright Woohyun Cho(NOLDA). All rights Reserved.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}
   m_sharedMaterial: {fileID: 3055816025143138274, guid: 8322a83c36dbf604db8a075474b12c47, type: 2}

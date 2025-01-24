@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Michsky.UI.Reach.ChapterManager;
 
-namespace STARTING
+namespace NOLDA
 {
     #region # 로그인
     public struct LoginRequestMessage : NetworkMessage

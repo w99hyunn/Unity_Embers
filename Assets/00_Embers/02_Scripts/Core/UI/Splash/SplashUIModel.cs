@@ -1,4 +1,4 @@
-﻿namespace STARTING
+﻿namespace NOLDA
 {
     public class SplashUIModel
     {

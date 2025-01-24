@@ -1,7 +1,7 @@
 ﻿ using Mirror;
  using UnityEngine;
  
- namespace STARTING
+ namespace NOLDA
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace STARTING
+namespace NOLDA
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/PlayerData", order = 1)]
     public class PlayerDataSO : ScriptableObject

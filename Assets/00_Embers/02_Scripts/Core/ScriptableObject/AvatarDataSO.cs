@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     [System.Serializable]
     public class AvatarData

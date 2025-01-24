@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace STARTING
+namespace NOLDA
 {
 	public class PlayerInput : MonoBehaviour
 	{

@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-namespace STARTING
+namespace NOLDA
 {
     public class SplashUIController : MonoBehaviour
     {

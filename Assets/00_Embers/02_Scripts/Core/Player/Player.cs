@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace STARTING
+namespace NOLDA
 {
     public class Player : NetworkBehaviour
     {

@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using static Michsky.UI.Reach.ChapterManager;
 
-namespace STARTING
+namespace NOLDA
 {
     public class LoginResponse
     {
