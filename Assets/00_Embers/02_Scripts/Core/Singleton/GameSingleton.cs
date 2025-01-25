@@ -9,7 +9,7 @@ namespace NOLDA
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
 
-        
+        #region ▶ Game Settings
         [Space(20)]
         [Header("▶ Game Settings")]
         [Header("Server Info")]
@@ -31,6 +31,7 @@ namespace NOLDA
         
         
         [Header("Inventory")]
+        [Tooltip("인벤토리에서 최대치로 쓸 슬롯 갯수. 이 수만큼 빈 슬롯이 생성됨")]
         [SerializeField] private int maxInventorySpace = 60;
         public int MaxInventorySpace => maxInventorySpace;
         
@@ -42,6 +43,7 @@ namespace NOLDA
         [Tooltip("로드할 주변 청크 수(1로 설정시 플레이어가 있는 청크 기준 1칸 주변까지")]
         [SerializeField] private int loadRange = 1;
         public int LoadRange => loadRange;
+        #endregion
         
         public GameObject GetAvatarPrefab(Class playerClass)
         {

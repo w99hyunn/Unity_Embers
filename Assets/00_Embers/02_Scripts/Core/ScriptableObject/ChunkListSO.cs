@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace NOLDA
 {
     [System.Serializable]
@@ -11,11 +15,31 @@ namespace NOLDA
 
         [Tooltip("유니티 씬 이름 ('Chunk_0_0')")]
         public string sceneName;
+        
+#if UNITY_EDITOR
+        [Tooltip("씬 객체")]
+        public SceneAsset sceneAsset;
+#endif
     }
     
-    [CreateAssetMenu(fileName = "ChunkList", menuName = "STARTING/ChunkList", order = 1)]
+    [CreateAssetMenu(fileName = "ChunkList", menuName = "NOLDA/ChunkList", order = 1)]
     public class ChunkListSO : ScriptableObject
     {
         public List<ChunkInfo> chunkSceneNames;
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            foreach (var chunk in chunkSceneNames)
+            {
+                if (chunk.sceneAsset != null)
+                {
+                    string fullPath = AssetDatabase.GetAssetPath(chunk.sceneAsset);
+                    string sceneNameOnly = System.IO.Path.GetFileNameWithoutExtension(fullPath);
+                    chunk.sceneName = sceneNameOnly;
+                }
+            }
+        }
+#endif
     }
 }

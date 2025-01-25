@@ -15,13 +15,19 @@ MonoBehaviour:
   chunkSceneNames:
   - chunkDisplayName: "\uC544\uBC1C\uB860 \uC11C\uCABD \uC678\uACFD"
     sceneName: Chunk_-1_0
+    sceneAsset: {fileID: 102900000, guid: e32377d922006ec489a9ddc32107ebe3, type: 3}
   - chunkDisplayName: "\uC544\uD2C0\uB780\uD2F0\uC2A4"
     sceneName: Chunk_0_-1
+    sceneAsset: {fileID: 102900000, guid: f77ef8fb7603e6b4f8c5d59fddb7fd98, type: 3}
   - chunkDisplayName: "\uC544\uBC1C\uB860"
     sceneName: Chunk_0_0
-  - chunkDisplayName: "\uC544\uBC1C\uB860 \uB3D9\uCABD \uC678\uACFD"
-    sceneName: Chunk_1_0
+    sceneAsset: {fileID: 102900000, guid: 777c351a2bdbdd241bf352df0a15c087, type: 3}
   - chunkDisplayName: "\uBC1C\uD560\uB77C"
     sceneName: Chunk_0_1
+    sceneAsset: {fileID: 102900000, guid: 309c99d06860e714eaa79e2b6bec21f3, type: 3}
   - chunkDisplayName: Chunk_0_2
     sceneName: Chunk_0_2
+    sceneAsset: {fileID: 102900000, guid: 7224ec6f050413e44a31d4bf28d7b437, type: 3}
+  - chunkDisplayName: "\uC544\uBC1C\uB860 \uB3D9\uCABD \uC678\uACFD"
+    sceneName: Chunk_1_0
+    sceneAsset: {fileID: 102900000, guid: 57737856524540248ab77500fbe9682b, type: 3}

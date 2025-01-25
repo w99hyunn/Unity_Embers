@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using TMPro;
 using Michsky.UI.Reach;
 
@@ -76,18 +77,16 @@ namespace NOLDA
         public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
         public ChapterManager ChapterManager => chapterManager;
         #endregion
-        
-        public void OpenPanel(string panelName)
-        {
-            panelManager.OpenPanel(panelName);
-        }
-        
-        public void CreateCharacterSuccess()
-        {
-            //Reset
-            nameInputField.text = "";
-        }
 
+        /// <summary>
+        /// 첫 시작시 서버 연결창 띄우고 로그인창은 비활성화 되어있어야 함(실수방지)
+        /// </summary>
+        private void Awake()
+        {
+            Connecting.SetActive(true);
+            Login.SetActive(false);
+        }
+        
         private void Update()
         {
             if (loginPwInputField.isFocused ||
@@ -102,6 +101,17 @@ namespace NOLDA
             {
                 Input.imeCompositionMode = IMECompositionMode.On;
             }
+        }
+
+        public void OpenPanel(string panelName)
+        {
+            panelManager.OpenPanel(panelName);
+        }
+        
+        public void CreateCharacterSuccess()
+        {
+            //Reset
+            nameInputField.text = "";
         }
 
         public void EditProfileUpdateSuccess()
@@ -128,8 +138,7 @@ namespace NOLDA
         {
             RetryBtn.SetActive(true);
         }
-
-
+        
         public void SignUpSuccess()
         {
             loginIdInputField.text = signUpIdInputField.text;
