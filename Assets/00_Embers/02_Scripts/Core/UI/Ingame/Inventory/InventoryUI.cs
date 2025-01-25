@@ -5,49 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 /*
-    [기능 - 에디터 전용]
-    - 게임 시작 시 동적으로 생성될 슬롯 미리보기(개수, 크기 미리보기 가능)
-
-    [기능 - 유저 인터페이스]
-    - 슬롯에 마우스 올리기
-      - 사용 가능 슬롯 : 하이라이트 이미지 표시
-      - 아이템 존재 슬롯 : 아이템 정보 툴팁 표시
-
-    - 드래그 앤 드롭
-      - 아이템 존재 슬롯 -> 아이템 존재 슬롯 : 두 아이템 위치 교환
-      - 아이템 존재 슬롯 -> 아이템 미존재 슬롯 : 아이템 위치 변경
-        - Shift 또는 Ctrl 누른 상태일 경우 : 셀 수 있는 아이템 수량 나누기
-      - 아이템 존재 슬롯 -> UI 바깥 : 아이템 버리기
-
-    - 슬롯 우클릭
-      - 사용 가능한 아이템일 경우 : 아이템 사용
-
-    - 기능 버튼(좌측 상단)
-      - Trim : 앞에서부터 빈 칸 없이 아이템 채우기
-      - Sort : 정해진 가중치대로 아이템 정렬
-
-    - 필터 버튼(우측 상단)
+    - 필터
       - [A] : 모든 아이템 필터링
       - [E] : 장비 아이템 필터링
       - [P] : 소비 아이템 필터링
 
       * 필터링에서 제외된 아이템 슬롯들은 조작 불가
 
-    [기능 - 기타]
-    - InvertMouse(bool) : 마우스 좌클릭/우클릭 반전 여부 설정
 */
-
-// 날짜 : 2021-03-07 PM 7:34:31
-// 작성자 : Rito
-
 namespace NOLDA
 {
     public class InventoryUI : MonoBehaviour
     {
-        /***********************************************************************
-        *                               Option Fields
-        ***********************************************************************/
-        #region .
         [Header("Options")]
         [Range(0, 10)]
         [SerializeField] private int _horizontalSlotCount = 8;  // 슬롯 가로 개수
@@ -80,13 +49,7 @@ namespace NOLDA
 
         [Space(16)]
         [SerializeField] private bool _mouseReversed = false; // 마우스 클릭 반전 여부
-
-        #endregion
-        /***********************************************************************
-        *                               Private Fields
-        ***********************************************************************/
-        #region .
-
+        
         /// <summary> 연결된 인벤토리 </summary>
         private Inventory _inventory;
 
@@ -112,12 +75,10 @@ namespace NOLDA
             All, Equipment, Portion
         }
         private FilterOption _currentFilterOption = FilterOption.All;
-
-        #endregion
+        
         /***********************************************************************
         *                               Unity Events
         ***********************************************************************/
-        #region .
         private void Awake()
         {
             Init();
@@ -136,12 +97,10 @@ namespace NOLDA
             OnPointerDrag();
             OnPointerUp();
         }
-
-        #endregion
+        
         /***********************************************************************
         *                               Init Methods
         ***********************************************************************/
-        #region .
         private void Init()
         {
             TryGetComponent(out _gr);
@@ -242,12 +201,10 @@ namespace NOLDA
                 }
             }
         }
-
-        #endregion
+        
         /***********************************************************************
         *                               Mouse Event Methods
         ***********************************************************************/
-        #region .
         private bool IsOverUI()
             => EventSystem.current.IsPointerOverGameObject();
 
@@ -468,12 +425,10 @@ namespace NOLDA
                 EditorLog($"Drag End(Do Nothing)");
             }
         }
-
-        #endregion
+        
         /***********************************************************************
         *                               Private Methods
         ***********************************************************************/
-        #region .
 
         /// <summary> UI 및 인벤토리에서 아이템 제거 </summary>
         private void TryRemoveItem(int index)
@@ -537,12 +492,10 @@ namespace NOLDA
             // 툴팁 위치 조정
             _itemTooltip.SetRectPosition(slot.SlotRect);
         }
-
-        #endregion
+        
         /***********************************************************************
         *                               Public Methods
         ***********************************************************************/
-        #region .
 
         /// <summary> 인벤토리 참조 등록 (인벤토리에서 직접 호출) </summary>
         public void SetInventoryReference(Inventory inventory)
@@ -634,7 +587,6 @@ namespace NOLDA
             }
         }
 
-        #endregion
         
         /***********************************************************************
         *                               Editor Only Debug
