@@ -1,6 +1,7 @@
 ﻿
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace NOLDA
@@ -41,8 +42,7 @@ namespace NOLDA
 
 		public void OnScroll(InputValue value)
 		{
-			Vector2 scrollInput = value.Get<Vector2>();
-			AdjustShoulderOffset(scrollInput.y);
+			_ = ScrollInput(value.Get<Vector2>());
 		}
 		
 		private void MoveInput(Vector2 newMoveDirection)
@@ -64,6 +64,23 @@ namespace NOLDA
 		{
 			sprint = newSprintState;
 		}
+		
+		private async Awaitable ScrollInput(Vector2 scrollDelta)
+		{
+			await Awaitable.NextFrameAsync(); //InputSystem 경고 방지를 위한 1프레임대기
+			if (IsPointerOverUI()) return; // UI 위라면 스크롤 입력 무시
+
+			Vector2 scrollInput = scrollDelta;
+			AdjustShoulderOffset(scrollInput.y);
+		}
+		
+		private bool IsPointerOverUI()
+		{
+			// EventSystem을 사용하여 포인터가 UI 위에 있는지 확인
+			return EventSystem.current != null
+			       && EventSystem.current.IsPointerOverGameObject(); // UI요소를 감지하는 함수
+		}
+
 		
 		private void AdjustShoulderOffset(float scrollInput)
 		{

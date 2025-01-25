@@ -9,13 +9,7 @@ namespace NOLDA
     public class MapSingleton : MonoBehaviour
     {
         public ChunkListSO chunkList;
-
-        [Tooltip("청크 사이즈(각 씬의 맵 사이즈)")]
-        public float chunkSize = 300f;
-
-        [Tooltip("로드할 주변 청크 수(1로 설정시 플레이어가 있는 청크 기준 1칸 주변까지")]
-        public int loadRange = 1;
-
+        
         // 현재 로드돼있는 청크 목록
         private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>();
         
@@ -116,9 +110,9 @@ namespace NOLDA
 
             // playerPosition값 기준으로 필요한 청크 계산
             List<Vector2Int> chunksToLoad = new List<Vector2Int>();
-            for (int x = -loadRange; x <= loadRange; x++)
+            for (int x = -(Singleton.Game.LoadRange); x <= Singleton.Game.LoadRange; x++)
             {
-                for (int z = -loadRange; z <= loadRange; z++)
+                for (int z = -(Singleton.Game.LoadRange); z <= Singleton.Game.LoadRange; z++)
                 {
                     Vector2Int coord = new Vector2Int(currentChunkCoord.x + x, currentChunkCoord.y + z);
                     chunksToLoad.Add(coord);
@@ -205,8 +199,8 @@ namespace NOLDA
 
         public Vector2Int GetChunkCoord(Vector3 position)
         {
-            int x = Mathf.FloorToInt(position.x / chunkSize);
-            int z = Mathf.FloorToInt(position.z / chunkSize);
+            int x = Mathf.FloorToInt(position.x / Singleton.Game.ChunkSize);
+            int z = Mathf.FloorToInt(position.z / Singleton.Game.ChunkSize);
             return new Vector2Int(x, z);
         }
         #endregion

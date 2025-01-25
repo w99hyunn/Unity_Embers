@@ -8,6 +8,21 @@ namespace NOLDA
     {
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
+
+        [Space(20)]
+        [Header("▶ Game Settings")]
+        [Header("Inventory")]
+        [SerializeField] private int maxInventorySpace = 60;
+        public int MaxInventorySpace => maxInventorySpace;
+        
+        [Header("Map")]
+        [Tooltip("청크 사이즈(각 씬의 맵 사이즈)")]
+        [SerializeField] private float chunkSize = 300f;
+        public float ChunkSize => chunkSize;
+        
+        [Tooltip("로드할 주변 청크 수(1로 설정시 플레이어가 있는 청크 기준 1칸 주변까지")]
+        [SerializeField] private int loadRange = 1;
+        public int LoadRange => loadRange;
         
         public GameObject GetAvatarPrefab(Class playerClass)
         {

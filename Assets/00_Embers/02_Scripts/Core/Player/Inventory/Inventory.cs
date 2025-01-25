@@ -86,13 +86,6 @@ namespace NOLDA
         }
         private static readonly ItemComparer _itemComparer = new ItemComparer();
         
-        
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-
-        }
-#endif
         private void Awake()
         {
             //Managers.Game.playerData.Items = new Item[_maxCapacity];
