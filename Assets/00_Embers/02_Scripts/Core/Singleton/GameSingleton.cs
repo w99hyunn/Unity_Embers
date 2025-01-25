@@ -9,8 +9,27 @@ namespace NOLDA
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
 
+        
         [Space(20)]
         [Header("▶ Game Settings")]
+        [Header("Server Info")]
+        [SerializeField] private string serverIp = "172.30.1.67";
+        public string ServerIP => serverIp;
+        [SerializeField] private ushort serverPort = 8585;
+        public ushort ServerPort => serverPort;
+
+        [SerializeField] private bool serverAutoRun = false;
+        public bool ServerAutoRun => serverAutoRun;
+        
+        [Header("DB Server Info")]
+        [SerializeField] private string dbServerIP = "localhost";
+        public string DBServerIP => dbServerIP;
+        [SerializeField] private string dbHost = "root";
+        public string DBHost => dbHost;
+        [SerializeField] private string dbPw = "root";
+        public string DBPw => dbPw;
+        
+        
         [Header("Inventory")]
         [SerializeField] private int maxInventorySpace = 60;
         public int MaxInventorySpace => maxInventorySpace;

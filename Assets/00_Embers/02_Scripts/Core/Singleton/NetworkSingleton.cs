@@ -9,14 +9,6 @@ namespace NOLDA
 {
     public class NetworkSingleton : NetworkManager
     {
-        [Header("Server Info")]
-        [SerializeField]
-        private string IP;
-        [SerializeField]
-        private ushort PORT;
-        [SerializeField]
-        private bool _SERVER_AUTO_RUN = false;
-        
         [SerializeField] private ChatServer chatServer;
         public ChatServer ChatServer => chatServer;
         
@@ -36,7 +28,7 @@ namespace NOLDA
                 DebugUtils.Log("Client 동작 실행");
             }
             
-            if (true == _SERVER_AUTO_RUN)
+            if (true == Singleton.Game.ServerAutoRun)
             {
                 if (!NetworkServer.active)
                 {
@@ -55,10 +47,10 @@ namespace NOLDA
 
         public new void StartClient()
         {
-            base.networkAddress = IP;
+            base.networkAddress = Singleton.Game.ServerIP;
             if (Transport.active is PortTransport portTransport)
             {
-                portTransport.Port = PORT;
+                portTransport.Port = Singleton.Game.ServerPort;
             }
 
             base.StartClient();

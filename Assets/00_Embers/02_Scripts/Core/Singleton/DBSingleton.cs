@@ -42,10 +42,7 @@ namespace NOLDA
         }
         #endregion
         
-        [Header("DB Server Info")]
-        public string dbServerIP = "localhost";
-        public string dbHost = "root";
-        public string dbPw = "root";
+        
         private MySqlConnection _connection;
         
         private void Start()
@@ -56,7 +53,7 @@ namespace NOLDA
         #region # DB 서버 Open / Close
         public bool ConnectDB()
         {
-            bool success = ConnectToDatabase(dbServerIP, "embers", dbHost, dbPw, "3306");
+            bool success = ConnectToDatabase(Singleton.Game.DBServerIP, "embers", Singleton.Game.DBHost, Singleton.Game.DBPw, "3306");
             return success;
         }
 
