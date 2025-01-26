@@ -18753,8 +18753,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 37.5}
-  m_SizeDelta: {x: 0, y: -75}
+  m_AnchoredPosition: {x: 0, y: 27.5}
+  m_SizeDelta: {x: 0, y: -55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &759860103
 MonoBehaviour:
@@ -44269,7 +44269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4db06c1189c8242998bad176287031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatCanvasGroup: {fileID: 1639205758}
   chatMessagePrefab: {fileID: 3524096976823913215, guid: 7fa739c9508efd544a57eed912b8f325, type: 3}
   chatContentPanel: {fileID: 850099569}
   chatInputField: {fileID: 1971677409}
@@ -53328,6 +53327,7 @@ GameObject:
   - component: {fileID: 1971677406}
   - component: {fileID: 1971677408}
   - component: {fileID: 1971677409}
+  - component: {fileID: 1971677410}
   m_Layer: 5
   m_Name: InputField (Legacy)
   m_TagString: Untagged
@@ -53434,6 +53434,18 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!225 &1971677410
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971677405}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1971760654
 GameObject:
   m_ObjectHideFlags: 0

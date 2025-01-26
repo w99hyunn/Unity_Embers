@@ -1344,6 +1344,7 @@ MonoBehaviour:
   dbHost: root
   dbPw: root
   maxInventorySpace: 60
+  chatMaxMessages: 50
   chunkSize: 300
   loadRange: 1
 --- !u!1 &409558270

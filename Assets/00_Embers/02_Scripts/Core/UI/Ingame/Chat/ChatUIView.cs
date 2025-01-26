@@ -1,22 +1,53 @@
 using System;
 using System.Threading;
-using Michsky.UI.Reach;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace NOLDA
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public class ChatUIView : MonoBehaviour
     {
         [Header("UI Elements")]
-        public CanvasGroup chatCanvasGroup;
         public GameObject chatMessagePrefab;
         public Transform chatContentPanel;
         public InputField chatInputField;
         public ScrollRect scrollView;
         
+        private CanvasGroup _chatCanvasGroup;
+        private CanvasGroup _inputFieldCanvasGroup;
+        
+        //Chat Msg ObjectPool
+        private ObjectPool<GameObject> _chatMessagePool;
+        private int _currentMessages = 0;
+        
         private CancellationTokenSource _fadeCancellationTokenSource;
+
+        private void Awake()
+        {
+            TryGetComponent<CanvasGroup>(out _chatCanvasGroup);
+            chatInputField.TryGetComponent<CanvasGroup>(out _inputFieldCanvasGroup);
+            _inputFieldCanvasGroup.alpha = 0;
+            
+            _chatMessagePool = new ObjectPool<GameObject>(
+                createFunc: () => Instantiate(chatMessagePrefab, chatContentPanel),
+                actionOnGet: obj =>
+                {
+                    obj.SetActive(true);
+                    obj.transform.SetAsLastSibling();
+                },
+                actionOnRelease: obj =>
+                {
+                    obj.SetActive(false);
+                    obj.transform.SetAsFirstSibling();
+                },
+                actionOnDestroy: obj => Destroy(obj),
+                collectionCheck: false, //중복반환
+                defaultCapacity: Singleton.Game.ChatMaxMessages,
+                maxSize: Singleton.Game.ChatMaxMessages
+                );
+        }
 
         private void Start()
         {
@@ -26,19 +57,28 @@ namespace NOLDA
 
         public void AddChatMessage(string playerName, string message)
         {
-            GameObject chatMessageObject = Instantiate(chatMessagePrefab, chatContentPanel);
+            GameObject chatMessageObject = _chatMessagePool.Get();
             ChatMessage chatMessage = chatMessageObject.GetComponent<ChatMessage>();
-
             chatMessage.SetMessage(playerName, message);
 
             Canvas.ForceUpdateCanvases();
             scrollView.verticalNormalizedPosition = 0f;
+
+            _currentMessages++;
+
+            if (_currentMessages > Singleton.Game.ChatMaxMessages)
+            {
+                Transform oldestChatMessage = chatContentPanel.GetChild(0);
+                _chatMessagePool.Release(oldestChatMessage.gameObject);
+                _currentMessages--;
+            }
         }
 
         public async Awaitable ShowChat()
         {
             CancelFadeOut();
-            chatCanvasGroup.alpha = 1f;
+            _inputFieldCanvasGroup.alpha = 1f;
+            _chatCanvasGroup.alpha = 1f;
             chatInputField.interactable = true;
             await Awaitable.NextFrameAsync();
             chatInputField.ActivateInputField();
@@ -46,6 +86,7 @@ namespace NOLDA
 
         public void HideChat()
         {
+            _inputFieldCanvasGroup.alpha = 0f;
             _ = StartFadeOutChatCanvasGroup(5f);
             chatInputField.interactable = false;
             chatInputField.DeactivateInputField();
@@ -57,7 +98,7 @@ namespace NOLDA
             _fadeCancellationTokenSource = new CancellationTokenSource();
             var token = _fadeCancellationTokenSource.Token;
 
-            float startAlpha = chatCanvasGroup.alpha;
+            float startAlpha = _chatCanvasGroup.alpha;
             float targetAlpha = 0.15f;
             float elapsed = 0f;
 
@@ -66,11 +107,11 @@ namespace NOLDA
                 while (elapsed < duration)
                 {
                     elapsed += Time.deltaTime;
-                    chatCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+                    _chatCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
                     await Awaitable.NextFrameAsync(token);
                 }
 
-                chatCanvasGroup.alpha = targetAlpha;
+                _chatCanvasGroup.alpha = targetAlpha;
             }
             catch (OperationCanceledException)
             {

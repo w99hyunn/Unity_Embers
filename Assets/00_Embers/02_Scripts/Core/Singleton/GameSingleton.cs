@@ -30,10 +30,13 @@ namespace NOLDA
         public string DBPw => dbPw;
         
         
-        [Header("Inventory")]
+        [Header("InGame")]
         [Tooltip("인벤토리에서 최대치로 쓸 슬롯 갯수. 이 수만큼 빈 슬롯이 생성됨")]
         [SerializeField] private int maxInventorySpace = 60;
         public int MaxInventorySpace => maxInventorySpace;
+        [SerializeField] private int chatMaxMessages = 50;
+        public int ChatMaxMessages => chatMaxMessages;
+        
         
         [Header("Map")]
         [Tooltip("청크 사이즈(각 씬의 맵 사이즈)")]
