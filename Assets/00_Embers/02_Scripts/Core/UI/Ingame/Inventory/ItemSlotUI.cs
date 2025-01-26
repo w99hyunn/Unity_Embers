@@ -7,10 +7,6 @@ namespace NOLDA
 {
     public class ItemSlotUI : MonoBehaviour
     {
-        /***********************************************************************
-        *                               Option Fields
-        ***********************************************************************/
-        #region .
         [Tooltip("슬롯 내에서 아이콘과 슬롯 사이의 여백")]
         [SerializeField] private float _padding = 1f;
 
@@ -29,12 +25,7 @@ namespace NOLDA
 
         [Tooltip("하이라이트 소요 시간")]
         [SerializeField] private float _highlightFadeDuration = 0.2f;
-
-        #endregion
-        /***********************************************************************
-        *                               Properties
-        ***********************************************************************/
-        #region .
+        
         /// <summary> 슬롯의 인덱스 </summary>
         public int Index { get; private set; }
 
@@ -46,12 +37,7 @@ namespace NOLDA
 
         public RectTransform SlotRect => _slotRect;
         public RectTransform IconRect => _iconRect;
-
-        #endregion
-        /***********************************************************************
-        *                               Fields
-        ***********************************************************************/
-        #region .
+        
         private InventoryUI _inventoryUI;
 
         private RectTransform _slotRect;
@@ -67,30 +53,23 @@ namespace NOLDA
         // 현재 하이라이트 알파값
         private float _currentHLAlpha = 0f;
 
-        private bool _isAccessibleSlot = true; // 슬롯 접근가능 여부
-        private bool _isAccessibleItem = true; // 아이템 접근가능 여부
+        public bool _isAccessibleSlot = true; // 슬롯 접근가능 여부
+        public bool _isAccessibleItem = true; // 아이템 접근가능 여부
 
         /// <summary> 비활성화된 슬롯의 색상 </summary>
         private static readonly Color InaccessibleSlotColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
         /// <summary> 비활성화된 아이콘 색상 </summary>
         private static readonly Color InaccessibleIconColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-
-        #endregion
-        /***********************************************************************
-        *                               Unity Events
-        ***********************************************************************/
-        #region .
+        
         private void Awake()
         {
             InitComponents();
             InitValues();
         }
-
-        #endregion
+        
         /***********************************************************************
         *                               Private Methods
         ***********************************************************************/
-        #region .
         private void InitComponents()
         {
             _inventoryUI = GetComponentInParent<InventoryUI>();
@@ -140,12 +119,6 @@ namespace NOLDA
 
         private void ShowText() => _textGo.SetActive(true);
         private void HideText() => _textGo.SetActive(false);
-
-        #endregion
-        /***********************************************************************
-        *                               Public Methods
-        ***********************************************************************/
-        #region .
 
         public void SetSlotIndex(int index) => Index = index;
 
@@ -272,12 +245,7 @@ namespace NOLDA
             else
                 _highlightRect.SetAsFirstSibling();
         }
-
-        #endregion
-        /***********************************************************************
-        *                               Coroutines
-        ***********************************************************************/
-        #region .
+        
         /// <summary> 하이라이트 알파값 서서히 증가 </summary>
         private IEnumerator HighlightFadeInRoutine()
         {
@@ -320,7 +288,5 @@ namespace NOLDA
 
             _highlightGo.SetActive(false);
         }
-
-        #endregion
     }
 }

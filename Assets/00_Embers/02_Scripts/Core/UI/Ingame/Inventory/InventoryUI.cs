@@ -20,10 +20,6 @@ namespace NOLDA
         [Header("Options")]
         [Range(1, 10)]
         [SerializeField] private int _horizontalSlotCount = 6;
-        [SerializeField] private float _slotMargin = 8f;          // 한 슬롯의 상하좌우 여백
-        [SerializeField] private float _contentAreaPadding = 20f; // 인벤토리 영역의 내부 여백
-        [Range(32, 128)]
-        [SerializeField] private float _slotSize = 64f;      // 각 슬롯의 크기
 
         [Space]
         [SerializeField] private bool _showTooltip = true;
@@ -70,9 +66,9 @@ namespace NOLDA
         /// <summary> 인벤토리 UI 내 아이템 필터링 옵션 </summary>
         private enum FilterOption
         {
-            All, Equipment, Portion
+            ALL, EQUIPMENT, PORTION
         }
-        private FilterOption _currentFilterOption = FilterOption.All;
+        private FilterOption _currentFilterOption = FilterOption.ALL;
         
         /***********************************************************************
         *                               Unity Events
@@ -108,31 +104,21 @@ namespace NOLDA
             // Graphic Raycaster
             _ped = new PointerEventData(EventSystem.current);
             _rrList = new List<RaycastResult>(10);
-
-            // Item Tooltip UI
-            if (_itemTooltip == null)
-            {
-                _itemTooltip = GetComponentInChildren<ItemTooltipUI>();
-                EditorLog("인스펙터에서 아이템 툴팁 UI를 직접 지정하지 않아 자식에서 발견하여 초기화하였습니다.");
-            }
         }
 
-        /// <summary> 지정된 개수만큼 슬롯 영역 내에 슬롯들 동적 생성 </summary>
+        /// <summary>
+        /// 지정된 개수만큼 슬롯 영역 내에 슬롯들 동적 생성
+        /// </summary>
         private void InitSlots()
         {
             // 슬롯 프리팹 설정
             _slotUiPrefab.TryGetComponent(out RectTransform slotRect);
-            slotRect.sizeDelta = new Vector2(_slotSize, _slotSize);
-
             _slotUiPrefab.TryGetComponent(out ItemSlotUI itemSlot);
+            
             if (itemSlot == null)
                 _slotUiPrefab.AddComponent<ItemSlotUI>();
 
             _slotUiPrefab.SetActive(false);
-
-            // --
-            Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding);
-            Vector2 curPos = beginPos;
 
             _slotUIList = new List<ItemSlotUI>(Singleton.Game.playerData.InventorySpace);
 
@@ -140,21 +126,13 @@ namespace NOLDA
             {
                 var slotRT = CloneSlot();
                 slotRT.pivot = new Vector2(0f, 1f); // Left Top
-                slotRT.anchoredPosition = curPos;
+
                 slotRT.gameObject.SetActive(true);
                 slotRT.gameObject.name = $"Item Slot [{slotIndex}]";
 
                 var slotUI = slotRT.GetComponent<ItemSlotUI>();
                 slotUI.SetSlotIndex(slotIndex);
                 _slotUIList.Add(slotUI);
-                
-                curPos.x += (_slotMargin + _slotSize);
-
-                if ((slotIndex + 1) % _horizontalSlotCount == 0)
-                {
-                    curPos.x = beginPos.x;
-                    curPos.y -= (_slotMargin + _slotSize);
-                }
             }
 
             // 슬롯 프리팹 - 프리팹이 아닌 경우 파괴
@@ -180,9 +158,9 @@ namespace NOLDA
 
         private void InitToggleEvents()
         {
-            _toggleFilterAll.onValueChanged.AddListener(       flag => UpdateFilter(flag, FilterOption.All));
-            _toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.Equipment));
-            _toggleFilterPortions.onValueChanged.AddListener(  flag => UpdateFilter(flag, FilterOption.Portion));
+            _toggleFilterAll.onValueChanged.AddListener(       flag => UpdateFilter(flag, FilterOption.ALL));
+            _toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.EQUIPMENT));
+            _toggleFilterPortions.onValueChanged.AddListener(  flag => UpdateFilter(flag, FilterOption.PORTION));
 
             // Local Method
             void UpdateFilter(bool flag, FilterOption option)
@@ -290,13 +268,16 @@ namespace NOLDA
                     _beginDragIconTransform = _beginDragSlot.IconRect.transform;
                     _beginDragIconPoint = _beginDragIconTransform.position;
                     _beginDragCursorPoint = Input.mousePosition;
-
+                    
                     // 맨 위에 보이기
                     _beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
                     _beginDragSlot.transform.SetAsLastSibling();
 
                     // 해당 슬롯의 하이라이트 이미지를 아이콘보다 뒤에 위치시키기
                     _beginDragSlot.SetHighlightOnTop(false);
+
+                    // Disable Grid Layout
+                    _contentAreaRT.GetComponent<GridLayoutGroup>().enabled = false;
                 }
                 else
                 {
@@ -330,29 +311,29 @@ namespace NOLDA
         /// <summary> 클릭을 뗄 경우 </summary>
         private void OnPointerUp()
         {
-            if (Input.GetMouseButtonUp(_leftClick))
+            if (Input.GetMouseButtonUp(_leftClick) && _beginDragSlot != null)
             {
-                // End Drag
-                if (_beginDragSlot != null)
-                {
-                    // 위치 복원
-                    _beginDragIconTransform.position = _beginDragIconPoint;
+                // 드래그 아이템 부모 복원
+                _beginDragIconTransform.position = _beginDragIconPoint;
 
-                    // UI 순서 복원
-                    _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
+                // UI 순서 복원
+                _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
+                
+                // 드래그 완료 처리
+                EndDrag();
+                
+                // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
+                _beginDragSlot.SetHighlightOnTop(true);
+                
+                // Grid Layout 정렬 복원
+                _contentAreaRT.GetComponent<GridLayoutGroup>().enabled = true;
 
-                    // 드래그 완료 처리
-                    EndDrag();
-
-                    // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
-                    _beginDragSlot.SetHighlightOnTop(true);
-
-                    // 참조 제거
-                    _beginDragSlot = null;
-                    _beginDragIconTransform = null;
-                }
+                // 참조 제거
+                _beginDragSlot = null;
+                _beginDragIconTransform = null;
             }
         }
+
 
         private void EndDrag()
         {
@@ -556,11 +537,11 @@ namespace NOLDA
             if(itemData != null)
                 switch (_currentFilterOption)
                 {
-                    case FilterOption.Equipment:
+                    case FilterOption.EQUIPMENT:
                         isFiltered = (itemData is EquipmentItemData);
                         break;
 
-                    case FilterOption.Portion:
+                    case FilterOption.PORTION:
                         isFiltered = (itemData is PortionItemData);
                         break;
                 }
