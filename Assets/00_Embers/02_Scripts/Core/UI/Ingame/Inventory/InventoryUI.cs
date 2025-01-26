@@ -251,6 +251,7 @@ namespace NOLDA
             else
                 _itemTooltip.Hide();
         }
+        
         /// <summary> 슬롯에 클릭하는 경우 </summary>
         private void OnPointerDown()
         {

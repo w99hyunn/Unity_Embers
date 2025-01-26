@@ -5349,9 +5349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _horizontalSlotCount: 6
-  _slotMargin: 8
-  _contentAreaPadding: 8
-  _slotSize: 72
   _showTooltip: 1
   _showHighlight: 1
   _showRemovingPopup: 1
@@ -5402,8 +5399,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -12, y: 0}
+  m_AnchoredPosition: {x: 0, y: -10}
+  m_SizeDelta: {x: -12, y: -10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &132878911
 MonoBehaviour:
@@ -8069,7 +8066,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 1030}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &260262331
 MonoBehaviour:
@@ -8086,7 +8083,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 15
     m_Right: 15
-    m_Top: 15
+    m_Top: 5
     m_Bottom: 15
   m_ChildAlignment: 0
   m_StartCorner: 0
@@ -8104,11 +8101,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 260262329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4473ca6b3d51a41a358e4ccb55ddd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
 --- !u!1001 &261757899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13446,9 +13441,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _horizontalSlotCount: 6
-  _slotMargin: 8
-  _contentAreaPadding: 8
-  _slotSize: 72
   _showTooltip: 1
   _showHighlight: 1
   _showRemovingPopup: 1
@@ -17450,8 +17442,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 549153834}
   m_HandleRect: {fileID: 731708768}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.53890294
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
