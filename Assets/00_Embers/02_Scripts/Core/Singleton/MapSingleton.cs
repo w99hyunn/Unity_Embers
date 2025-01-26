@@ -9,9 +9,75 @@ namespace NOLDA
     public class MapSingleton : MonoBehaviour
     {
         public ChunkListSO chunkList;
+
+        private AudioSource _audioSource;
         
         // 현재 로드돼있는 청크 목록
         private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>();
+        // 현재 재생중인 BGM
+        private string _currentBGMName;
+
+        private void Awake()
+        {
+            TryGetComponent<AudioSource>(out _audioSource);
+        }
+
+        #region # BGM(청크별 BGM 관리)
+        public async Awaitable PlayBGM(AudioClip bgmClip, float fadeDuration = 1.0f)
+        {
+            if (bgmClip == null) return;
+            
+            //현재 재생중인 BGM과 동일하면 계속 재생(신규 X)
+            if (_currentBGMName == bgmClip.name) return; 
+
+            _currentBGMName = bgmClip.name;
+            
+            if (_audioSource.isPlaying)
+            {
+                await FadeOut(fadeDuration);
+            }
+            
+            _audioSource.clip = bgmClip;
+            _audioSource.Play();
+            await FadeIn(fadeDuration);
+        }
+
+        public async Awaitable StopBGM(float fadeDuration = 1.0f)
+        {
+            if (_audioSource.isPlaying)
+            {
+                await FadeOut(fadeDuration);
+                _audioSource.Stop();
+                _currentBGMName = null;
+            }
+        }
+
+        private async Awaitable FadeOut(float duration)
+        {
+            float startVolume = _audioSource.volume;
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                _audioSource.volume = Mathf.Lerp(startVolume, 0, t / duration);
+                await Awaitable.NextFrameAsync();
+            }
+
+            _audioSource.volume = 0;
+        }
+
+        private async Awaitable FadeIn(float duration)
+        {
+            float startVolume = _audioSource.volume;
+            _audioSource.volume = 0;
+
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                _audioSource.volume = Mathf.Lerp(0, 1, t / duration);
+                await Awaitable.NextFrameAsync();
+            }
+
+            _audioSource.volume = 1;
+        }
+        #endregion
         
         #region # Load InGame
 
@@ -52,6 +118,7 @@ namespace NOLDA
 
         private async Awaitable ReturnTitleCoroutine()
         {
+            StopBGM();
             string inGameScene = "InGame";
             if (SceneManager.GetSceneByName(inGameScene).isLoaded)
             {
@@ -161,8 +228,15 @@ namespace NOLDA
                 SceneManager.MoveGameObjectToScene(NetworkClient.localPlayer.gameObject, inGameScene);
             }
             
-            SceneManager.SetActiveScene(
-                SceneManager.GetSceneByName($"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}"));
+            // 현재 활성화된 씬 설정
+            string activeSceneName = $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}";
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(activeSceneName));
+            
+            var chunkInfo = chunkList.GetChunkInfo(activeSceneName);
+            if (chunkInfo != null && chunkInfo.bgm != null)
+            {
+                PlayBGM(chunkInfo.bgm);
+            }
         }
 
         private async Awaitable LoadChunk(string sceneName, Vector2Int coord)

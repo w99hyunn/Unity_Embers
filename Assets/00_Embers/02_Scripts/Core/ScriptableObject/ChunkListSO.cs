@@ -15,6 +15,9 @@ namespace NOLDA
 
         [Tooltip("유니티 씬 이름 ('Chunk_0_0')")]
         public string sceneName;
+
+        [Tooltip("이 청크에서 재생할 BGM")]
+        public AudioClip bgm;
         
 #if UNITY_EDITOR
         [Tooltip("씬 객체")]
@@ -26,6 +29,11 @@ namespace NOLDA
     public class ChunkListSO : ScriptableObject
     {
         public List<ChunkInfo> chunkSceneNames;
+        
+        public ChunkInfo GetChunkInfo(string sceneName)
+        {
+            return chunkSceneNames.Find(chunk => chunk.sceneName == sceneName);
+        }
         
 #if UNITY_EDITOR
         private void OnValidate()
