@@ -12593,7 +12593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1844934317179871778, guid: d69ab333fc7fb4f4c9e09f66d8af0821, type: 3}
       propertyPath: saveKey
-      value: AnisotropicFiltering
+      value: AntiAliasing
       objectReference: {fileID: 0}
     - target: {fileID: 1844934317179871778, guid: d69ab333fc7fb4f4c9e09f66d8af0821, type: 3}
       propertyPath: defaultIndex
@@ -43349,9 +43349,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cover: {fileID: 21300000, guid: 36cb3cbca9e6e6e49b9aed396ea78e3e, type: 3}
-  title: Settings
-  description: Tweak some options and make your gameplay experience even better!
-    You can change between categories using the buttons on the top.
+  title: "\uC124\uC815"
+  description: "\uBA87 \uAC00\uC9C0 \uC635\uC158\uC744 \uC870\uC815\uD558\uC5EC \uAC8C\uC784
+    \uD50C\uB808\uC774 \uACBD\uD5D8\uC744 \uB354\uC6B1 \uD5A5\uC0C1\uC2DC\uD0A4\uC138\uC694!
+    \uC0C1\uB2E8\uC758 \uBC84\uD2BC\uC744 \uC0AC\uC6A9\uD558\uC5EC \uCE74\uD14C\uACE0\uB9AC\uB97C
+    \uBCC0\uACBD\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   tableID: UI
   titleKey: SettingsTitle
   descriptionKey: SettingsDesc
