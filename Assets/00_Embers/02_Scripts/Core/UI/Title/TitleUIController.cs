@@ -72,8 +72,8 @@ namespace NOLDA
             if (!connected)
             {
                 _view.ConnectingFail();
-                Singleton.UI.OpenAlert("CONNECTING FAIL",
-                "The server cannot be connected. If you continue to fail to connect, please contact us on the website.");
+                Singleton.UI.OpenAlert("연결 실패",
+                "연결에 실패했습니다. 계속 연결에 실패하면 홈페이지에서 서버 상태를 확인하세요.");
             }
         }
 
@@ -101,8 +101,8 @@ namespace NOLDA
         /// </summary>
         private void HandleServerDisconnection()
         {
-            Singleton.UI.OpenAlert("CONNECTING LOST",
-                "The connection to the server is lost, and the game is terminated.", 1);
+            Singleton.UI.OpenAlert("연결 종료",
+                "연결이 손실되었습니다. 게임을 종료합니다.", 1);
             _isCheckingConnection = false;
         }
 
@@ -114,21 +114,21 @@ namespace NOLDA
             //아이디 길이 확인
             if (_view.SignUpID.Length < 5)
             {
-                Singleton.UI.OpenAlert("FAIL", "ID must be at least 5 characters long.");
+                Singleton.UI.OpenAlert("실패", "아이디는 최소 5자 이상이어야 합니다.");
                 return;
             }
             
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
-                Singleton.UI.OpenAlert("FAIL", "Password must be at least 5 characters long.");
+                Singleton.UI.OpenAlert("실패", "비밀번호는 최소 5자 이상이어야 합니다.");
                 return;
             }
             
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                Singleton.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
+                Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
             
@@ -243,7 +243,7 @@ namespace NOLDA
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                Singleton.UI.OpenAlert("FAIL", "Invalid password input, please enter the same value.");
+                Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
 
@@ -274,12 +274,12 @@ namespace NOLDA
             if (true == msg.Success)
             {
                 Singleton.Game.UserInfoUpdate(msg.Email);
-                Singleton.UI.OpenAlert("SUCCESS", "User information update successful.");
+                Singleton.UI.OpenAlert("성공", "회원정보 업데이트가 완료되었습니다.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                Singleton.UI.OpenAlert("FAIL", "Failed to update user information.");
+                Singleton.UI.OpenAlert("실패", "회원정보 업데이트에 실패했습니다.");
             }
         }
         #endregion
@@ -317,16 +317,16 @@ namespace NOLDA
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    Singleton.UI.OpenAlert("SUCCESS", "The character creation has been completed.");
+                    Singleton.UI.OpenAlert("성공", "캐릭터 생성이 완료되었습니다.");
                     LoadCharacterInfo();
                     _view.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    Singleton.UI.OpenAlert("DUPLICATE", "This is a character name that already exists.");
+                    Singleton.UI.OpenAlert("실패", "이미 존재하는 캐릭터 이름입니다.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    Singleton.UI.OpenAlert("ERROR", "Error occurred. Error code 101");
+                    Singleton.UI.OpenAlert("실패", "오류가 발생했습니다. 오류코드 101");
                     break;
             }
         }
@@ -509,7 +509,7 @@ namespace NOLDA
         private void InitInGame()
         {
             Singleton.UI.FadeIn();
-            Singleton.UI.OpenAlert("LOADING", "Ingame loading...", 2);
+            Singleton.UI.OpenAlert("게임 시작", "게임 로딩중입니다. 잠시만 기다려주세요.", 2);
             Singleton.Map.LoadInGame();
         }
 

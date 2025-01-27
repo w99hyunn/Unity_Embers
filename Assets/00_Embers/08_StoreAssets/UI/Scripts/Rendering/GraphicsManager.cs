@@ -1,5 +1,5 @@
-using System.Reflection;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Michsky.UI.Reach
 {
@@ -142,6 +142,55 @@ namespace Michsky.UI.Reach
             if (index == 2) { SetAnisotropicFiltering(AnisotropicOption.ForcedOn); }
             else if (index == 1) { SetAnisotropicFiltering(AnisotropicOption.PerTexture); }
             else if (index == 0) { SetAnisotropicFiltering(AnisotropicOption.None); }
+        }
+
+        public enum AntiAliasingOption
+        {
+            None,
+            FXAA,
+            SMAA,
+            TAA
+        }
+
+        public void SetAntiAliasing(AntiAliasingOption option)
+        {
+            var camera = Camera.main;
+            if (camera == null)
+                return;
+
+            var additionalCameraData = camera.GetUniversalAdditionalCameraData();
+            if (additionalCameraData == null)
+                return;
+
+            switch (option)
+            {
+                case AntiAliasingOption.None:
+                    additionalCameraData.antialiasing = AntialiasingMode.None;
+                    break;
+                    
+                case AntiAliasingOption.FXAA:
+                    additionalCameraData.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
+                    // FXAA 강도는 URP 에셋에서 전역 설정으로 관리됨
+                    break;
+                    
+                case AntiAliasingOption.SMAA:
+                    additionalCameraData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                    additionalCameraData.antialiasingQuality = AntialiasingQuality.High;
+                    break;
+                    
+                case AntiAliasingOption.TAA:
+                    additionalCameraData.antialiasing = AntialiasingMode.TemporalAntiAliasing;
+                    // TAA 설정은 URP 에셋에서 전역으로 관리됨
+                    break;
+            }
+        }
+
+        public void SetAntiAliasing(int index)
+        {
+            if (index == 0) { SetAntiAliasing(AntiAliasingOption.None); }
+            else if (index == 1) { SetAntiAliasing(AntiAliasingOption.FXAA); }
+            else if (index == 2) { SetAntiAliasing(AntiAliasingOption.SMAA); }
+            else if (index == 3) { SetAntiAliasing(AntiAliasingOption.TAA); }
         }
     }
 }
