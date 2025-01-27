@@ -541,17 +541,17 @@ namespace NOLDA
                                     // 아이템 종류에 따라 처리
                                     if (itemData is ArmorItemData armorData)
                                     {
-                                        Debug.Log("방어구 " + itemData.Name);
+                                        //Debug.Log("방어구 " + itemData.Name);
                                         item = new ArmorItem(armorData);
                                     }
                                     else if (itemData is WeaponItemData weaponData)
                                     {
-                                        Debug.Log("무기 " + itemData.Name);
+                                        //Debug.Log("무기 " + itemData.Name);
                                         item = new WeaponItem(weaponData);
                                     }
                                     else if (itemData is PortionItemData portionData)
                                     {
-                                        Debug.Log("포션 " + itemData.Name);
+                                        //Debug.Log("포션 " + itemData.Name);
                                         item = new PortionItem(portionData, amount);
                                     }
                                     else
