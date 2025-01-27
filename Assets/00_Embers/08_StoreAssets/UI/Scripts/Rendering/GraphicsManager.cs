@@ -146,7 +146,7 @@ namespace Michsky.UI.Reach
 
         public enum AntiAliasingOption
         {
-            None,
+            NONE,
             FXAA,
             SMAA,
             TAA
@@ -164,7 +164,7 @@ namespace Michsky.UI.Reach
 
             switch (option)
             {
-                case AntiAliasingOption.None:
+                case AntiAliasingOption.NONE:
                     additionalCameraData.antialiasing = AntialiasingMode.None;
                     break;
                     
@@ -187,7 +187,7 @@ namespace Michsky.UI.Reach
 
         public void SetAntiAliasing(int index)
         {
-            if (index == 0) { SetAntiAliasing(AntiAliasingOption.None); }
+            if (index == 0) { SetAntiAliasing(AntiAliasingOption.NONE); }
             else if (index == 1) { SetAntiAliasing(AntiAliasingOption.FXAA); }
             else if (index == 2) { SetAntiAliasing(AntiAliasingOption.SMAA); }
             else if (index == 3) { SetAntiAliasing(AntiAliasingOption.TAA); }
