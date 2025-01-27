@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NOLDA
 {
-    [CreateAssetMenu(fileName = "SceneData", menuName = "STARTING/SceneData", order = 1)]
+    [CreateAssetMenu(fileName = "SceneData", menuName = "NOLDA/SceneData", order = 1)]
     public class SceneData : ScriptableObject
     {
         [System.Serializable]

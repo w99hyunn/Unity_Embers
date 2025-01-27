@@ -3,7 +3,7 @@ using System;
 
 namespace NOLDA
 {
-    [CreateAssetMenu(fileName = "PlayerData", menuName = "STARTING/PlayerData", order = 1)]
+    [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;

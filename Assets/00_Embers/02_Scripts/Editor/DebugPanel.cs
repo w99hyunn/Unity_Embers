@@ -18,7 +18,7 @@ namespace NOLDA
 
         private Vector2 _scrollPosition;
 
-        [MenuItem("STARTING/Debug Panel")]
+        [MenuItem("NOLDA/Debug Panel")]
         public static void ShowWindow()
         {
             GetWindow<DebugPanel>("Debug Panel");

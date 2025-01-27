@@ -2,7 +2,7 @@
 
 namespace NOLDA
 {
-    [CreateAssetMenu(fileName = "ExperienceTable", menuName = "STARTING/Experience Table", order = 1)]
+    [CreateAssetMenu(fileName = "ExperienceTable", menuName = "NOLDA/Experience Table", order = 1)]
     public class HxpTableSO : ScriptableObject
     {
         public int[] experienceRequiredPerLevel;
