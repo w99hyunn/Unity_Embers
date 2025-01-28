@@ -47,7 +47,7 @@ namespace NOLDA
                 Singleton.Network.StartClient();
                 attemptCount++;
 
-                _view.ConnectingMessageUpdate($"{attemptCount} / {SERVER_CONNECT_MAX_RETRY}회 연결 시도중...");
+                _view.ConnectingMessageUpdate($"{attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
 
                 //연결됐는지 확인
                 while (NetworkClient.active && !NetworkClient.isConnected)

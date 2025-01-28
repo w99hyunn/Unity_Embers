@@ -504,7 +504,6 @@ namespace NOLDA
                         if (Enum.TryParse(factionString, out Faction characterFaction))
                         {
                             playerData.Faction = characterFaction;
-                            Debug.Log("Faction : " + characterFaction);
                         }
                         playerData.Sp = reader.GetInt32("Sp");
                         string genderString = reader.GetString("Gender");
