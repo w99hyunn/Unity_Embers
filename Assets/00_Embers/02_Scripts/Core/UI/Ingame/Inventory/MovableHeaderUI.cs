@@ -46,6 +46,7 @@ namespace NOLDA
         {
             _beginPoint = targetTransform.position;
             _moveBegin = eventData.position;
+            targetTransform.SetAsLastSibling();
         }
         
         void IDragHandler.OnDrag(PointerEventData eventData)

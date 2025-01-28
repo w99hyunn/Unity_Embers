@@ -86,7 +86,15 @@ namespace NOLDA
 
             // 3. 골드 입력 팝업
             _goldInputOkButton.onClick.AddListener(HideGoldInputPopup);
-            _goldInputOkButton.onClick.AddListener(() => OnGoldInputOK?.Invoke(int.Parse(_goldInputField.text)));
+            _goldInputOkButton.onClick.AddListener(() => 
+            {
+                int gold = 0;
+                if (!string.IsNullOrEmpty(_goldInputField.text))
+                {
+                    int.TryParse(_goldInputField.text, out gold);
+                }
+                OnGoldInputOK?.Invoke(gold <= 0 ? 0 : gold);
+            });
             
             _goldInputCancelButton.onClick.AddListener(HideGoldInputPopup);
 

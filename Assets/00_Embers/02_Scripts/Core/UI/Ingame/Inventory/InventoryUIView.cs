@@ -399,7 +399,7 @@ namespace NOLDA
         
         public void TryRemoveGold(int amount)
         {
-            _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold);
+            _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold > 0 ? (gold > Singleton.Game.playerData.Gold ? Singleton.Game.playerData.Gold : gold) : 0);
         }
 
         /***********************************************************************

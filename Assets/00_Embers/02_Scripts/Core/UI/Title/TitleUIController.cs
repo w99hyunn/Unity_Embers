@@ -80,7 +80,6 @@ namespace NOLDA
 
         private async Awaitable CheckServerConnectionLoop()
         {
-            DebugUtils.Log("서버 연결상태 확인 시작");
             _isCheckingConnection = true;
 
             while (_isCheckingConnection)
