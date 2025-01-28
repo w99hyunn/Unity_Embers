@@ -1337,6 +1337,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 4f0975df5fafc2c46a85d65111fc42c6, type: 2}
   avatarData: {fileID: 11400000, guid: 46488b42bca6c8e41925b566a937a556, type: 2}
+  levelUpAttack: 5
+  levelUpArmor: 10
+  levelUpMaxHp: 100
+  levelUpMaxMp: 100
   serverIp: 172.30.1.67
   serverPort: 8585
   serverAutoRun: 0
@@ -6343,6 +6347,7 @@ MonoBehaviour:
   descriptionText: ALERT TEXT
   titleKey: 
   descriptionKey: 
+  nowClose: 0
   useCustomContent: 0
   isOn: 0
   closeOnCancel: 1

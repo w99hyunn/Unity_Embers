@@ -29,6 +29,7 @@ namespace Michsky.UI.Reach
         public string descriptionKey;
 
         // Settings
+        public bool nowClose = false;
         public bool useCustomContent = false;
         public bool isOn = false;
         public bool closeOnCancel = true;
@@ -193,6 +194,14 @@ namespace Michsky.UI.Reach
 
         public void CloseWindow()
         {
+            if(true == nowClose) //바로 닫는 기능을 켰을 때 따로 처리
+            {
+                gameObject.SetActive(false);
+                isOn = false;
+                onClose.Invoke();
+                return;
+            }
+
             if (!isOn)
                 return;
 

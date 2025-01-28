@@ -153,7 +153,7 @@ namespace NOLDA
             if (Singleton.Game == null)
                 return;
             
-            var _inventory = FindAnyObjectByType<Inventory>();
+            var _inventory = FindAnyObjectByType<InventoryUIController>();
             
             switch (index)
             {

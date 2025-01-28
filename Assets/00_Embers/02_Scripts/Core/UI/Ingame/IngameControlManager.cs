@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Michsky.UI.Reach;
 using Mirror;
@@ -74,7 +73,7 @@ namespace NOLDA
             }
             else if (true == _isChatting)
             {
-                chatUIController.SendChatMessage();
+                _ = chatUIController.SendChatMessage();
                 _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
                 _isChatting = false;
             }

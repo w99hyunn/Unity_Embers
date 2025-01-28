@@ -54,3 +54,7 @@ MonoBehaviour:
     itemType: 0
     itemIcon: {fileID: 21300000, guid: e0687b3be7db73c499d9e3b9135521b2, type: 3}
     itemText: 
+  - itemID: Inventory
+    itemType: 1
+    itemIcon: {fileID: 0}
+    itemText: I

@@ -11,6 +11,12 @@
         ROGUE,
     }
 
+    public enum Faction
+    {
+        HOPE = 0,
+        FIRE = 1
+    }
+
     public enum Gender
     {
         MALE = 0,

@@ -61,6 +61,7 @@ namespace Michsky.UI.Reach
 
             var closeBehaviour = serializedObject.FindProperty("closeBehaviour");
             var startBehaviour = serializedObject.FindProperty("startBehaviour");
+            var nowClose = serializedObject.FindProperty("nowClose");
             var useCustomContent = serializedObject.FindProperty("useCustomContent");
             var closeOnCancel = serializedObject.FindProperty("closeOnCancel");
             var closeOnConfirm = serializedObject.FindProperty("closeOnConfirm");
@@ -149,6 +150,7 @@ namespace Michsky.UI.Reach
                     ReachUIEditorHandler.DrawProperty(animationSpeed, customSkin, "Animation Speed");
                     ReachUIEditorHandler.DrawProperty(startBehaviour, customSkin, "Start Behaviour");
                     ReachUIEditorHandler.DrawProperty(closeBehaviour, customSkin, "Close Behaviour");
+                    nowClose.boolValue = ReachUIEditorHandler.DrawToggle(nowClose.boolValue, customSkin, "애니메이션 없이 바로 닫기", "체크하면 애니메이션 없이 바로 닫음");
                     useCustomContent.boolValue = ReachUIEditorHandler.DrawToggle(useCustomContent.boolValue, customSkin, "Use Custom Content", "Bypasses inspector values and allows manual editing.");
                     closeOnCancel.boolValue = ReachUIEditorHandler.DrawToggle(closeOnCancel.boolValue, customSkin, "Close Window On Cancel");
                     closeOnConfirm.boolValue = ReachUIEditorHandler.DrawToggle(closeOnConfirm.boolValue, customSkin, "Close Window On Confirm");

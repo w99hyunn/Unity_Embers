@@ -315,7 +315,7 @@ namespace NOLDA
         /// <param name="gender">Male, Female, Other</param>
         /// <param name="mapCode">인트값</param>
         /// <returns></returns>
-        public CreateCharacterResult CreateCharacter(string username, string characterName, int faction, Class characterClass, int gender, int mapCode)
+        public CreateCharacterResult CreateCharacter(string username, string characterName, Faction faction, Class characterClass, Gender gender, int mapCode)
         {
             try
             {
@@ -361,9 +361,9 @@ namespace NOLDA
                 {
                     characterCmd.Parameters.AddWithValue("@Account_id", accountId);
                     characterCmd.Parameters.AddWithValue("@Name", characterName);
-                    characterCmd.Parameters.AddWithValue("@Faction", faction);
+                    characterCmd.Parameters.AddWithValue("@Faction", faction.ToString());
                     characterCmd.Parameters.AddWithValue("@Class", characterClass.ToString());
-                    characterCmd.Parameters.AddWithValue("@Gender", gender);
+                    characterCmd.Parameters.AddWithValue("@Gender", gender.ToString());
                     characterCmd.Parameters.AddWithValue("@MapCode", mapCode);
 
                     int rowsAffected = characterCmd.ExecuteNonQuery();
@@ -468,7 +468,7 @@ namespace NOLDA
             string characterQuery = @"
         SELECT 
             `Character_id`, `Name`, `Level`, `Hp`, `Mp`, `Hxp`, `Gold`, `MaxHp`, `MaxMp`, 
-            `Attack`, `Class`, `Sp`, `Gender`, 
+            `Attack`, `Armor`, `Class`, `Faction`, `Sp`, `Gender`, 
             `Current_position_x`, `Current_position_y`, `Current_position_z`, 
             `MapCode`, `InventorySpace`
         FROM `character`
@@ -500,8 +500,18 @@ namespace NOLDA
                         {
                             playerData.Class = characterClass;
                         }
+                        string factionString = reader.GetString("Faction");
+                        if (Enum.TryParse(factionString, out Faction characterFaction))
+                        {
+                            playerData.Faction = characterFaction;
+                            Debug.Log("Faction : " + characterFaction);
+                        }
                         playerData.Sp = reader.GetInt32("Sp");
-                        playerData.Gender = reader.GetString("Gender");
+                        string genderString = reader.GetString("Gender");
+                        if (Enum.TryParse(genderString, out Gender characterGender))
+                        {
+                            playerData.Gender = characterGender;
+                        }
 
                         float posX = reader.GetFloat("Current_position_x");
                         float posY = reader.GetFloat("Current_position_y");
@@ -565,11 +575,11 @@ namespace NOLDA
                                         playerData.Items[position] = item;
                                     }
                                 }
-                                
-                                // 데이터 set 이벤트 재개
-                                playerData.suppressEvents = false;
                             }
                         }
+
+                        // 데이터 set 이벤트 재개
+                        playerData.suppressEvents = false;
                     }
                 }
             }

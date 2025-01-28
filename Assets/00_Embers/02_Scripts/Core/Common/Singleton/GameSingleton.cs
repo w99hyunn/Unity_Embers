@@ -12,6 +12,16 @@ namespace NOLDA
         #region ▶ Game Settings
         [Space(20)]
         [Header("▶ Game Settings")]
+        [Header("Charcter Settings - 레벨업시 증가하는 스탯")]
+        [SerializeField] private int levelUpAttack = 5;
+        public int LevelUpAttack => levelUpAttack;
+        [SerializeField] private int levelUpArmor = 10;
+        public int LevelUpArmor => levelUpArmor;
+        [SerializeField] private int levelUpMaxHp = 100;
+        public int LevelUpMaxHp => levelUpMaxHp;
+        [SerializeField] private int levelUpMaxMp = 100;
+        public int LevelUpMaxMp => levelUpMaxMp;
+
         [Header("Server Info")]
         [SerializeField] private string serverIp = "172.30.1.67";
         public string ServerIP => serverIp;

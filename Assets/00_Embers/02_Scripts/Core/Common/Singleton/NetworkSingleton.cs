@@ -205,6 +205,7 @@ namespace NOLDA
                 MaxMp = playerData.MaxMp,
                 Attack = playerData.Attack,
                 Class = playerData.Class,
+                Faction = playerData.Faction,
                 Sp = playerData.Sp,
                 Gender = playerData.Gender,
                 Position = playerData.Position,

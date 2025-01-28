@@ -182,6 +182,37 @@ namespace NOLDA
             }
         }
 
+        [SerializeField] private int armor;
+        public int Armor
+        {
+            get => armor;
+            set
+            {
+                if (armor != value)
+                {
+                    armor = value;
+                    if (false == suppressEvents)
+                        OnDataChanged?.Invoke(nameof(Armor), value);
+                }
+            }
+        }
+
+        [SerializeField] private Faction factionType;
+        public Faction Faction
+        {
+            get => factionType;
+            set
+            {
+                if (factionType != value)
+                {
+                    factionType = value;
+                    if (false == suppressEvents)
+                        OnDataChanged?.Invoke(nameof(Faction), value);
+                }
+            }
+        }
+
+
         [SerializeField] private Class classType;
         public Class Class
         {
@@ -212,8 +243,8 @@ namespace NOLDA
             }
         }
 
-        [SerializeField] private string gender;
-        public string Gender
+        [SerializeField] private Gender gender;
+        public Gender Gender
         {
             get => gender;
             set
@@ -292,11 +323,12 @@ namespace NOLDA
 
         private void HandleLevelUp()
         {
-            //레벨업시 오르는 능력치 상승률
-            MaxHp += 100;
-            MaxMp += 100;
-            Attack += 5;
-            
+            //레벨업시 오르는 능력치 상승률(GameSingleton에서 정의)
+            MaxHp += Singleton.Game.LevelUpMaxHp;
+            MaxMp += Singleton.Game.LevelUpMaxMp;
+            Attack += Singleton.Game.LevelUpAttack;
+            Armor += Singleton.Game.LevelUpArmor;
+
             //레벨업하면 현재 HP, MP를 모두 채워줌
             Hp = MaxHp;
             Mp = MaxMp;

@@ -5,7 +5,6 @@ namespace NOLDA
 {
     public class MovableHeaderUI : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
-        [SerializeField]
         private Transform targetTransform;
 
         private Vector2 _beginPoint;

@@ -1,4 +1,5 @@
 using System.Linq;
+using Mirror;
 using UnityEngine;
 
 namespace NOLDA
@@ -7,7 +8,7 @@ namespace NOLDA
     {
         private async Awaitable OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.gameObject == NetworkClient.localPlayer.gameObject)
             {
                 await Awaitable.WaitForSecondsAsync(1f);
                 

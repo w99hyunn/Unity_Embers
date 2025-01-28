@@ -38,7 +38,7 @@ namespace NOLDA
         public RectTransform SlotRect => _slotRect;
         public RectTransform IconRect => _iconRect;
         
-        private InventoryUI _inventoryUI;
+        private InventoryUIView _inventoryUI;
 
         private RectTransform _slotRect;
         private RectTransform _iconRect;
@@ -72,7 +72,7 @@ namespace NOLDA
         ***********************************************************************/
         private void InitComponents()
         {
-            _inventoryUI = GetComponentInParent<InventoryUI>();
+            _inventoryUI = GetComponentInParent<InventoryUIView>();
 
             // Rects
             _slotRect = GetComponent<RectTransform>();

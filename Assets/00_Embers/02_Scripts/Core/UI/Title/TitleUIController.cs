@@ -47,7 +47,7 @@ namespace NOLDA
                 Singleton.Network.StartClient();
                 attemptCount++;
 
-                _view.ConnectingMessageUpdate($"Try {attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
+                _view.ConnectingMessageUpdate($"{attemptCount} / {SERVER_CONNECT_MAX_RETRY}회 연결 시도중...");
 
                 //연결됐는지 확인
                 while (NetworkClient.active && !NetworkClient.isConnected)
@@ -295,7 +295,7 @@ namespace NOLDA
                 _view.Gender);
         }
 
-        private void CreateCharacterRequest(string username, string characterName, int faction, Class characterClass, Gender gender)
+        private void CreateCharacterRequest(string username, string characterName, Faction faction, Class characterClass, Gender gender)
         {
             CreateCharacterRequestMessage createChracterRequestMessage = new CreateCharacterRequestMessage
             {
@@ -303,7 +303,7 @@ namespace NOLDA
                 CharacterName = characterName,
                 Faction = faction,
                 CharacterClass = characterClass,
-                Gender = (int)gender,
+                Gender = gender,
                 MapCode = _model.MapCode,
             };
             
@@ -456,6 +456,7 @@ namespace NOLDA
             Singleton.Game.playerData.Gold = msg.Gold;
             Singleton.Game.playerData.Attack = msg.Attack;
             Singleton.Game.playerData.Class = msg.Class;
+            Singleton.Game.playerData.Faction = msg.Faction;
             Singleton.Game.playerData.Sp = msg.Sp;
             Singleton.Game.playerData.Gender = msg.Gender;
             Singleton.Game.playerData.Position = msg.Position;

@@ -55,9 +55,9 @@ namespace NOLDA
     {
         public string Username;
         public string CharacterName;
-        public int Faction;
+        public Faction Faction;
         public Class CharacterClass;
-        public int Gender;
+        public Gender Gender;
         public int MapCode;
     }
 
@@ -97,8 +97,9 @@ namespace NOLDA
         public int MaxMp;
         public int Attack;
         public Class Class;
+        public Faction Faction;
         public int Sp;
-        public string Gender;
+        public Gender Gender;
         public Vector3 Position;
         public string MapCode;
         public int InventorySpace;

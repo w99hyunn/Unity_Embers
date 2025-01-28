@@ -71,8 +71,8 @@ namespace NOLDA
         
 
         public Class Class => (Class)classSelector.currentModeIndex;
+        public Faction Faction => (Faction)factionSelector.index;
         public Gender Gender => (Gender)genderSelector.index;
-        public int Faction => factionSelector.index;
         public string Name => nameInputField.text;
         public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
         public ChapterManager ChapterManager => chapterManager;
@@ -125,7 +125,7 @@ namespace NOLDA
         /// <param name="text"></param>
         public void ConnectingMessageUpdate(string text)
         {
-            ConnectingMessage.text = $"Connecting Server...\r\n{text}";
+            ConnectingMessage.text = $"서버에 연결중입니다...\r\n{text}";
         }
 
         public void ConnectingSuccess()
