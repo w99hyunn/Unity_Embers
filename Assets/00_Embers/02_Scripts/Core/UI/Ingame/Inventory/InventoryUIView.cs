@@ -3,6 +3,7 @@ using Michsky.UI.Reach;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /*
     - 필터
@@ -43,7 +44,9 @@ namespace NOLDA
 
         [Space(16)]
         [SerializeField] private bool _mouseReversed = false; // 마우스 클릭 반전 여부
-        
+
+        public TMP_Text goldText;
+
         /// <summary> 연결된 인벤토리 </summary>
         private InventoryUIController _inventory;
 
@@ -263,8 +266,6 @@ namespace NOLDA
                 // 아이템을 갖고 있는 슬롯만 해당
                 if (_beginDragSlot != null && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
                 {
-                    EditorLog($"Drag Begin : Slot [{_beginDragSlot.Index}]");
-
                     // 위치 기억, 참조 등록
                     _beginDragIconTransform = _beginDragSlot.IconRect.transform;
                     _beginDragIconPoint = _beginDragIconTransform.position;
@@ -394,13 +395,13 @@ namespace NOLDA
                 else
                     TryRemoveItem(index);
             }
-            // 슬롯이 아닌 다른 UI 위에 놓은 경우
-            else
-            {
-                EditorLog($"Drag End(Do Nothing)");
-            }
         }
         
+        public void TryRemoveGold(int amount)
+        {
+            _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold);
+        }
+
         /***********************************************************************
         *                               Private Methods
         ***********************************************************************/
@@ -408,16 +409,12 @@ namespace NOLDA
         /// <summary> UI 및 인벤토리에서 아이템 제거 </summary>
         private void TryRemoveItem(int index)
         {
-            EditorLog($"UI - Try Remove Item : Slot [{index}]");
-
             _inventory.Remove(index);
         }
 
         /// <summary> 아이템 사용 </summary>
         private void TryUseItem(int index)
         {
-            EditorLog($"UI - Try Use Item : Slot [{index}]");
-
             _inventory.Use(index);
         }
 
@@ -426,11 +423,8 @@ namespace NOLDA
         {
             if (from == to)
             {
-                EditorLog($"UI - Try Swap Items: Same Slot [{from.Index}]");
                 return;
             }
-
-            EditorLog($"UI - Try Swap Items: Slot [{from.Index} -> {to.Index}]");
 
             from.SwapOrMoveIcon(to);
             _inventory.Swap(from.Index, to.Index);
@@ -441,11 +435,8 @@ namespace NOLDA
         {
             if (indexA == indexB)
             {
-                EditorLog($"UI - Try Separate Amount: Same Slot [{indexA}]");
                 return;
             }
-
-            EditorLog($"UI - Try Separate Amount: Slot [{indexA} -> {indexB}]");
 
             string itemName = $"{_inventory.GetItemName(indexA)} x{amount}";
 
@@ -561,222 +552,5 @@ namespace NOLDA
                 UpdateSlotFilterState(i, data);
             }
         }
-
-        
-        /***********************************************************************
-        *                               Editor Only Debug
-        ***********************************************************************/
-        #region .
-#if UNITY_EDITOR
-        [Header("Editor Options")]
-        [SerializeField] private bool _showDebug = true;
-#endif
-        [System.Diagnostics.Conditional("UNITY_EDITOR")]
-        private void EditorLog(object message)
-        {
-#if UNITY_EDITOR
-            if (!_showDebug) return;
-#endif
-            DebugUtils.Log($"[InventoryUI] {message}");
-        }
-
-        #endregion
-        /***********************************************************************
-        *                               Editor Preview
-        ***********************************************************************/
-//         #region .
-// #if UNITY_EDITOR
-//         [SerializeField] private bool __showPreview = false;
-//
-//         [Range(0.01f, 1f)]
-//         [SerializeField] private float __previewAlpha = 0.1f;
-//
-//         private List<GameObject> __previewSlotGoList = new List<GameObject>();
-//         private int __prevSlotCountPerLine;
-//         private int __prevSlotLineCount;
-//         private float __prevSlotSize;
-//         private float __prevSlotMargin;
-//         private float __prevContentPadding;
-//         private float __prevAlpha;
-//         private bool __prevShow = false;
-//         private bool __prevMouseReversed = false;
-//
-//         private void OnValidate()
-//         {
-//             if (__prevMouseReversed != _mouseReversed)
-//             {
-//                 __prevMouseReversed = _mouseReversed;
-//                 InvertMouse(_mouseReversed);
-//
-//                 EditorLog($"Mouse Reversed : {_mouseReversed}");
-//             }
-//
-//             if (Application.isPlaying) return;
-//
-//             if (__showPreview && !__prevShow)
-//             {
-//                 CreateSlots();
-//             }
-//             __prevShow = __showPreview;
-//
-//             if (Unavailable())
-//             {
-//                 ClearAll();
-//                 return;
-//             }
-//             if (CountChanged())
-//             {
-//                 ClearAll();
-//                 CreateSlots();
-//                 __prevSlotCountPerLine = _horizontalSlotCount;
-//                 __prevSlotLineCount = _verticalSlotCount;
-//             }
-//             if (ValueChanged())
-//             {
-//                 DrawGrid();
-//                 __prevSlotSize = _slotSize;
-//                 __prevSlotMargin = _slotMargin;
-//                 __prevContentPadding = _contentAreaPadding;
-//             }
-//             if (AlphaChanged())
-//             {
-//                 SetImageAlpha();
-//                 __prevAlpha = __previewAlpha;
-//             }
-//
-//             bool Unavailable()
-//             {
-//                 return !__showPreview ||
-//                         _horizontalSlotCount < 1 ||
-//                         _verticalSlotCount < 1 ||
-//                         _slotSize <= 0f ||
-//                         _contentAreaRT == null ||
-//                         _slotUiPrefab == null;
-//             }
-//             bool CountChanged()
-//             {
-//                 return _horizontalSlotCount != __prevSlotCountPerLine ||
-//                        _verticalSlotCount != __prevSlotLineCount;
-//             }
-//             bool ValueChanged()
-//             {
-//                 return _slotSize != __prevSlotSize ||
-//                        _slotMargin != __prevSlotMargin ||
-//                        _contentAreaPadding != __prevContentPadding;
-//             }
-//             bool AlphaChanged()
-//             {
-//                 return __previewAlpha != __prevAlpha;
-//             }
-//             void ClearAll()
-//             {
-//                 foreach (var go in __previewSlotGoList)
-//                 {
-//                     Destroyer.Destroy(go);
-//                 }
-//                 __previewSlotGoList.Clear();
-//             }
-//             void CreateSlots()
-//             {
-//                 int count = _horizontalSlotCount * _verticalSlotCount;
-//                 __previewSlotGoList.Capacity = count;
-//
-//                 // 슬롯의 피벗은 Left Top으로 고정
-//                 RectTransform slotPrefabRT = _slotUiPrefab.GetComponent<RectTransform>();
-//                 slotPrefabRT.pivot = new Vector2(0f, 1f);
-//
-//                 for (int i = 0; i < count; i++)
-//                 {
-//                     GameObject slotGo = Instantiate(_slotUiPrefab);
-//                     slotGo.transform.SetParent(_contentAreaRT.transform);
-//                     slotGo.SetActive(true);
-//                     slotGo.AddComponent<PreviewItemSlot>();
-//
-//                     slotGo.transform.localScale = Vector3.one; // 버그 해결
-//
-//                     HideGameObject(slotGo);
-//
-//                     __previewSlotGoList.Add(slotGo);
-//                 }
-//
-//                 DrawGrid();
-//                 SetImageAlpha();
-//             }
-//             void DrawGrid()
-//             {
-//                 Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding);
-//                 Vector2 curPos = beginPos;
-//
-//                 // Draw Slots
-//                 int index = 0;
-//                 for (int j = 0; j < _verticalSlotCount; j++)
-//                 {
-//                     for (int i = 0; i < _horizontalSlotCount; i++)
-//                     {
-//                         GameObject slotGo = __previewSlotGoList[index++];
-//                         RectTransform slotRT = slotGo.GetComponent<RectTransform>();
-//
-//                         slotRT.anchoredPosition = curPos;
-//                         slotRT.sizeDelta = new Vector2(_slotSize, _slotSize);
-//                         __previewSlotGoList.Add(slotGo);
-//
-//                         // Next X
-//                         curPos.x += (_slotMargin + _slotSize);
-//                     }
-//
-//                     // Next Line
-//                     curPos.x = beginPos.x;
-//                     curPos.y -= (_slotMargin + _slotSize);
-//                 }
-//             }
-//             void HideGameObject(GameObject go)
-//             {
-//                 go.hideFlags = HideFlags.HideAndDontSave;
-//
-//                 Transform tr = go.transform;
-//                 for (int i = 0; i < tr.childCount; i++)
-//                 {
-//                     tr.GetChild(i).gameObject.hideFlags = HideFlags.HideAndDontSave;
-//                 }
-//             }
-//             void SetImageAlpha()
-//             {
-//                 foreach (var go in __previewSlotGoList)
-//                 {
-//                     var images = go.GetComponentsInChildren<Image>();
-//                     foreach (var img in images)
-//                     {
-//                         img.color = new Color(img.color.r, img.color.g, img.color.b, __previewAlpha);
-//                         var outline = img.GetComponent<Outline>();
-//                         if (outline)
-//                             outline.effectColor = new Color(outline.effectColor.r, outline.effectColor.g, outline.effectColor.b, __previewAlpha);
-//                     }
-//                 }
-//             }
-//         }
-//
-//         private class PreviewItemSlot : MonoBehaviour { }
-//
-//         [UnityEditor.InitializeOnLoad]
-//         private static class Destroyer
-//         {
-//             private static Queue<GameObject> targetQueue = new Queue<GameObject>();
-//
-//             static Destroyer()
-//             { 
-//                 UnityEditor.EditorApplication.update += () =>
-//                 {
-//                     for (int i = 0; targetQueue.Count > 0 && i < 100000; i++)
-//                     {
-//                         var next = targetQueue.Dequeue();
-//                         DestroyImmediate(next);
-//                     }
-//                 };
-//             }
-//             public static void Destroy(GameObject go) => targetQueue.Enqueue(go);
-//         }
-// #endif
-//
-//         #endregion
     }
 }

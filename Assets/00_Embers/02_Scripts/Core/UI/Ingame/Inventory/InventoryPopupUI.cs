@@ -27,9 +27,17 @@ namespace NOLDA
         [SerializeField] private ButtonManager _amountInputOkButton;     // Ok
         [SerializeField] private ButtonManager _amountInputCancelButton; // Cancel
 
+        // 3. 골드 입력 팝업
+        [Header("Gold Input Popup")]
+        [SerializeField] private ModalWindowManager _goldInputPopupObject;
+        [SerializeField] private TMP_InputField _goldInputField;
+        [SerializeField] private ButtonManager _goldInputOkButton;     // Ok
+        [SerializeField] private ButtonManager _goldInputCancelButton; // Cancel
+
         // 확인 버튼 눌렀을 때 동작할 이벤트
         private event Action OnConfirmationOK;
         private event Action<int> OnAmountInputOK;
+        private event Action<int> OnGoldInputOK;
 
         // 수량 입력 제한 개수
         private int _maxAmount;
@@ -39,6 +47,7 @@ namespace NOLDA
             InitUIEvents();
             HideConfirmationPopup();
             HideAmountInputPopup();
+            HideGoldInputPopup();
         }
 
         /// <summary>
@@ -60,6 +69,13 @@ namespace NOLDA
             SetAmountInputOKEvent(okCallback);
         }
 
+        /// <summary> 골드 입력 팝업 띄우기 </summary>
+        public void OpenGoldInputPopup(Action<int> okCallback)
+        {
+            ShowGoldInputPopup();
+            SetGoldInputOKEvent(okCallback);
+        }
+
         private void InitUIEvents()
         {
             // 1. 버릴건지 팝업
@@ -67,6 +83,12 @@ namespace NOLDA
             _confirmationOkButton.onClick.AddListener(() => OnConfirmationOK?.Invoke());
             
             _confirmationCancelButton.onClick.AddListener(HideConfirmationPopup);
+
+            // 3. 골드 입력 팝업
+            _goldInputOkButton.onClick.AddListener(HideGoldInputPopup);
+            _goldInputOkButton.onClick.AddListener(() => OnGoldInputOK?.Invoke(int.Parse(_goldInputField.text)));
+            
+            _goldInputCancelButton.onClick.AddListener(HideGoldInputPopup);
 
             // 2. 수량 입력 팝업
             _amountInputOkButton.onClick.AddListener(HideAmountInputPopup);
@@ -122,6 +144,8 @@ namespace NOLDA
                 if(flag)
                     _amountInputField.text = amount.ToString();
             });
+
+
         }
 
         private void ShowConfirmationPopup(string itemName)
@@ -136,10 +160,13 @@ namespace NOLDA
             _amountInputItemNameText.text = itemName;
             _amountInputPopupObject.OpenWindow();
         }
-
         private void HideAmountInputPopup() => _amountInputPopupObject.CloseWindow();
+
+        private void ShowGoldInputPopup() => _goldInputPopupObject.OpenWindow();
+        private void HideGoldInputPopup() => _goldInputPopupObject.CloseWindow();
 
         private void SetConfirmationOKEvent(Action handler) => OnConfirmationOK = handler;
         private void SetAmountInputOKEvent(Action<int> handler) => OnAmountInputOK = handler;
+        private void SetGoldInputOKEvent(Action<int> handler) => OnGoldInputOK = handler;
     }
 }

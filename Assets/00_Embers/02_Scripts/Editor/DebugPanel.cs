@@ -14,7 +14,7 @@ namespace NOLDA
         private bool _loadAdditively = false;
         
         private int _selectedIndex = 0;
-        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "4번 아이템 추가", "모두제거"};
+        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "4번 아이템 추가", "모두제거", "골드 +1000000"};
 
         private Vector2 _scrollPosition;
 
@@ -185,6 +185,9 @@ namespace NOLDA
                     int capacity = Singleton.Game.playerData.InventorySpace;
                     for(int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
+                    break;
+                case 9:
+                    Singleton.Game.playerData.Gold += 1000000;
                     break;
                 default:
                     Debug.LogWarning("Invalid Option Selected");

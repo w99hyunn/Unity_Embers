@@ -97,6 +97,30 @@ namespace NOLDA
         {
             UpdateAccessibleStatesAll();
             UpdateAllSlot();
+            UpdateGoldText();
+        }
+
+        public void OnEnable()
+        {
+            Singleton.Game.playerData.OnDataChanged += HandleDataChanged;
+        }
+
+        private void OnDisable()
+        {
+            Singleton.Game.playerData.OnDataChanged -= HandleDataChanged;
+        }
+
+        private void HandleDataChanged(string fieldName, object newValue)
+        {
+            if(fieldName == nameof(Singleton.Game.playerData.Gold))
+            {
+                UpdateGoldText();
+            }
+        }
+
+        private void UpdateGoldText()
+        {
+            _inventoryUI.goldText.text = string.Format("{0:N0}", Singleton.Game.playerData.Gold);
         }
         
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
