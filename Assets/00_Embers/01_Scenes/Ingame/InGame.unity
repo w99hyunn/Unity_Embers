@@ -28554,7 +28554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504050c5fda9c0645802e401a644a171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonIcon: {fileID: 21300000, guid: e8d4a6efbb8450c4b9a8c14980fc1f7d, type: 3}
+  buttonIcon: {fileID: 21300000, guid: 7ef7ca5870b1d5c4cb5cb4f4b796f2b7, type: 3}
   buttonText: GOLD
   iconScale: 1
   textSize: 20
@@ -33864,7 +33864,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e8d4a6efbb8450c4b9a8c14980fc1f7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ef7ca5870b1d5c4cb5cb4f4b796f2b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -53496,7 +53496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e8d4a6efbb8450c4b9a8c14980fc1f7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ef7ca5870b1d5c4cb5cb4f4b796f2b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -54243,7 +54243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e8d4a6efbb8450c4b9a8c14980fc1f7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ef7ca5870b1d5c4cb5cb4f4b796f2b7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
