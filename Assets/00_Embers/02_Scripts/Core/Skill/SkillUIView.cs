@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace NOLDA
@@ -6,14 +7,23 @@ namespace NOLDA
     public class SkillUIView : MonoBehaviour
     {
         public SkillManager skillManager;
+        public UIControlManager uiControlManager;
 
         public Transform skillPanel;
         public GameObject skillButtonPrefab;
+        public TMP_Text spPoint;
+
         private List<GameObject> skillButtons = new List<GameObject>();
 
         private void Start()
         {
             UpdateSkillUI();
+            SetSPPoint();
+        }
+
+        private void SetSPPoint()
+        {
+            spPoint.text = $"{Singleton.Game.playerData.Sp}";
         }
 
         public void UpdateSkillUI()
@@ -26,8 +36,12 @@ namespace NOLDA
 
             foreach (var skill in skillManager.availableSkills)
             {
-                int skillLevel = skillManager.GetSkillLevel(skill.skillName);
-                bool canLearn = Singleton.Game.playerData.Level >= skill.levelData[0].requiredLevel && Singleton.Game.playerData.Sp >= skill.levelData[0].spCost;
+                if (skill.classType != Singleton.Game.playerData.Class)
+                    continue;
+
+                int skillLevel = Singleton.Game.playerData.Skills.ContainsKey(skill.skillID) ? Singleton.Game.playerData.Skills[skill.skillID] : 0;
+                bool canLearn = Singleton.Game.playerData.Level >= skill.levelData[0].requiredLevel 
+                                && Singleton.Game.playerData.Sp >= skill.levelData[0].spCost;
                 bool canUpgrade = skillLevel > 0 && skillLevel < skill.levelData.Count;
 
                 GameObject skillButton = Instantiate(skillButtonPrefab, skillPanel);
@@ -38,11 +52,11 @@ namespace NOLDA
 
                 if (skillLevel == 0 && canLearn)
                 {
-                    skillPrefab.skillLevelupBtn.onClick.AddListener(() => LearnSkill(skill));
+                    skillPrefab.skillLevelupBtn.onClick.AddListener(() => LearnSkill(skill.skillID));
                 }
                 else if (canUpgrade)
                 {
-                    skillPrefab.skillLevelupBtn.onClick.AddListener(() => UpgradeSkill(skill));
+                    skillPrefab.skillLevelupBtn.onClick.AddListener(() => UpgradeSkill(skill.skillID));
                 }
                 else
                 {
@@ -51,22 +65,32 @@ namespace NOLDA
 
                 skillButtons.Add(skillButton);
             }
+
+            SetSPPoint();
         }
 
-        private void LearnSkill(SkillData skill)
+        private void LearnSkill(int skillID)
         {
-            int sp = Singleton.Game.playerData.Sp;
-            skillManager.LearnSkill(skill, Singleton.Game.playerData.Level, Singleton.Game.playerData.Sp, ref sp);
-            Singleton.Game.playerData.Sp = sp;
-            UpdateSkillUI();
+            if (true == Singleton.Game.playerData.LearnSkill(skillID))
+            {
+                UpdateSkillUI();
+            }
+            else
+            {
+                uiControlManager.InGameChatNotice("시스템", "SP가 부족합니다.");
+            }
         }
 
-        private void UpgradeSkill(SkillData skill)
+        private void UpgradeSkill(int skillID)
         {
-            int sp = Singleton.Game.playerData.Sp;
-            skillManager.UpgradeSkill(skill, Singleton.Game.playerData.Level, Singleton.Game.playerData.Sp, ref sp);
-            Singleton.Game.playerData.Sp = sp;
-            UpdateSkillUI();
+            if (true == Singleton.Game.playerData.LevelUpSkill(skillID))
+            {
+                UpdateSkillUI();
+            }
+            else
+            {
+                uiControlManager.InGameChatNotice("시스템", "SP가 부족합니다.");
+            }
         }
     }
 }

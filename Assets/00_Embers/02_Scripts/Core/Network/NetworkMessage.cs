@@ -104,8 +104,22 @@ namespace NOLDA
         public string MapCode;
         public int InventorySpace;
         public List<InventoryItemMessage> InventoryItems;
+        public List<SkillEntry> Skills;
     }
     
+    [System.Serializable]
+    public struct SkillEntry
+    {
+        public int SkillID;
+        public int Level;
+
+        public SkillEntry(int skillID, int level)
+        {
+            SkillID = skillID;
+            Level = level;
+        }
+    }
+
     public struct InventoryItemMessage
     {
         public int ItemId;
@@ -130,7 +144,7 @@ namespace NOLDA
     //PlayerDataSO update
     public struct UpdatePlayerDataMessage : NetworkMessage
     {
-        public string Username;
+        public string CharacterName;
         public string FieldName;
         public string NewValue;
     }
@@ -142,6 +156,14 @@ namespace NOLDA
         public int Index;
         public int ItemId;
         public int Amount;
+    }
+
+    //Skill Data update
+    public struct UpdateSkillMessage : NetworkMessage
+    {
+        public string CharacterName;
+        public int SkillID;
+        public int Level;
     }
     #endregion
 }

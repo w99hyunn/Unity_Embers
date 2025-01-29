@@ -4,6 +4,7 @@ using Unity.Multiplayer.Playmode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Michsky.UI.Reach.ChapterManager;
+using System.Linq;
 
 namespace NOLDA
 {
@@ -78,6 +79,9 @@ namespace NOLDA
             
             //Player Inventory Update
             NetworkServer.ReplaceHandler<UpdateInventoryMessage>(OnUpdateInventoryMessageReceived);
+
+            //Player Skill Update
+            NetworkServer.RegisterHandler<UpdateSkillMessage>(OnUpdateSkillMessageReceived);
         }
 
         public override void OnStopServer()
@@ -212,8 +216,14 @@ namespace NOLDA
                 MapCode = playerData.MapCode,
                 InventorySpace = playerData.InventorySpace,
                 InventoryItems = new List<InventoryItemMessage>(),
+                Skills = new List<SkillEntry>()
             };
-            
+
+            foreach (var skill in playerData.Skills)
+            {
+                message.Skills.Add(new SkillEntry(skill.Key, skill.Value));
+            }
+
             for (int i = 0; i < playerData.Items.Length; i++)
             {
                 Item item = playerData.Items[i];
@@ -258,7 +268,7 @@ namespace NOLDA
         /// <param name="message"></param>
         private void OnUpdatePlayerDataMessageReceived(NetworkConnectionToClient conn, UpdatePlayerDataMessage message)
         {
-            Singleton.DB.UpdateDatabase(message.Username, message.FieldName, message.NewValue);
+            Singleton.DB.UpdateDatabase(message.CharacterName, message.FieldName, message.NewValue);
         }
 
         /// <summary>
@@ -270,6 +280,16 @@ namespace NOLDA
         {
             // 슬롯 업데이트 요청 처리
             Singleton.DB.HandleSlotUpdateInDB(msg.CharacterName, msg.Index, msg.ItemId, msg.Amount);
+        }
+
+        /// <summary>
+        /// 클라이언트의 스킬 레벨 업데이트 요청 메시지
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="msg"></param>
+        private void OnUpdateSkillMessageReceived(NetworkConnectionToClient conn, UpdateSkillMessage msg)
+        {
+            Singleton.DB.UpdateCharacterSkillsInDB(msg.CharacterName, msg.SkillID, msg.Level);
         }
 
         //public override void OnServerDisconnect(NetworkConnectionToClient conn)

@@ -21,6 +21,9 @@ namespace NOLDA
         public int LevelUpMaxHp => levelUpMaxHp;
         [SerializeField] private int levelUpMaxMp = 100;
         public int LevelUpMaxMp => levelUpMaxMp;
+        [SerializeField] private int levelUpSp = 3;
+        public int LevelUpSp => levelUpSp;
+
 
         [Header("Server Info")]
         [SerializeField] private string serverIp = "172.30.1.67";
@@ -99,7 +102,7 @@ namespace NOLDA
         {
             UpdatePlayerDataMessage message = new UpdatePlayerDataMessage
             {
-                Username = playerData.Username,
+                CharacterName = playerData.Username,
                 FieldName = fieldName,
                 NewValue = newValue.ToString()
             };
@@ -117,6 +120,23 @@ namespace NOLDA
         public void UserInfoUpdate(string email)
         {
             playerData.Email = email;
+        }
+        #endregion
+
+        #region # Skill Update Logic
+        // 네트워크로 skillID와 level을 직접 전송하는 함수
+        public void SendSkillUpdateToServer(string characterName, int skillID, int level)
+        {
+            if (!NetworkClient.active) return;
+
+            UpdateSkillMessage message = new UpdateSkillMessage
+            {
+                CharacterName = characterName,
+                SkillID = skillID,
+                Level = level
+            };
+
+            NetworkClient.Send(message);
         }
         #endregion
 

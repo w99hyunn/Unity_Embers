@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System;
-
+using System.Collections.Generic;
 namespace NOLDA
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
@@ -12,6 +12,48 @@ namespace NOLDA
         
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
         
+        #region # Skill Data
+        [SerializeField] private Dictionary<int, int> skills = new Dictionary<int, int>();
+
+        public Dictionary<int, int> Skills
+        {
+            get => skills;
+            set => skills = value;
+        }
+
+        public bool LearnSkill(int skillID)
+        {
+            if (!skills.ContainsKey(skillID))
+            {
+                if (Sp <= 0)
+                    return false;
+
+                skills[skillID] = 1; // 신규 스킬 학습
+                Sp--;
+                if (!suppressEvents)
+                    Singleton.Game.SendSkillUpdateToServer(Username, skillID, 1);
+                return true;
+            }
+            return false;
+        }
+
+        public bool LevelUpSkill(int skillID)
+        {
+            if (skills.ContainsKey(skillID))
+            {
+                if (Sp <= 0)
+                    return false;
+
+                skills[skillID]++; // 스킬 레벨업
+                Sp--;
+                if (!suppressEvents)
+                    Singleton.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
         #region # Inventory Data
         [SerializeField] private Item[] items;
 
@@ -328,6 +370,7 @@ namespace NOLDA
             MaxMp += Singleton.Game.LevelUpMaxMp;
             Attack += Singleton.Game.LevelUpAttack;
             Armor += Singleton.Game.LevelUpArmor;
+            Sp += Singleton.Game.LevelUpSp;
 
             //레벨업하면 현재 HP, MP를 모두 채워줌
             Hp = MaxHp;

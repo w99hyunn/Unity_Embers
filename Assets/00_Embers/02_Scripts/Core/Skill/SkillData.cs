@@ -5,6 +5,7 @@ namespace NOLDA
     [CreateAssetMenu(fileName = "NewSkill", menuName = "Skill System/SkillData", order = 1)]
     public class SkillData : ScriptableObject
     {
+        public int skillID;
         public string skillName;
         public string description;
         public Sprite icon;
@@ -14,6 +15,8 @@ namespace NOLDA
         public GameObject skillEffectPrefab; // 이펙트 프리팹
         public float cooldownTime; // 쿨타임
         public KeyCode defaultKey;
+        public float hitRadius = 2f; // 공격 범위
+        public int baseDamage = 10; // 기본 데미지
 
         // 스킬 레벨별 정보
         public List<SkillLevelData> levelData;

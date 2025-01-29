@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -463,6 +464,13 @@ namespace NOLDA
             Singleton.Game.playerData.MapCode = msg.MapCode;
             Singleton.Game.playerData.InventorySpace = msg.InventorySpace;
             
+            // 스킬 데이터 초기화
+            Singleton.Game.playerData.Skills = new Dictionary<int, int>();
+            foreach (var skill in msg.Skills)
+            {
+                Singleton.Game.playerData.Skills[skill.SkillID] = skill.Level;
+            }
+
             // 인벤토리 데이터 초기화
             Singleton.Game.playerData.Items = new Item[Singleton.Game.playerData.InventorySpace];
 

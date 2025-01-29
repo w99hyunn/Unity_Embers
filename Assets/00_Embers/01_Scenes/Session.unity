@@ -1248,6 +1248,7 @@ MonoBehaviour:
   levelUpArmor: 10
   levelUpMaxHp: 100
   levelUpMaxMp: 100
+  levelUpSp: 3
   serverIp: 172.30.1.67
   serverPort: 8585
   serverAutoRun: 0

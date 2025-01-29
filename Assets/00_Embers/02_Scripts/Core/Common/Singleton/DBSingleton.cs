@@ -575,7 +575,11 @@ namespace NOLDA
                                     }
                                 }
                             }
+                            inventoryReader.Close();
                         }
+
+                        // 스킬 데이터 가져오기
+                        playerData.Skills = GetCharacterSkills(characterId);
 
                         // 데이터 set 이벤트 재개
                         playerData.suppressEvents = false;
@@ -585,6 +589,35 @@ namespace NOLDA
 
             return playerData;
         }
+
+        public Dictionary<int, int> GetCharacterSkills(int characterId)
+        {
+            Dictionary<int, int> skills = new Dictionary<int, int>();
+            
+            string query = "SELECT Skill_id, Level FROM Skill WHERE Character_id = @CharacterId";
+            MySqlCommand cmd = new MySqlCommand(query, _connection);
+            cmd.Parameters.AddWithValue("@CharacterId", characterId);
+
+            try
+            {
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int skillId = reader.GetInt32("Skill_id");
+                        int level = reader.GetInt32("Level");
+                        skills.Add(skillId, level);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error fetching character skills: " + ex.Message);
+            }
+
+            return skills;
+        }
+
         #endregion
 
         #region # 캐릭터 삭제
@@ -667,6 +700,34 @@ namespace NOLDA
                 Debug.LogError($"Error updating database: {ex.Message}");
             }
         }
+
+        public void UpdateCharacterSkillsInDB(string characterName, int skillID, int level)
+        {
+            string query = @"
+            INSERT INTO `skill` (Character_id, Skill_id, Level) 
+            VALUES (
+                (SELECT `Character_id` FROM `character` WHERE `Name` = @CharacterName),
+                @SkillID, @Level
+            )
+            ON DUPLICATE KEY UPDATE Level = @Level";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, _connection))
+            {
+                cmd.Parameters.AddWithValue("@CharacterName", characterName);
+                cmd.Parameters.AddWithValue("@SkillID", skillID);
+                cmd.Parameters.AddWithValue("@Level", level);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error updating skill level in DB: " + ex.Message);
+                }
+            }
+        }
+
         #endregion
 
         #region # 캐릭터 인벤토리 자동 업데이트 로직
