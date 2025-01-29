@@ -17,10 +17,8 @@ namespace NOLDA
                 var locationChunkInfo = Singleton.Map.chunkList.chunkSceneNames
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
                 
-                Singleton.UI.LocationNoti(locationChunkInfo.chunkDisplayName);
-                FindAnyObjectByType<HudUIController>().MapNameChange(locationChunkInfo.chunkDisplayName);
+                FindAnyObjectByType<LocationNotificationUI>().LocationNoti(locationChunkInfo.chunkDisplayName);
             }
         }
-        
     }
 }

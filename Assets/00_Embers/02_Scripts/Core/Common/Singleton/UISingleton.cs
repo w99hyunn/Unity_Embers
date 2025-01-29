@@ -8,9 +8,6 @@ namespace NOLDA
         [Header("Common Alert Popup")]
         public ModalWindowManager alertModal;
 
-        [Header("Location Alert")]
-        public FeedNotification localtionNoti;
-        
         [Header("Fade Screen")]
         public ImageFading initPanel;
 
@@ -35,12 +32,6 @@ namespace NOLDA
         }
         #endregion
 
-        public void LocationNoti(string message)
-        {
-            localtionNoti.notificationText = message;
-            localtionNoti.ExpandNotification();
-        }
-        
         #region # Fade In / Out
         public void FadeIn()
         {

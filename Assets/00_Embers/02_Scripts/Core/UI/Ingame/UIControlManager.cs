@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NOLDA
 {
-    public class IngameControlManager : MonoBehaviour
+    public class UIControlManager : MonoBehaviour
     {
         [Header("Windows 예외1 PauseMenu")]
         public PauseMenuManager pauseMenuManager;
