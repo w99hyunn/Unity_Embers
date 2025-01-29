@@ -147,5 +147,10 @@ namespace NOLDA
 
             Singleton.Map.ReturnTitle();
         }
+
+        public void InGameChatNotice(string header, string message)
+        {
+            chatUIController.AddChatMessageHandle($"[{header}]", message);
+        }
     }
 }

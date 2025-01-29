@@ -10,15 +10,15 @@ namespace NOLDA
         
         private void OnEnable()
         {
-            Singleton.Network.ChatServer.OnMessageRecieved += HandleMessageRecieved;
+            Singleton.Network.ChatServer.OnMessageRecieved += AddChatMessageHandle;
         }
 
         private void OnDisable()
         {
-            Singleton.Network.ChatServer.OnMessageRecieved -= HandleMessageRecieved;
+            Singleton.Network.ChatServer.OnMessageRecieved -= AddChatMessageHandle;
         }
 
-        private void HandleMessageRecieved(string playerName, string msg)
+        public void AddChatMessageHandle(string playerName, string msg)
         {
             _view.AddChatMessage(playerName, msg);
         }
