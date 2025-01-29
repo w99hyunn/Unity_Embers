@@ -11,11 +11,18 @@
         ROGUE,
     }
 
+    public enum SkillType
+    {
+        ACTIVE = 0,
+        PASSIVE = 1,
+    }
+
     public enum Faction
     {
         HOPE = 0,
         FIRE = 1
     }
+
 
     public enum Gender
     {

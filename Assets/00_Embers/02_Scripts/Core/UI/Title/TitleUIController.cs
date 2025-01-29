@@ -208,18 +208,19 @@ namespace NOLDA
                     LoadCharacterInfo();
                     return;
                 case LoginResult.IDWRONG:
-                    title = "ID WRONG";
-                    message = "This ID does not exist.";
+                    title = "아이디 오류";
+                    message = "존재하지 않는 아이디입니다.";
                     break;
                 case LoginResult.PWWRONG:
-                    title = "PASSWORD WRONG";
-                    message = "Password does not match.";
+                    title = "비밀번호 오류";
+                    message = "비밀번호가 일치하지 않습니다.";
                     break;
                 case LoginResult.ERROR:
                 default:
-                    title = "ERROR";
-                    message = "An error has occurred. Please try again.";
+                    title = "오류";
+                    message = "오류가 발생했습니다. 다시 시도해주세요.";
                     break;
+
             }
 
             Singleton.UI.OpenAlert(title, message);
