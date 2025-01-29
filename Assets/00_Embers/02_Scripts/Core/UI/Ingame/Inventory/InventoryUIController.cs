@@ -52,14 +52,11 @@ namespace NOLDA
 {
     public class InventoryUIController : MonoBehaviour
     {
-        
-
         // /// <summary> 현재 아이템 개수 </summary>
         //public int ItemCount => _itemArray.Count;
         
-
         [SerializeField]
-        private InventoryUIView _inventoryUI; // 연결된 인벤토리 UI
+        private InventoryUIView _view;
 
         /// <summary> 아이템 목록 </summary>
         //[SerializeField]
@@ -90,7 +87,7 @@ namespace NOLDA
         {
             //Managers.Game.playerData.Items = new Item[_maxCapacity];
 
-            _inventoryUI.SetInventoryReference(this);
+            _view.SetInventoryReference(this);
         }
 
         private void Start()
@@ -120,11 +117,12 @@ namespace NOLDA
 
         private void UpdateGoldText()
         {
-            _inventoryUI.goldText.text = string.Format("{0:N0}", Singleton.Game.playerData.Gold);
+            _view.UpdateGoldText();
         }
         
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
         private bool IsValidIndex(int index)
+
         {
             return index >= 0 && index < Singleton.Game.playerData.InventorySpace;
         }
@@ -169,7 +167,7 @@ namespace NOLDA
             if (item != null)
             {
                 // 아이콘 등록
-                _inventoryUI.SetItemIcon(index, item.Data.IconSprite);
+                _view.SetItemIcon(index, item.Data.IconSprite);
 
                 // 1-1. 셀 수 있는 아이템
                 if (item is CountableItem ci)
@@ -184,17 +182,17 @@ namespace NOLDA
                     // 1-1-2. 수량 텍스트 표시
                     else
                     {
-                        _inventoryUI.SetItemAmountText(index, ci.Amount);
+                        _view.SetItemAmountText(index, ci.Amount);
                     }
                 }
                 // 1-2. 셀 수 없는 아이템인 경우 수량 텍스트 제거
                 else
                 {
-                    _inventoryUI.HideItemAmountText(index);
+                    _view.HideItemAmountText(index);
                 }
 
                 // 슬롯 필터 상태 업데이트
-                _inventoryUI.UpdateSlotFilterState(index, item.Data);
+                _view.UpdateSlotFilterState(index, item.Data);
             }
             // 2. 빈 슬롯인 경우 : 아이콘 제거
             else
@@ -205,8 +203,8 @@ namespace NOLDA
             // 로컬 : 아이콘 제거하기
             void RemoveIcon()
             {
-                _inventoryUI.RemoveItem(index);
-                _inventoryUI.HideItemAmountText(index); // 수량 텍스트 숨기기
+                _view.RemoveItem(index);
+                _view.HideItemAmountText(index); // 수량 텍스트 숨기기
             }
         }
 
@@ -279,14 +277,14 @@ namespace NOLDA
         /// <summary> 인벤토리 UI 연결 </summary>
         public void ConnectUI(InventoryUIView inventoryUI)
         {
-            _inventoryUI = inventoryUI;
-            _inventoryUI.SetInventoryReference(this);
+            _view = inventoryUI;
+            _view.SetInventoryReference(this);
         }
         
         /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
         public void UpdateAccessibleStatesAll()
         {
-            _inventoryUI.SetAccessibleSlotRange(Singleton.Game.playerData.InventorySpace);
+            _view.SetAccessibleSlotRange(Singleton.Game.playerData.InventorySpace);
         }
         
 
@@ -404,7 +402,7 @@ namespace NOLDA
             if (!IsValidIndex(index)) return;
 
             Singleton.Game.playerData.Items[index] = null;
-            _inventoryUI.RemoveItem(index);
+            _view.RemoveItem(index);
             
             Singleton.Game.SendSlotUpdateToServer(index);
         }
@@ -539,7 +537,7 @@ namespace NOLDA
             {
                 UpdateSlot(index);
             }
-            _inventoryUI.UpdateAllSlotFilters();
+            _view.UpdateAllSlotFilters();
         }
 
         /// <summary> 빈 슬롯 없이 채우면서 아이템 종류별로 정렬하기 </summary>
@@ -567,7 +565,7 @@ namespace NOLDA
 
             // 3. Update
             UpdateAllSlot();
-            _inventoryUI.UpdateAllSlotFilters(); // 필터 상태 업데이트
+            _view.UpdateAllSlotFilters(); // 필터 상태 업데이트
         }
         #endregion
         

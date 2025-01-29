@@ -19,10 +19,6 @@ namespace NOLDA
     public class InventoryUIView : MonoBehaviour
     {
         [Header("Options")]
-        [Range(1, 10)]
-        [SerializeField] private int _horizontalSlotCount = 6;
-
-        [Space]
         [SerializeField] private bool _showTooltip = true;
         [SerializeField] private bool _showHighlight = true;
         [SerializeField] private bool _showRemovingPopup = true;
@@ -45,7 +41,7 @@ namespace NOLDA
         [Space(16)]
         [SerializeField] private bool _mouseReversed = false; // 마우스 클릭 반전 여부
 
-        public TMP_Text goldText;
+        [SerializeField] private TMP_Text goldText;
 
         /// <summary> 연결된 인벤토리 </summary>
         private InventoryUIController _inventory;
@@ -463,8 +459,14 @@ namespace NOLDA
         *                               Public Methods
         ***********************************************************************/
 
+        public void UpdateGoldText()
+        {
+            goldText.text = string.Format("{0:N0}", Singleton.Game.playerData.Gold);
+        }
+
         /// <summary> 인벤토리 참조 등록 (인벤토리에서 직접 호출) </summary>
         public void SetInventoryReference(InventoryUIController inventory)
+
         {
             _inventory = inventory;
         }

@@ -118,7 +118,7 @@ namespace NOLDA
 
         private async Awaitable ReturnTitleCoroutine()
         {
-            StopBGM();
+            _ = StopBGM();
             string inGameScene = "InGame";
             if (SceneManager.GetSceneByName(inGameScene).isLoaded)
             {
@@ -235,8 +235,9 @@ namespace NOLDA
             var chunkInfo = chunkList.GetChunkInfo(activeSceneName);
             if (chunkInfo != null && chunkInfo.bgm != null)
             {
-                PlayBGM(chunkInfo.bgm);
+                _ = PlayBGM(chunkInfo.bgm);
             }
+
         }
 
         private async Awaitable LoadChunk(string sceneName, Vector2Int coord)
