@@ -25,7 +25,7 @@ namespace NOLDA
         {
             if (skills.ContainsKey(skillID)) return false;
 
-            SkillData skill = Singleton.Skill.GetSkillData(skillID);
+            SkillData skill = Director.Skill.GetSkillData(skillID);
             if (skill == null) return false;
 
             SkillLevelData firstLevelData = skill.levelData[0];
@@ -36,7 +36,7 @@ namespace NOLDA
             //스킬 배우기 가능할시
             skills[skillID] = 1;
             Sp--;
-            Singleton.Game.SendSkillUpdateToServer(Username, skillID, 1);
+            Director.Game.SendSkillUpdateToServer(Username, skillID, 1);
             return true;
         }
 
@@ -45,7 +45,7 @@ namespace NOLDA
         {
             if (!skills.ContainsKey(skillID)) return false;
 
-            SkillData skill = Singleton.Skill.GetSkillData(skillID);
+            SkillData skill = Director.Skill.GetSkillData(skillID);
             if (skill == null) return false;
 
             int currentLevel = skills[skillID];
@@ -59,7 +59,7 @@ namespace NOLDA
             //스킬 업데이트 가능할시
             skills[skillID]++;
             Sp--;
-            Singleton.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
+            Director.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
             return true;
         }
 
@@ -377,11 +377,11 @@ namespace NOLDA
         private void HandleLevelUp()
         {
             //레벨업시 오르는 능력치 상승률(GameSingleton에서 정의)
-            MaxHp += Singleton.Game.LevelUpMaxHp;
-            MaxMp += Singleton.Game.LevelUpMaxMp;
-            Attack += Singleton.Game.LevelUpAttack;
-            Armor += Singleton.Game.LevelUpArmor;
-            Sp += Singleton.Game.LevelUpSp;
+            MaxHp += Director.Game.LevelUpMaxHp;
+            MaxMp += Director.Game.LevelUpMaxMp;
+            Attack += Director.Game.LevelUpAttack;
+            Armor += Director.Game.LevelUpArmor;
+            Sp += Director.Game.LevelUpSp;
 
             //레벨업하면 현재 HP, MP를 모두 채워줌
             Hp = MaxHp;

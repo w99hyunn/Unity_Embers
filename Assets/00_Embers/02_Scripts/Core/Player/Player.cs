@@ -40,7 +40,7 @@ namespace NOLDA
         //Sync Nickname
         private void InitNickName()
         {
-            CmdSetNickname(Singleton.Game.playerData.Username);
+            CmdSetNickname(Director.Game.playerData.Username);
         }
         
         [Command]
@@ -67,7 +67,7 @@ namespace NOLDA
         //Sync Class
         private void InitClass()
         {
-            CmdSetClass(Singleton.Game.playerData.Class);
+            CmdSetClass(Director.Game.playerData.Class);
         }
         
         [Command(requiresAuthority = false)]
@@ -83,7 +83,7 @@ namespace NOLDA
         
         public void InitializePlayerAvatar()
         {
-            var avatarPrefab = Singleton.Game.GetAvatarPrefab(this.playerClass);
+            var avatarPrefab = Director.Game.GetAvatarPrefab(this.playerClass);
             
             GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
             _currentAvatar.transform.localPosition = Vector3.zero;
@@ -99,7 +99,7 @@ namespace NOLDA
         private void InitializePlayerPosition()
         {
             _characterController.enabled = false;
-            transform.position = Singleton.Game.playerData.Position;
+            transform.position = Director.Game.playerData.Position;
             _characterController.enabled = true;
             
             _ = SavePosition(); // 위치 지속적으로 저장
@@ -110,7 +110,7 @@ namespace NOLDA
             while (true)
             {
                 await Awaitable.WaitForSecondsAsync(5f);
-                Singleton.Game.playerData.Position = transform.position;
+                Director.Game.playerData.Position = transform.position;
             }
         }
         #endregion

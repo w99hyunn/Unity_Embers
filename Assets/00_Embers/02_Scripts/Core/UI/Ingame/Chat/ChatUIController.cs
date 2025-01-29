@@ -10,12 +10,12 @@ namespace NOLDA
         
         private void OnEnable()
         {
-            Singleton.Network.ChatServer.OnMessageRecieved += AddChatMessageHandle;
+            Director.Network.ChatServer.OnMessageRecieved += AddChatMessageHandle;
         }
 
         private void OnDisable()
         {
-            Singleton.Network.ChatServer.OnMessageRecieved -= AddChatMessageHandle;
+            Director.Network.ChatServer.OnMessageRecieved -= AddChatMessageHandle;
         }
 
         public void AddChatMessageHandle(string playerName, string msg)
@@ -37,7 +37,7 @@ namespace NOLDA
             if (!string.IsNullOrEmpty(_view.chatInputField.text))
             {
                 
-                Singleton.Network.ChatServer.CmdSendChatMessage(
+                Director.Network.ChatServer.CmdSendChatMessage(
                     NetworkClient.localPlayer != null ? NetworkClient.localPlayer.gameObject.name : "Anonymous",
                     _view.chatInputField.text
                 );

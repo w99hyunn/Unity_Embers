@@ -17,7 +17,7 @@ MonoBehaviour:
   accountID: admin
   email: admin@naver.com
   createdDate: 2024-12-28 20:28:10
-  username: dgdg
+  username: "\uD558\uC789"
   level: 1
   maxHp: 100
   hp: 100
@@ -29,8 +29,8 @@ MonoBehaviour:
   armor: 0
   factionType: 0
   classType: 0
-  sp: 2
+  sp: 0
   gender: 0
-  position: {x: 31.977, y: 3.018113, z: 44.5882}
+  position: {x: 33, y: 5.2804775, z: 36}
   mapCode: 1
   inventorySpace: 20

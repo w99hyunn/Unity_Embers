@@ -145,7 +145,7 @@ namespace NOLDA
             _localPlayer.GetComponent<Player>().CmdRemovePlayer();
             NetworkClient.NotReady();
 
-            Singleton.Map.ReturnTitle();
+            Director.Map.ReturnTitle();
         }
 
         public void InGameChatNotice(string header, string message)

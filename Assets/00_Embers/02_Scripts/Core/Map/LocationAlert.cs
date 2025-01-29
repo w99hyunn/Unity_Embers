@@ -12,9 +12,9 @@ namespace NOLDA
             {
                 await Awaitable.WaitForSecondsAsync(1f);
                 
-                Vector2Int currentChunkCoord = Singleton.Map.GetChunkCoord(other.transform.position);
+                Vector2Int currentChunkCoord = Director.Map.GetChunkCoord(other.transform.position);
                 
-                var locationChunkInfo = Singleton.Map.chunkList.chunkSceneNames
+                var locationChunkInfo = Director.Map.chunkList.chunkSceneNames
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
                 
                 FindAnyObjectByType<LocationNotificationUI>().LocationNoti(locationChunkInfo.chunkDisplayName);

@@ -22,7 +22,7 @@ namespace NOLDA
 
         private void SetSPPoint()
         {
-            spPoint.text = $"{Singleton.Game.playerData.Sp}";
+            spPoint.text = $"{Director.Game.playerData.Sp}";
         }
 
         public void UpdateSkillUI()
@@ -33,14 +33,14 @@ namespace NOLDA
             }
             skillButtons.Clear();
 
-            foreach (var skill in Singleton.Skill.availableSkills)
+            foreach (var skill in Director.Skill.availableSkills)
             {
-                if (skill.classType != Singleton.Game.playerData.Class)
+                if (skill.classType != Director.Game.playerData.Class)
                     continue;
 
-                int skillLevel = Singleton.Game.playerData.Skills.ContainsKey(skill.skillID) ? Singleton.Game.playerData.Skills[skill.skillID] : 0;
-                bool canLearn = Singleton.Game.playerData.Level >= skill.levelData[0].requiredLevel 
-                                && Singleton.Game.playerData.Sp >= skill.levelData[0].spCost;
+                int skillLevel = Director.Game.playerData.Skills.ContainsKey(skill.skillID) ? Director.Game.playerData.Skills[skill.skillID] : 0;
+                bool canLearn = Director.Game.playerData.Level >= skill.levelData[0].requiredLevel 
+                                && Director.Game.playerData.Sp >= skill.levelData[0].spCost;
                 bool canUpgrade = skillLevel > 0 && skillLevel < skill.levelData.Count;
 
                 GameObject skillButton = Instantiate(skillButtonPrefab, skillPanel);
@@ -70,7 +70,7 @@ namespace NOLDA
 
         private void LearnSkill(int skillID)
         {
-            if (true == Singleton.Game.playerData.LearnSkill(skillID))
+            if (true == Director.Game.playerData.LearnSkill(skillID))
             {
                 UpdateSkillUI();
             }
@@ -82,7 +82,7 @@ namespace NOLDA
 
         private void UpgradeSkill(int skillID)
         {
-            if (true == Singleton.Game.playerData.LevelUpSkill(skillID))
+            if (true == Director.Game.playerData.LevelUpSkill(skillID))
             {
                 UpdateSkillUI();
             }

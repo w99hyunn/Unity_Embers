@@ -5,20 +5,20 @@ namespace NOLDA
 {
     public class PlayerSkillHandler : NetworkBehaviour
     {
-        private SkillSingleton skillManager;
+        private SkillDirector skillManager;
         private Animator animator;
 
         private void Start()
         {
-            skillManager = FindAnyObjectByType<SkillSingleton>();
+            skillManager = FindAnyObjectByType<SkillDirector>();
             animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            if (!isLocalPlayer || Singleton.Game.playerData == null) return;
+            if (!isLocalPlayer || Director.Game.playerData == null) return;
 
-            foreach (var skillEntry in Singleton.Game.playerData.Skills) // PlayerDataSO에서 직접 스킬 데이터 가져오기
+            foreach (var skillEntry in Director.Game.playerData.Skills) // PlayerDataSO에서 직접 스킬 데이터 가져오기
             {
                 SkillData skillData = skillManager.GetSkillData(skillEntry.Key);
                 if (skillData == null) continue;
@@ -70,8 +70,8 @@ namespace NOLDA
             SkillData skill = skillManager.GetSkillData(skillID);
             if (skill == null || target == null) return;
 
-            if (!Singleton.Game.playerData.Skills.ContainsKey(skillID)) return; // PlayerDataSO에서 직접 확인
-            int skillLevel = Singleton.Game.playerData.Skills[skillID];
+            if (!Director.Game.playerData.Skills.ContainsKey(skillID)) return; // PlayerDataSO에서 직접 확인
+            int skillLevel = Director.Game.playerData.Skills[skillID];
 
             SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
             if (levelData == null) return;

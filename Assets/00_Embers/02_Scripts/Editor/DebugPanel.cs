@@ -150,7 +150,7 @@ namespace NOLDA
         
         private void ExecuteOption(int index)
         {
-            if (Singleton.Game == null)
+            if (Director.Game == null)
                 return;
             
             var _inventory = FindAnyObjectByType<InventoryUIController>();
@@ -158,36 +158,36 @@ namespace NOLDA
             switch (index)
             {
                 case 0:
-                    Singleton.Game.playerData.Hp += 450;
+                    Director.Game.playerData.Hp += 450;
                     break;
                 case 1:
-                    Singleton.Game.playerData.Mp += 450;
+                    Director.Game.playerData.Mp += 450;
                     break;
                 case 2:
-                    Singleton.Game.playerData.Hxp += 450;
+                    Director.Game.playerData.Hxp += 450;
                     break;
                 case 3:
-                    Singleton.Game.playerData.Hp -= 450;
+                    Director.Game.playerData.Hp -= 450;
                     break;
                 case 4:
-                    Singleton.Game.playerData.Mp -= 450;
+                    Director.Game.playerData.Mp -= 450;
                     break;
                 case 5:
-                    _inventory.Add(Singleton.DB.GetItemDataById(0));
+                    _inventory.Add(Director.DB.GetItemDataById(0));
                     break;
                 case 6:
-                    _inventory.Add(Singleton.DB.GetItemDataById(1));
+                    _inventory.Add(Director.DB.GetItemDataById(1));
                     break;
                 case 7:
-                    _inventory.Add(Singleton.DB.GetItemDataById(4));
+                    _inventory.Add(Director.DB.GetItemDataById(4));
                     break;
                 case 8:
-                    int capacity = Singleton.Game.playerData.InventorySpace;
+                    int capacity = Director.Game.playerData.InventorySpace;
                     for(int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
                     break;
                 case 9:
-                    Singleton.Game.playerData.Gold += 1000000;
+                    Director.Game.playerData.Gold += 1000000;
                     break;
                 default:
                     Debug.LogWarning("Invalid Option Selected");

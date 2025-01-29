@@ -153,7 +153,7 @@ namespace NOLDA
 
         public void TopPanelProfileUpdate()
         {
-            profileEdit.buttonText = Singleton.Game.playerData.AccountID;
+            profileEdit.buttonText = Director.Game.playerData.AccountID;
         }
 
         /// <summary>
@@ -188,8 +188,8 @@ namespace NOLDA
         {
             editProfilePWInputField.text = "";
             editProfilePWConfirmInputField.text = "";
-            editProfileEmailInputField.text = Singleton.Game.playerData.Email;
-            editProfileCreatedInputField.text = Singleton.Game.playerData.CreatedDate.ToString();
+            editProfileEmailInputField.text = Director.Game.playerData.Email;
+            editProfileCreatedInputField.text = Director.Game.playerData.CreatedDate.ToString();
             editProfilePopup.OpenWindow();
         }
     }
