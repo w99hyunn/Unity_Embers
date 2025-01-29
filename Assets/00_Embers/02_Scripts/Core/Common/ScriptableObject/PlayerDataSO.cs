@@ -23,35 +23,46 @@ namespace NOLDA
 
         public bool LearnSkill(int skillID)
         {
-            if (!skills.ContainsKey(skillID))
-            {
-                if (Sp <= 0)
-                    return false;
+            if (skills.ContainsKey(skillID)) return false;
 
-                skills[skillID] = 1; // 신규 스킬 학습
-                Sp--;
-                if (!suppressEvents)
-                    Singleton.Game.SendSkillUpdateToServer(Username, skillID, 1);
-                return true;
-            }
-            return false;
+            SkillData skill = Singleton.Skill.GetSkillData(skillID);
+            if (skill == null) return false;
+
+            SkillLevelData firstLevelData = skill.levelData[0];
+            if (Level < firstLevelData.requiredLevel) return false;
+
+            if (Sp < 1) return false;
+
+            //스킬 배우기 가능할시
+            skills[skillID] = 1;
+            Sp--;
+            Singleton.Game.SendSkillUpdateToServer(Username, skillID, 1);
+            return true;
         }
+
 
         public bool LevelUpSkill(int skillID)
         {
-            if (skills.ContainsKey(skillID))
-            {
-                if (Sp <= 0)
-                    return false;
+            if (!skills.ContainsKey(skillID)) return false;
 
-                skills[skillID]++; // 스킬 레벨업
-                Sp--;
-                if (!suppressEvents)
-                    Singleton.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
-                return true;
-            }
-            return false;
+            SkillData skill = Singleton.Skill.GetSkillData(skillID);
+            if (skill == null) return false;
+
+            int currentLevel = skills[skillID];
+            if (currentLevel >= skill.levelData.Count) return false;
+
+            SkillLevelData nextLevelData = skill.levelData[currentLevel];
+            if (Level < nextLevelData.requiredLevel) return false;
+
+            if (Sp < 1) return false;
+
+            //스킬 업데이트 가능할시
+            skills[skillID]++;
+            Sp--;
+            Singleton.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
+            return true;
         }
+
         #endregion
 
         #region # Inventory Data

@@ -24629,7 +24629,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: 45}
+  m_SizeDelta: {x: 202.55, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &545744897
 MonoBehaviour:
@@ -36784,7 +36784,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 0, y: 40}
+  m_SizeDelta: {x: 54.050003, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &787267931
 MonoBehaviour:
@@ -43913,51 +43913,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!1 &911967929
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 911967930}
-  - component: {fileID: 911967931}
-  m_Layer: 5
-  m_Name: SkillManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &911967930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911967929}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &911967931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911967929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bfbe5ff3b409614694c31acc7642aad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableSkills: []
 --- !u!1 &913657759
 GameObject:
   m_ObjectHideFlags: 0
@@ -71050,7 +71005,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30.489746, y: -20}
-  m_SizeDelta: {x: 0, y: 40}
+  m_SizeDelta: {x: 54.050003, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1526696921
 MonoBehaviour:
@@ -92537,7 +92492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159824abd5f27d94f91bbcbe38cb94b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillManager: {fileID: 911967931}
+  skillManager: {fileID: 0}
   uiControlManager: {fileID: 944067006}
   skillPanel: {fileID: 1107828871}
   skillButtonPrefab: {fileID: 991952315182777690, guid: f2499763ec5842544a813428d2d2c5bf, type: 3}
@@ -97474,7 +97429,6 @@ SceneRoots:
   - {fileID: 1845251107}
   - {fileID: 551717577}
   - {fileID: 595090291}
-  - {fileID: 911967930}
   - {fileID: 944067005}
   - {fileID: 374201016}
   - {fileID: 1727086544}

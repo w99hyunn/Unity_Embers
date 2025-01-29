@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NOLDA
 {
-    public class SkillManager : MonoBehaviour
+    public class SkillSingleton : MonoBehaviour
     {
         public List<SkillData> availableSkills = new List<SkillData>(); // 모든 스킬 데이터
         private Dictionary<string, float> cooldownTimers = new Dictionary<string, float>(); // 스킬 쿨타임

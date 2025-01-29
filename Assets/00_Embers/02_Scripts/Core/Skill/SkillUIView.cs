@@ -6,7 +6,6 @@ namespace NOLDA
 {
     public class SkillUIView : MonoBehaviour
     {
-        public SkillManager skillManager;
         public UIControlManager uiControlManager;
 
         public Transform skillPanel;
@@ -34,7 +33,7 @@ namespace NOLDA
             }
             skillButtons.Clear();
 
-            foreach (var skill in skillManager.availableSkills)
+            foreach (var skill in Singleton.Skill.availableSkills)
             {
                 if (skill.classType != Singleton.Game.playerData.Class)
                     continue;
@@ -77,7 +76,7 @@ namespace NOLDA
             }
             else
             {
-                uiControlManager.InGameChatNotice("시스템", "SP가 부족합니다.");
+                uiControlManager.InGameChatNotice("시스템", "SP가 부족하거나 레벨이 부족합니다.");
             }
         }
 
@@ -89,7 +88,7 @@ namespace NOLDA
             }
             else
             {
-                uiControlManager.InGameChatNotice("시스템", "SP가 부족합니다.");
+                uiControlManager.InGameChatNotice("시스템", "SP가 부족하거나 레벨이 부족합니다.");
             }
         }
     }

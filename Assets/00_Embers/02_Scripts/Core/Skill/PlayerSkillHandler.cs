@@ -5,12 +5,12 @@ namespace NOLDA
 {
     public class PlayerSkillHandler : NetworkBehaviour
     {
-        private SkillManager skillManager;
+        private SkillSingleton skillManager;
         private Animator animator;
 
         private void Start()
         {
-            skillManager = FindAnyObjectByType<SkillManager>();
+            skillManager = FindAnyObjectByType<SkillSingleton>();
             animator = GetComponent<Animator>();
         }
 

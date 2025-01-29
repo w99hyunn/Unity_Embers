@@ -17,20 +17,20 @@ MonoBehaviour:
   accountID: admin
   email: admin@naver.com
   createdDate: 2024-12-28 20:28:10
-  username: "\uC548\uB155"
-  level: 6
-  maxHp: 600
-  hp: 600
-  maxMp: 550
-  mp: 550
-  hxp: 350
-  gold: 9999800
-  attack: 35
+  username: dgdg
+  level: 1
+  maxHp: 100
+  hp: 100
+  maxMp: 50
+  mp: 50
+  hxp: 0
+  gold: 0
+  attack: 10
   armor: 0
-  factionType: 1
+  factionType: 0
   classType: 0
-  sp: 97
-  gender: 1
-  position: {x: 20.4111, y: 2.0109713, z: 99.5195}
+  sp: 2
+  gender: 0
+  position: {x: 31.977, y: 3.018113, z: 44.5882}
   mapCode: 1
   inventorySpace: 20

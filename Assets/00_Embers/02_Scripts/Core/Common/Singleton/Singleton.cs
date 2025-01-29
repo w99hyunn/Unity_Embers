@@ -12,6 +12,7 @@ namespace NOLDA
         public static UISingleton UI { get; private set; }
         public static NetworkSingleton Network { get; private set; }
         public static DBSingleton DB { get; private set; }
+        public static SkillSingleton Skill { get; private set; }
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace NOLDA
             UI = GetComponentInChildren<UISingleton>();
             Network = GetComponentInChildren<NetworkSingleton>();
             DB = GetComponentInChildren<DBSingleton>();
+            Skill = GetComponentInChildren<SkillSingleton>();
         }
     }
 }
