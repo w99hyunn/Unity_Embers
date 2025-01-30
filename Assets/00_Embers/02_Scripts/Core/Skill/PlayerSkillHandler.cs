@@ -41,9 +41,9 @@ namespace NOLDA
             }
 
             // 애니메이션 실행
-            if (animator != null)
+            if (skill.skillExecuter is ISkill skillScript)
             {
-                animator.SetTrigger(skill.animationTriggerName);
+                skillScript.ExecuteSkill(animator);
             }
 
             // 주변 적을 찾아 공격

@@ -11,12 +11,14 @@ namespace NOLDA
         public Sprite icon;
         public Class classType;
         public SkillType skillType;
-        public string animationTriggerName; // 애니메이션 트리거 이름 추가
         public GameObject skillEffectPrefab; // 이펙트 프리팹
         public float cooldownTime; // 쿨타임
         public KeyCode defaultKey;
         public float hitRadius = 2f; // 공격 범위
         public int baseDamage = 10; // 기본 데미지
+
+        [Header("스킬 사용시 실행될 스크립트")]
+        public SkillExecuter skillExecuter; // 스킬 스크립트
 
         // 스킬 레벨별 정보
         public List<SkillLevelData> levelData;
