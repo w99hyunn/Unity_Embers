@@ -454,7 +454,7 @@ namespace Verpha.HierarchyDesigner
             if (mainIconIndex != -1 && mainIconIndex < components.Length)
             {
                 Component mainComponent = components[mainIconIndex];
-                return EditorGUIUtility.ObjectContent(mainComponent, mainComponent.GetType()).image as Texture2D;
+                return mainComponent == null ? EditorGUIUtility.FindTexture(warningIconTexture) : EditorGUIUtility.ObjectContent(mainComponent, mainComponent.GetType())?.image as Texture2D;
             }
             return null;
         }

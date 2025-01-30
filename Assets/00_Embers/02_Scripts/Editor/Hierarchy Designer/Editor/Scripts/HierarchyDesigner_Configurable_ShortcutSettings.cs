@@ -246,6 +246,14 @@ namespace Verpha.HierarchyDesigner
         [Shortcut("Hierarchy Designer/Refresh Selected Layer")]
         private static void RefreshLayerForSelectedGameObjects() => HierarchyDesigner_Shared_Menu.RefreshSelectedLayer();
         #endregion
+
+        #region General
+        [Shortcut("Hierarchy Designer/Expand All GameObjects", KeyCode.E, ShortcutModifiers.Shift | ShortcutModifiers.Alt)]
+        private static void ExpandAllGameObjects() => HierarchyDesigner_Shared_Menu.GeneralExpandAll();
+
+        [Shortcut("Hierarchy Designer/Collapse All GameObjects", KeyCode.C, ShortcutModifiers.Shift | ShortcutModifiers.Alt)]
+        private static void CollapseAllGameObjects() => HierarchyDesigner_Shared_Menu.GeneralCollapseAll();
+        #endregion
         #endregion
     }
 }

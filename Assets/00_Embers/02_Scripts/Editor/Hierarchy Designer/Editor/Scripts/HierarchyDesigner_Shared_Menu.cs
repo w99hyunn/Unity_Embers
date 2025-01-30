@@ -2494,7 +2494,7 @@ namespace Verpha.HierarchyDesigner
         #endregion
         #endregion
 
-        #region GameObject
+        #region Refresh
         [MenuItem(HierarchyDesigner_Shared_Constants.GroupRefresh + "/Refresh All GameObjects' Data", false, HierarchyDesigner_Shared_Constants.MenuPriorityNineteen)]
         public static void RefreshAllGameObjectsData() => HierarchyDesigner_Shared_Operations.RefreshAllGameObjectsData();
 
@@ -2515,6 +2515,14 @@ namespace Verpha.HierarchyDesigner
 
         [MenuItem(HierarchyDesigner_Shared_Constants.GroupRefresh + "/Refresh Selected Layer", false, HierarchyDesigner_Shared_Constants.MenuPriorityTwenty + 2)]
         public static void RefreshSelectedLayer() => HierarchyDesigner_Shared_Operations.RefreshLayerForSelectedGameObjects();
+        #endregion
+
+        #region General
+        [MenuItem(HierarchyDesigner_Shared_Constants.MenuBase + "/Expand All", false, HierarchyDesigner_Shared_Constants.MenuPriorityTwentyOne + 2)]
+        public static void GeneralExpandAll() => HierarchyDesigner_Shared_Operations.ExpandAllGameObjects();
+
+        [MenuItem(HierarchyDesigner_Shared_Constants.MenuBase + "/Collapse All", false, HierarchyDesigner_Shared_Constants.MenuPriorityTwentyOne + 3)]
+        public static void GeneralCollapseAll() => HierarchyDesigner_Shared_Operations.CollapseAllGameObjects();
         #endregion
     }
 }

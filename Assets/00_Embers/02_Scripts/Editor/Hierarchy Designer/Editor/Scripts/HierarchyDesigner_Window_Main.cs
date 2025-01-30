@@ -278,6 +278,9 @@ namespace Verpha.HierarchyDesigner
             "Hierarchy Designer/Refresh Selected Hierarchy Tree Icon",
             "Hierarchy Designer/Refresh Selected Tag",
             "Hierarchy Designer/Refresh Selected Layer",
+            "Hierarchy Designer/Refresh Selected Layer",
+            "Hierarchy Designer/Expand All GameObjects",
+            "Hierarchy Designer/Collapse All GameObjects",
         };
         private KeyCode tempToggleGameObjectActiveStateKeyCode;
         private KeyCode tempToggleLockStateKeyCode;

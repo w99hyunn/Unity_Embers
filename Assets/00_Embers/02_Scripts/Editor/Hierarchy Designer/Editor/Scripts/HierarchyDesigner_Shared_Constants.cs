@@ -6,7 +6,7 @@ namespace Verpha.HierarchyDesigner
         #region Properties
         #region Asset Info
         public const string AssetName = "Hierarchy Designer";
-        public const string AssetVersion = "VERSION 1.2.0";
+        public const string AssetVersion = "VERSION 1.3.0";
         public const string AssetLocation = "Tools/Hierarchy Designer";
         #endregion
 
@@ -32,6 +32,7 @@ namespace Verpha.HierarchyDesigner
         public const int MenuPriorityEigtheen = 187;
         public const int MenuPriorityNineteen = 198;
         public const int MenuPriorityTwenty = 209;
+        public const int MenuPriorityTwentyOne = 220;
         #endregion
 
         #region Item Name

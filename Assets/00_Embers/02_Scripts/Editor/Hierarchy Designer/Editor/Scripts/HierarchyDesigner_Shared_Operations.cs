@@ -1,84 +1,15 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Verpha.HierarchyDesigner
 {
     internal static class HierarchyDesigner_Shared_Operations
     {
-        #region General
-        private static IEnumerable<GameObject> GetAllGameObjectsInActiveScene()
-        {
-            GameObject[] rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
-            List<GameObject> allGameObjects = new();
-
-            Stack<GameObject> stack = new(rootObjects);
-            while (stack.Count > 0)
-            {
-                GameObject current = stack.Pop();
-                allGameObjects.Add(current);
-                foreach (Transform child in current.transform) { stack.Push(child.gameObject); }
-            }
-            return allGameObjects;
-        }
-
-        private static bool IsGameObjectActive(GameObject gameObject)
-        {
-            if (gameObject == null) 
-            { 
-                return false;
-            }
-            return gameObject.activeSelf;
-        }
-
-        private static bool IsGameObjectParent(GameObject gameObject)
-        {
-            return gameObject.transform.childCount > 0;
-        }
-
-        private static bool IsGameObjectEmpty(GameObject gameObject)
-        {
-            Component[] components = gameObject.GetComponents<Component>();
-            return components.Length == 1 && (components[0] is Transform || components[0] is RectTransform);
-        }
-
-        public static bool IsGameObjectLocked(GameObject gameObject)
-        {
-            if (gameObject == null)
-            { 
-                return false;
-            }
-            return (gameObject.hideFlags & HideFlags.NotEditable) == HideFlags.NotEditable;
-        }
-
-        private static bool IsGameObjectFolder(GameObject gameObject)
-        {
-            return gameObject.GetComponent<HierarchyDesignerFolder>();
-        }
-
-        private static bool IsGameObjectSeparator(GameObject gameObject)
-        {
-            return gameObject.CompareTag(HierarchyDesigner_Shared_Constants.SeparatorTag) && gameObject.name.StartsWith(HierarchyDesigner_Shared_Constants.SeparatorPrefix);
-        }
-
-        private static bool ShouldIncludeFolderAndSeparator(GameObject gameObject, bool addFolderToCount, bool addSeparatorToCount)
-        {
-            if (!addFolderToCount && IsGameObjectFolder(gameObject)) 
-            {
-                return false;
-            }
-
-            if (!addSeparatorToCount && IsGameObjectSeparator(gameObject)) 
-            {
-                return false;
-            }
-
-            return true;
-        }
-        #endregion
-
         #region Folder
         public static void CreateFolder(string folderName, bool shouldRename)
         {
@@ -167,200 +98,78 @@ namespace Verpha.HierarchyDesigner
         }
         #endregion
 
-        #region GameObject
-        public static void RefreshAllGameObjectsData()
+        #region Tools
+        #region General
+        private static IEnumerable<GameObject> GetAllGameObjectsInActiveScene()
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon &&
-                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons &&
-                !HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree &&
-                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag &&
-                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer)
-            {
-                Debug.Log("No GameObject data is enabled for refreshing.");
-                return;
-            }
+            GameObject[] rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+            List<GameObject> allGameObjects = new();
 
-            #if UNITY_6000_0_OR_NEWER
-            GameObject[] allGameObjects = UnityEngine.Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-            #else
-            GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-            #endif
-
-            foreach (GameObject gameObject in allGameObjects)
+            Stack<GameObject> stack = new(rootObjects);
+            while (stack.Count > 0)
             {
-                RefreshGameObjectData(gameObject);
+                GameObject current = stack.Pop();
+                allGameObjects.Add(current);
+                foreach (Transform child in current.transform) { stack.Push(child.gameObject); }
             }
+            return allGameObjects;
         }
 
-        public static void RefreshSelectedGameObjectsData()
+        private static bool IsGameObjectActive(GameObject gameObject)
         {
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
+            if (gameObject == null)
             {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    RefreshGameObjectData(selectedGameObject);
-                }
+                return false;
             }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their data.");
-            }
+            return gameObject.activeSelf;
         }
 
-        public static void RefreshMainIconForSelectedGameObject()
+        private static bool IsGameObjectParent(GameObject gameObject)
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon) return;
-
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
-            {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    int instanceID = selectedGameObject.GetInstanceID();
-                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
-                    {
-                        data.MainIcon = HierarchyDesigner_Manager_GameObject.GetGameObjectMainIcon(selectedGameObject);
-                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select a GameObject to refresh its main icon.");
-            }
+            return gameObject.transform.childCount > 0;
         }
 
-        public static void RefreshComponentIconsForSelectedGameObjects()
+        private static bool IsGameObjectEmpty(GameObject gameObject)
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons) return;
-
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
-            {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    int instanceID = selectedGameObject.GetInstanceID();
-                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
-                    {
-                        data.ComponentIcons = HierarchyDesigner_Manager_GameObject.GetComponentIcons(selectedGameObject);
-                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their component icons.");
-            }
+            Component[] components = gameObject.GetComponents<Component>();
+            return components.Length == 1 && (components[0] is Transform || components[0] is RectTransform);
         }
 
-        public static void RefreshHierarchyTreeIconForSelectedGameObjects()
+        public static bool IsGameObjectLocked(GameObject gameObject)
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree) return;
-
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
+            if (gameObject == null)
             {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    int instanceID = selectedGameObject.GetInstanceID();
-                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
-                    {
-                        data.HierarchyTreeIcon = HierarchyDesigner_Manager_GameObject.GetOrCreateBranchIcon(selectedGameObject.transform);
-                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
-                    }
-                }
+                return false;
             }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their hierarchy tree icons.");
-            }
+            return (gameObject.hideFlags & HideFlags.NotEditable) == HideFlags.NotEditable;
         }
 
-        public static void RefreshTagForSelectedGameObjects()
+        private static bool IsGameObjectFolder(GameObject gameObject)
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag) return;
-
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
-            {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    int instanceID = selectedGameObject.GetInstanceID();
-                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
-                    {
-                        data.Tag = selectedGameObject.tag;
-                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their tags.");
-            }
+            return gameObject.GetComponent<HierarchyDesignerFolder>();
         }
 
-        public static void RefreshLayerForSelectedGameObjects()
+        private static bool IsGameObjectSeparator(GameObject gameObject)
         {
-            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer) return;
-
-            GameObject[] selectedGameObjects = Selection.gameObjects;
-            if (selectedGameObjects.Length > 0)
-            {
-                foreach (GameObject selectedGameObject in selectedGameObjects)
-                {
-                    int instanceID = selectedGameObject.GetInstanceID();
-                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
-                    {
-                        data.Layer = LayerMask.LayerToName(selectedGameObject.layer);
-                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their layers.");
-            }
+            return gameObject.CompareTag(HierarchyDesigner_Shared_Constants.SeparatorTag) && gameObject.name.StartsWith(HierarchyDesigner_Shared_Constants.SeparatorPrefix);
         }
 
-        public static void RefreshGameObjectData(GameObject gameObject)
+        private static bool ShouldIncludeFolderAndSeparator(GameObject gameObject, bool addFolderToCount, bool addSeparatorToCount)
         {
-            int instanceID = gameObject.GetInstanceID();
-            if (!HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+            if (!addFolderToCount && IsGameObjectFolder(gameObject))
             {
-                data = new HierarchyDesigner_Manager_GameObject.GameObjectData();
+                return false;
             }
 
-            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon)
+            if (!addSeparatorToCount && IsGameObjectSeparator(gameObject))
             {
-                data.MainIcon = HierarchyDesigner_Manager_GameObject.GetGameObjectMainIcon(gameObject);
+                return false;
             }
 
-            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons)
-            {
-                data.ComponentIcons = HierarchyDesigner_Manager_GameObject.GetComponentIcons(gameObject);
-            }
-
-            if (HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree && gameObject.transform.parent != null)
-            {
-                data.HierarchyTreeIcon = HierarchyDesigner_Manager_GameObject.GetOrCreateBranchIcon(gameObject.transform);
-            }
-
-            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag)
-            {
-                data.Tag = gameObject.tag;
-            }
-
-            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer)
-            {
-                data.Layer = LayerMask.LayerToName(gameObject.layer);
-            }
-
-            HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+            return true;
         }
         #endregion
 
-        #region Tools
         #region Activate
         public static void SetActiveState(GameObject gameObject, bool isActive)
         {
@@ -1266,6 +1075,270 @@ namespace Verpha.HierarchyDesigner
             }
         }
         #endregion
+        #endregion
+
+        #region Refresh
+        public static void RefreshAllGameObjectsData()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon &&
+                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons &&
+                !HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree &&
+                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag &&
+                !HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer)
+            {
+                Debug.Log("No GameObject data is enabled for refreshing.");
+                return;
+            }
+
+#if UNITY_6000_0_OR_NEWER
+            GameObject[] allGameObjects = UnityEngine.Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+#else
+            GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+#endif
+
+            foreach (GameObject gameObject in allGameObjects)
+            {
+                RefreshGameObjectData(gameObject);
+            }
+        }
+
+        public static void RefreshSelectedGameObjectsData()
+        {
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    RefreshGameObjectData(selectedGameObject);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their data.");
+            }
+        }
+
+        public static void RefreshMainIconForSelectedGameObject()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon) return;
+
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    int instanceID = selectedGameObject.GetInstanceID();
+                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+                    {
+                        data.MainIcon = HierarchyDesigner_Manager_GameObject.GetGameObjectMainIcon(selectedGameObject);
+                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select a GameObject to refresh its main icon.");
+            }
+        }
+
+        public static void RefreshComponentIconsForSelectedGameObjects()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons) return;
+
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    int instanceID = selectedGameObject.GetInstanceID();
+                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+                    {
+                        data.ComponentIcons = HierarchyDesigner_Manager_GameObject.GetComponentIcons(selectedGameObject);
+                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their component icons.");
+            }
+        }
+
+        public static void RefreshHierarchyTreeIconForSelectedGameObjects()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree) return;
+
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    int instanceID = selectedGameObject.GetInstanceID();
+                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+                    {
+                        data.HierarchyTreeIcon = HierarchyDesigner_Manager_GameObject.GetOrCreateBranchIcon(selectedGameObject.transform);
+                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their hierarchy tree icons.");
+            }
+        }
+
+        public static void RefreshTagForSelectedGameObjects()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag) return;
+
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    int instanceID = selectedGameObject.GetInstanceID();
+                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+                    {
+                        data.Tag = selectedGameObject.tag;
+                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their tags.");
+            }
+        }
+
+        public static void RefreshLayerForSelectedGameObjects()
+        {
+            if (!HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer) return;
+
+            GameObject[] selectedGameObjects = Selection.gameObjects;
+            if (selectedGameObjects.Length > 0)
+            {
+                foreach (GameObject selectedGameObject in selectedGameObjects)
+                {
+                    int instanceID = selectedGameObject.GetInstanceID();
+                    if (HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+                    {
+                        data.Layer = LayerMask.LayerToName(selectedGameObject.layer);
+                        HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No GameObject selected. Please select one or more GameObjects to refresh their layers.");
+            }
+        }
+
+        public static void RefreshGameObjectData(GameObject gameObject)
+        {
+            int instanceID = gameObject.GetInstanceID();
+            if (!HierarchyDesigner_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HierarchyDesigner_Manager_GameObject.GameObjectData data))
+            {
+                data = new HierarchyDesigner_Manager_GameObject.GameObjectData();
+            }
+
+            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectMainIcon)
+            {
+                data.MainIcon = HierarchyDesigner_Manager_GameObject.GetGameObjectMainIcon(gameObject);
+            }
+
+            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectComponentIcons)
+            {
+                data.ComponentIcons = HierarchyDesigner_Manager_GameObject.GetComponentIcons(gameObject);
+            }
+
+            if (HierarchyDesigner_Configurable_GeneralSettings.EnableHierarchyTree && gameObject.transform.parent != null)
+            {
+                data.HierarchyTreeIcon = HierarchyDesigner_Manager_GameObject.GetOrCreateBranchIcon(gameObject.transform);
+            }
+
+            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectTag)
+            {
+                data.Tag = gameObject.tag;
+            }
+
+            if (HierarchyDesigner_Configurable_GeneralSettings.EnableGameObjectLayer)
+            {
+                data.Layer = LayerMask.LayerToName(gameObject.layer);
+            }
+
+            HierarchyDesigner_Manager_GameObject.gameObjectDataCache[instanceID] = data;
+        }
+        #endregion
+
+        #region General
+        public static void CollapseAllGameObjects()
+        {
+            Scene activeScene = SceneManager.GetActiveScene();
+            if (!activeScene.IsValid()) return;
+
+            foreach (GameObject rootObject in activeScene.GetRootGameObjects())
+            {
+                CollapseRecursive(rootObject);
+            }
+        }
+
+        public static void ExpandAllGameObjects()
+        {
+            Scene activeScene = SceneManager.GetActiveScene();
+            if (!activeScene.IsValid()) return;
+
+            foreach (GameObject rootObject in activeScene.GetRootGameObjects())
+            {
+                ExpandRecursive(rootObject);
+            }
+        }
+
+        private static void CollapseRecursive(GameObject obj)
+        {
+            int instanceID = obj.GetInstanceID();
+            SetExpanded(instanceID, false);
+
+            foreach (Transform child in obj.transform)
+            {
+                CollapseRecursive(child.gameObject);
+            }
+        }
+
+        private static void ExpandRecursive(GameObject obj)
+        {
+            int instanceID = obj.GetInstanceID();
+            SetExpanded(instanceID, true);
+
+            foreach (Transform child in obj.transform)
+            {
+                ExpandRecursive(child.gameObject);
+            }
+        }
+
+        private static void SetExpanded(int instanceID, bool expand)
+        {
+            EditorWindow hierarchyWindow = GetHierarchyWindow();
+            if (hierarchyWindow == null) return;
+
+            MethodInfo expandMethod = hierarchyWindow.GetType().GetMethod("SetExpanded", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (expandMethod != null)
+            {
+                expandMethod.Invoke(hierarchyWindow, new object[] { instanceID, expand });
+            }
+        }
+
+        private static EditorWindow GetHierarchyWindow()
+        {
+            EditorWindow[] windows = Resources.FindObjectsOfTypeAll<EditorWindow>();
+            foreach (EditorWindow window in windows)
+            {
+                if (window.titleContent.text == HierarchyDesigner_Shared_Constants.HierarchyWindow)
+                {
+                    return window;
+                }
+            }
+            return null;
+        }
         #endregion
 
         #region Presets
