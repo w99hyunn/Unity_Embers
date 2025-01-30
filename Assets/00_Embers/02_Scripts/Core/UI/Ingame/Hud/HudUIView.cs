@@ -66,8 +66,8 @@ namespace NOLDA
             MaxHxpSet();
             
             //HP, MP Init
-            playerHp.SetMaxValue(Director.Game.playerData.MaxHp);
-            playerMp.SetMaxValue(Director.Game.playerData.MaxMp);
+            playerHp.SetMaxValue(Director.Game.playerData.TotalMaxHp);
+            playerMp.SetMaxValue(Director.Game.playerData.TotalMaxMp);
             playerHp.SetValue(Director.Game.playerData.Hp);
             playerMp.SetValue(Director.Game.playerData.Mp);
         }

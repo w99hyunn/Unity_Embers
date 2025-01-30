@@ -495,6 +495,7 @@ namespace NOLDA
                         playerData.Hxp = reader.GetInt32("Hxp");
                         playerData.Gold = reader.GetInt32("Gold");
                         playerData.Attack = reader.GetInt32("Attack");
+                        playerData.Armor = reader.GetInt32("Armor");
                         string classString = reader.GetString("Class");
                         if (Enum.TryParse(classString, out Class characterClass))
                         {

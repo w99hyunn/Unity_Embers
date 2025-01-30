@@ -14,7 +14,6 @@ namespace NOLDA
             animator = GetComponent<Animator>();
         }
 
-
         // TODO: 스킬 애니메이션 자연스럽게 처리 및 playerInput쪽과 연동해서 커서 상태에 따른 스킬 사용 가능 여부 연동처리 필요
 
         
@@ -24,7 +23,7 @@ namespace NOLDA
 
             foreach (var skillEntry in Director.Game.playerData.Skills) // PlayerDataSO에서 직접 스킬 데이터 가져오기
             {
-                SkillData skillData = skillManager.GetSkillData(skillEntry.Key);
+                SkillData skillData = Director.Skill.GetSkillData(skillEntry.Key);
                 if (skillData == null) continue;
 
                 if (Input.GetKeyDown(skillData.defaultKey))

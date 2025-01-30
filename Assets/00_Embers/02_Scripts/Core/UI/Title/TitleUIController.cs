@@ -456,6 +456,7 @@ namespace NOLDA
             Director.Game.playerData.Hxp = msg.Hxp;
             Director.Game.playerData.Gold = msg.Gold;
             Director.Game.playerData.Attack = msg.Attack;
+            Director.Game.playerData.Armor = msg.Armor;
             Director.Game.playerData.Class = msg.Class;
             Director.Game.playerData.Faction = msg.Faction;
             Director.Game.playerData.Sp = msg.Sp;
@@ -470,6 +471,8 @@ namespace NOLDA
             {
                 Director.Game.playerData.Skills[skill.SkillID] = skill.Level;
             }
+
+            Director.Game.playerData.ApplyPassiveSkills();
 
             // 인벤토리 데이터 초기화
             Director.Game.playerData.Items = new Item[Director.Game.playerData.InventorySpace];

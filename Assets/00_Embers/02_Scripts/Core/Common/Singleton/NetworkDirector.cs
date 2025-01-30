@@ -207,6 +207,7 @@ namespace NOLDA
                 MaxHp = playerData.MaxHp,
                 MaxMp = playerData.MaxMp,
                 Attack = playerData.Attack,
+                Armor = playerData.Armor,
                 Class = playerData.Class,
                 Faction = playerData.Faction,
                 Sp = playerData.Sp,

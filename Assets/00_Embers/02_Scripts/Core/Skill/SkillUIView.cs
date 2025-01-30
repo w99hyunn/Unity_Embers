@@ -17,7 +17,25 @@ namespace NOLDA
         private void Start()
         {
             UpdateSkillUI();
+        }
+
+        public void OnEnable()
+        {
             SetSPPoint();
+            Director.Game.playerData.OnDataChanged += HandleDataChanged;
+        }
+
+        private void OnDisable()
+        {
+            Director.Game.playerData.OnDataChanged -= HandleDataChanged;
+        }
+
+        private void HandleDataChanged(string fieldName, object newValue)
+        {
+            if (fieldName == nameof(Director.Game.playerData.Sp))
+            {
+                SetSPPoint();
+            }
         }
 
         private void SetSPPoint()

@@ -92492,7 +92492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159824abd5f27d94f91bbcbe38cb94b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillManager: {fileID: 0}
   uiControlManager: {fileID: 944067006}
   skillPanel: {fileID: 1107828871}
   skillButtonPrefab: {fileID: 991952315182777690, guid: f2499763ec5842544a813428d2d2c5bf, type: 3}

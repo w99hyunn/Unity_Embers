@@ -14,22 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hxpTable: {fileID: 11400000, guid: 38ec5a302ca560a499965799409e56fd, type: 2}
   suppressEvents: 0
+  additionalAttack: 0
+  additionalArmor: 0
+  additionalMaxHp: 0
+  additionalMaxMp: 0
   accountID: admin
   email: admin@naver.com
   createdDate: 2024-12-28 20:28:10
-  username: "\uD558\uC789"
-  level: 1
-  maxHp: 100
-  hp: 100
-  maxMp: 50
-  mp: 50
-  hxp: 0
+  username: "\uD558\uC774"
+  level: 6
+  maxHp: 600
+  hp: 600
+  maxMp: 550
+  mp: 550
+  hxp: 2150
   gold: 0
-  attack: 10
-  armor: 0
+  attack: 35
+  armor: 60
   factionType: 0
   classType: 0
-  sp: 0
+  sp: 10
   gender: 0
   position: {x: 33, y: 5.2804775, z: 36}
   mapCode: 1

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5bd34bd55da4e4999ee81d725f5c20, type: 3}
   m_Name: warrior_0
   m_EditorClassIdentifier: 
+  skillID: 0
   skillName: "\uC2AC\uB798\uC2DC \uC5B4\uD0DD"
   description: "\uAE30\uBCF8 \uACF5\uACA9\uC774\uB2E4."
   icon: {fileID: 21300000, guid: e316cf1125691be45b17957c8f852e0f, type: 3}
@@ -21,16 +22,30 @@ MonoBehaviour:
   skillEffectPrefab: {fileID: 0}
   cooldownTime: 0.1
   defaultKey: 323
+  hitRadius: 2
+  baseDamage: 10
   levelData:
   - level: 1
     spCost: 0
     requiredLevel: 1
     effectMultiplier: 10
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    defenseIncrease: 0
+    attackIncrease: 0
   - level: 2
     spCost: 1
     requiredLevel: 2
     effectMultiplier: 20
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    defenseIncrease: 0
+    attackIncrease: 0
   - level: 3
     spCost: 2
     requiredLevel: 3
     effectMultiplier: 30
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    defenseIncrease: 0
+    attackIncrease: 0

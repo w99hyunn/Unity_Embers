@@ -96,6 +96,7 @@ namespace NOLDA
         public int MaxHp;
         public int MaxMp;
         public int Attack;
+        public int Armor;
         public Class Class;
         public Faction Faction;
         public int Sp;

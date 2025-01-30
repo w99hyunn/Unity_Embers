@@ -4,13 +4,64 @@ using System.Collections.Generic;
 namespace NOLDA
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
+    /// <summary>
+    /// Username = 캐릭터 이름
+    /// Level = 캐릭터 레벨
+    /// TotalAttack = 최종 공격력 (Attack + additionalAttack)
+    /// TotalArmor = 최종 방어력 (Armor + additionalArmor)
+    /// TotalMaxHp = 최종 MaxHP (MaxHp + additionalMaxHp)
+    /// TotalMaxMp = 최종 MaxMP (MaxMp + additionalMaxMp)
+    /// Gold = 골드
+    /// Faction = 세력
+    /// Class = 직업
+    /// Sp = 스킬 포인트
+    /// Gender = 성별
+    /// Position = 위치
+    /// MapCode = 맵 코드(현재 미사용 - 추후 인스턴스 던전에서 필요할듯듯)
+    /// InventorySpace = 인벤토리 슬롯 수
+    /// 
+    /// 공격력, 방어력, MaxHP, MaxMP 불러올 때 주의할 것. Total 값으로 불러와야함.
+    /// additional은 스킬 또는 아이템에서 추가 능력치 적용되는 수치
+    /// </summary>
     public class PlayerDataSO : ScriptableObject
     {
         public event Action<string, object> OnDataChanged;
+        public event Action OnPassiveSkillsApplied;
 
         public HxpTableSO hxpTable;
         
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
+
+        #region # 추가 능력치(스킬, 아이템 등)가 적용된 최종 능력치
+        //추가 능력치치
+        [SerializeField] private int additionalAttack;
+        [SerializeField] private int additionalArmor;
+        [SerializeField] private int additionalMaxHp;
+        [SerializeField] private int additionalMaxMp;
+
+        //외부에서 참조해야할 최종 능력치
+        public int TotalAttack => Attack + additionalAttack;
+        public int TotalArmor => Armor + additionalArmor;
+        public int TotalMaxHp => MaxHp + additionalMaxHp;
+        public int TotalMaxMp => MaxMp + additionalMaxMp;
+
+        //추가 능력치 적용 메소드
+        public void ApplyAdditionalStats(int maxHp, int maxMp, int defense, int attack)
+        {
+            additionalMaxHp += maxHp;
+            additionalMaxMp += maxMp;
+            additionalArmor += defense;
+            additionalAttack += attack;
+            OnPassiveSkillsApplied?.Invoke();
+        }
+        public void ResetAdditionalStats()
+        {
+            additionalMaxHp = 0;
+            additionalMaxMp = 0;
+            additionalArmor = 0;
+            additionalAttack = 0;
+        }
+        #endregion
         
         #region # Skill Data
         [SerializeField] private Dictionary<int, int> skills = new Dictionary<int, int>();
@@ -37,9 +88,12 @@ namespace NOLDA
             skills[skillID] = 1;
             Sp--;
             Director.Game.SendSkillUpdateToServer(Username, skillID, 1);
+            if (skill.skillType == SkillType.PASSIVE)
+            {
+                ApplyPassiveSkills();
+            }
             return true;
         }
-
 
         public bool LevelUpSkill(int skillID)
         {
@@ -60,7 +114,32 @@ namespace NOLDA
             skills[skillID]++;
             Sp--;
             Director.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
+            if (skill.skillType == SkillType.PASSIVE)
+            {
+                ApplyPassiveSkills();
+            }
             return true;
+        }
+
+        public void ApplyPassiveSkills()
+        {
+            Director.Game.playerData.ResetAdditionalStats();
+            foreach (var skillEntry in Director.Game.playerData.Skills)
+            {
+                SkillData skillData = Director.Skill.GetSkillData(skillEntry.Key);
+                if (skillData == null || skillData.skillType != SkillType.PASSIVE) continue;
+
+                SkillLevelData levelData = skillData.GetSkillLevelData(skillEntry.Value);
+                if (levelData == null) continue;
+
+                // 추가 능력치 적용
+                Director.Game.playerData.ApplyAdditionalStats(
+                    levelData.maxHpIncrease,
+                    levelData.maxMpIncrease,
+                    levelData.armorIncrease,
+                    levelData.attackIncrease
+                );
+            }
         }
 
         #endregion
@@ -384,8 +463,8 @@ namespace NOLDA
             Sp += Director.Game.LevelUpSp;
 
             //레벨업하면 현재 HP, MP를 모두 채워줌
-            Hp = MaxHp;
-            Mp = MaxMp;
+            Hp = TotalMaxHp;
+            Mp = TotalMaxMp;
         }
         #endregion
     }

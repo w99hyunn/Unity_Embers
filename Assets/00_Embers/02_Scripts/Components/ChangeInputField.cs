@@ -19,10 +19,9 @@ namespace NOLDA
         void OnNextInputField(InputValue input)
         {
             Selectable next = _system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
-            if (next != null)
-            {
-                next.Select();
-            }
+            if (next == null) return;
+
+            next.Select();
         }
 
         //void OnPrevInputField(InputValue input)

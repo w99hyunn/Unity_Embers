@@ -35,6 +35,12 @@ namespace NOLDA
         public int spCost;       // 해당 레벨에서의 SP 소모량
         public int requiredLevel; // 스킬을 배우기 위한 요구 레벨
         public float effectMultiplier; // 효과 배율 (예: 데미지 증가율)
+
+        [Header("패시브일 경우")]
+        public int maxHpIncrease; // MaxHP 증가량
+        public int maxMpIncrease; // MaxMP 증가량
+        public int armorIncrease; // 방어력 증가량
+        public int attackIncrease; // 공격력 증가량
     }
 
 }

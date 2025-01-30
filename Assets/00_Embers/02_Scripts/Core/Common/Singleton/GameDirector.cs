@@ -77,18 +77,12 @@ namespace NOLDA
         //Managers.Game.playerData의 정보가 업데이트되면 자동으로 네트워크 메시지를 보내 DB 업데이트
         public void OnEnable()
         {
-            if (playerData != null)
-            {
-                playerData.OnDataChanged += HandleDataChanged;
-            }
+            playerData.OnDataChanged += HandleDataChanged;
         }
 
         private void OnDisable()
         {
-            if (playerData != null)
-            {
-                playerData.OnDataChanged -= HandleDataChanged;
-            }
+            playerData.OnDataChanged -= HandleDataChanged;
         }
         #endregion
         
