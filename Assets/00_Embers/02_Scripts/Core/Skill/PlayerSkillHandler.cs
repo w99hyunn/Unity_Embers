@@ -33,6 +33,11 @@ namespace NOLDA
             }
         }
 
+        /// <summary>
+        /// 스킬 실행시 호출되는 함수(플레이어단)
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <param name="skillLevel"></param>
         public void ExecuteSkill(SkillData skill, int skillLevel)
         {
             if (skillManager.IsSkillOnCooldown(skill.skillID))
