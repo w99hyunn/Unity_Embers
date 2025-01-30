@@ -17,10 +17,6 @@ namespace NOLDA
         private void Start()
         {
             UpdateSkillUI();
-        }
-
-        public void OnEnable()
-        {
             SetSPPoint();
             Director.Game.playerData.OnDataChanged += HandleDataChanged;
         }
@@ -35,6 +31,10 @@ namespace NOLDA
             if (fieldName == nameof(Director.Game.playerData.Sp))
             {
                 SetSPPoint();
+            }
+            if (fieldName == nameof(Director.Game.playerData.Level))
+            {
+                UpdateSkillUI();
             }
         }
 
@@ -78,6 +78,7 @@ namespace NOLDA
                 else
                 {
                     skillPrefab.skillLevelupBtn.isInteractable = false;
+                    skillPrefab.skillLevelupBtn.UpdateUI();
                 }
 
                 skillButtons.Add(skillButton);

@@ -17,7 +17,7 @@ namespace NOLDA
     /// Sp = 스킬 포인트
     /// Gender = 성별
     /// Position = 위치
-    /// MapCode = 맵 코드(현재 미사용 - 추후 인스턴스 던전에서 필요할듯듯)
+    /// MapCode = 맵 코드(현재 미사용 - 추후 인스턴스 던전에서 필요할듯)
     /// InventorySpace = 인벤토리 슬롯 수
     /// 
     /// 공격력, 방어력, MaxHP, MaxMP 불러올 때 주의할 것. Total 값으로 불러와야함.
