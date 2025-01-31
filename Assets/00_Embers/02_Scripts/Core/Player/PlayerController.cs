@@ -6,6 +6,13 @@
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour
     {
+        public UnityEngine.InputSystem.PlayerInput playerInput;
+        public CharacterController controller;
+        public PlayerInput input;
+        public GameObject mainCamera;
+        public Player player;
+        public PlayerSkillHandler skillHandler;
+
         [Header("Player")]
         [Tooltip("캐릭터의 이동 속도(m/s)")]
         public float MoveSpeed = 2.0f;
@@ -64,9 +71,7 @@
         [Tooltip("카메라 위치를 미세 조정할 때 유용한 추가 각도")]
         public float CameraAngleOverride = 0.0f;
 
-        [Tooltip("모든 축에서 카메라 위치 고정")]
-        public bool LockCameraPosition = false;
-
+        #region private variables
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -90,25 +95,12 @@
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
         
-        public UnityEngine.InputSystem.PlayerInput playerInput;
-        private Animator _animator;
-        public CharacterController controller;
-        public PlayerInput input;
-        public GameObject mainCamera;
-        public Player player;
-        
+        private Animator _animator;        
         
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
-
-        private bool IsCurrentDeviceMouse
-        {
-            get
-            {
-                return playerInput.currentControlScheme == "KeyboardMouse";
-            }
-        }
+        #endregion
 
         private void Start()
         {
@@ -134,7 +126,7 @@
 
         private void Update()
         {
-            if (!isLocalPlayer)
+            if (!isLocalPlayer || skillHandler.IsSkillInUse)
                 return;
             
             _hasAnimator = TryGetComponent(out _animator);
@@ -150,12 +142,9 @@
 
         private void LateUpdate()
         {
-            if (!isLocalPlayer)
+            if (!isLocalPlayer || player.lockCursor)
                 return;
 
-            if (player.lockCursor)
-                return;
-            
             CameraRotation();
         }
 
@@ -186,7 +175,7 @@
         private void CameraRotation()
         {
             // 입력이 있고 카메라 위치가 고정되지 않은 경우
-            if (input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (input.look.sqrMagnitude >= _threshold)
             {
                 //마우스 입력에 Time.deltaTime을 곱하지 않음
                 float deltaTimeMultiplier = 1.0f;

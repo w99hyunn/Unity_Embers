@@ -4,6 +4,6 @@ namespace NOLDA
 {
     public interface ISkill
     {
-        void ExecuteSkill(Animator animator);
+        void ExecuteSkill(Animator animator, ISkillEndCallback skillEndCallback);
     }
 }

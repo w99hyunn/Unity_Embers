@@ -432,7 +432,7 @@ namespace NOLDA
                             {
                                 chapterID = reader.GetString("Name"),
                                 title = reader.GetString("Name"),
-                                description = $"Level {reader.GetInt32("Level")} | Attack {reader.GetInt32("Attack")}",
+                                description = $"레벨 {reader.GetInt32("Level")} | 공격력 {reader.GetInt32("Attack")}",
                                 defaultState = ChapterState.CharacterPlayAndDelete,
                             };
                             

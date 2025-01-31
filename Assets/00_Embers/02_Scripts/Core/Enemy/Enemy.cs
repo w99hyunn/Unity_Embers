@@ -5,8 +5,8 @@ namespace NOLDA
 {
     public class Enemy : NetworkBehaviour
     {
-        [SyncVar] public int maxHp = 100;
-        [SyncVar] private int currentHp;
+        [SyncVar] public float maxHp = 100;
+        [SyncVar] private float currentHp;
 
         private void Start()
         {
@@ -14,7 +14,7 @@ namespace NOLDA
         }
 
         [Server]
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             currentHp -= damage;
             Debug.Log($"몬스터 {gameObject.name}가 {damage}의 피해를 받음. 현재 HP: {currentHp}");

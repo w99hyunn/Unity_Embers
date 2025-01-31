@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace NOLDA
 {
-    public class PlayerSkillHandler : NetworkBehaviour
+    public class PlayerSkillHandler : NetworkBehaviour, ISkillEndCallback
     {
         private SkillDirector skillManager;
         private Animator animator;
+        private bool _isSkillInUse = false;
+        public bool IsSkillInUse => _isSkillInUse;
 
         private void Start()
         {
@@ -40,65 +42,73 @@ namespace NOLDA
         /// <param name="skillLevel"></param>
         public void ExecuteSkill(SkillData skill, int skillLevel)
         {
-            if (skillManager.IsSkillOnCooldown(skill.skillID))
+            if (skillManager.IsSkillOnCooldown(skill.skillID) || _isSkillInUse)
             {
                 return;
             }
 
             // 애니메이션 실행
+            _isSkillInUse = true;
+            //animator.applyRootMotion = true;
             if (skill.skillExecuter is ISkill skillScript)
             {
-                skillScript.ExecuteSkill(animator);
+                skillScript.ExecuteSkill(animator, this);
             }
 
             // 주변 적을 찾아 공격
-            //TryUseSkillOnEnemy(skill);
+            TryUseSkillOnEnemy(skill);
 
             // 쿨타임 설정
             skillManager.SetSkillCooldown(skill.skillID);
         }
 
-        // private void TryUseSkillOnEnemy(SkillData skill)
-        // {
-        //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, skill.hitRadius);
-        //     foreach (Collider hitCollider in hitColliders)
-        //     {
-        //         if (hitCollider.TryGetComponent(out NetworkIdentity targetIdentity) &&
-        //             hitCollider.TryGetComponent(out Enemy enemy))
-        //         {
-        //             CmdUseSkillOnTarget(skill.skillID, targetIdentity);
-        //             break;
-        //         }
-        //     }
-        // }
+        public void OnSkillEnd()
+        {
+            _isSkillInUse = false;
+            //animator.applyRootMotion = false;
+        }
 
-        // [Command]
-        // private void CmdUseSkillOnTarget(int skillID, NetworkIdentity target)
-        // {
-        //     SkillData skill = skillManager.GetSkillData(skillID);
-        //     if (skill == null || target == null) return;
+        private void TryUseSkillOnEnemy(SkillData skill)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, skill.hitRadius);
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.TryGetComponent(out NetworkIdentity targetIdentity) &&
+                    hitCollider.TryGetComponent(out Enemy enemy))
+                {
+                    CmdUseSkillOnTarget(skill.skillID, targetIdentity);
+                    break;
+                }
+            }
+        }
 
-        //     if (!Director.Game.playerData.Skills.ContainsKey(skillID)) return; // PlayerDataSO에서 직접 확인
-        //     int skillLevel = Director.Game.playerData.Skills[skillID];
+        [Command]
+        private void CmdUseSkillOnTarget(int skillID, NetworkIdentity target)
+        {
+            SkillData skill = skillManager.GetSkillData(skillID);
+            if (skill == null || target == null) return;
 
-        //     SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
-        //     if (levelData == null) return;
+            if (!Director.Game.playerData.Skills.ContainsKey(skillID)) return;
+            int skillLevel = Director.Game.playerData.Skills[skillID];
 
-        //     if (target.TryGetComponent(out Enemy enemy))
-        //     {
-        //         enemy.TakeDamage(skill.baseDamage);
-        //     }
+            SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
+            if (levelData == null) return;
 
-        //     RpcPlaySkillEffects(skill.skillEffectPrefab, target.transform.position);
-        // }
+            if (target.TryGetComponent(out Enemy enemy))
+            {
+                enemy.TakeDamage(skill.baseDamage * levelData.effectMultiplier);
+            }
 
-        // [ClientRpc]
-        // private void RpcPlaySkillEffects(GameObject effectPrefab, Vector3 targetPosition)
-        // {
-        //     if (effectPrefab != null)
-        //     {
-        //         Instantiate(effectPrefab, targetPosition, Quaternion.identity);
-        //     }
-        // }
+            RpcPlaySkillEffects(skill.skillEffectPrefab, target.transform.position);
+        }
+
+        [ClientRpc]
+        private void RpcPlaySkillEffects(GameObject effectPrefab, Vector3 targetPosition)
+        {
+            if (effectPrefab != null)
+            {
+                Instantiate(effectPrefab, targetPosition, Quaternion.identity);
+            }
+        }
     }
 }
