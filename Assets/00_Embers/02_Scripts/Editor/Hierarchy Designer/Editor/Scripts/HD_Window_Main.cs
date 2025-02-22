@@ -133,6 +133,7 @@ namespace Verpha.HierarchyDesigner
         private bool applyToLayer = true;
         private bool applyToTree = true;
         private bool applyToLines = true;
+        private bool applyToHierarchyButtons = true;
         private bool applyToFolderDefaultValues = true;
         private bool applyToSeparatorDefaultValues = true;
         private bool applyToLock = true;
@@ -167,6 +168,8 @@ namespace Verpha.HierarchyDesigner
         private TextAnchor customPresetLayerTextAnchor = TextAnchor.MiddleLeft;
         private Color customPresetTreeColor = Color.white;
         private Color customPresetHierarchyLineColor = HD_Common_Color.HexToColor("00000080");
+        private Color customPresetHierarchyButtonLockColor = HD_Common_Color.HexToColor("404040");
+        private Color customPresetHierarchyButtonVisibilityColor = HD_Common_Color.HexToColor("404040");
         private Color customPresetLockColor = Color.white;
         private int customPresetLockFontSize = 11;
         private FontStyle customPresetLockFontStyle = FontStyle.BoldAndItalic;
@@ -223,6 +226,8 @@ namespace Verpha.HierarchyDesigner
         private int tempTagLayerSpacing;
         private Color tempHierarchyLineColor;
         private int tempHierarchyLineThickness;
+        private Color tempHierarchyButtonLockColor;
+        private Color tempHierarchyButtonVisibilityColor;
         private Color tempFolderDefaultTextColor;
         private int tempFolderDefaultFontSize;
         private FontStyle tempFolderDefaultFontStyle;
@@ -1001,7 +1006,7 @@ namespace Verpha.HierarchyDesigner
             folder.AddComponent<HierarchyDesignerFolder>();
             Undo.RegisterCreatedObjectUndo(folder, $"Create {folderData.Name}");
 
-            Texture2D inspectorIcon = HD_Common_Resources.FolderInspectorIcon;
+            Texture2D inspectorIcon = HD_Common_Resources.Textures.FolderScene;
             if (inspectorIcon != null)
             {
                 EditorGUIUtility.SetIconForObject(folder, inspectorIcon);
@@ -1392,7 +1397,7 @@ namespace Verpha.HierarchyDesigner
             separator.SetActive(false);
             Undo.RegisterCreatedObjectUndo(separator, $"Create {separatorData.Name}");
 
-            Texture2D inspectorIcon = HD_Common_Resources.SeparatorInspectorIcon;
+            Texture2D inspectorIcon = HD_Common_Resources.Textures.SeparatorInspectorIcon;
             if (inspectorIcon != null)
             {
                 EditorGUIUtility.SetIconForObject(separator, inspectorIcon);
@@ -1729,6 +1734,7 @@ namespace Verpha.HierarchyDesigner
             applyToLayer = HD_Common_GUI.DrawToggle("GameObject's Layer", presetsToggleLabelWidth, applyToLayer, true, true, "Applies the layer values from the currently selected preset (i.e., Color, Font Style, Font Size, and Text Anchor) to the GameObject's Layer.");
             applyToTree = HD_Common_GUI.DrawToggle("Hierarchy Tree", presetsToggleLabelWidth, applyToTree, true, true, "Applies the tree values from the currently selected preset (i.e., Color) to the Hierarchy Tree.");
             applyToLines = HD_Common_GUI.DrawToggle("Hierarchy Lines", presetsToggleLabelWidth, applyToLines, true, true, "Applies the line values from the currently selected preset (i.e., Color) to the Hierarchy Lines.");
+            applyToHierarchyButtons = HD_Common_GUI.DrawToggle("Hierarchy Buttons", presetsToggleLabelWidth, applyToHierarchyButtons, true, true, "Applies the hierarchy buttons values from the currently selected preset (i.e., Color) to the Hierarchy Buttons.");
             applyToFolderDefaultValues = HD_Common_GUI.DrawToggle("Folder Default Values", presetsToggleLabelWidth, applyToFolderDefaultValues, true, true, "Applies the default folder values from the currently selected preset (i.e., Text Color, Font Size, Font Style, Image Color, and Image Type) to folders that are not present in your folders list, as well as to the folder creation fields.");
             applyToSeparatorDefaultValues = HD_Common_GUI.DrawToggle("Separator Default Values", presetsToggleLabelWidth, applyToSeparatorDefaultValues, true, true, "Applies the default separator values from the currently selected preset (i.e., Text Color, Is Gradient Background, Background Color, Background Gradient, Font Size, Font Style, Text Alignment and Background Image Type) to separators that are not present in your separators list, as well as to the separator creation fields.");
             applyToLock = HD_Common_GUI.DrawToggle("Lock Label", presetsToggleLabelWidth, applyToLock, true, true, "Applies the lock label values from the currently selected preset (i.e., Color, Font Size, Font Style and Text Anchor) to the Lock Label.");
@@ -1803,6 +1809,7 @@ namespace Verpha.HierarchyDesigner
             if (applyToLayer) changesList.Add("GameObject's Layer");
             if (applyToTree) changesList.Add("Hierarchy Tree");
             if (applyToLines) changesList.Add("Hierarchy Lines");
+            if (applyToHierarchyButtons) changesList.Add("Hierarchy Buttons");
             if (applyToFolderDefaultValues) changesList.Add("Folder Default Values");
             if (applyToSeparatorDefaultValues) changesList.Add("Separator Default Values");
             if (applyToLock) changesList.Add("Lock Label");
@@ -1839,6 +1846,11 @@ namespace Verpha.HierarchyDesigner
                 if (applyToLines)
                 {
                     HD_Common_Operations.ApplyPresetToLines(selectedPreset);
+                    shouldSaveDesignSettings = true;
+                }
+                if (applyToHierarchyButtons)
+                {
+                    HD_Common_Operations.ApplyPresetToHierarchyButtons(selectedPreset);
                     shouldSaveDesignSettings = true;
                 }
                 if (applyToFolderDefaultValues)
@@ -1987,6 +1999,16 @@ namespace Verpha.HierarchyDesigner
 
             GUILayout.Space(customPresetsSpacing);
 
+            #region Buttons
+            GUILayout.Label("Buttons", HD_Common_GUI.MiniBoldLabelStyle);
+            GUILayout.Space(2);
+
+            customPresetHierarchyButtonLockColor = HD_Common_GUI.DrawColorField("Button Lock Color", customPresetsLabelWidth, "#404040", customPresetHierarchyButtonLockColor, true, "The hierarchy button lock color value in your custom preset.");
+            customPresetHierarchyButtonVisibilityColor = HD_Common_GUI.DrawColorField("Button Visibility Color", customPresetsLabelWidth, "#404040", customPresetHierarchyButtonVisibilityColor, true, "The hierarchy button visibility color value in your custom preset.");
+            #endregion
+
+            GUILayout.Space(customPresetsSpacing);
+
             #region Lock Label
             GUILayout.Label("Lock Label", HD_Common_GUI.MiniBoldLabelStyle);
             GUILayout.Space(2);
@@ -2058,7 +2080,7 @@ namespace Verpha.HierarchyDesigner
                     customPresetSeparatorFontStyle, customPresetSeparatorFontSize, customPresetSeparatorTextAlignment, customPresetSeparatorBackgroundImageType,
                     customPresetTagTextColor, customPresetTagFontStyle, customPresetTagFontSize, customPresetTagTextAnchor,
                     customPresetLayerTextColor, customPresetLayerFontStyle, customPresetLayerFontSize, customPresetLayerTextAnchor,
-                    customPresetTreeColor, customPresetHierarchyLineColor,
+                    customPresetTreeColor, customPresetHierarchyLineColor, customPresetHierarchyButtonLockColor, customPresetHierarchyButtonVisibilityColor,
                     customPresetLockColor, customPresetLockFontSize, customPresetLockFontStyle, customPresetLockTextAnchor
                 );
 
@@ -2105,6 +2127,8 @@ namespace Verpha.HierarchyDesigner
 
             customPresetTreeColor = Color.white;
             customPresetHierarchyLineColor = HD_Common_Color.HexToColor("00000080");
+            customPresetHierarchyButtonLockColor = HD_Common_Color.HexToColor("404040");
+            customPresetHierarchyButtonVisibilityColor = HD_Common_Color.HexToColor("404040");
 
             customPresetLockColor = Color.white;
             customPresetLockFontSize = 11;
@@ -2326,6 +2350,7 @@ namespace Verpha.HierarchyDesigner
             DrawDesignSettingsTagAndLayer();
             DrawDesignSettingsHierarchyTree();
             DrawDesignSettingsHierarchyLines();
+            DrawDesignSettingsHierarchyButtons();
             DrawDesignSettingsFolder();
             DrawDesignSettingsSeparator();
             DrawDesignSettingsLock();
@@ -2420,6 +2445,18 @@ namespace Verpha.HierarchyDesigner
             EditorGUILayout.EndVertical();
         }
 
+        private void DrawDesignSettingsHierarchyButtons()
+        {
+            EditorGUILayout.BeginVertical(HD_Common_GUI.SecondaryPanelStyle);
+            EditorGUILayout.LabelField("Hierarchy Buttons", HD_Common_GUI.FieldsCategoryLabelStyle);
+
+            EditorGUI.BeginChangeCheck();
+            tempHierarchyButtonLockColor = HD_Common_GUI.DrawColorField("Lock Button Color", designSettingslabelWidth, "#404040", tempHierarchyButtonLockColor, true, "The color of the Hierarchy Lock Button.");
+            tempHierarchyButtonVisibilityColor = HD_Common_GUI.DrawColorField("Visibility Button Color", designSettingslabelWidth, "#404040", tempHierarchyButtonVisibilityColor, true, "The color of the Hierarchy Visibility Button.");
+            if (EditorGUI.EndChangeCheck()) { designSettingsHasModifiedChanges = true; }
+            EditorGUILayout.EndVertical();
+        }
+
         private void DrawDesignSettingsFolder()
         {
             EditorGUILayout.BeginVertical(HD_Common_GUI.SecondaryPanelStyle);
@@ -2492,6 +2529,8 @@ namespace Verpha.HierarchyDesigner
             HD_Settings_Design.TagLayerSpacing = tempTagLayerSpacing;
             HD_Settings_Design.HierarchyLineColor = tempHierarchyLineColor;
             HD_Settings_Design.HierarchyLineThickness = tempHierarchyLineThickness;
+            HD_Settings_Design.HierarchyButtonLockColor = tempHierarchyButtonLockColor;
+            HD_Settings_Design.HierarchyButtonVisibilityColor = tempHierarchyButtonVisibilityColor;
             HD_Settings_Design.FolderDefaultTextColor = tempFolderDefaultTextColor;
             HD_Settings_Design.FolderDefaultFontSize = tempFolderDefaultFontSize;
             HD_Settings_Design.FolderDefaultFontStyle = tempFolderDefaultFontStyle;
@@ -2541,6 +2580,8 @@ namespace Verpha.HierarchyDesigner
             tempTagLayerSpacing = HD_Settings_Design.TagLayerSpacing;
             tempHierarchyLineColor = HD_Settings_Design.HierarchyLineColor;
             tempHierarchyLineThickness = HD_Settings_Design.HierarchyLineThickness;
+            tempHierarchyButtonLockColor = HD_Settings_Design.HierarchyButtonLockColor;
+            tempHierarchyButtonVisibilityColor = HD_Settings_Design.HierarchyButtonVisibilityColor;
             tempFolderDefaultTextColor = HD_Settings_Design.FolderDefaultTextColor;
             tempFolderDefaultFontSize = HD_Settings_Design.FolderDefaultFontSize;
             tempFolderDefaultFontStyle = HD_Settings_Design.FolderDefaultFontStyle;

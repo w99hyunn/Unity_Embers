@@ -43,6 +43,11 @@ namespace Verpha.HierarchyDesigner
             public int HierarchyLineThickness = 1;
             #endregion
 
+            #region Hierarchy Buttons
+            public Color HierarchyButtonLockColor = HD_Common_Color.HexToColor("404040");
+            public Color HierarchyButtonVisibilityColor = HD_Common_Color.HexToColor("404040");
+            #endregion
+
             #region Folder
             public Color FolderDefaultTextColor = Color.white;
             public int FolderDefaultFontSize = 12;
@@ -392,6 +397,34 @@ namespace Verpha.HierarchyDesigner
         }
         #endregion
 
+        #region Hierarchy Buttons
+        public static Color HierarchyButtonLockColor
+        {
+            get => designSettings.HierarchyButtonLockColor;
+            set
+            {
+                if (designSettings.HierarchyButtonLockColor != value)
+                {
+                    designSettings.HierarchyButtonLockColor = value;
+                    HD_Common_GUI.RefreshHierarchyButtonLockStyle();
+                }
+            }
+        }
+
+        public static Color HierarchyButtonVisibilityColor
+        {
+            get => designSettings.HierarchyButtonVisibilityColor;
+            set
+            {
+                if (designSettings.HierarchyButtonVisibilityColor != value)
+                {
+                    designSettings.HierarchyButtonVisibilityColor = value;
+                    HD_Common_GUI.RefreshHierarchyButtonVisibilityStyle();
+                }
+            }
+        }
+        #endregion
+
         #region Folder
         public static Color FolderDefaultTextColor
         {
@@ -700,6 +733,8 @@ namespace Verpha.HierarchyDesigner
                 TagLayerSpacing = 5,
                 HierarchyLineColor = HD_Common_Color.HexToColor("00000080"),
                 HierarchyLineThickness = 1,
+                HierarchyButtonLockColor = HD_Common_Color.HexToColor("404040"),
+                HierarchyButtonVisibilityColor = HD_Common_Color.HexToColor("404040"),
                 FolderDefaultTextColor = Color.white,
                 FolderDefaultFontSize = 12,
                 FolderDefaultFontStyle = FontStyle.Normal,

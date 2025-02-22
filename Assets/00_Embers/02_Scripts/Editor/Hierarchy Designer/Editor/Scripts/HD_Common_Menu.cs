@@ -67,7 +67,7 @@ namespace Verpha.HierarchyDesigner
                 {
                     selectedObject.AddComponent<HierarchyDesignerFolder>();
                 }
-                EditorGUIUtility.SetIconForObject(selectedObject, HD_Common_Resources.FolderInspectorIcon);
+                EditorGUIUtility.SetIconForObject(selectedObject, HD_Common_Resources.Textures.FolderScene);
                 Debug.Log($"GameObject <color=#73FF7A>'{folderName}'</color> was transformed into a Folder and added to the Folders dictionary.");
             }
             else
@@ -172,7 +172,7 @@ namespace Verpha.HierarchyDesigner
                 }
                 selectedObject.tag = HD_Common_Constants.SeparatorTag;
                 selectedObject.SetActive(false);
-                EditorGUIUtility.SetIconForObject(selectedObject, HD_Common_Resources.SeparatorInspectorIcon);
+                EditorGUIUtility.SetIconForObject(selectedObject, HD_Common_Resources.Textures.SeparatorInspectorIcon);
                 Debug.Log($"GameObject <color=#73FF7A>'{separatorName}'</color> was transformed into a Separator and added to the Separators dictionary.");
             }
             else

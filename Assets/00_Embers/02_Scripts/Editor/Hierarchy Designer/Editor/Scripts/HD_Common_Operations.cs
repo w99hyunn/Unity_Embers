@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Verpha.HierarchyDesigner
 {
@@ -15,7 +17,7 @@ namespace Verpha.HierarchyDesigner
         {
             GameObject folder = new(folderName);
             folder.AddComponent<HierarchyDesignerFolder>();
-            EditorGUIUtility.SetIconForObject(folder, HD_Common_Resources.FolderInspectorIcon);
+            EditorGUIUtility.SetIconForObject(folder, HD_Common_Resources.Textures.FolderScene);
             if (shouldRename) EditorApplication.delayCall += () => BeginRename(folder);
             Undo.RegisterCreatedObjectUndo(folder, $"Create {folderName}");
         }
@@ -52,7 +54,7 @@ namespace Verpha.HierarchyDesigner
             separator.tag = HD_Common_Constants.SeparatorTag;
             SetSeparatorState(separator, false);
             separator.SetActive(false);
-            EditorGUIUtility.SetIconForObject(separator, HD_Common_Resources.SeparatorInspectorIcon);
+            EditorGUIUtility.SetIconForObject(separator, HD_Common_Resources.Textures.SeparatorInspectorIcon);
             Undo.RegisterCreatedObjectUndo(separator, $"Create {separatorName}");
         }
 
@@ -95,6 +97,107 @@ namespace Verpha.HierarchyDesigner
                 return name[2..].Trim();
             }
             return name.Trim();
+        }
+        #endregion
+
+        #region Tag & Layer
+        internal static void HandleTagClick(GameObject gameObject, Vector2 position)
+        {
+            GenericMenu menu = new();
+            menu.AddDisabledItem(new("Tag"));
+            menu.AddSeparator("");
+
+            string[] tags = InternalEditorUtility.tags;
+            foreach (string tag in tags)
+            {
+                bool isOn = gameObject.CompareTag(tag);
+                menu.AddItem(new(tag), isOn, () =>
+                {
+                    if (!isOn)
+                    {
+                        Undo.RecordObject(gameObject, "Change Tag");
+                        gameObject.tag = tag;
+                        EditorUtility.SetDirty(gameObject);
+                    }
+                });
+            }
+
+            menu.AddSeparator("");
+            menu.AddItem(new("Add Tag..."), false, () =>
+            {
+                Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/TagManager.asset");
+                EditorApplication.ExecuteMenuItem("Window/General/Inspector");
+            });
+
+            menu.DropDown(new(position, Vector2.zero));
+        }
+
+        internal static void HandleLayerClick(GameObject gameObject, Vector2 position)
+        {
+            GenericMenu menu = new();
+            menu.AddDisabledItem(new("Layer"));
+            menu.AddSeparator("");
+
+            for (int i = 0; i < 32; i++)
+            {
+                string layerName = LayerMask.LayerToName(i);
+                if (string.IsNullOrEmpty(layerName)) continue;
+
+                bool isOn = gameObject.layer == i;
+                int layerIndex = i;
+                menu.AddItem(new(layerName), isOn, () =>
+                {
+                    if (!isOn)
+                    {
+                        if (gameObject.transform.childCount > 0)
+                        {
+                            int result = AskToChangeChildrenLayers(gameObject, layerIndex);
+                            if (result == 2) return;
+                        }
+
+                        Undo.RecordObject(gameObject, "Change Layer");
+                        gameObject.layer = layerIndex;
+                        EditorUtility.SetDirty(gameObject);
+                    }
+                });
+            }
+
+            menu.AddSeparator("");
+            menu.AddItem(new("Add Layer..."), false, () =>
+            {
+                Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/TagManager.asset");
+                EditorApplication.ExecuteMenuItem("Window/General/Inspector");
+            });
+
+            menu.DropDown(new(position, Vector2.zero));
+        }
+
+        private static int AskToChangeChildrenLayers(GameObject obj, int newLayer)
+        {
+            int option = EditorUtility.DisplayDialogComplex(
+                "Change Layer",
+                $"Do you want to set the layer to '{LayerMask.LayerToName(newLayer)}' for all child objects as well?",
+                "Yes, change children",
+                "No, this object only",
+                "Cancel"
+            );
+
+            if (option == 0)
+            {
+                SetLayerRecursively(obj, newLayer);
+            }
+
+            return option;
+        }
+
+        private static void SetLayerRecursively(GameObject obj, int newLayer)
+        {
+            foreach (Transform child in obj.transform)
+            {
+                Undo.RecordObject(child.gameObject, "Change Layer");
+                child.gameObject.layer = newLayer;
+                SetLayerRecursively(child.gameObject, newLayer);
+            }
         }
         #endregion
 
@@ -1392,6 +1495,12 @@ namespace Verpha.HierarchyDesigner
         public static void ApplyPresetToLines(HD_Settings_Presets.HD_Preset preset)
         {
             HD_Settings_Design.HierarchyLineColor = preset.hierarchyLineColor;
+        }
+
+        public static void ApplyPresetToHierarchyButtons(HD_Settings_Presets.HD_Preset preset)
+        {
+            HD_Settings_Design.HierarchyButtonLockColor = preset.hierarchyButtonLockColor;
+            HD_Settings_Design.HierarchyButtonVisibilityColor = preset.hierarchyButtonVisibilityColor;
         }
 
         public static void ApplyPresetToDefaultFolderValues(HD_Settings_Presets.HD_Preset preset)

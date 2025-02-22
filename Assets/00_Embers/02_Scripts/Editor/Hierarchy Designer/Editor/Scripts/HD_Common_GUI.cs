@@ -208,6 +208,16 @@ namespace Verpha.HierarchyDesigner
             normal = { textColor = HD_Common_Color.GetPrimaryFontColorFaded() }
         });
         public static GUIStyle InspectorFolderInactiveLabelStyle => _inspectorFolderInactiveLabelStyle.Value;
+
+        private static readonly Lazy<GUIStyle> _componentWindowTitleLabelStyle = new(() => new()
+        {
+            fontSize = 12,
+            alignment = TextAnchor.MiddleLeft,
+            padding = new(0, 0, 3, 0),
+            margin = new(0, 0, 0, 0),
+            normal = { textColor = HD_Common_Color.GetPrimaryFontColorFaded() }
+        });
+        public static GUIStyle ComponentWindowTitleLabelStyle => _componentWindowTitleLabelStyle.Value;
         #endregion
 
         #region Panels
@@ -381,7 +391,56 @@ namespace Verpha.HierarchyDesigner
             normal = { background = HD_Common_Resources.Icons.Tooltip }
         });
         public static GUIStyle TooltipButtonStyle => _tooltipButtonStyle.Value;
+        #endregion
 
+        #region Modifiables
+        private static Lazy<GUIStyle> _hierarchyButtonLockStyle = new(() =>
+        {
+            GUIStyle style = new(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageOnly,
+                fixedHeight = 14,
+                padding = new(0, 0, 0, 0),
+                overflow = new(0, 0, 0, 2),
+                contentOffset = new(0, 1),
+            };
+
+            style.normal.background = HD_Common_Texture.CreateTexture(2, 2, HD_Settings_Design.HierarchyButtonLockColor);
+            style.hover.background = HD_Common_Texture.CreateTexture(2, 2, new(0.35f, 0.35f, 0.35f));
+            style.active.background = HD_Common_Texture.CreateTexture(2, 2, new(0.45f, 0.45f, 0.45f));
+            style.focused.background = style.normal.background;
+            style.onNormal.background = style.normal.background;
+            style.onHover.background = style.hover.background;
+            style.onActive.background = style.active.background;
+
+            return style;
+        });
+        public static GUIStyle HierarchyButtonLockStyle => _hierarchyButtonLockStyle.Value;
+
+        private static Lazy<GUIStyle> _hierarchyButtonVisibilityStyle = new(() =>
+        {
+            GUIStyle style = new(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageOnly,
+                fixedHeight = 14,
+                padding = new(0, 0, 0, 0),
+                overflow = new(0, 0, 0, 2),
+                contentOffset = new(0, 1),
+            };
+
+            style.normal.background = HD_Common_Texture.CreateTexture(2, 2, HD_Settings_Design.HierarchyButtonVisibilityColor);
+            style.hover.background = HD_Common_Texture.CreateTexture(2, 2, new(0.35f, 0.35f, 0.35f));
+            style.active.background = HD_Common_Texture.CreateTexture(2, 2, new(0.45f, 0.45f, 0.45f));
+            style.focused.background = style.normal.background;
+            style.onNormal.background = style.normal.background;
+            style.onHover.background = style.hover.background;
+            style.onActive.background = style.active.background;
+
+            return style;
+        });
+        public static GUIStyle HierarchyButtonVisibilityStyle => _hierarchyButtonVisibilityStyle.Value;
         #endregion
         #endregion
 
@@ -792,6 +851,64 @@ namespace Verpha.HierarchyDesigner
                 PopupWindow.Show(popupRect, new TooltipPopup(tooltipText));
             }
             GUILayout.Space(2);
+        }
+        #endregion
+
+        #region Modifiables
+        private static GUIStyle CreateHierarchyButtonLockStyle()
+        {
+            GUIStyle style = new(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageOnly,
+                fixedHeight = 14,
+                padding = new(0, 0, 0, 0),
+                overflow = new(0, 0, 0, 2),
+                contentOffset = new(0, 1)
+            };
+
+            style.normal.background = HD_Common_Texture.CreateTexture(2, 2, HD_Settings_Design.HierarchyButtonLockColor);
+            style.hover.background = HD_Common_Texture.CreateTexture(2, 2, new(0.35f, 0.35f, 0.35f));
+            style.active.background = HD_Common_Texture.CreateTexture(2, 2, new(0.45f, 0.45f, 0.45f));
+            style.focused.background = style.normal.background;
+            style.onNormal.background = style.normal.background;
+            style.onHover.background = style.hover.background;
+            style.onActive.background = style.active.background;
+
+            return style;
+        }
+
+        public static void RefreshHierarchyButtonLockStyle()
+        {
+            _hierarchyButtonLockStyle = new Lazy<GUIStyle>(() => CreateHierarchyButtonLockStyle());
+        }
+
+        private static GUIStyle CreateHierarchyButtonVisibilityStyle()
+        {
+            GUIStyle style = new(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageOnly,
+                fixedHeight = 14,
+                padding = new(0, 0, 0, 0),
+                overflow = new(0, 0, 0, 2),
+                contentOffset = new(0, 1)
+            };
+
+            style.normal.background = HD_Common_Texture.CreateTexture(2, 2, HD_Settings_Design.HierarchyButtonVisibilityColor);
+            style.hover.background = HD_Common_Texture.CreateTexture(2, 2, new(0.35f, 0.35f, 0.35f));
+            style.active.background = HD_Common_Texture.CreateTexture(2, 2, new(0.45f, 0.45f, 0.45f));
+            style.focused.background = style.normal.background;
+            style.onNormal.background = style.normal.background;
+            style.onHover.background = style.hover.background;
+            style.onActive.background = style.active.background;
+
+            return style;
+        }
+
+        public static void RefreshHierarchyButtonVisibilityStyle()
+        {
+            _hierarchyButtonVisibilityStyle = new Lazy<GUIStyle>(() => CreateHierarchyButtonVisibilityStyle());
         }
         #endregion
         #endregion

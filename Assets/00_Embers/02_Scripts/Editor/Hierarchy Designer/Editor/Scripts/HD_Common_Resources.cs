@@ -28,6 +28,57 @@ namespace Verpha.HierarchyDesigner
             internal const string IconVisibilityOffLight = "Hierarchy Designer Icon Visibility Off Light";
             #endregion
 
+            #region Textures
+            internal const string TextureDefault = "Hierarchy Designer Default Texture";
+            internal const string TreeBranchIDefault = "Hierarchy Designer Tree Branch Icon Default I";
+            internal const string TreeBranchLDefault = "Hierarchy Designer Tree Branch Icon Default L";
+            internal const string TreeBranchTDefault = "Hierarchy Designer Tree Branch Icon Default T";
+            internal const string TreeBranchTerminalBudDefault = "Hierarchy Designer Tree Branch Icon Default Terminal Bud";
+            internal const string TreeBranchICurved = "Hierarchy Designer Tree Branch Icon Curved I";
+            internal const string TreeBranchLCurved = "Hierarchy Designer Tree Branch Icon Curved L";
+            internal const string TreeBranchTCurved = "Hierarchy Designer Tree Branch Icon Curved T";
+            internal const string TreeBranchTerminalBudCurved = "Hierarchy Designer Tree Branch Icon Curved Terminal Bud";
+            internal const string TreeBranchIDotted = "Hierarchy Designer Tree Branch Icon Dotted I";
+            internal const string TreeBranchLDotted = "Hierarchy Designer Tree Branch Icon Dotted L";
+            internal const string TreeBranchTDotted = "Hierarchy Designer Tree Branch Icon Dotted T";
+            internal const string TreeBranchTerminalBudDotted = "Hierarchy Designer Tree Branch Icon Dotted Terminal Bud";
+            internal const string TreeBranchISegmented = "Hierarchy Designer Tree Branch Icon Segmented I";
+            internal const string TreeBranchLSegmented = "Hierarchy Designer Tree Branch Icon Segmented L";
+            internal const string TreeBranchTSegmented = "Hierarchy Designer Tree Branch Icon Segmented T";
+            internal const string TreeBranchTerminalBudSegmented = "Hierarchy Designer Tree Branch Icon Segmented Terminal Bud";
+            internal const string FolderScene = "Hierarchy Designer Folder Icon Scene";
+            internal const string FolderDefault = "Hierarchy Designer Folder Icon Default";
+            internal const string FolderDefaultOutline = "Hierarchy Designer Folder Icon Default Outline";
+            internal const string FolderClassicI = "Hierarchy Designer Folder Icon Classic I";
+            internal const string FolderClassicII = "Hierarchy Designer Folder Icon Classic II";
+            internal const string FolderClassicOutline = "Hierarchy Designer Folder Icon Classic Outline";
+            internal const string FolderModernI = "Hierarchy Designer Folder Icon Modern I";
+            internal const string FolderModernII = "Hierarchy Designer Folder Icon Modern II";
+            internal const string FolderModernIII = "Hierarchy Designer Folder Icon Modern III";
+            internal const string FolderModernOutline = "Hierarchy Designer Folder Icon Modern Outline";
+            internal const string FolderNeoI = "Hierarchy Designer Folder Icon Neo I";
+            internal const string FolderNeoII = "Hierarchy Designer Folder Icon Neo II";
+            internal const string FolderNeoOutline = "Hierarchy Designer Folder Icon Neo Outline";
+            internal const string SeparatorInspectorIcon = "Hierarchy Designer Separator Icon Inspector";
+            internal const string SeparatorDefault = "Hierarchy Designer Separator Background Image Default";
+            internal const string SeparatorDefaultFadedBottom = "Hierarchy Designer Separator Background Image Default Faded Bottom";
+            internal const string SeparatorDefaultFadedLeft = "Hierarchy Designer Separator Background Image Default Faded Left";
+            internal const string SeparatorDefaultFadedSideways = "Hierarchy Designer Separator Background Image Default Faded Sideways";
+            internal const string SeparatorDefaultFadedRight = "Hierarchy Designer Separator Background Image Default Faded Right";
+            internal const string SeparatorDefaultFadedTop = "Hierarchy Designer Separator Background Image Default Faded Top";
+            internal const string SeparatorClassicI = "Hierarchy Designer Separator Background Image Classic I";
+            internal const string SeparatorClassicII = "Hierarchy Designer Separator Background Image Classic II";
+            internal const string SeparatorModernI = "Hierarchy Designer Separator Background Image Modern I";
+            internal const string SeparatorModernII = "Hierarchy Designer Separator Background Image Modern II";
+            internal const string SeparatorModernIII = "Hierarchy Designer Separator Background Image Modern III";
+            internal const string SeparatorNeoI = "Hierarchy Designer Separator Background Image Neo I";
+            internal const string SeparatorNeoII = "Hierarchy Designer Separator Background Image Neo II";
+            internal const string SeparatorNextGenI = "Hierarchy Designer Separator Background Image Next-Gen I";
+            internal const string SeparatorNextGenII = "Hierarchy Designer Separator Background Image Next-Gen II";
+            internal const string SeparatorPostmodernI = "Hierarchy Designer Separator Background Image Postmodern I";
+            internal const string SeparatorPostmodernII = "Hierarchy Designer Separator Background Image Postmodern II";
+            #endregion
+
             #region Graphics
             internal const string GraphicsTitleDark = "Hierarchy Designer Graphics Title Dark";
             internal const string GraphicsTitleLight = "Hierarchy Designer Graphics Title Light";
@@ -69,6 +120,159 @@ namespace Verpha.HierarchyDesigner
             public static Texture2D VisibilityOff => _visibilityOffIcon.Value;
         }
 
+        internal static class Textures
+        {
+            private static readonly Lazy<Texture2D> _defaultTexture = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TextureDefault));
+            public static Texture2D DefaultTexture => _defaultTexture.Value;
+
+            #region Tree
+            private static readonly Lazy<Texture2D> _treeBranchIDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchIDefault));
+            public static Texture2D TreeBranchIDefault => _treeBranchIDefault.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchLDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchLDefault));
+            public static Texture2D TreeBranchLDefault => _treeBranchLDefault.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTDefault));
+            public static Texture2D TreeBranchTDefault => _treeBranchTDefault.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTerminalBudDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTerminalBudDefault));
+            public static Texture2D TreeBranchTerminalBudDefault => _treeBranchTerminalBudDefault.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchICurved = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchICurved));
+            public static Texture2D TreeBranchICurved => _treeBranchICurved.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchLCurved = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchLCurved));
+            public static Texture2D TreeBranchLCurved => _treeBranchLCurved.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTCurved = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTCurved));
+            public static Texture2D TreeBranchTCurved => _treeBranchTCurved.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTerminalBudCurved = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTerminalBudCurved));
+            public static Texture2D TreeBranchTerminalBudCurved => _treeBranchTerminalBudCurved.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchIDotted = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchIDotted));
+            public static Texture2D TreeBranchIDotted => _treeBranchIDotted.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchLDotted = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchLDotted));
+            public static Texture2D TreeBranchLDotted => _treeBranchLDotted.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTDotted = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTDotted));
+            public static Texture2D TreeBranchTDotted => _treeBranchTDotted.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTerminalBudDotted = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTerminalBudDotted));
+            public static Texture2D TreeBranchTerminalBudDotted => _treeBranchTerminalBudDotted.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchISegmented = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchISegmented));
+            public static Texture2D TreeBranchISegmented => _treeBranchISegmented.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchLSegmented = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchLSegmented));
+            public static Texture2D TreeBranchLSegmented => _treeBranchLSegmented.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTSegmented = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTSegmented));
+            public static Texture2D TreeBranchTSegmented => _treeBranchTSegmented.Value;
+
+            private static readonly Lazy<Texture2D> _treeBranchTerminalBudSegmented = new(() => HD_Common_Texture.LoadTexture(ResourceNames.TreeBranchTerminalBudSegmented));
+            public static Texture2D TreeBranchTerminalBudSegmented => _treeBranchTerminalBudSegmented.Value;
+            #endregion
+
+            #region Folder
+            private static readonly Lazy<Texture2D> _folderScene = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderScene));
+            public static Texture2D FolderScene => _folderScene.Value;
+
+            private static readonly Lazy<Texture2D> _folderDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderDefault));
+            public static Texture2D FolderDefault => _folderDefault.Value;
+
+            private static readonly Lazy<Texture2D> _folderDefaultOutline = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderDefaultOutline));
+            public static Texture2D FolderDefaultOutline => _folderDefaultOutline.Value;
+
+            private static readonly Lazy<Texture2D> _folderClassicI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderClassicI));
+            public static Texture2D FolderClassicI => _folderClassicI.Value;
+
+            private static readonly Lazy<Texture2D> _folderClassicII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderClassicII));
+            public static Texture2D FolderClassicII => _folderClassicII.Value;
+
+            private static readonly Lazy<Texture2D> _folderClassicOutline = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderClassicOutline));
+            public static Texture2D FolderClassicOutline => _folderClassicOutline.Value;
+
+            private static readonly Lazy<Texture2D> _folderModernI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderModernI));
+            public static Texture2D FolderModernI => _folderModernI.Value;
+
+            private static readonly Lazy<Texture2D> _folderModernII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderModernII));
+            public static Texture2D FolderModernII => _folderModernII.Value;
+
+            private static readonly Lazy<Texture2D> _folderModernIII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderModernIII));
+            public static Texture2D FolderModernIII => _folderModernIII.Value;
+
+            private static readonly Lazy<Texture2D> _folderModernOutline = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderModernOutline));
+            public static Texture2D FolderModernOutline => _folderModernOutline.Value;
+
+            private static readonly Lazy<Texture2D> _folderNeoI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderNeoI));
+            public static Texture2D FolderNeoI => _folderNeoI.Value;
+
+            private static readonly Lazy<Texture2D> _folderNeoII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderNeoII));
+            public static Texture2D FolderNeoII => _folderNeoII.Value;
+
+            private static readonly Lazy<Texture2D> _folderNeoOutline = new(() => HD_Common_Texture.LoadTexture(ResourceNames.FolderNeoOutline));
+            public static Texture2D FolderNeoOutline => _folderNeoOutline.Value;
+            #endregion
+
+            #region Separator
+            private static readonly Lazy<Texture2D> _separatorInspectorIcon = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorInspectorIcon));
+            public static Texture2D SeparatorInspectorIcon => _separatorInspectorIcon.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefault = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefault));
+            public static Texture2D SeparatorDefault => _separatorDefault.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefaultFadedBottom = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefaultFadedBottom));
+            public static Texture2D SeparatorDefaultFadedBottom => _separatorDefaultFadedBottom.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefaultFadedLeft = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefaultFadedLeft));
+            public static Texture2D SeparatorDefaultFadedLeft => _separatorDefaultFadedLeft.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefaultFadedSideways = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefaultFadedSideways));
+            public static Texture2D SeparatorDefaultFadedSideways => _separatorDefaultFadedSideways.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefaultFadedRight = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefaultFadedRight));
+            public static Texture2D SeparatorDefaultFadedRight => _separatorDefaultFadedRight.Value;
+
+            private static readonly Lazy<Texture2D> _separatorDefaultFadedTop = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorDefaultFadedTop));
+            public static Texture2D SeparatorDefaultFadedTop => _separatorDefaultFadedTop.Value;
+
+            private static readonly Lazy<Texture2D> _separatorClassicI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorClassicI));
+            public static Texture2D SeparatorClassicI => _separatorClassicI.Value;
+
+            private static readonly Lazy<Texture2D> _separatorClassicII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorClassicII));
+            public static Texture2D SeparatorClassicII => _separatorClassicII.Value;
+
+            private static readonly Lazy<Texture2D> _separatorModernI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorModernI));
+            public static Texture2D SeparatorModernI => _separatorModernI.Value;
+
+            private static readonly Lazy<Texture2D> _separatorModernII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorModernII));
+            public static Texture2D SeparatorModernII => _separatorModernII.Value;
+
+            private static readonly Lazy<Texture2D> _separatorModernIII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorModernIII));
+            public static Texture2D SeparatorModernIII => _separatorModernIII.Value;
+
+            private static readonly Lazy<Texture2D> _separatorNeoI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorNeoI));
+            public static Texture2D SeparatorNeoI => _separatorNeoI.Value;
+
+            private static readonly Lazy<Texture2D> _separatorNeoII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorNeoII));
+            public static Texture2D SeparatorNeoII => _separatorNeoII.Value;
+
+            private static readonly Lazy<Texture2D> _separatorNextGenI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorNextGenI));
+            public static Texture2D SeparatorNextGenI => _separatorNextGenI.Value;
+
+            private static readonly Lazy<Texture2D> _separatorNextGenII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorNextGenII));
+            public static Texture2D SeparatorNextGenII => _separatorNextGenII.Value;
+
+            private static readonly Lazy<Texture2D> _separatorPostmodernI = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorPostmodernI));
+            public static Texture2D SeparatorPostmodernI => _separatorPostmodernI.Value;
+
+            private static readonly Lazy<Texture2D> _separatorPostmodernII = new(() => HD_Common_Texture.LoadTexture(ResourceNames.SeparatorPostmodernII));
+            public static Texture2D SeparatorPostmodernII => _separatorPostmodernII.Value;
+            #endregion
+        }
+
         internal static class Graphics
         {
             private static readonly Lazy<Texture2D> _titleDark = new(() => HD_Common_Texture.LoadTexture(ResourceNames.GraphicsTitleDark));
@@ -85,200 +289,93 @@ namespace Verpha.HierarchyDesigner
         }
         #endregion
 
-        #region Old
-        #region General
-        private static readonly string defaultFontBoldName = "Hierarchy Designer Font Bold";
-        private static readonly string defaultFontRegularName = "Hierarchy Designer Font Regular";
-        private static readonly string defaultTextureName = "Hierarchy Designer Default Texture";
-
-        public static readonly Font DefaultFontBold = HD_Common_Texture.LoadFont(defaultFontBoldName);
-        public static readonly Font DefaultFont = HD_Common_Texture.LoadFont(defaultFontRegularName);
-        public static readonly Texture2D DefaultTexture = HD_Common_Texture.LoadTexture(defaultTextureName);
-        #endregion
-
-        #region Tree Branches
-        private static readonly string treeBranchIconDefaultIName = "Hierarchy Designer Tree Branch Icon Default I";
-        private static readonly string treeBranchIconDefaultLName = "Hierarchy Designer Tree Branch Icon Default L";
-        private static readonly string treeBranchIconDefaultTName = "Hierarchy Designer Tree Branch Icon Default T";
-        private static readonly string treeBranchIconDefaultTerminalBudName = "Hierarchy Designer Tree Branch Icon Default Terminal Bud";
-        private static readonly string treeBranchIconCurvedIName = "Hierarchy Designer Tree Branch Icon Curved I";
-        private static readonly string treeBranchIconCurvedLName = "Hierarchy Designer Tree Branch Icon Curved L";
-        private static readonly string treeBranchIconCurvedTName = "Hierarchy Designer Tree Branch Icon Curved T";
-        private static readonly string treeBranchIconCurvedTerminalBudName = "Hierarchy Designer Tree Branch Icon Curved Terminal Bud";
-        private static readonly string treeBranchIconDottedIName = "Hierarchy Designer Tree Branch Icon Dotted I";
-        private static readonly string treeBranchIconDottedLName = "Hierarchy Designer Tree Branch Icon Dotted L";
-        private static readonly string treeBranchIconDottedTName = "Hierarchy Designer Tree Branch Icon Dotted T";
-        private static readonly string treeBranchIconDottedTerminalBudName = "Hierarchy Designer Tree Branch Icon Dotted Terminal Bud";
-        private static readonly string treeBranchIconSegmentedIName = "Hierarchy Designer Tree Branch Icon Segmented I";
-        private static readonly string treeBranchIconSegmentedLName = "Hierarchy Designer Tree Branch Icon Segmented L";
-        private static readonly string treeBranchIconSegmentedTName = "Hierarchy Designer Tree Branch Icon Segmented T";
-        private static readonly string treeBranchIconSegmentedTerminalBudName = "Hierarchy Designer Tree Branch Icon Segmented Terminal Bud";
-
-        public static readonly Texture2D TreeBranchIconDefault_I = HD_Common_Texture.LoadTexture(treeBranchIconDefaultIName);
-        public static readonly Texture2D TreeBranchIconDefault_L = HD_Common_Texture.LoadTexture(treeBranchIconDefaultLName);
-        public static readonly Texture2D TreeBranchIconDefault_T = HD_Common_Texture.LoadTexture(treeBranchIconDefaultTName);
-        public static readonly Texture2D TreeBranchIconDefault_TerminalBud = HD_Common_Texture.LoadTexture(treeBranchIconDefaultTerminalBudName);
-        public static readonly Texture2D TreeBranchIconCurved_I = HD_Common_Texture.LoadTexture(treeBranchIconCurvedIName);
-        public static readonly Texture2D TreeBranchIconCurved_L = HD_Common_Texture.LoadTexture(treeBranchIconCurvedLName);
-        public static readonly Texture2D TreeBranchIconCurved_T = HD_Common_Texture.LoadTexture(treeBranchIconCurvedTName);
-        public static readonly Texture2D TreeBranchIconCurved_TerminalBud = HD_Common_Texture.LoadTexture(treeBranchIconCurvedTerminalBudName);
-        public static readonly Texture2D TreeBranchIconDotted_I = HD_Common_Texture.LoadTexture(treeBranchIconDottedIName);
-        public static readonly Texture2D TreeBranchIconDotted_L = HD_Common_Texture.LoadTexture(treeBranchIconDottedLName);
-        public static readonly Texture2D TreeBranchIconDotted_T = HD_Common_Texture.LoadTexture(treeBranchIconDottedTName);
-        public static readonly Texture2D TreeBranchIconDotted_TerminalBud = HD_Common_Texture.LoadTexture(treeBranchIconDottedTerminalBudName);
-        public static readonly Texture2D TreeBranchIconSegmented_I = HD_Common_Texture.LoadTexture(treeBranchIconSegmentedIName);
-        public static readonly Texture2D TreeBranchIconSegmented_L = HD_Common_Texture.LoadTexture(treeBranchIconSegmentedLName);
-        public static readonly Texture2D TreeBranchIconSegmented_T = HD_Common_Texture.LoadTexture(treeBranchIconSegmentedTName);
-        public static readonly Texture2D TreeBranchIconSegmented_TerminalBud = HD_Common_Texture.LoadTexture(treeBranchIconSegmentedTerminalBudName);
-
-        public static Texture2D GetTreeBranchIconI(HD_Settings_Design.TreeBranchImageType imageType)
+        #region Accessors
+        public static Texture2D GetTreeBranchImageTypeI(HD_Settings_Design.TreeBranchImageType imageType)
         {
             return imageType switch
             {
-                HD_Settings_Design.TreeBranchImageType.Curved => TreeBranchIconCurved_I,
-                HD_Settings_Design.TreeBranchImageType.Dotted => TreeBranchIconDotted_I,
-                HD_Settings_Design.TreeBranchImageType.Segmented => TreeBranchIconSegmented_I,
-                _ => TreeBranchIconDefault_I,
+                HD_Settings_Design.TreeBranchImageType.Curved => Textures.TreeBranchICurved,
+                HD_Settings_Design.TreeBranchImageType.Dotted => Textures.TreeBranchIDotted,
+                HD_Settings_Design.TreeBranchImageType.Segmented => Textures.TreeBranchISegmented,
+                _ => Textures.TreeBranchIDefault,
             };
         }
 
-        public static Texture2D GetTreeBranchIconL(HD_Settings_Design.TreeBranchImageType imageType)
+        public static Texture2D GetTreeBranchImageTypeL(HD_Settings_Design.TreeBranchImageType imageType)
         {
             return imageType switch
             {
-                HD_Settings_Design.TreeBranchImageType.Curved => TreeBranchIconCurved_L,
-                HD_Settings_Design.TreeBranchImageType.Dotted => TreeBranchIconDotted_L,
-                HD_Settings_Design.TreeBranchImageType.Segmented => TreeBranchIconSegmented_L,
-                _ => TreeBranchIconDefault_L,
+                HD_Settings_Design.TreeBranchImageType.Curved => Textures.TreeBranchLCurved,
+                HD_Settings_Design.TreeBranchImageType.Dotted => Textures.TreeBranchLDotted,
+                HD_Settings_Design.TreeBranchImageType.Segmented => Textures.TreeBranchLSegmented,
+                _ => Textures.TreeBranchLDefault,
             };
         }
 
-        public static Texture2D GetTreeBranchIconT(HD_Settings_Design.TreeBranchImageType imageType)
+        public static Texture2D GetTreeBranchImageTypeT(HD_Settings_Design.TreeBranchImageType imageType)
         {
             return imageType switch
             {
-                HD_Settings_Design.TreeBranchImageType.Curved => TreeBranchIconCurved_T,
-                HD_Settings_Design.TreeBranchImageType.Dotted => TreeBranchIconDotted_T,
-                HD_Settings_Design.TreeBranchImageType.Segmented => TreeBranchIconSegmented_T,
-                _ => TreeBranchIconDefault_T,
+                HD_Settings_Design.TreeBranchImageType.Curved => Textures.TreeBranchTCurved,
+                HD_Settings_Design.TreeBranchImageType.Dotted => Textures.TreeBranchTDotted,
+                HD_Settings_Design.TreeBranchImageType.Segmented => Textures.TreeBranchTSegmented,
+                _ => Textures.TreeBranchTDefault,
             };
         }
 
-        public static Texture2D GetTreeBranchIconTerminalBud(HD_Settings_Design.TreeBranchImageType imageType)
+        public static Texture2D GetTreeBranchImageTypeTerminalBud(HD_Settings_Design.TreeBranchImageType imageType)
         {
             return imageType switch
             {
-                HD_Settings_Design.TreeBranchImageType.Curved => TreeBranchIconCurved_TerminalBud,
-                HD_Settings_Design.TreeBranchImageType.Dotted => TreeBranchIconDotted_TerminalBud,
-                HD_Settings_Design.TreeBranchImageType.Segmented => TreeBranchIconSegmented_TerminalBud,
-                _ => TreeBranchIconDefault_TerminalBud,
+                HD_Settings_Design.TreeBranchImageType.Curved => Textures.TreeBranchTerminalBudCurved,
+                HD_Settings_Design.TreeBranchImageType.Dotted => Textures.TreeBranchTerminalBudDotted,
+                HD_Settings_Design.TreeBranchImageType.Segmented => Textures.TreeBranchTerminalBudSegmented,
+                _ => Textures.TreeBranchTerminalBudDefault,
             };
         }
-        #endregion
 
-        #region Folder Images
-        private static readonly string folderDefaultIconName = "Hierarchy Designer Folder Icon Default";
-        private static readonly string folderDefaultOutlineIconName = "Hierarchy Designer Folder Icon Default Outline";
-        private static readonly string folderModernIIconName = "Hierarchy Designer Folder Icon Modern I";
-        private static readonly string folderModernIIIconName = "Hierarchy Designer Folder Icon Modern II";
-        private static readonly string folderModernIIIIconName = "Hierarchy Designer Folder Icon Modern III";
-        private static readonly string folderModernOutlineIconName = "Hierarchy Designer Folder Icon Modern Outline";
-        private static readonly string folderNeoIIconName = "Hierarchy Designer Folder Icon Neo I";
-        private static readonly string folderNeoIIIconName = "Hierarchy Designer Folder Icon Neo II";
-        private static readonly string folderNeoOutlineconName = "Hierarchy Designer Folder Icon Neo Outline";
-        private static readonly string folderInspectorIconName = "Hierarchy Designer Folder Icon Scene";
-
-        public static readonly Texture2D FolderDefaultIcon = HD_Common_Texture.LoadTexture(folderDefaultIconName);
-        public static readonly Texture2D FolderDefaultOutlineIcon = HD_Common_Texture.LoadTexture(folderDefaultOutlineIconName);
-        public static readonly Texture2D FolderModernIIcon = HD_Common_Texture.LoadTexture(folderModernIIconName);
-        public static readonly Texture2D FolderModernIIIcon = HD_Common_Texture.LoadTexture(folderModernIIIconName);
-        public static readonly Texture2D FolderModernIIIIcon = HD_Common_Texture.LoadTexture(folderModernIIIIconName);
-        public static readonly Texture2D FolderModernOutlineIcon = HD_Common_Texture.LoadTexture(folderModernOutlineIconName);
-        public static readonly Texture2D FolderNeoIIconName = HD_Common_Texture.LoadTexture(folderNeoIIconName);
-        public static readonly Texture2D FolderNeoIIIconName = HD_Common_Texture.LoadTexture(folderNeoIIIconName);
-        public static readonly Texture2D FolderNeoOutlineconName = HD_Common_Texture.LoadTexture(folderNeoOutlineconName);
-        public static readonly Texture2D FolderInspectorIcon = HD_Common_Texture.LoadTexture(folderInspectorIconName);
-
-        public static Texture2D FolderImageType(HD_Settings_Folders.FolderImageType folderImageType)
+        public static Texture2D GetFolderImageType(HD_Settings_Folders.FolderImageType folderImageType)
         {
             return folderImageType switch
             {
-                HD_Settings_Folders.FolderImageType.DefaultOutline => FolderDefaultOutlineIcon,
-                HD_Settings_Folders.FolderImageType.ModernI => FolderModernIIcon,
-                HD_Settings_Folders.FolderImageType.ModernII => FolderModernIIIcon,
-                HD_Settings_Folders.FolderImageType.ModernIII => FolderModernIIIIcon,
-                HD_Settings_Folders.FolderImageType.ModernOutline => FolderModernOutlineIcon,
-                HD_Settings_Folders.FolderImageType.NeoI => FolderNeoIIconName,
-                HD_Settings_Folders.FolderImageType.NeoII => FolderNeoIIIconName,
-                HD_Settings_Folders.FolderImageType.NeoOutline => FolderNeoOutlineconName,
-                _ => FolderDefaultIcon,
+                HD_Settings_Folders.FolderImageType.DefaultOutline => Textures.FolderDefaultOutline,
+                HD_Settings_Folders.FolderImageType.ClassicI => Textures.FolderClassicI,
+                HD_Settings_Folders.FolderImageType.ClassicII => Textures.FolderClassicII,
+                HD_Settings_Folders.FolderImageType.ClassicOutline => Textures.FolderClassicOutline,
+                HD_Settings_Folders.FolderImageType.ModernI => Textures.FolderModernI,
+                HD_Settings_Folders.FolderImageType.ModernII => Textures.FolderModernII,
+                HD_Settings_Folders.FolderImageType.ModernIII => Textures.FolderModernIII,
+                HD_Settings_Folders.FolderImageType.ModernOutline => Textures.FolderModernOutline,
+                HD_Settings_Folders.FolderImageType.NeoI => Textures.FolderNeoI,
+                HD_Settings_Folders.FolderImageType.NeoII => Textures.FolderNeoII,
+                HD_Settings_Folders.FolderImageType.NeoOutline => Textures.FolderNeoOutline,
+                _ => Textures.FolderDefault,
             };
         }
-        #endregion
 
-        #region Separator Images
-        private static readonly string separatorBackgroundImageDefaultName = "Hierarchy Designer Separator Background Image Default";
-        private static readonly string separatorBackgroundImageDefaultFadedBottomName = "Hierarchy Designer Separator Background Image Default Faded Bottom";
-        private static readonly string separatorBackgroundImageDefaultFadedLeftName = "Hierarchy Designer Separator Background Image Default Faded Left";
-        private static readonly string separatorBackgroundImageDefaultFadedSidewaysName = "Hierarchy Designer Separator Background Image Default Faded Sideways";
-        private static readonly string separatorBackgroundImageDefaultFadedRightName = "Hierarchy Designer Separator Background Image Default Faded Right";
-        private static readonly string separatorBackgroundImageDefaultFadedTopName = "Hierarchy Designer Separator Background Image Default Faded Top";
-        private static readonly string separatorBackgroundImageClassicIName = "Hierarchy Designer Separator Background Image Classic I";
-        private static readonly string separatorBackgroundImageClassicIIName = "Hierarchy Designer Separator Background Image Classic II";
-        private static readonly string separatorBackgroundImageModernIName = "Hierarchy Designer Separator Background Image Modern I";
-        private static readonly string separatorBackgroundImageModernIIName = "Hierarchy Designer Separator Background Image Modern II";
-        private static readonly string separatorBackgroundImageModernIIIName = "Hierarchy Designer Separator Background Image Modern III";
-        private static readonly string separatorBackgroundImageNeoIName = "Hierarchy Designer Separator Background Image Neo I";
-        private static readonly string separatorBackgroundImageNeoIIName = "Hierarchy Designer Separator Background Image Neo II";
-        private static readonly string separatorBackgroundImageNextGenIName = "Hierarchy Designer Separator Background Image Next-Gen I";
-        private static readonly string separatorBackgroundImageNextGenIIName = "Hierarchy Designer Separator Background Image Next-Gen II";
-        private static readonly string separatorBackgroundImagePostmodernIName = "Hierarchy Designer Separator Background Image Postmodern I";
-        private static readonly string separatorBackgroundImagePostmodernIIName = "Hierarchy Designer Separator Background Image Postmodern II";
-        private static readonly string separatorInspectorIconName = "Hierarchy Designer Separator Icon Inspector";
-
-        public static readonly Texture2D SeparatorBackgroundImageDefault = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultName);
-        public static readonly Texture2D SeparatorBackgroundImageDefaultFadedBottom = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultFadedBottomName);
-        public static readonly Texture2D SeparatorBackgroundImageDefaultFadedLeft = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultFadedLeftName);
-        public static readonly Texture2D SeparatorBackgroundImageDefaultFadedSideways = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultFadedSidewaysName);
-        public static readonly Texture2D SeparatorBackgroundImageDefaultFadedRight = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultFadedRightName);
-        public static readonly Texture2D SeparatorBackgroundImageDefaultFadedTop = HD_Common_Texture.LoadTexture(separatorBackgroundImageDefaultFadedTopName);
-        public static readonly Texture2D SeparatorBackgroundImageClassicI = HD_Common_Texture.LoadTexture(separatorBackgroundImageClassicIName);
-        public static readonly Texture2D SeparatorBackgroundImageClassicII = HD_Common_Texture.LoadTexture(separatorBackgroundImageClassicIIName);
-        public static readonly Texture2D SeparatorBackgroundImageModernI = HD_Common_Texture.LoadTexture(separatorBackgroundImageModernIName);
-        public static readonly Texture2D SeparatorBackgroundImageModernII = HD_Common_Texture.LoadTexture(separatorBackgroundImageModernIIName);
-        public static readonly Texture2D SeparatorBackgroundImageModernIII = HD_Common_Texture.LoadTexture(separatorBackgroundImageModernIIIName);
-        public static readonly Texture2D SeparatorBackgroundImageNeoI = HD_Common_Texture.LoadTexture(separatorBackgroundImageNeoIName);
-        public static readonly Texture2D SeparatorBackgroundImageNeoII = HD_Common_Texture.LoadTexture(separatorBackgroundImageNeoIIName);
-        public static readonly Texture2D SeparatorBackgroundImageNextGenI = HD_Common_Texture.LoadTexture(separatorBackgroundImageNextGenIName);
-        public static readonly Texture2D SeparatorBackgroundImageNextGenII = HD_Common_Texture.LoadTexture(separatorBackgroundImageNextGenIIName);
-        public static readonly Texture2D SeparatorBackgroundImagePostmodernI = HD_Common_Texture.LoadTexture(separatorBackgroundImagePostmodernIName);
-        public static readonly Texture2D SeparatorBackgroundImagePostmodernII = HD_Common_Texture.LoadTexture(separatorBackgroundImagePostmodernIIName);
-        public static readonly Texture2D SeparatorInspectorIcon = HD_Common_Texture.LoadTexture(separatorInspectorIconName);
-
-        public static Texture2D SeparatorImageType(HD_Settings_Separators.SeparatorImageType separatorImageType)
+        public static Texture2D GetSeparatorImageType(HD_Settings_Separators.SeparatorImageType separatorImageType)
         {
             return separatorImageType switch
             {
-                HD_Settings_Separators.SeparatorImageType.DefaultFadedBottom => SeparatorBackgroundImageDefaultFadedBottom,
-                HD_Settings_Separators.SeparatorImageType.DefaultFadedLeft => SeparatorBackgroundImageDefaultFadedLeft,
-                HD_Settings_Separators.SeparatorImageType.DefaultFadedSideways => SeparatorBackgroundImageDefaultFadedSideways,
-                HD_Settings_Separators.SeparatorImageType.DefaultFadedRight => SeparatorBackgroundImageDefaultFadedRight,
-                HD_Settings_Separators.SeparatorImageType.DefaultFadedTop => SeparatorBackgroundImageDefaultFadedTop,
-                HD_Settings_Separators.SeparatorImageType.ClassicI => SeparatorBackgroundImageClassicI,
-                HD_Settings_Separators.SeparatorImageType.ClassicII => SeparatorBackgroundImageClassicII,
-                HD_Settings_Separators.SeparatorImageType.ModernI => SeparatorBackgroundImageModernI,
-                HD_Settings_Separators.SeparatorImageType.ModernII => SeparatorBackgroundImageModernII,
-                HD_Settings_Separators.SeparatorImageType.ModernIII => SeparatorBackgroundImageModernIII,
-                HD_Settings_Separators.SeparatorImageType.NeoI => SeparatorBackgroundImageNeoI,
-                HD_Settings_Separators.SeparatorImageType.NeoII => SeparatorBackgroundImageNeoII,
-                HD_Settings_Separators.SeparatorImageType.NextGenI => SeparatorBackgroundImageNextGenI,
-                HD_Settings_Separators.SeparatorImageType.NextGenII => SeparatorBackgroundImageNextGenII,
-                HD_Settings_Separators.SeparatorImageType.PostmodernI => SeparatorBackgroundImagePostmodernI,
-                HD_Settings_Separators.SeparatorImageType.PostmodernII => SeparatorBackgroundImagePostmodernII,
-                _ => SeparatorBackgroundImageDefault,
+                HD_Settings_Separators.SeparatorImageType.DefaultFadedBottom => Textures.SeparatorDefaultFadedBottom,
+                HD_Settings_Separators.SeparatorImageType.DefaultFadedLeft => Textures.SeparatorDefaultFadedLeft,
+                HD_Settings_Separators.SeparatorImageType.DefaultFadedSideways => Textures.SeparatorDefaultFadedSideways,
+                HD_Settings_Separators.SeparatorImageType.DefaultFadedRight => Textures.SeparatorDefaultFadedRight,
+                HD_Settings_Separators.SeparatorImageType.DefaultFadedTop => Textures.SeparatorDefaultFadedTop,
+                HD_Settings_Separators.SeparatorImageType.ClassicI => Textures.SeparatorClassicI,
+                HD_Settings_Separators.SeparatorImageType.ClassicII => Textures.SeparatorClassicII,
+                HD_Settings_Separators.SeparatorImageType.ModernI => Textures.SeparatorModernI,
+                HD_Settings_Separators.SeparatorImageType.ModernII => Textures.SeparatorModernII,
+                HD_Settings_Separators.SeparatorImageType.ModernIII => Textures.SeparatorModernIII,
+                HD_Settings_Separators.SeparatorImageType.NeoI => Textures.SeparatorNeoI,
+                HD_Settings_Separators.SeparatorImageType.NeoII => Textures.SeparatorNeoII,
+                HD_Settings_Separators.SeparatorImageType.NextGenI => Textures.SeparatorNextGenI,
+                HD_Settings_Separators.SeparatorImageType.NextGenII => Textures.SeparatorNextGenII,
+                HD_Settings_Separators.SeparatorImageType.PostmodernI => Textures.SeparatorPostmodernI,
+                HD_Settings_Separators.SeparatorImageType.PostmodernII => Textures.SeparatorPostmodernII,
+                _ => Textures.SeparatorDefault,
             };
         }
-        #endregion
         #endregion
     }
 }

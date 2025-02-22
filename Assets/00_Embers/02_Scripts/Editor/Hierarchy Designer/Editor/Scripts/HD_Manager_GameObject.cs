@@ -234,6 +234,7 @@ namespace Verpha.HierarchyDesigner
             if (currentEvent.type != EventType.Repaint && !(gameObject.CompareTag(HD_Common_Constants.SeparatorTag) && gameObject.name.StartsWith(HD_Common_Constants.SeparatorPrefix)))
             {
                 if (enableHierarchyButtons) { ProcessHierarchyButtons(gameObject, selectionRect); }
+                if (enableGameObjectComponentIcons) { ProcessComponentIconsClick(gameObject, selectionRect, instanceID, currentEvent); }
                 if (enableMajorShortcuts)
                 {
                     if (IsShortcutPressed(toggleGameObjectActiveStateKeyCode))
@@ -344,7 +345,7 @@ namespace Verpha.HierarchyDesigner
         private static void DrawBackground(Rect selectionRect, int instanceID)
         {
             GUI.color = SetBackgroundColorBasedOnState(selectionRect, instanceID);
-            GUI.DrawTexture(new(selectionRect.x, selectionRect.y, selectionRect.height, defaultIconSelectionHeight), HD_Common_Resources.DefaultTexture);
+            GUI.DrawTexture(new(selectionRect.x, selectionRect.y, selectionRect.height, defaultIconSelectionHeight), HD_Common_Resources.Textures.DefaultTexture);
             GUI.color = activeColor;
         }
 
@@ -594,6 +595,85 @@ namespace Verpha.HierarchyDesigner
             }
         }
 
+        private static void ProcessComponentIconsClick(GameObject gameObject, Rect selectionRect, int instanceID, Event currentEvent)
+        {
+            if (currentEvent.type != EventType.MouseDown || currentEvent.button != 0 || !gameObject.activeInHierarchy || (gameObject.hideFlags & HideFlags.NotEditable) == HideFlags.NotEditable) return;
+
+            List<(Component component, Texture2D icon)> componentIcons = DecideComponentIcons(gameObject, instanceID);
+            if (componentIcons == null || componentIcons.Count == 0) return;
+
+            float iconSizeMultiplier = enableCustomizationForGameObjectComponentIcons ? componentIconsSize : defaultComponentIconsSize;
+            float iconsSpacing = enableCustomizationForGameObjectComponentIcons ? componentIconsSpacing : defaultComponentIconsSpacing;
+            float iconSize = selectionRect.height * iconSizeMultiplier;
+            int iconAdditionalOffset = enableCustomizationForGameObjectComponentIcons ? componentIconsOffset : defaultComponentIconsOffset;
+
+            float iconOffset = CalculateComponentIconsOffset(gameObject, selectionRect, instanceID, componentIcons, iconSize, iconsSpacing, iconAdditionalOffset);
+            float iconY = selectionRect.y + (selectionRect.height - iconSize) * 0.5f;
+
+            foreach ((Component component, Texture2D icon) in componentIcons)
+            {
+                if (component == null)
+                {
+                    iconOffset += iconSize + iconsSpacing;
+                    continue;
+                }
+
+                Rect iconRect = new(iconOffset, iconY, iconSize, iconSize);
+                if (iconRect.Contains(currentEvent.mousePosition))
+                {
+                    HandleComponentIconClick(component);
+                    currentEvent.Use();
+                    GUIUtility.ExitGUI();
+                    return;
+                }
+                iconOffset += iconSize + iconsSpacing;
+            }
+        }
+
+        private static float CalculateComponentIconsOffset(GameObject gameObject, Rect selectionRect, int instanceID, List<(Component component, Texture2D icon)> componentIcons, float iconSize, float iconsSpacing, int iconAdditionalOffset)
+        {
+            float offset = 0f;
+            switch (layoutMode)
+            {
+                case HD_Settings_General.HierarchyLayoutMode.Consecutive:
+                    float nameWidth = GUI.skin.label.CalcSize(new(gameObject.name)).x;
+                    if (folderCache.TryGetValue(instanceID, out var folderInfo))
+                    {
+                        GUIStyle folderLabelStyle = FolderStyle;
+                        folderLabelStyle.fontSize = folderInfo.fontSize;
+                        folderLabelStyle.fontStyle = folderInfo.fontStyle;
+                        nameWidth = folderLabelStyle.CalcSize(new(gameObject.name)).x;
+                    }
+                    return selectionRect.x + nameWidth + iconAdditionalOffset;
+
+                case HD_Settings_General.HierarchyLayoutMode.Split:
+                    if (enableHierarchyButtons) offset += totalButtonsWidth + defaultXOffset;
+                    offset += componentIcons.Count * (iconSize + iconsSpacing);
+                    float newX = currentViewWidth - layoutBaseOffset - offset;
+                    return newX - componentIconsOffset + defaultComponentIconsOffset;
+
+                default:
+                    if (enableHierarchyButtons) offset += totalButtonsWidth + defaultXOffset;
+                    if (gameObjectDataCache.TryGetValue(instanceID, out var data))
+                    {
+                        if (enableGameObjectLayer && !excludedLayers.Contains(data.Layer)) offset += LayerStyle.CalcSize(new(data.Layer)).x;
+                        if (enableGameObjectTag && !excludedTags.Contains(data.Tag)) offset += TagStyle.CalcSize(new(data.Tag)).x;
+                    }
+                    if (enableGameObjectLayer || enableGameObjectTag) offset += tagLayerOffset + tagLayerSpacing;
+                    offset += componentIcons.Count * (iconSize + iconsSpacing);
+                    float finalX = currentViewWidth - layoutBaseOffset - offset;
+                    return finalX - componentIconsOffset + defaultComponentIconsOffset;
+            }
+        }
+
+        private static void HandleComponentIconClick(Component component)
+        {
+            Vector2 mousePos = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
+            HD_Window_Component window = EditorWindow.GetWindow<HD_Window_Component>(typeof(HD_Window_Component));
+            window.InitializeWindow(component, mousePos);
+            window.Show();
+        }
+
         private static bool CheckComponentsChanged(GameObject gameObject, List<(Component component, Texture2D icon)> cachedIcons)
         {
             if (cachedIcons == null) return true;
@@ -625,7 +705,7 @@ namespace Verpha.HierarchyDesigner
 
                 if (excludedComponents.Contains(component.GetType().Name)) continue;
 
-                Texture2D icon = (Texture2D)EditorGUIUtility.ObjectContent(component, component.GetType()).image ?? HD_Common_Resources.DefaultTexture;
+                Texture2D icon = (Texture2D)EditorGUIUtility.ObjectContent(component, component.GetType()).image ?? HD_Common_Resources.Textures.DefaultTexture;
                 icons.Add((component, icon));
 
                 if (icons.Count >= maximumComponentIconsAmount)
@@ -691,17 +771,17 @@ namespace Verpha.HierarchyDesigner
             switch (treeMode)
             {
                 case HD_Settings_General.HierarchyTreeMode.Minimal:
-                    icon = HD_Common_Resources.TreeBranchIconDefault_I;
+                    icon = HD_Common_Resources.Textures.TreeBranchIDefault;
                     break;
 
                 case HD_Settings_General.HierarchyTreeMode.Default:
                     if (transform.GetSiblingIndex() == transform.parent.childCount - 1)
                     {
-                        icon = transform.childCount > 0 ? HD_Common_Resources.GetTreeBranchIconL(treeBranchImageType_L) : HD_Common_Resources.GetTreeBranchIconTerminalBud(treeBranchImageType_TerminalBud);
+                        icon = transform.childCount > 0 ? HD_Common_Resources.GetTreeBranchImageTypeL(treeBranchImageType_L) : HD_Common_Resources.GetTreeBranchImageTypeTerminalBud(treeBranchImageType_TerminalBud);
                     }
                     else
                     {
-                        icon = HD_Common_Resources.GetTreeBranchIconT(treeBranchImageType_T);
+                        icon = HD_Common_Resources.GetTreeBranchImageTypeT(treeBranchImageType_T);
                     }
                     break;
             }
@@ -718,7 +798,7 @@ namespace Verpha.HierarchyDesigner
                 bool isLastSibling = parentTransform.GetSiblingIndex() == parentTransform.parent.childCount - 1;
                 if (!isLastSibling)
                 {
-                    GUI.DrawTexture(new(rectX, rectY, rectHeight, rectHeight), HD_Common_Resources.GetTreeBranchIconI(treeBranchImageType_I), ScaleMode.ScaleToFit);
+                    GUI.DrawTexture(new(rectX, rectY, rectHeight, rectHeight), HD_Common_Resources.GetTreeBranchImageTypeI(treeBranchImageType_I), ScaleMode.ScaleToFit);
                 }
                 parentTransform = parentTransform.parent;
             }
@@ -959,11 +1039,11 @@ namespace Verpha.HierarchyDesigner
             bool isLocked = (gameObject.hideFlags & HideFlags.NotEditable) == HideFlags.NotEditable;
 
             GUI.color = isActive ? activeColor : inactiveColor;
-            if (GUI.Button(new(iconStartX, selectionRect.y, buttonsWidth, selectionRect.height), isLocked ? HD_Common_Resources.Icons.Lock : HD_Common_Resources.Icons.Unlock))
+            if (GUI.Button(new(iconStartX, selectionRect.y, buttonsWidth, selectionRect.height), isLocked ? HD_Common_Resources.Icons.Lock : HD_Common_Resources.Icons.Unlock, HD_Common_GUI.HierarchyButtonLockStyle))
             {
                 ToggleLockState(gameObject, !isLocked);
             }
-            if (GUI.Button(new(iconStartX + buttonsWidth, selectionRect.y, buttonsWidth, selectionRect.height), isActive ? HD_Common_Resources.Icons.VisibilityOn : HD_Common_Resources.Icons.VisibilityOff))
+            if (GUI.Button(new(iconStartX + buttonsWidth, selectionRect.y, buttonsWidth, selectionRect.height), isActive ? HD_Common_Resources.Icons.VisibilityOn : HD_Common_Resources.Icons.VisibilityOff, HD_Common_GUI.HierarchyButtonVisibilityStyle))
             {
                 ToggleActiveState(gameObject, !isActive);
             }
@@ -1127,7 +1207,7 @@ namespace Verpha.HierarchyDesigner
                 Rect tagRect = CalculateTagRect(gameObject, selectionRect, instanceID);
                 if (tagRect.Contains(mousePosition))
                 {
-                    HD_Window_TagLayer.OpenWindow(gameObject, true, Event.current.mousePosition);
+                    HD_Common_Operations.HandleTagClick(gameObject, Event.current.mousePosition);
                     Event.current.Use();
                 }
             }
@@ -1136,7 +1216,7 @@ namespace Verpha.HierarchyDesigner
                 Rect layerRect = CalculateLayerRect(gameObject, selectionRect, instanceID);
                 if (layerRect.Contains(mousePosition))
                 {
-                    HD_Window_TagLayer.OpenWindow(gameObject, false, Event.current.mousePosition);
+                    HD_Common_Operations.HandleLayerClick(gameObject, Event.current.mousePosition);
                     Event.current.Use();
                 }
             }
@@ -1203,7 +1283,7 @@ namespace Verpha.HierarchyDesigner
             GUI.DrawTexture(new(selectionRect.x, selectionRect.y, currentViewWidth - currentViewWidthOffset, selectionRect.height), folderBackgroundTexture);
             GUI.color = activeColor;
 
-            Texture2D folderIcon = HD_Common_Resources.FolderImageType(folderInfo.folderImageType);
+            Texture2D folderIcon = HD_Common_Resources.GetFolderImageType(folderInfo.folderImageType);
             GUI.color = gameObject.activeInHierarchy ? folderInfo.folderColor : ConvertColorToInactive(folderInfo.folderColor, alphaValueForInactiveGameObjects);
             GUI.DrawTexture(new(selectionRect.x, selectionRect.y, selectionRect.height, selectionRect.height), folderIcon);
             GUI.color = activeColor;
@@ -1258,7 +1338,7 @@ namespace Verpha.HierarchyDesigner
                 normal = { textColor = separatorInfo.textColor }
             };
 
-            Texture2D backgroundTexture = HD_Common_Resources.SeparatorImageType(separatorInfo.separatorImageType);
+            Texture2D backgroundTexture = HD_Common_Resources.GetSeparatorImageType(separatorInfo.separatorImageType);
 
             if (separatorInfo.isGradientBackground)
             {

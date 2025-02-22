@@ -23,6 +23,9 @@ namespace Verpha.HierarchyDesigner
         { 
             Default, 
             DefaultOutline,
+            ClassicI,
+            ClassicII,
+            ClassicOutline,
             ModernI,
             ModernII,
             ModernIII,
@@ -132,6 +135,15 @@ namespace Verpha.HierarchyDesigner
                     }
                 },
                 {
+                    "Classic",
+                    new()
+                    {
+                        "Classic I",
+                        "Classic II",
+                        "Classic Outline"
+                    }
+                },
+                {
                     "Modern", new()
                     {
                         "Modern I",
@@ -158,6 +170,9 @@ namespace Verpha.HierarchyDesigner
             {
                 "Default" => FolderImageType.Default,
                 "Default Outline" => FolderImageType.DefaultOutline,
+                "Classic I" => FolderImageType.ClassicI,
+                "Classic II" => FolderImageType.ClassicII,
+                "Classic Outline" => FolderImageType.ClassicOutline,
                 "Modern I" => FolderImageType.ModernI,
                 "Modern II" => FolderImageType.ModernII,
                 "Modern III" => FolderImageType.ModernIII,
@@ -175,6 +190,9 @@ namespace Verpha.HierarchyDesigner
             {
                 FolderImageType.Default => "Default",
                 FolderImageType.DefaultOutline => "Default Outline",
+                FolderImageType.ClassicI => "Classic I",
+                FolderImageType.ClassicII => "Classic II",
+                FolderImageType.ClassicOutline => "Classic Outline",
                 FolderImageType.ModernI => "Modern I",
                 FolderImageType.ModernII => "Modern II",
                 FolderImageType.ModernIII => "Modern III",
