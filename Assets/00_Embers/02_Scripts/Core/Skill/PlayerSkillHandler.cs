@@ -1,36 +1,84 @@
 using Mirror;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace NOLDA
 {
+    [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(Animator))]
     public class PlayerSkillHandler : NetworkBehaviour, ISkillEndCallback
     {
+        private PlayerInput input;
         private SkillDirector skillManager;
         private Animator animator;
         private bool _isSkillInUse = false;
         public bool IsSkillInUse => _isSkillInUse;
 
+        // 캐시된 스킬 데이터를 저장할 구조체
+        private struct CachedSkillInfo
+        {
+            public SkillData skillData;
+            public int skillLevel;
+            public KeyCode keyCode;
+        }
+        
+        // 스킬 정보 캐시
+        private List<CachedSkillInfo> cachedSkills = new List<CachedSkillInfo>();
+        
         private void Start()
         {
             skillManager = FindAnyObjectByType<SkillDirector>();
-            animator = GetComponent<Animator>();
+            TryGetComponent<PlayerInput>(out input);
+            TryGetComponent<Animator>(out animator);
+
+            // 플레이어가 스킬정보 캐시를 갖고있음(메모리 효율성)
+            UpdateSkillCache();
+            Director.Game.playerData.OnDataChanged += OnPlayerDataChanged;
         }
 
-        // TODO: 스킬 애니메이션 자연스럽게 처리 및 playerInput쪽과 연동해서 커서 상태에 따른 스킬 사용 가능 여부 연동처리 필요
-
-        
-        private void Update()
+        private void OnDestroy()
         {
-            if (!isLocalPlayer || Director.Game.playerData == null) return;
+            Director.Game.playerData.OnDataChanged -= OnPlayerDataChanged;
+        }
 
-            foreach (var skillEntry in Director.Game.playerData.Skills) // PlayerDataSO에서 직접 스킬 데이터 가져오기
+        private void OnPlayerDataChanged(string propertyName, object value)
+        {
+            if (propertyName == nameof(PlayerDataSO.Skills))
+            {
+                UpdateSkillCache();
+            }
+        }
+
+        private void UpdateSkillCache()
+        {
+            cachedSkills.Clear();
+            foreach (var skillEntry in Director.Game.playerData.Skills)
             {
                 SkillData skillData = Director.Skill.GetSkillData(skillEntry.Key);
-                if (skillData == null) continue;
-
-                if (Input.GetKeyDown(skillData.defaultKey))
+                if (skillData != null)
                 {
-                    ExecuteSkill(skillData, skillEntry.Value);
+                    cachedSkills.Add(new CachedSkillInfo
+                    {
+                        skillData = skillData,
+                        skillLevel = skillEntry.Value,
+                        keyCode = skillData.defaultKey
+                    });
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (!isLocalPlayer 
+                || Director.Game.playerData == null 
+                || input.IsPointerOverUI())
+                return;
+
+            foreach (var skillInfo in cachedSkills)
+            {
+                if (Input.GetKeyDown(skillInfo.keyCode))
+                {
+                    ExecuteSkill(skillInfo.skillData, skillInfo.skillLevel);
                 }
             }
         }

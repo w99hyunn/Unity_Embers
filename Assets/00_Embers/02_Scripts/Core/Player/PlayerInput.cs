@@ -74,13 +74,12 @@ namespace NOLDA
 			AdjustShoulderOffset(scrollInput.y);
 		}
 		
-		private bool IsPointerOverUI()
+		public bool IsPointerOverUI()
 		{
 			// EventSystem을 사용하여 포인터가 UI 위에 있는지 확인
 			return EventSystem.current != null
 			       && EventSystem.current.IsPointerOverGameObject(); // UI요소를 감지하는 함수
 		}
-
 		
 		private void AdjustShoulderOffset(float scrollInput)
 		{
