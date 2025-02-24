@@ -9,7 +9,7 @@ namespace NOLDA
     public class PlayerSkillHandler : NetworkBehaviour, ISkillEndCallback
     {
         private PlayerInput input;
-        private SkillDirector skillManager;
+        private SkillSingleton skillManager;
         private Animator animator;
         private bool _isSkillInUse = false;
         public bool IsSkillInUse => _isSkillInUse;
@@ -27,34 +27,34 @@ namespace NOLDA
         
         private void Start()
         {
-            skillManager = FindAnyObjectByType<SkillDirector>();
+            skillManager = FindAnyObjectByType<SkillSingleton>();
             TryGetComponent<PlayerInput>(out input);
             TryGetComponent<Animator>(out animator);
 
             // 플레이어가 스킬정보 캐시를 갖고있음(메모리 효율성)
             UpdateSkillCache();
-            Director.Game.playerData.OnDataChanged += OnPlayerDataChanged;
+            Singleton.Game.playerData.OnDataChanged += OnPlayerDataChanged;
         }
 
         private void OnDestroy()
         {
-            Director.Game.playerData.OnDataChanged -= OnPlayerDataChanged;
+            Singleton.Game.playerData.OnDataChanged -= OnPlayerDataChanged;
         }
 
         private void OnPlayerDataChanged(string propertyName, object value)
         {
             if (propertyName == nameof(PlayerDataSO.Skills))
             {
-                UpdateSkillCache();
-            }
+                UpdateSkillCache(); 
+            }  //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
         }
 
         private void UpdateSkillCache()
         {
             cachedSkills.Clear();
-            foreach (var skillEntry in Director.Game.playerData.Skills)
+            foreach (var skillEntry in Singleton.Game.playerData.Skills)
             {
-                SkillData skillData = Director.Skill.GetSkillData(skillEntry.Key);
+                SkillData skillData = Singleton.Skill.GetSkillData(skillEntry.Key);
                 if (skillData != null)
                 {
                     cachedSkills.Add(new CachedSkillInfo
@@ -70,7 +70,7 @@ namespace NOLDA
         private void Update()
         {
             if (!isLocalPlayer 
-                || Director.Game.playerData == null 
+                || Singleton.Game.playerData == null 
                 || input.IsPointerOverUI())
                 return;
 
@@ -136,8 +136,8 @@ namespace NOLDA
             SkillData skill = skillManager.GetSkillData(skillID);
             if (skill == null || target == null) return;
 
-            if (!Director.Game.playerData.Skills.ContainsKey(skillID)) return;
-            int skillLevel = Director.Game.playerData.Skills[skillID];
+            if (!Singleton.Game.playerData.Skills.ContainsKey(skillID)) return;
+            int skillLevel = Singleton.Game.playerData.Skills[skillID];
 
             SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
             if (levelData == null) return;

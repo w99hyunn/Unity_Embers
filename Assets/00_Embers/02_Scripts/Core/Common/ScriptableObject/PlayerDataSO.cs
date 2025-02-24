@@ -69,14 +69,18 @@ namespace NOLDA
         public Dictionary<int, int> Skills
         {
             get => skills;
-            set => skills = value;
+            set
+            {
+                skills = value;
+                OnDataChanged?.Invoke(nameof(Skills), skills);
+            } //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
         }
 
         public bool LearnSkill(int skillID)
         {
             if (skills.ContainsKey(skillID)) return false;
 
-            SkillData skill = Director.Skill.GetSkillData(skillID);
+            SkillData skill = Singleton.Skill.GetSkillData(skillID);
             if (skill == null) return false;
 
             SkillLevelData firstLevelData = skill.levelData[0];
@@ -87,7 +91,7 @@ namespace NOLDA
             //스킬 배우기 가능할시
             skills[skillID] = 1;
             Sp--;
-            Director.Game.SendSkillUpdateToServer(Username, skillID, 1);
+            Singleton.Game.SendSkillUpdateToServer(Username, skillID, 1);
             if (skill.skillType == SkillType.PASSIVE)
             {
                 ApplyPassiveSkills();
@@ -99,7 +103,7 @@ namespace NOLDA
         {
             if (!skills.ContainsKey(skillID)) return false;
 
-            SkillData skill = Director.Skill.GetSkillData(skillID);
+            SkillData skill = Singleton.Skill.GetSkillData(skillID);
             if (skill == null) return false;
 
             int currentLevel = skills[skillID];
@@ -113,7 +117,7 @@ namespace NOLDA
             //스킬 업데이트 가능할시
             skills[skillID]++;
             Sp--;
-            Director.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
+            Singleton.Game.SendSkillUpdateToServer(Username, skillID, skills[skillID]);
             if (skill.skillType == SkillType.PASSIVE)
             {
                 ApplyPassiveSkills();
@@ -123,17 +127,17 @@ namespace NOLDA
 
         public void ApplyPassiveSkills()
         {
-            Director.Game.playerData.ResetAdditionalStats();
-            foreach (var skillEntry in Director.Game.playerData.Skills)
+            Singleton.Game.playerData.ResetAdditionalStats();
+            foreach (var skillEntry in Singleton.Game.playerData.Skills)
             {
-                SkillData skillData = Director.Skill.GetSkillData(skillEntry.Key);
+                SkillData skillData = Singleton.Skill.GetSkillData(skillEntry.Key);
                 if (skillData == null || skillData.skillType != SkillType.PASSIVE) continue;
 
                 SkillLevelData levelData = skillData.GetSkillLevelData(skillEntry.Value);
                 if (levelData == null) continue;
 
                 // 추가 능력치 적용
-                Director.Game.playerData.ApplyAdditionalStats(
+                Singleton.Game.playerData.ApplyAdditionalStats(
                     levelData.maxHpIncrease,
                     levelData.maxMpIncrease,
                     levelData.armorIncrease,
@@ -456,11 +460,11 @@ namespace NOLDA
         private void HandleLevelUp()
         {
             //레벨업시 오르는 능력치 상승률(GameSingleton에서 정의)
-            MaxHp += Director.Game.LevelUpMaxHp;
-            MaxMp += Director.Game.LevelUpMaxMp;
-            Attack += Director.Game.LevelUpAttack;
-            Armor += Director.Game.LevelUpArmor;
-            Sp += Director.Game.LevelUpSp;
+            MaxHp += Singleton.Game.LevelUpMaxHp;
+            MaxMp += Singleton.Game.LevelUpMaxMp;
+            Attack += Singleton.Game.LevelUpAttack;
+            Armor += Singleton.Game.LevelUpArmor;
+            Sp += Singleton.Game.LevelUpSp;
 
             //레벨업하면 현재 HP, MP를 모두 채워줌
             Hp = TotalMaxHp;

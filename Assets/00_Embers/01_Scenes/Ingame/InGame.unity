@@ -758,7 +758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: hotkeyLabel
-      value: Select
+      value: "\uC120\uD0DD"
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: controllerPreset
@@ -50427,7 +50427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: hotkeyLabel
-      value: Continue
+      value: "\uACC4\uC18D\uD558\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: controllerPreset
@@ -56451,7 +56451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: hotkeyLabel
-      value: Navigate
+      value: "\uB124\uBE44\uAC8C\uC774\uC158"
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: controllerPreset

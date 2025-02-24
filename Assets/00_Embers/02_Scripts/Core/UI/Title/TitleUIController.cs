@@ -28,7 +28,7 @@ namespace NOLDA
 
         private async Awaitable WaitForNetworkInitialization()
         {
-            while (Director.Network == null)
+            while (Singleton.Network == null)
             {
                 await Awaitable.NextFrameAsync();
             }
@@ -45,7 +45,7 @@ namespace NOLDA
 
             while (attemptCount < SERVER_CONNECT_MAX_RETRY && !connected)
             {
-                Director.Network.StartClient();
+                Singleton.Network.StartClient();
                 attemptCount++;
 
                 _view.ConnectingMessageUpdate($"{attemptCount} / {SERVER_CONNECT_MAX_RETRY}");
@@ -73,7 +73,7 @@ namespace NOLDA
             if (!connected)
             {
                 _view.ConnectingFail();
-                Director.UI.OpenAlert("연결 실패",
+                Singleton.UI.OpenAlert("연결 실패",
                 "연결에 실패했습니다. 계속 연결에 실패하면 홈페이지에서 서버 상태를 확인하세요.");
             }
         }
@@ -101,7 +101,7 @@ namespace NOLDA
         /// </summary>
         private void HandleServerDisconnection()
         {
-            Director.UI.OpenAlert("연결 종료",
+            Singleton.UI.OpenAlert("연결 종료",
                 "연결이 손실되었습니다. 게임을 종료합니다.", 1);
             _isCheckingConnection = false;
         }
@@ -114,21 +114,21 @@ namespace NOLDA
             //아이디 길이 확인
             if (_view.SignUpID.Length < 5)
             {
-                Director.UI.OpenAlert("실패", "아이디는 최소 5자 이상이어야 합니다.");
+                Singleton.UI.OpenAlert("실패", "아이디는 최소 5자 이상이어야 합니다.");
                 return;
             }
             
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
-                Director.UI.OpenAlert("실패", "비밀번호는 최소 5자 이상이어야 합니다.");
+                Singleton.UI.OpenAlert("실패", "비밀번호는 최소 5자 이상이어야 합니다.");
                 return;
             }
             
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                Director.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
+                Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
             
@@ -172,7 +172,7 @@ namespace NOLDA
                     break;
             }
 
-            Director.UI.OpenAlert(title, message);
+            Singleton.UI.OpenAlert(title, message);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace NOLDA
             switch (msg.Result)
             {
                 case LoginResult.SUCCESS:
-                    Director.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
+                    Singleton.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
                     _view.menuManager.DisableSplashScreen();
                     _view.TopPanelProfileUpdate();
                     LoadCharacterInfo();
@@ -224,7 +224,7 @@ namespace NOLDA
 
             }
 
-            Director.UI.OpenAlert(title, message);
+            Singleton.UI.OpenAlert(title, message);
         }
         
         public void ReturnBackTitle()
@@ -244,7 +244,7 @@ namespace NOLDA
             if (_view.EditProfilePw != _view.EditProfilePwConfirm)
             {
                 //뭐라도 값이 입력됐는데 두개 필드가 다르면 안내
-                Director.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
+                Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
 
@@ -261,7 +261,7 @@ namespace NOLDA
         {
             ProfileUpdateRequestMessage profileUpdateRequestMessage = new ProfileUpdateRequestMessage
             {
-                Username = Director.Game.playerData.AccountID,
+                Username = Singleton.Game.playerData.AccountID,
                 Email = email,
                 Password = password
             };
@@ -274,13 +274,13 @@ namespace NOLDA
         {
             if (true == msg.Success)
             {
-                Director.Game.UserInfoUpdate(msg.Email);
-                Director.UI.OpenAlert("성공", "회원정보 업데이트가 완료되었습니다.");
+                Singleton.Game.UserInfoUpdate(msg.Email);
+                Singleton.UI.OpenAlert("성공", "회원정보 업데이트가 완료되었습니다.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                Director.UI.OpenAlert("실패", "회원정보 업데이트에 실패했습니다.");
+                Singleton.UI.OpenAlert("실패", "회원정보 업데이트에 실패했습니다.");
             }
         }
         #endregion
@@ -289,7 +289,7 @@ namespace NOLDA
         public void CreateCharacter()
         {
             CreateCharacterRequest(
-                Director.Game.playerData.AccountID,
+                Singleton.Game.playerData.AccountID,
                 _view.Name,
                 _view.Faction,
                 _view.Class,
@@ -318,16 +318,16 @@ namespace NOLDA
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    Director.UI.OpenAlert("성공", "캐릭터 생성이 완료되었습니다.");
+                    Singleton.UI.OpenAlert("성공", "캐릭터 생성이 완료되었습니다.");
                     LoadCharacterInfo();
                     _view.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    Director.UI.OpenAlert("실패", "이미 존재하는 캐릭터 이름입니다.");
+                    Singleton.UI.OpenAlert("실패", "이미 존재하는 캐릭터 이름입니다.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    Director.UI.OpenAlert("실패", "오류가 발생했습니다. 오류코드 101");
+                    Singleton.UI.OpenAlert("실패", "오류가 발생했습니다. 오류코드 101");
                     break;
             }
         }
@@ -344,7 +344,7 @@ namespace NOLDA
         {
             CharacterInfoLoadRequestMessage loadCharacterRequestMessage = new CharacterInfoLoadRequestMessage
             {
-                Username = Director.Game.playerData.AccountID
+                Username = Singleton.Game.playerData.AccountID
             };
 
             NetworkClient.ReplaceHandler<CharacterInfoLoadResponseMessage>(OnLoadCharacterInfoResultReceived);
@@ -447,40 +447,40 @@ namespace NOLDA
 
         private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
         {
-            Director.Game.playerData.Username = msg.Username;
-            Director.Game.playerData.Level = msg.Level;
-            Director.Game.playerData.MaxHp = msg.MaxHp;
-            Director.Game.playerData.Hp = msg.Hp;
-            Director.Game.playerData.MaxMp = msg.MaxMp;
-            Director.Game.playerData.Mp = msg.Mp;
-            Director.Game.playerData.Hxp = msg.Hxp;
-            Director.Game.playerData.Gold = msg.Gold;
-            Director.Game.playerData.Attack = msg.Attack;
-            Director.Game.playerData.Armor = msg.Armor;
-            Director.Game.playerData.Class = msg.Class;
-            Director.Game.playerData.Faction = msg.Faction;
-            Director.Game.playerData.Sp = msg.Sp;
-            Director.Game.playerData.Gender = msg.Gender;
-            Director.Game.playerData.Position = msg.Position;
-            Director.Game.playerData.MapCode = msg.MapCode;
-            Director.Game.playerData.InventorySpace = msg.InventorySpace;
+            Singleton.Game.playerData.Username = msg.Username;
+            Singleton.Game.playerData.Level = msg.Level;
+            Singleton.Game.playerData.MaxHp = msg.MaxHp;
+            Singleton.Game.playerData.Hp = msg.Hp;
+            Singleton.Game.playerData.MaxMp = msg.MaxMp;
+            Singleton.Game.playerData.Mp = msg.Mp;
+            Singleton.Game.playerData.Hxp = msg.Hxp;
+            Singleton.Game.playerData.Gold = msg.Gold;
+            Singleton.Game.playerData.Attack = msg.Attack;
+            Singleton.Game.playerData.Armor = msg.Armor;
+            Singleton.Game.playerData.Class = msg.Class;
+            Singleton.Game.playerData.Faction = msg.Faction;
+            Singleton.Game.playerData.Sp = msg.Sp;
+            Singleton.Game.playerData.Gender = msg.Gender;
+            Singleton.Game.playerData.Position = msg.Position;
+            Singleton.Game.playerData.MapCode = msg.MapCode;
+            Singleton.Game.playerData.InventorySpace = msg.InventorySpace;
             
             // 스킬 데이터 초기화
-            Director.Game.playerData.Skills = new Dictionary<int, int>();
+            Singleton.Game.playerData.Skills = new Dictionary<int, int>();
             foreach (var skill in msg.Skills)
             {
-                Director.Game.playerData.Skills[skill.SkillID] = skill.Level;
+                Singleton.Game.playerData.Skills[skill.SkillID] = skill.Level;
             }
 
-            Director.Game.playerData.ApplyPassiveSkills();
+            Singleton.Game.playerData.ApplyPassiveSkills();
 
             // 인벤토리 데이터 초기화
-            Director.Game.playerData.Items = new Item[Director.Game.playerData.InventorySpace];
+            Singleton.Game.playerData.Items = new Item[Singleton.Game.playerData.InventorySpace];
 
             // 서버에서 받은 InventoryItems 처리
             foreach (var itemMessage in msg.InventoryItems)
             {
-                ItemData itemData = Director.DB.GetItemDataById(itemMessage.ItemId);
+                ItemData itemData = Singleton.DB.GetItemDataById(itemMessage.ItemId);
                 if (itemData != null)
                 {
                     Item item;
@@ -503,9 +503,9 @@ namespace NOLDA
                     }
 
                     // 서버에서 전달받은 position에 맞게 아이템 배열에 저장
-                    if (itemMessage.Position >= 0 && itemMessage.Position < Director.Game.playerData.Items.Length)
+                    if (itemMessage.Position >= 0 && itemMessage.Position < Singleton.Game.playerData.Items.Length)
                     {
-                        Director.Game.playerData.Items[itemMessage.Position] = item;
+                        Singleton.Game.playerData.Items[itemMessage.Position] = item;
                     }
                 }
                 else
@@ -520,9 +520,9 @@ namespace NOLDA
 
         private void InitInGame()
         {
-            Director.UI.FadeIn();
-            Director.UI.OpenAlert("게임 시작", "게임 로딩중입니다. 잠시만 기다려주세요.", 2);
-            Director.Map.LoadInGame();
+            Singleton.UI.FadeIn();
+            Singleton.UI.OpenAlert("게임 시작", "게임 로딩중입니다. 잠시만 기다려주세요.", 2);
+            Singleton.Map.LoadInGame();
         }
 
         //캐릭터 삭제

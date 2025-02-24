@@ -44,8 +44,8 @@ namespace NOLDA
                 },
                 actionOnDestroy: obj => Destroy(obj),
                 collectionCheck: false, //중복반환
-                defaultCapacity: Director.Game.ChatMaxMessages,
-                maxSize: Director.Game.ChatMaxMessages
+                defaultCapacity: Singleton.Game.ChatMaxMessages,
+                maxSize: Singleton.Game.ChatMaxMessages
                 );
         }
 
@@ -66,7 +66,7 @@ namespace NOLDA
 
             _currentMessages++;
 
-            if (_currentMessages > Director.Game.ChatMaxMessages)
+            if (_currentMessages > Singleton.Game.ChatMaxMessages)
             {
                 Transform oldestChatMessage = chatContentPanel.GetChild(0);
                 _chatMessagePool.Release(oldestChatMessage.gameObject);

@@ -24,12 +24,12 @@ namespace NOLDA
 
         public void OnEnable()
         {
-            Director.Game.playerData.OnDataChanged += HandleDataChanged;
+            Singleton.Game.playerData.OnDataChanged += HandleDataChanged;
         }
 
         private void OnDisable()
         {
-            Director.Game.playerData.OnDataChanged -= HandleDataChanged;
+            Singleton.Game.playerData.OnDataChanged -= HandleDataChanged;
         }
         
         private void HandleDataChanged(string fieldName, object newValue)
@@ -61,21 +61,21 @@ namespace NOLDA
         private void StartHUDInit()
         {
             //Level Init
-            playerLevel.text = Director.Game.playerData.Level.ToString();
-            playerHxp.SetValue(Director.Game.playerData.Hxp);
+            playerLevel.text = Singleton.Game.playerData.Level.ToString();
+            playerHxp.SetValue(Singleton.Game.playerData.Hxp);
             MaxHxpSet();
             
             //HP, MP Init
-            playerHp.SetMaxValue(Director.Game.playerData.TotalMaxHp);
-            playerMp.SetMaxValue(Director.Game.playerData.TotalMaxMp);
-            playerHp.SetValue(Director.Game.playerData.Hp);
-            playerMp.SetValue(Director.Game.playerData.Mp);
+            playerHp.SetMaxValue(Singleton.Game.playerData.TotalMaxHp);
+            playerMp.SetMaxValue(Singleton.Game.playerData.TotalMaxMp);
+            playerHp.SetValue(Singleton.Game.playerData.Hp);
+            playerMp.SetValue(Singleton.Game.playerData.Mp);
         }
 
         private void MaxHxpSet()
         {
             playerHxp.SetMaxValue(
-                Director.Game.playerData.hxpTable.GetExperienceForNextLevel((Director.Game.playerData.Level)));
+                Singleton.Game.playerData.hxpTable.GetExperienceForNextLevel((Singleton.Game.playerData.Level)));
         }
     }
 }

@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 185821995}
   - component: {fileID: 185821996}
   m_Layer: 0
-  m_Name: Skill Director
+  m_Name: Skill Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 324171307}
   - component: {fileID: 324171308}
   m_Layer: 0
-  m_Name: UI Director
+  m_Name: UI Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 390157421}
   - component: {fileID: 390157419}
   m_Layer: 0
-  m_Name: Network Director
+  m_Name: Network Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 390961615}
   - component: {fileID: 390961616}
   m_Layer: 0
-  m_Name: Game Director
+  m_Name: Game Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1690,7 +1690,7 @@ GameObject:
   - component: {fileID: 739026195}
   - component: {fileID: 739026196}
   m_Layer: 0
-  m_Name: DB Director
+  m_Name: DB Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3576,7 +3576,7 @@ GameObject:
   - component: {fileID: 1358769804}
   - component: {fileID: 1358769803}
   m_Layer: 0
-  m_Name: Director
+  m_Name: Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4945,7 +4945,7 @@ GameObject:
   - component: {fileID: 2018809871}
   - component: {fileID: 2018809872}
   m_Layer: 0
-  m_Name: Map Director
+  m_Name: Map Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

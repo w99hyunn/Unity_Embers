@@ -137,7 +137,7 @@
 
             //청크 로드
             //TODO: Update에서 프레임단위로 호출되는 코드이므로, 좋은 방법을 생각해서 부하 줄이기
-            _ = Director.Map.UpdateChunks(this.transform.position);
+            _ = Singleton.Map.UpdateChunks(this.transform.position);
         }
 
         private void LateUpdate()

@@ -119,9 +119,9 @@ namespace NOLDA
 
             _slotUiPrefab.SetActive(false);
 
-            _slotUIList = new List<ItemSlotUI>(Director.Game.playerData.InventorySpace);
+            _slotUIList = new List<ItemSlotUI>(Singleton.Game.playerData.InventorySpace);
 
-            for (int slotIndex = 0; slotIndex < Director.Game.MaxInventorySpace; slotIndex++)
+            for (int slotIndex = 0; slotIndex < Singleton.Game.MaxInventorySpace; slotIndex++)
             {
                 var slotRT = CloneSlot();
                 slotRT.pivot = new Vector2(0f, 1f); // Left Top
@@ -395,7 +395,7 @@ namespace NOLDA
         
         public void TryRemoveGold(int amount)
         {
-            _popup.OpenGoldInputPopup(gold => Director.Game.playerData.Gold -= gold > 0 ? (gold > Director.Game.playerData.Gold ? Director.Game.playerData.Gold : gold) : 0);
+            _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold > 0 ? (gold > Singleton.Game.playerData.Gold ? Singleton.Game.playerData.Gold : gold) : 0);
         }
 
         /***********************************************************************
@@ -461,7 +461,7 @@ namespace NOLDA
 
         public void UpdateGoldText()
         {
-            goldText.text = string.Format("{0:N0}", Director.Game.playerData.Gold);
+            goldText.text = string.Format("{0:N0}", Singleton.Game.playerData.Gold);
         }
 
         /// <summary> 인벤토리 참조 등록 (인벤토리에서 직접 호출) </summary>
@@ -546,7 +546,7 @@ namespace NOLDA
         /// <summary> 모든 슬롯 필터 상태 업데이트 </summary>
         public void UpdateAllSlotFilters()
         {
-            int capacity = Director.Game.playerData.InventorySpace;
+            int capacity = Singleton.Game.playerData.InventorySpace;
 
             for (int i = 0; i < capacity; i++)
             {
