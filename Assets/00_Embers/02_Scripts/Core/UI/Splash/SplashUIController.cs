@@ -17,8 +17,8 @@ namespace NOLDA
             TryGetComponent<SplashUIView>(out _view);
             _model = new SplashUIModel();
 
-            _ = LoadSceneAsync();
-            _ = SwitchCanvasAndLoadScene();
+            LoadSceneAsync().Forget();
+            SwitchCanvasAndLoadScene().Forget();
         }
 
         private async Awaitable LoadSceneAsync()

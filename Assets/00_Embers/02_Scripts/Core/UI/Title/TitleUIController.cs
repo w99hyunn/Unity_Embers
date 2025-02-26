@@ -60,7 +60,7 @@ namespace NOLDA
                 if (NetworkClient.isConnected)
                 {
                     _view.ConnectingSuccess();
-                    _ = CheckServerConnectionLoop();
+                    CheckServerConnectionLoop().Forget();
                     connected = true;
                 }
                 else
@@ -520,8 +520,14 @@ namespace NOLDA
 
         private void InitInGame()
         {
+            InitInGameAsync().Forget();
+        }
+
+        private async Awaitable InitInGameAsync()
+        {
             Singleton.UI.FadeIn();
-            Singleton.UI.OpenAlert("게임 시작", "게임 로딩중입니다. 잠시만 기다려주세요.", 2);
+            Singleton.UI.OpenLoading("게임 시작", "게임 로딩중입니다. 잠시만 기다려주세요.", 2);
+            await Awaitable.WaitForSecondsAsync(0.5f);
             Singleton.Map.LoadInGame();
         }
 

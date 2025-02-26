@@ -25,7 +25,7 @@ namespace NOLDA
 
         public void OpenChat()
         {
-            _ = _view.ShowChat();
+            _view.ShowChat().Forget();
         }
         
         public async Awaitable SendChatMessage()

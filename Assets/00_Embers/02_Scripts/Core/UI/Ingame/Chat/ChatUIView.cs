@@ -52,7 +52,7 @@ namespace NOLDA
         private void Start()
         {
             chatInputField.interactable = false;
-            _ = StartFadeOutChatCanvasGroup(5f);
+            StartFadeOutChatCanvasGroup(5f).Forget();
         }
 
         public void AddChatMessage(string playerName, string message)
@@ -87,7 +87,7 @@ namespace NOLDA
         public void HideChat()
         {
             _inputFieldCanvasGroup.alpha = 0f;
-            _ = StartFadeOutChatCanvasGroup(5f);
+            StartFadeOutChatCanvasGroup(5f).Forget();
             chatInputField.interactable = false;
             chatInputField.DeactivateInputField();
         }

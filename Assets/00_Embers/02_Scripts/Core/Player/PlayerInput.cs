@@ -42,7 +42,7 @@ namespace NOLDA
 
 		public void OnScroll(InputValue value)
 		{
-			_ = ScrollInput(value.Get<Vector2>());
+			ScrollInput(value.Get<Vector2>()).Forget();
 		}
 		
 		private void MoveInput(Vector2 newMoveDirection)

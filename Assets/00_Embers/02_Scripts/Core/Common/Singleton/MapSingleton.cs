@@ -83,11 +83,13 @@ namespace NOLDA
 
         public void LoadInGame()
         {
-            _ = LoadInGameCoroutine();
+            LoadInGameAsync().Forget();
         }
 
-        private async Awaitable LoadInGameCoroutine()
+        private async Awaitable LoadInGameAsync()
         {
+            float startTime = Time.time;
+
             await SceneManager.UnloadSceneAsync("Title");
 
             AsyncOperation inGameLoadOperation = SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
@@ -102,10 +104,17 @@ namespace NOLDA
 
             NetworkClient.Ready();
             NetworkClient.AddPlayer();
+
+            float elapsedTime = Time.time - startTime;
+            float remainingTime = Mathf.Max(0, 3f - elapsedTime);
             
-            await Awaitable.WaitForSecondsAsync(0.5f);
+            if (remainingTime > 0)
+            {
+                await Awaitable.WaitForSecondsAsync(remainingTime);
+            }
+
             Singleton.UI.FadeOut();
-            Singleton.UI.CloseAlert();
+            Singleton.UI.CloseLoading();
         }
         #endregion
         
@@ -113,12 +122,12 @@ namespace NOLDA
 
         public void ReturnTitle()
         {
-            _ = ReturnTitleCoroutine();
+            ReturnTitleCoroutine().Forget();
         }
 
         private async Awaitable ReturnTitleCoroutine()
         {
-            _ = StopBGM();
+            StopBGM().Forget();
             string inGameScene = "InGame";
             if (SceneManager.GetSceneByName(inGameScene).isLoaded)
             {
@@ -235,7 +244,7 @@ namespace NOLDA
             var chunkInfo = chunkList.GetChunkInfo(activeSceneName);
             if (chunkInfo != null && chunkInfo.bgm != null)
             {
-                _ = PlayBGM(chunkInfo.bgm);
+                PlayBGM(chunkInfo.bgm).Forget();
             }
 
         }

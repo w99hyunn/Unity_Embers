@@ -102,7 +102,7 @@ namespace NOLDA
             transform.position = Singleton.Game.playerData.Position;
             _characterController.enabled = true;
             
-            _ = SavePosition(); // 위치 지속적으로 저장
+            SavePosition().Forget(); // 위치 지속적으로 저장
         }
 
         private async Awaitable SavePosition()

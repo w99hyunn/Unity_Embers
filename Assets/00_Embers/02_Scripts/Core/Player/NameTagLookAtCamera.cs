@@ -9,7 +9,7 @@ namespace NOLDA
 
         private void Start()
         {
-            _ = FindLocalPlayer();
+            FindLocalPlayer().Forget();
         }
 
         private async Awaitable FindLocalPlayer()

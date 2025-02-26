@@ -12,7 +12,7 @@ namespace NOLDA
         
         public override void ExecuteSkill(Animator animator, ISkillEndCallback skillEndCallback)
         {
-            _ = WaitForAnimationEnd(animator, skillEndCallback);
+            WaitForAnimationEnd(animator, skillEndCallback).Forget();
         }
         private async Awaitable WaitForAnimationEnd(Animator animator, ISkillEndCallback skillEndCallback)
         {

@@ -73,7 +73,7 @@ namespace NOLDA
             }
             else if (true == _isChatting)
             {
-                _ = chatUIController.SendChatMessage();
+                chatUIController.SendChatMessage().Forget();
                 _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
                 _isChatting = false;
             }
