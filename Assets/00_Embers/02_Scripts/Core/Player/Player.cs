@@ -11,14 +11,15 @@ namespace NOLDA
 
         [SyncVar(hook = nameof(OnClassChanged))]
         public Class playerClass = Class.NONE;
-        
+
         [Header("플레이어 아바타가 바인드될 곳")]
         public Transform playerAvatarBind;
         [Header("캐릭터 닉네임")]
         public TMP_Text nicknameText;
-        
+
         private CharacterController _characterController;
         private Animator _animator;
+
         [HideInInspector]
         public bool lockCursor = false;
 
@@ -27,10 +28,11 @@ namespace NOLDA
             TryGetComponent<CharacterController>(out _characterController);
             TryGetComponent<Animator>(out _animator);
         }
+
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
-            
+
             InitNickName();
             InitializePlayerPosition();
             InitClass(); //Class SyncVar로 공유 후 Init Avatar 해줌.
@@ -42,19 +44,19 @@ namespace NOLDA
         {
             CmdSetNickname(Singleton.Game.playerData.Username);
         }
-        
+
         [Command]
         private void CmdSetNickname(string nickname)
         {
             this.playerNickname = nickname;
             gameObject.name = nickname;
         }
-        
+
         private void OnNicknameChanged(string oldNickname, string newNickname)
         {
             UpdateNicknameUI(newNickname);
         }
-        
+
         private void UpdateNicknameUI(string nickname)
         {
             if (nicknameText != null)
@@ -63,13 +65,13 @@ namespace NOLDA
                 nicknameText.text = nickname;
             }
         }
-        
+
         //Sync Class
         private void InitClass()
         {
             CmdSetClass(Singleton.Game.playerData.Class);
         }
-        
+
         [Command(requiresAuthority = false)]
         public void CmdSetClass(Class playerClass)
         {
@@ -80,20 +82,20 @@ namespace NOLDA
         {
             InitializePlayerAvatar();
         }
-        
+
         public void InitializePlayerAvatar()
         {
             var avatarPrefab = Singleton.Game.GetAvatarPrefab(this.playerClass);
-            
+
             GameObject _currentAvatar = Instantiate(avatarPrefab, playerAvatarBind);
             _currentAvatar.transform.localPosition = Vector3.zero;
             _currentAvatar.transform.localRotation = Quaternion.identity;
-            
+
             _animator.Rebind(); // Animator 초기화
             _animator.Update(0);
         }
         #endregion
-        
+
         #region # Player Position Setting && Save
 
         private void InitializePlayerPosition()
@@ -101,7 +103,7 @@ namespace NOLDA
             _characterController.enabled = false;
             transform.position = Singleton.Game.playerData.Position;
             _characterController.enabled = true;
-            
+
             SavePosition().Forget(); // 위치 지속적으로 저장
         }
 
@@ -110,11 +112,15 @@ namespace NOLDA
             while (true)
             {
                 await Awaitable.WaitForSecondsAsync(5f);
+                if (this == null)
+                {
+                    break;
+                }
                 Singleton.Game.playerData.Position = transform.position;
             }
         }
         #endregion
-        
+
         /// <summary>
         /// 플레이어 삭제 요청(타이틀로 나갈 때)
         /// </summary>

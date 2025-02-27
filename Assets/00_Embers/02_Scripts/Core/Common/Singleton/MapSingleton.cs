@@ -11,7 +11,7 @@ namespace NOLDA
         public ChunkListSO chunkList;
 
         private AudioSource _audioSource;
-        
+
         // 현재 로드돼있는 청크 목록
         private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>();
         // 현재 재생중인 BGM
@@ -26,17 +26,17 @@ namespace NOLDA
         public async Awaitable PlayBGM(AudioClip bgmClip, float fadeDuration = 1.0f)
         {
             if (bgmClip == null) return;
-            
+
             //현재 재생중인 BGM과 동일하면 계속 재생(신규 X)
-            if (_currentBGMName == bgmClip.name) return; 
+            if (_currentBGMName == bgmClip.name) return;
 
             _currentBGMName = bgmClip.name;
-            
+
             if (_audioSource.isPlaying)
             {
                 await FadeOut(fadeDuration);
             }
-            
+
             _audioSource.clip = bgmClip;
             _audioSource.Play();
             await FadeIn(fadeDuration);
@@ -78,7 +78,7 @@ namespace NOLDA
             _audioSource.volume = 1;
         }
         #endregion
-        
+
         #region # Load InGame
 
         public void LoadInGame()
@@ -107,7 +107,7 @@ namespace NOLDA
 
             float elapsedTime = Time.time - startTime;
             float remainingTime = Mathf.Max(0, 3f - elapsedTime);
-            
+
             if (remainingTime > 0)
             {
                 await Awaitable.WaitForSecondsAsync(remainingTime);
@@ -117,7 +117,7 @@ namespace NOLDA
             Singleton.UI.CloseLoading();
         }
         #endregion
-        
+
         #region # Return Title
 
         public void ReturnTitle()
@@ -140,7 +140,7 @@ namespace NOLDA
 
             // 지금 로드되어 있는 씬들 중, "Chunk_"로 시작하는 씬을 모두 언로드
             List<Scene> chunkScenes = new List<Scene>();
-            
+
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene loadedScene = SceneManager.GetSceneAt(i);
@@ -149,7 +149,7 @@ namespace NOLDA
                     chunkScenes.Add(loadedScene);
                 }
             }
-            
+
             foreach (var chunkScene in chunkScenes)
             {
                 if (chunkScene.isLoaded)
@@ -172,13 +172,13 @@ namespace NOLDA
             }
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(titleScene));
-            
+
             chunkStates.Clear();
             Singleton.UI.CloseAlert();
             FindAnyObjectByType<TitleUIController>().ReturnBackTitle();
         }
         #endregion
-        
+
         #region # Chunk Loading
         public async Awaitable UpdateChunks(Vector3 playerPosition)
         {
@@ -234,13 +234,16 @@ namespace NOLDA
             if (NetworkClient.localPlayer != null)
             {
                 Scene inGameScene = SceneManager.GetSceneByName("InGame");
-                SceneManager.MoveGameObjectToScene(NetworkClient.localPlayer.gameObject, inGameScene);
+                if (inGameScene.isLoaded)
+                {
+                    SceneManager.MoveGameObjectToScene(NetworkClient.localPlayer.gameObject, inGameScene);
+                }
             }
-            
+
             // 현재 활성화된 씬 설정
             string activeSceneName = $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}";
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(activeSceneName));
-            
+
             var chunkInfo = chunkList.GetChunkInfo(activeSceneName);
             if (chunkInfo != null && chunkInfo.bgm != null)
             {

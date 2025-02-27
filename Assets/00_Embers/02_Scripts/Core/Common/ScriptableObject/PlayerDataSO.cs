@@ -29,7 +29,7 @@ namespace NOLDA
         public event Action OnPassiveSkillsApplied;
 
         public HxpTableSO hxpTable;
-        
+
         public bool suppressEvents; //플래그가 true면 네트워크 전송을 멈춤
 
         #region # 추가 능력치(스킬, 아이템 등)가 적용된 최종 능력치
@@ -62,7 +62,7 @@ namespace NOLDA
             additionalAttack = 0;
         }
         #endregion
-        
+
         #region # Skill Data
         [SerializeField] private Dictionary<int, int> skills = new Dictionary<int, int>();
 
@@ -72,7 +72,7 @@ namespace NOLDA
             set
             {
                 skills = value;
-                OnDataChanged?.Invoke(nameof(Skills), skills);
+                //OnDataChanged?.Invoke(nameof(Skills), skills);
             } //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
         }
 
@@ -157,7 +157,7 @@ namespace NOLDA
             set => items = value;
         }
         #endregion
-        
+
         #region # Character Data
         // Account-related data
         [SerializeField] private string accountID;
@@ -166,14 +166,14 @@ namespace NOLDA
             get => accountID;
             set => accountID = value;
         }
-        
+
         [SerializeField] private string email;
         public string Email
         {
             get => email;
             set => email = value;
         }
-        
+
         [SerializeField] private string createdDate;
         public string CreatedDate
         {
@@ -188,7 +188,7 @@ namespace NOLDA
             get => username;
             set => username = value;
         }
-        
+
         [SerializeField] private int level;
         public int Level
         {
@@ -203,7 +203,7 @@ namespace NOLDA
                 }
             }
         }
-        
+
         [SerializeField] private int maxHp;
         public int MaxHp
         {
@@ -215,7 +215,7 @@ namespace NOLDA
                     maxHp = value;
                     if (false == suppressEvents)
                         OnDataChanged?.Invoke(nameof(MaxHp), value);
-                    
+
                     Hp = Mathf.Clamp(Hp, 0, maxHp);
                 }
             }
@@ -236,7 +236,7 @@ namespace NOLDA
                 }
             }
         }
-        
+
         [SerializeField] private int maxMp;
         public int MaxMp
         {
@@ -248,7 +248,7 @@ namespace NOLDA
                     maxMp = value;
                     if (false == suppressEvents)
                         OnDataChanged?.Invoke(nameof(MaxMp), value);
-                    
+
                     Mp = Mathf.Clamp(Mp, 0, maxMp);
                 }
             }
@@ -425,7 +425,7 @@ namespace NOLDA
                 }
             }
         }
-        
+
         [SerializeField] private int inventorySpace;
         public int InventorySpace
         {
@@ -442,7 +442,7 @@ namespace NOLDA
             }
         }
         #endregion
-        
+
         #region # 각 프로퍼티 처리 Logic
         /// <summary>
         /// 경험치 상승시마다 레벨업하는지 체크
