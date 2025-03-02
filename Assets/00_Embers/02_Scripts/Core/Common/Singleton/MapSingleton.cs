@@ -207,7 +207,6 @@ namespace NOLDA
                     bool existsInList = chunkList.chunkSceneNames.Any(ci => ci.sceneName == sceneName);
                     if (!existsInList)
                     {
-                        //Debug.Log($"청크 {sceneName} 는 등록되지 않아서 로드하지 않고 ChunkLoadState.LOADED처리해서 무한로드 방지");
                         chunkStates[coord] = ChunkLoadState.LOADED;
                         continue;
                     }
@@ -249,7 +248,6 @@ namespace NOLDA
             {
                 PlayBGM(chunkInfo.bgm).Forget();
             }
-
         }
 
         private async Awaitable LoadChunk(string sceneName, Vector2Int coord)
@@ -263,25 +261,22 @@ namespace NOLDA
             }
 
             chunkStates[coord] = ChunkLoadState.LOADED;
-            //Debug.Log($"Loaded chunk: {sceneName}");
         }
 
         private async Awaitable UnloadChunk(string sceneName, Vector2Int coord)
         {
-            // 언로드 중
             chunkStates[coord] = ChunkLoadState.UNLOADING;
 
-            var unloadOp = SceneManager.UnloadSceneAsync(sceneName);
-            while (unloadOp != null && !unloadOp.isDone)
+            if (true == SceneManager.GetSceneByName(sceneName).isLoaded)
             {
-                await Awaitable.NextFrameAsync();
+                var unloadOp = SceneManager.UnloadSceneAsync(sceneName);
+                while (unloadOp != null && !unloadOp.isDone)
+                {
+                    await Awaitable.NextFrameAsync();
+                }
             }
 
-            //Remove 해주거나, None 상태로
-            chunkStates.Remove(coord);
-            //chunkStates[coord] = ChunkLoadState.None;
-
-            //Debug.Log($"Unloaded chunk: {sceneName}");
+            chunkStates[coord] = ChunkLoadState.NONE;
         }
 
         public Vector2Int GetChunkCoord(Vector3 position)
