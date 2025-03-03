@@ -104,9 +104,9 @@ namespace NOLDA
                     }
 
                     // 서버에서 전달받은 position에 맞게 아이템 배열에 저장
-                    if (itemMessage.Position >= 0 && itemMessage.Position < Singleton.Game.playerData.Items.Length)
+                    if (itemMessage.Position >= 0 && itemMessage.Position < Items.Length)
                     {
-                        Singleton.Game.playerData.Items[itemMessage.Position] = item;
+                        Items[itemMessage.Position] = item;
                     }
                 }
                 else
@@ -198,8 +198,8 @@ namespace NOLDA
 
         public void ApplyPassiveSkills()
         {
-            Singleton.Game.playerData.ResetAdditionalStats();
-            foreach (var skillEntry in Singleton.Game.playerData.Skills)
+            ResetAdditionalStats();
+            foreach (var skillEntry in Skills)
             {
                 SkillData skillData = Singleton.Skill.GetSkillData(skillEntry.Key);
                 if (skillData == null || skillData.skillType != SkillType.PASSIVE) continue;
@@ -208,7 +208,7 @@ namespace NOLDA
                 if (levelData == null) continue;
 
                 // 추가 능력치 적용
-                Singleton.Game.playerData.ApplyAdditionalStats(
+                ApplyAdditionalStats(
                     levelData.maxHpIncrease,
                     levelData.maxMpIncrease,
                     levelData.armorIncrease,
