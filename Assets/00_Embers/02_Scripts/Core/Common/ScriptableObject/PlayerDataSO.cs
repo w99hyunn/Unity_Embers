@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+
 namespace NOLDA
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
@@ -44,6 +45,76 @@ namespace NOLDA
         public int TotalArmor => Armor + additionalArmor;
         public int TotalMaxHp => MaxHp + additionalMaxHp;
         public int TotalMaxMp => MaxMp + additionalMaxMp;
+
+        public void Init(CharacterDataResponseMessage msg)
+        {
+            Username = msg.Username;
+            Level = msg.Level;
+            MaxHp = msg.MaxHp;
+            Hp = msg.Hp;
+            MaxMp = msg.MaxMp;
+            Mp = msg.Mp;
+            Hxp = msg.Hxp;
+            Gold = msg.Gold;
+            Attack = msg.Attack;
+            Armor = msg.Armor;
+            Faction = msg.Faction;
+            Class = msg.Class;
+            Sp = msg.Sp;
+            Gender = msg.Gender;
+            Position = msg.Position;
+            MapCode = msg.MapCode;
+            InventorySpace = msg.InventorySpace;
+
+            // 스킬 데이터 초기화
+            Skills = new Dictionary<int, int>();
+            foreach (var skill in msg.Skills)
+            {
+                Skills[skill.SkillID] = skill.Level;
+            }
+
+            ApplyPassiveSkills();
+
+            // 인벤토리 데이터 초기화
+            Items = new Item[InventorySpace];
+
+            // 서버에서 받은 InventoryItems 처리
+            foreach (var itemMessage in msg.InventoryItems)
+            {
+                ItemData itemData = Singleton.DB.GetItemDataById(itemMessage.ItemId);
+                if (itemData != null)
+                {
+                    Item item;
+
+                    if (itemData is ArmorItemData armorData)
+                    {
+                        item = new ArmorItem(armorData);
+                    }
+                    else if (itemData is WeaponItemData weaponData)
+                    {
+                        item = new WeaponItem(weaponData);
+                    }
+                    else if (itemData is PortionItemData portionData)
+                    {
+                        item = new PortionItem(portionData, itemMessage.Amount);
+                    }
+                    else
+                    {
+                        item = itemData.CreateItem();
+                    }
+
+                    // 서버에서 전달받은 position에 맞게 아이템 배열에 저장
+                    if (itemMessage.Position >= 0 && itemMessage.Position < Singleton.Game.playerData.Items.Length)
+                    {
+                        Singleton.Game.playerData.Items[itemMessage.Position] = item;
+                    }
+                }
+                else
+                {
+                    DebugUtils.LogWarning($"ItemData not found for ItemId: {itemMessage.ItemId}");
+                }
+            }
+        }
 
         //추가 능력치 적용 메소드
         public void ApplyAdditionalStats(int maxHp, int maxMp, int defense, int attack)
