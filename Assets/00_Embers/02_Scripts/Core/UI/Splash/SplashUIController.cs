@@ -35,7 +35,7 @@ namespace NOLDA
         private async Awaitable SwitchCanvasAndLoadScene()
         {
             Cursor.visible = false;
-            await Awaitable.WaitForSecondsAsync(3.5f);
+            await Awaitable.WaitForSecondsAsync(4f);
             _view.StartingLogo(true);
             await Awaitable.WaitForSecondsAsync(4f);
             _view.EmbersLogo(true);
