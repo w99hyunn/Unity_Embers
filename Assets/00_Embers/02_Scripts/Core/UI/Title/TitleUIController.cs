@@ -117,21 +117,21 @@ namespace NOLDA
                 Singleton.UI.OpenAlert("실패", "아이디는 최소 5자 이상이어야 합니다.");
                 return;
             }
-            
+
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
                 Singleton.UI.OpenAlert("실패", "비밀번호는 최소 5자 이상이어야 합니다.");
                 return;
             }
-            
+
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
                 Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
-            
+
             SignUpRequest(_view.SignUpID, _view.SignUpPw, _view.SignUpEmail);
         }
 
@@ -226,14 +226,14 @@ namespace NOLDA
 
             Singleton.UI.OpenAlert(title, message);
         }
-        
+
         public void ReturnBackTitle()
         {
             _view.TopPanelProfileUpdate();
             LoadCharacterInfo();
             _view.OpenPanel("GameStart");
         }
-        
+
         public void EditProfilePopupOpen()
         {
             _view.EditProfilePopupInit();
@@ -307,7 +307,7 @@ namespace NOLDA
                 Gender = gender,
                 MapCode = _model.MapCode,
             };
-            
+
             NetworkClient.ReplaceHandler<CreateCharacterResponsetMessage>(OnCreateCharacterResultReceived);
             NetworkClient.Send(createChracterRequestMessage);
         }
@@ -447,6 +447,15 @@ namespace NOLDA
 
         private void OnCharacterDataReceived(CharacterDataResponseMessage msg)
         {
+            // 스킬 데이터 초기화
+            Singleton.Game.playerData.Skills = new Dictionary<int, int>();
+            foreach (var skill in msg.Skills)
+            {
+                Singleton.Game.playerData.Skills[skill.SkillID] = skill.Level;
+            }
+            Singleton.Game.playerData.ApplyPassiveSkills();
+
+
             Singleton.Game.playerData.Username = msg.Username;
             Singleton.Game.playerData.Level = msg.Level;
             Singleton.Game.playerData.MaxHp = msg.MaxHp;
@@ -464,15 +473,6 @@ namespace NOLDA
             Singleton.Game.playerData.Position = msg.Position;
             Singleton.Game.playerData.MapCode = msg.MapCode;
             Singleton.Game.playerData.InventorySpace = msg.InventorySpace;
-            
-            // 스킬 데이터 초기화
-            Singleton.Game.playerData.Skills = new Dictionary<int, int>();
-            foreach (var skill in msg.Skills)
-            {
-                Singleton.Game.playerData.Skills[skill.SkillID] = skill.Level;
-            }
-
-            Singleton.Game.playerData.ApplyPassiveSkills();
 
             // 인벤토리 데이터 초기화
             Singleton.Game.playerData.Items = new Item[Singleton.Game.playerData.InventorySpace];
@@ -484,7 +484,7 @@ namespace NOLDA
                 if (itemData != null)
                 {
                     Item item;
-                    
+
                     if (itemData is ArmorItemData armorData)
                     {
                         item = new ArmorItem(armorData);
@@ -513,7 +513,7 @@ namespace NOLDA
                     DebugUtils.LogWarning($"ItemData not found for ItemId: {itemMessage.ItemId}");
                 }
             }
-            
+
             //캐릭터 정보를 모두 받아왔으면 인게임으로 씬 전환을 시작
             InitInGame();
         }

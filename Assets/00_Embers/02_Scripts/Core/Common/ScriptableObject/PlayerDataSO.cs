@@ -227,7 +227,7 @@ namespace NOLDA
             get => hp;
             set
             {
-                int clampedValue = Mathf.Clamp(value, 0, MaxHp); // MaxHp를 초과하지 않도록 제한
+                int clampedValue = Mathf.Clamp(value, 0, TotalMaxHp); // MaxHp를 초과하지 않도록 제한
                 if (hp != clampedValue)
                 {
                     hp = clampedValue;
@@ -260,7 +260,7 @@ namespace NOLDA
             get => mp;
             set
             {
-                int clampedValue = Mathf.Clamp(value, 0, MaxMp); // MaxHp를 초과하지 않도록 제한
+                int clampedValue = Mathf.Clamp(value, 0, TotalMaxMp); // MaxHp를 초과하지 않도록 제한
                 if (mp != clampedValue)
                 {
                     mp = clampedValue;
