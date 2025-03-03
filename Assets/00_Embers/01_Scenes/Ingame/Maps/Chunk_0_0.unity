@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 7b0f2096b49ccfb4f8b47c8084d650fa, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5c8d5031ce45e4962818ca2b5426a8cf, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000008, guid: 2df457ed3465d5944ba0fec7637beacf, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 3e9d0d0220978464eb65ecf9685b83a6, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 959eaf4a98717d943b443a47448378d6, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializedBakingSet: {fileID: 11400000, guid: 10aa66b09ae88474a96127de62cf1c34, type: 2}
+  serializedBakingSet: {fileID: 11400000, guid: 68c5e29cd18df7d4fae92e9d654bb2d4, type: 2}
   sceneGUID: 777c351a2bdbdd241bf352df0a15c087
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
@@ -11737,7 +11737,7 @@ MonoBehaviour:
     e10: 0
     e11: 1
     e12: 0
-    e13: -5.847983
+    e13: -5.847982
     e20: 0
     e21: 0
     e22: 1
@@ -11746,7 +11746,7 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  cachedHashCode: 1180077059
+  cachedHashCode: -1956348497
   fillEmptySpaces: 1
   version: 2
   globalVolume: 0

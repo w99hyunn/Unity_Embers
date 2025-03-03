@@ -181,11 +181,11 @@ MonoBehaviour:
         hasOnlyBiggerBricks: 0
     - position: {x: 0, y: 0, z: 0}
       index: 17
-      probeCount: 105408
+      probeCount: 105536
       minSubdiv: 0
       indexChunkCount: 91
       shChunkCount: 13
-      bricksCount: 1647
+      bricksCount: 1649
       indirectionEntryInfo:
       - positionInBricks: {x: 0, y: 0, z: 0}
         minSubdiv: 0
@@ -195,11 +195,11 @@ MonoBehaviour:
         hasOnlyBiggerBricks: 0
     - position: {x: 0, y: 0, z: 1}
       index: 29
-      probeCount: 22592
+      probeCount: 22656
       minSubdiv: 0
       indexChunkCount: 91
       shChunkCount: 3
-      bricksCount: 353
+      bricksCount: 354
       indirectionEntryInfo:
       - positionInBricks: {x: 0, y: 0, z: 27}
         minSubdiv: 0
@@ -265,11 +265,11 @@ MonoBehaviour:
         hasOnlyBiggerBricks: 0
     - position: {x: 1, y: 0, z: 0}
       index: 18
-      probeCount: 20288
+      probeCount: 20416
       minSubdiv: 0
       indexChunkCount: 91
       shChunkCount: 3
-      bricksCount: 317
+      bricksCount: 319
       indirectionEntryInfo:
       - positionInBricks: {x: 27, y: 0, z: 0}
         minSubdiv: 0
@@ -295,8 +295,8 @@ MonoBehaviour:
   - sceneGUID: 777c351a2bdbdd241bf352df0a15c087
     cellList: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
   cellSharedDataAsset:
-    m_AssetGUID: 861ed3bbefafae94699c5c448bc0ef93
-    m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\861ed3bbefafae94699c5c448bc0ef93.bytes
+    m_AssetGUID: 5614ced279822404ab96f41370a2444f
+    m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\5614ced279822404ab96f41370a2444f.bytes
     m_ElementSize: 8192
     m_StreamableCellDescs:
       m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -342,10 +342,10 @@ MonoBehaviour:
     m_Keys:
     - Default
     m_Values:
-    - sceneHash: 1390461815
+    - sceneHash: -954897064
       cellDataAsset:
-        m_AssetGUID: 472ad6a5d2c112944b92ea69f8f530df
-        m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\472ad6a5d2c112944b92ea69f8f530df.bytes
+        m_AssetGUID: aea38c8d765347d4d8243a81d7fbb681
+        m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\aea38c8d765347d4d8243a81d7fbb681.bytes
         m_ElementSize: 131072
         m_StreamableCellDescs:
           m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -388,8 +388,8 @@ MonoBehaviour:
             elementCount: 1
         m_Asset: {fileID: 0}
       cellOptionalDataAsset:
-        m_AssetGUID: b1397029e24d75c488178a3cc07b001e
-        m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\b1397029e24d75c488178a3cc07b001e.bytes
+        m_AssetGUID: 67d2105e786bd3a41b4797ea23692ea1
+        m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\67d2105e786bd3a41b4797ea23692ea1.bytes
         m_ElementSize: 131072
         m_StreamableCellDescs:
           m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -432,8 +432,8 @@ MonoBehaviour:
             elementCount: 1
         m_Asset: {fileID: 0}
       cellProbeOcclusionDataAsset:
-        m_AssetGUID: 0ff6b442fe9d87d41a9527011cc61924
-        m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\0ff6b442fe9d87d41a9527011cc61924.bytes
+        m_AssetGUID: c5f76709e7b4de545bba127f3e554d81
+        m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\c5f76709e7b4de545bba127f3e554d81.bytes
         m_ElementSize: 32768
         m_StreamableCellDescs:
           m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -476,8 +476,8 @@ MonoBehaviour:
             elementCount: 1
         m_Asset: {fileID: 0}
   cellBricksDataAsset:
-    m_AssetGUID: 0ff4bc2e8cba3e245b20ce3a14c11660
-    m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\0ff4bc2e8cba3e245b20ce3a14c11660.bytes
+    m_AssetGUID: 02383623c82b95848a944fb05a788cd4
+    m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\02383623c82b95848a944fb05a788cd4.bytes
     m_ElementSize: 16
     m_StreamableCellDescs:
       m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -503,25 +503,25 @@ MonoBehaviour:
       - offset: 144
         elementCount: 1
       - offset: 160
-        elementCount: 1647
-      - offset: 26512
-        elementCount: 353
-      - offset: 32160
-        elementCount: 1
-      - offset: 32176
-        elementCount: 1
-      - offset: 32192
-        elementCount: 1
+        elementCount: 1649
+      - offset: 26544
+        elementCount: 354
       - offset: 32208
         elementCount: 1
       - offset: 32224
-        elementCount: 317
-      - offset: 37296
+        elementCount: 1
+      - offset: 32240
+        elementCount: 1
+      - offset: 32256
+        elementCount: 1
+      - offset: 32272
+        elementCount: 319
+      - offset: 37376
         elementCount: 80
     m_Asset: {fileID: 0}
   cellSupportDataAsset:
-    m_AssetGUID: c5d1cfd2de9fafa48b5777e84b7c05de
-    m_StreamableAssetPath: APVStreamingAssets\10aa66b09ae88474a96127de62cf1c34\c5d1cfd2de9fafa48b5777e84b7c05de.bytes
+    m_AssetGUID: dbf87ada04e4b3a49b41cc40de3e300a
+    m_StreamableAssetPath: APVStreamingAssets\68c5e29cd18df7d4fae92e9d654bb2d4\dbf87ada04e4b3a49b41cc40de3e300a.bytes
     m_ElementSize: 262144
     m_StreamableCellDescs:
       m_Keys: 000000000c0000001800000004000000100000001c000000010000000d0000001900000005000000110000001d000000020000000e0000001a00000006000000120000001e000000
@@ -611,7 +611,7 @@ MonoBehaviour:
   skyOcclusionBakingBounces: 2
   skyOcclusionAverageAlbedo: 0.6
   skyOcclusionBackFaceCulling: 0
-  skyOcclusionShadingDirection: 0
+  skyOcclusionShadingDirection: 1
   useRenderingLayers: 0
   renderingLayerMasks: []
   m_SceneBakeData:
