@@ -151,7 +151,7 @@ AnimatorStateMachine:
     m_Position: {x: 50, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7064694584926211235}
-    m_Position: {x: 820, y: 390, z: 0}
+    m_Position: {x: 860, y: 390, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -343,7 +343,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StarterAssetsThirdPerson
+  m_Name: PlayerAnimationController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Speed
