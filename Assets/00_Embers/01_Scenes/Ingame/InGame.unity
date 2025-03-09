@@ -36740,7 +36740,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 0, y: 40}
+  m_SizeDelta: {x: 54.050003, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &787267931
 MonoBehaviour:
@@ -70728,7 +70728,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30.489746, y: -20}
-  m_SizeDelta: {x: 0, y: 40}
+  m_SizeDelta: {x: 54.050003, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1526696921
 MonoBehaviour:
@@ -95658,7 +95658,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimapImage: {fileID: 4943781549983812512}
-  player: {fileID: 0}
   textureSize: 512
   scanInterval: 4
   minimapFilterMode: 1

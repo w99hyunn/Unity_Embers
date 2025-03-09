@@ -9,7 +9,6 @@ namespace NOLDA
     {
         [Header("미니맵 설정")]
         [SerializeField] private RawImage minimapImage;
-        [SerializeField] private Transform player;
         [SerializeField] private int textureSize = 512;
         [SerializeField] private int scanInterval = 4;
         [SerializeField] private FilterMode minimapFilterMode = FilterMode.Bilinear;
@@ -28,6 +27,7 @@ namespace NOLDA
         [SerializeField] private GameObject npcIconPrefab;
         [SerializeField] private GameObject enemyIconPrefab;
 
+        private Transform player;
         private GameObject playerIconObject;
         private RectTransform playerIconRect;
         private Dictionary<GameObject, GameObject> npcIcons = new Dictionary<GameObject, GameObject>();
