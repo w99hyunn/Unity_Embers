@@ -42,7 +42,7 @@ MonoBehaviour:
     - position: {x: 1, y: -1, z: -1}
       index: 0
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -56,7 +56,7 @@ MonoBehaviour:
     - position: {x: 1, y: -1, z: 0}
       index: 9
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -70,7 +70,7 @@ MonoBehaviour:
     - position: {x: 1, y: -1, z: 1}
       index: 18
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -84,7 +84,7 @@ MonoBehaviour:
     - position: {x: 1, y: 0, z: -1}
       index: 3
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -126,7 +126,7 @@ MonoBehaviour:
     - position: {x: 2, y: -1, z: -1}
       index: 1
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -140,7 +140,7 @@ MonoBehaviour:
     - position: {x: 2, y: -1, z: 0}
       index: 10
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -154,7 +154,7 @@ MonoBehaviour:
     - position: {x: 2, y: -1, z: 1}
       index: 19
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -168,7 +168,7 @@ MonoBehaviour:
     - position: {x: 2, y: 0, z: -1}
       index: 4
       probeCount: 64
-      minSubdiv: 0
+      minSubdiv: 3
       indexChunkCount: 1
       shChunkCount: 1
       bricksCount: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
     m_Keys:
     - Default
     m_Values:
-    - sceneHash: -76961589
+    - sceneHash: -479073301
       cellDataAsset:
         m_AssetGUID: 058931f1c24921d44ac096937faeb1c1
         m_StreamableAssetPath: APVStreamingAssets\a4109cc253e7ab240a0d9d6a0273ebd7\058931f1c24921d44ac096937faeb1c1.bytes

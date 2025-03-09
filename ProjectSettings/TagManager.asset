@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - Building
+  - Road
+  - Water
+  - Path
+  - NPC
+  - Enemy
   layers:
   - Default
   - TransparentFX
