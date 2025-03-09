@@ -8195,7 +8195,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 36fd5342373a2d442a2e02d62b32ec06, type: 3}
     - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
       propertyPath: buttonText
-      value: "\uAC8C\uC784 \uC885\uB8CC"
+      value: "\uBA54\uC778\uC73C\uB85C"
       objectReference: {fileID: 0}
     - target: {fileID: 6764342455403032506, guid: 98e041e89031b034381ead3eef61fdef, type: 3}
       propertyPath: latestTabIndex
@@ -24536,7 +24536,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 202.55, y: 45}
+  m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &545744897
 MonoBehaviour:
@@ -36740,7 +36740,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 54.050003, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &787267931
 MonoBehaviour:
@@ -70728,7 +70728,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30.489746, y: -20}
-  m_SizeDelta: {x: 54.050003, y: 40}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1526696921
 MonoBehaviour:
@@ -95663,6 +95663,7 @@ MonoBehaviour:
   minimapFilterMode: 1
   iconSize: 10
   iconUpdateInterval: 1
+  maxChunkCacheSize: 20
   groundColor: {r: 0.2, g: 0.5, b: 0.2, a: 1}
   pathColor: {r: 0.7, g: 0.7, b: 0.5, a: 1}
   waterColor: {r: 0.3, g: 0.4, b: 0.8, a: 1}
