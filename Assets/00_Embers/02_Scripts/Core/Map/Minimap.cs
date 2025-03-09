@@ -354,8 +354,6 @@ namespace NOLDA
 
             posX -= minimapRect.rect.width * 0.5f;
             posY -= minimapRect.rect.height * 0.5f;
-
-            //오프셋을 적용하여 아이콘 위치 조정
             posX -= minimapOffset.x;
             posY -= minimapOffset.y;
 
@@ -369,9 +367,19 @@ namespace NOLDA
                 iconObject.SetActive(false);
                 return;
             }
+
             iconObject.SetActive(true);
             iconRect.anchoredPosition = new Vector2(posX, posY);
-            iconRect.rotation = Quaternion.Euler(0, 0, -target.transform.eulerAngles.y);
+
+            // Enemy는 아이콘 회전 적용
+            if (target.CompareTag("Enemy"))
+            {
+                iconRect.rotation = Quaternion.Euler(0, 0, -target.transform.eulerAngles.y);
+            }
+            else
+            {
+                iconRect.rotation = Quaternion.identity;
+            }
         }
 
         private void UpdateCombinedTexture()
