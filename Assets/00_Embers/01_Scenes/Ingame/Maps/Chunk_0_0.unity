@@ -6988,7 +6988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcNameTag: {fileID: 3259909497126508806}
   npcData: {fileID: 11400000, guid: 3c9f775563586274aa9c8c7c6ef33f5b, type: 2}
-  npcRole: "\uCD08\uC2EC\uC790 \uB3C4\uC6B0\uBBF8"
+  npcRole: "\uD29C\uD1A0\uB9AC\uC5BC"
   npcName: "\uB9C8\uB9AC\uC544"
 --- !u!1001 &1148424963
 PrefabInstance:

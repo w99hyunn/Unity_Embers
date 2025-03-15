@@ -9,7 +9,6 @@ namespace NOLDA
     public class PlayerSkillHandler : NetworkBehaviour, ISkillEndCallback
     {
         private PlayerInput input;
-        private SkillSingleton skillManager;
         private Animator animator;
         private bool _isSkillInUse = false;
         public bool IsSkillInUse => _isSkillInUse;
@@ -21,13 +20,12 @@ namespace NOLDA
             public int skillLevel;
             public KeyCode keyCode;
         }
-        
+
         // 스킬 정보 캐시
         private List<CachedSkillInfo> cachedSkills = new List<CachedSkillInfo>();
-        
+
         private void Start()
         {
-            skillManager = FindAnyObjectByType<SkillSingleton>();
             TryGetComponent<PlayerInput>(out input);
             TryGetComponent<Animator>(out animator);
 
@@ -45,7 +43,7 @@ namespace NOLDA
         {
             if (propertyName == nameof(PlayerDataSO.Skills))
             {
-                UpdateSkillCache(); 
+                UpdateSkillCache();
             }  //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
         }
 
@@ -69,8 +67,8 @@ namespace NOLDA
 
         private void Update()
         {
-            if (!isLocalPlayer 
-                || Singleton.Game.playerData == null 
+            if (!isLocalPlayer
+                || Singleton.Game.playerData == null
                 || input.IsPointerOverUI())
                 return;
 
@@ -90,7 +88,7 @@ namespace NOLDA
         /// <param name="skillLevel"></param>
         public void ExecuteSkill(SkillData skill, int skillLevel)
         {
-            if (skillManager.IsSkillOnCooldown(skill.skillID) || _isSkillInUse)
+            if (Singleton.Skill.IsSkillOnCooldown(skill.skillID) || _isSkillInUse)
             {
                 return;
             }
@@ -107,7 +105,7 @@ namespace NOLDA
             TryUseSkillOnEnemy(skill);
 
             // 쿨타임 설정
-            skillManager.SetSkillCooldown(skill.skillID);
+            Singleton.Skill.SetSkillCooldown(skill.skillID);
         }
 
         public void OnSkillEnd()
@@ -133,7 +131,7 @@ namespace NOLDA
         [Command]
         private void CmdUseSkillOnTarget(int skillID, NetworkIdentity target)
         {
-            SkillData skill = skillManager.GetSkillData(skillID);
+            SkillData skill = Singleton.Skill.GetSkillData(skillID);
             if (skill == null || target == null) return;
 
             if (!Singleton.Game.playerData.Skills.ContainsKey(skillID)) return;
