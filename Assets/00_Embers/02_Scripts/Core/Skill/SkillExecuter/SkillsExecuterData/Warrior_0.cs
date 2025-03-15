@@ -7,9 +7,9 @@ namespace NOLDA
     {
         #region Skill Code Info
         public const string SKILL_CODE = "Warrior_0"; //스킬 제작시 이 부분 수정 필요
-        public const string MENU_NAME = "Skill System/SkillExecuter/" + SKILL_CODE;
+        public const string MENU_NAME = "NOLDA/Skill System/SkillExecuter/" + SKILL_CODE;
         #endregion
-        
+
         public override void ExecuteSkill(Animator animator, ISkillEndCallback skillEndCallback)
         {
             WaitForAnimationEnd(animator, skillEndCallback).Forget();

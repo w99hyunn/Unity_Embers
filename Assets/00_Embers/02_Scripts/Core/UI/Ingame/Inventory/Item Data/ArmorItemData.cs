@@ -3,7 +3,7 @@ using UnityEngine;
 namespace NOLDA
 {
     /// <summary> 장비 - 방어구 아이템 </summary>
-    [CreateAssetMenu(fileName = "Item_Armor_", menuName = "Inventory System/Item Data/Armor", order = 2)]
+    [CreateAssetMenu(fileName = "Item_Armor_", menuName = "NOLDA/Inventory System/Item Data/Armor", order = 2)]
     public class ArmorItemData : EquipmentItemData
     {
         /// <summary> 방어력 </summary>
