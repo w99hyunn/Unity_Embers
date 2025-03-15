@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb33987440aa094d918f4d9635d3484, type: 3}
   m_Name: NPC_0
   m_EditorClassIdentifier: 
-  npcName: 
-  dialogueLines: []
+  npcName: "\uB9C8\uB9AC\uC544"
+  dialogueLines:
+  - "\uC548\uB155?"
+  - "\uB09C \uB9C8\uB9AC\uC544\uC58C."
