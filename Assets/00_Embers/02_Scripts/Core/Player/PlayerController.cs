@@ -11,7 +11,6 @@ namespace NOLDA
         public PlayerInput input;
         public GameObject mainCamera;
         public Player player;
-        public PlayerSkillHandler skillHandler;
 
         [Header("Player")]
         [Tooltip("캐릭터의 이동 속도(m/s)")]

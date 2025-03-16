@@ -12,11 +12,6 @@ namespace NOLDA
         [SerializeField] private NPCNameTag npcNameTag;
         [SerializeField] private NPCData npcData;
 
-        [Header("NPC INFO")]
-        [SerializeField] private string npcRole;
-        [SerializeField] private string npcName;
-
-
         private bool isPlayerInRange = false;
 
         void Awake()
@@ -27,7 +22,7 @@ namespace NOLDA
 
         void UpdateNPCInfo()
         {
-            npcNameTag.SetNPCInfo(npcRole, npcName);
+            npcNameTag.SetNPCInfo(npcData.npcRole, npcData.npcName);
         }
 
         private void OnTriggerEnter(Collider other)

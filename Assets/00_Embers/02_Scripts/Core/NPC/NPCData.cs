@@ -6,6 +6,7 @@ namespace NOLDA
     public class NPCData : ScriptableObject
     {
         public string npcName;
+        public string npcRole;
         [TextArea(3, 5)] public string[] dialogueLines;
     }
 }

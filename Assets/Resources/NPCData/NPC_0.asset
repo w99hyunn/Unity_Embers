@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NPC_0
   m_EditorClassIdentifier: 
   npcName: "\uB9C8\uB9AC\uC544"
+  npcRole: "\uD29C\uD1A0\uB9AC\uC5BC"
   dialogueLines:
   - "\uC548\uB155?"
   - "\uB09C \uB9C8\uB9AC\uC544\uC58C."

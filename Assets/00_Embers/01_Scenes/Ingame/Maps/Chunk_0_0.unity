@@ -6988,8 +6988,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcNameTag: {fileID: 3259909497126508806}
   npcData: {fileID: 11400000, guid: 3c9f775563586274aa9c8c7c6ef33f5b, type: 2}
-  npcRole: "\uD29C\uD1A0\uB9AC\uC5BC"
-  npcName: "\uB9C8\uB9AC\uC544"
 --- !u!1001 &1148424963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11978,7 +11976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 103.01001, y: 14.705964, z: 103.01001}
+  size: {x: 103.01001, y: 14.705966, z: 103.01001}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -12018,7 +12016,7 @@ Transform:
   m_GameObject: {fileID: 1750014254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.000004, y: 5.847982, z: 50.000004}
+  m_LocalPosition: {x: 50.000004, y: 5.847983, z: 50.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
