@@ -14,22 +14,22 @@ namespace NOLDA
         public Transform chatContentPanel;
         public InputField chatInputField;
         public ScrollRect scrollView;
-        
+
         private CanvasGroup _chatCanvasGroup;
         private CanvasGroup _inputFieldCanvasGroup;
-        
+
         //Chat Msg ObjectPool
         private ObjectPool<GameObject> _chatMessagePool;
         private int _currentMessages = 0;
-        
+
         private CancellationTokenSource _fadeCancellationTokenSource;
 
         private void Awake()
         {
             TryGetComponent<CanvasGroup>(out _chatCanvasGroup);
             chatInputField.TryGetComponent<CanvasGroup>(out _inputFieldCanvasGroup);
-            _inputFieldCanvasGroup.alpha = 0;
-            
+            _inputFieldCanvasGroup.gameObject.SetActive(false);
+
             _chatMessagePool = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(chatMessagePrefab, chatContentPanel),
                 actionOnGet: obj =>
@@ -77,7 +77,7 @@ namespace NOLDA
         public async Awaitable ShowChat()
         {
             CancelFadeOut();
-            _inputFieldCanvasGroup.alpha = 1f;
+            _inputFieldCanvasGroup.gameObject.SetActive(true);
             _chatCanvasGroup.alpha = 1f;
             chatInputField.interactable = true;
             await Awaitable.NextFrameAsync();
@@ -86,7 +86,7 @@ namespace NOLDA
 
         public void HideChat()
         {
-            _inputFieldCanvasGroup.alpha = 0f;
+            _inputFieldCanvasGroup.gameObject.SetActive(false);
             StartFadeOutChatCanvasGroup(5f).Forget();
             chatInputField.interactable = false;
             chatInputField.DeactivateInputField();
