@@ -13,13 +13,13 @@ namespace NOLDA
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		
+
 		[Header("Cinemachine Settings")]
 		public CinemachineThirdPersonFollow thirdPersonFollow;
 		public float scrollSpeed = 0.5f;
 		public float minZ = 1f;
 		public float maxZ = 8f;
-		
+
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -44,11 +44,11 @@ namespace NOLDA
 		{
 			ScrollInput(value.Get<Vector2>()).Forget();
 		}
-		
+
 		private void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-		} 
+		}
 
 		private void LookInput(Vector2 newLookDirection)
 		{
@@ -64,7 +64,7 @@ namespace NOLDA
 		{
 			sprint = newSprintState;
 		}
-		
+
 		private async Awaitable ScrollInput(Vector2 scrollDelta)
 		{
 			await Awaitable.NextFrameAsync(); //InputSystem 경고 방지를 위한 1프레임대기
@@ -73,14 +73,14 @@ namespace NOLDA
 			Vector2 scrollInput = scrollDelta;
 			AdjustShoulderOffset(scrollInput.y);
 		}
-		
+
 		public bool IsPointerOverUI()
 		{
 			// EventSystem을 사용하여 포인터가 UI 위에 있는지 확인
 			return EventSystem.current != null
-			       && EventSystem.current.IsPointerOverGameObject(); // UI요소를 감지하는 함수
+				   && EventSystem.current.IsPointerOverGameObject(); // UI요소를 감지하는 함수
 		}
-		
+
 		private void AdjustShoulderOffset(float scrollInput)
 		{
 			if (thirdPersonFollow != null && scrollInput != 0)
@@ -93,5 +93,5 @@ namespace NOLDA
 			}
 		}
 	}
-	
+
 }

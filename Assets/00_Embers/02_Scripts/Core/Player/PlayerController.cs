@@ -1,7 +1,7 @@
-﻿ using Mirror;
- using UnityEngine;
- 
- namespace NOLDA
+﻿using Mirror;
+using UnityEngine;
+
+namespace NOLDA
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour
@@ -71,6 +71,12 @@
         [Tooltip("카메라 위치를 미세 조정할 때 유용한 추가 각도")]
         public float CameraAngleOverride = 0.0f;
 
+        [Header("NPC 대화 중")]
+        public bool isNpcTalk = false;
+
+        [Header("스킬 사용 중")]
+        public bool isUseSkill = false;
+
         #region private variables
         // cinemachine
         private float _cinemachineTargetYaw;
@@ -94,9 +100,9 @@
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
-        
-        private Animator _animator;        
-        
+
+        private Animator _animator;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -113,9 +119,9 @@
             {
                 playerInput.enabled = true;
             }
-            
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             AssignAnimationIDs();
 
@@ -126,9 +132,9 @@
 
         private void Update()
         {
-            if (!isLocalPlayer || skillHandler.IsSkillInUse)
+            if (!isLocalPlayer || isUseSkill || isNpcTalk)
                 return;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -252,7 +258,7 @@
             // 플레이어 이동
             controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-            
+
             // 캐릭터를 사용하는 경우 애니메이터 업데이트
             if (_hasAnimator)
             {
@@ -354,7 +360,7 @@
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (NetworkClient.localPlayer == null) return;
-            
+
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 if (FootstepAudioClips.Length > 0)
@@ -368,7 +374,7 @@
         private void OnLand(AnimationEvent animationEvent)
         {
             if (NetworkClient.localPlayer == null) return;
-            
+
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(controller.center), FootstepAudioVolume);

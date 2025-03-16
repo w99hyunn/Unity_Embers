@@ -8,10 +8,18 @@ namespace NOLDA
     [RequireComponent(typeof(Animator))]
     public class PlayerSkillHandler : NetworkBehaviour, ISkillEndCallback
     {
-        private PlayerInput input;
-        private Animator animator;
-        private bool _isSkillInUse = false;
-        public bool IsSkillInUse => _isSkillInUse;
+        public bool IsSkillInUse
+        {
+            get => _isSkillInUse;
+            set
+            {
+                if (value != _isSkillInUse)
+                {
+                    _isSkillInUse = value;
+                    playerController.isUseSkill = value;
+                }
+            }
+        }
 
         // 캐시된 스킬 데이터를 저장할 구조체
         private struct CachedSkillInfo
@@ -21,16 +29,24 @@ namespace NOLDA
             public KeyCode keyCode;
         }
 
+        private PlayerController playerController;
+        private PlayerInput input;
+        private Animator animator;
+        private bool _isSkillInUse = false;
+
         // 스킬 정보 캐시
         private List<CachedSkillInfo> cachedSkills = new List<CachedSkillInfo>();
 
-        private void Start()
+        private void Awake()
         {
+            TryGetComponent<PlayerController>(out playerController);
             TryGetComponent<PlayerInput>(out input);
             TryGetComponent<Animator>(out animator);
+        }
 
-            // 플레이어가 스킬정보 캐시를 갖고있음(메모리 효율성)
-            UpdateSkillCache();
+        private void Start()
+        {
+            UpdateSkillCache(); // 플레이어가 스킬정보 캐시를 갖고있음(메모리 효율성)
             Singleton.Game.playerData.OnDataChanged += OnPlayerDataChanged;
         }
 
@@ -88,13 +104,13 @@ namespace NOLDA
         /// <param name="skillLevel"></param>
         public void ExecuteSkill(SkillData skill, int skillLevel)
         {
-            if (Singleton.Skill.IsSkillOnCooldown(skill.skillID) || _isSkillInUse)
+            if (Singleton.Skill.IsSkillOnCooldown(skill.skillID) || IsSkillInUse)
             {
                 return;
             }
 
             // 애니메이션 실행
-            _isSkillInUse = true;
+            IsSkillInUse = true;
             //animator.applyRootMotion = true;
             if (skill.skillExecuter is ISkill skillScript)
             {
@@ -110,7 +126,7 @@ namespace NOLDA
 
         public void OnSkillEnd()
         {
-            _isSkillInUse = false;
+            IsSkillInUse = false;
             //animator.applyRootMotion = false;
         }
 

@@ -4,15 +4,17 @@ namespace NOLDA
 {
     public class PlayerNPCDialogueHandler : MonoBehaviour
     {
-        DialogueManager dialogueManager;
-        NPCInteract currentNPC;
+        private PlayerController playerController;
+        private DialogueManager dialogueManager;
+        private NPCInteract currentNPC;
 
-        void Awake()
+        private void Awake()
         {
+            TryGetComponent<PlayerController>(out playerController);
             dialogueManager = FindAnyObjectByType<DialogueManager>();
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             NPCInteract npc = other.GetComponent<NPCInteract>();
             if (npc != null)
@@ -21,7 +23,7 @@ namespace NOLDA
             }
         }
 
-        void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<NPCInteract>() == currentNPC)
             {
@@ -29,13 +31,18 @@ namespace NOLDA
             }
         }
 
-        void OnInteract()
+        private void OnInteract()
         {
             if (currentNPC != null && currentNPC.CanTalk())
             {
-                Debug.Log("까꿍");
-                //dialogueManager.StartDialogue(currentNPC);
+                dialogueManager.StartDialogue(currentNPC, EndDialogueCallback);
+                playerController.isNpcTalk = true;
             }
+        }
+
+        private void EndDialogueCallback()
+        {
+            playerController.isNpcTalk = false;
         }
     }
 }

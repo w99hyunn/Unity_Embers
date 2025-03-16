@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 namespace NOLDA
 {
@@ -16,12 +17,15 @@ namespace NOLDA
         private int dialogueIndex = 0;
         private bool isTyping = false;
 
-        public void StartDialogue(NPCInteract npc)
+        private Action onDialogueEnd;
+
+        public void StartDialogue(NPCInteract npc, Action onEndCallback)
         {
             dialogueUI.SetActive(true);
             npcNameText.text = npc.GetNPCData().npcName;
             currentDialogue = npc.GetNPCData().dialogueLines;
             dialogueIndex = 0;
+            onDialogueEnd = onEndCallback;
             nextButton.gameObject.SetActive(false);
             StartCoroutine(TypeDialogue(currentDialogue[dialogueIndex]));
         }
@@ -61,6 +65,7 @@ namespace NOLDA
         public void EndDialogue()
         {
             dialogueUI.SetActive(false);
+            onDialogueEnd?.Invoke();
         }
     }
 }

@@ -2468,7 +2468,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 116.18, y: 50}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &662192399974378561
 CanvasRenderer:
@@ -3177,6 +3177,8 @@ MonoBehaviour:
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
+  isNpcTalk: 0
+  isUseSkill: 0
 --- !u!114 &1325093965284912871
 MonoBehaviour:
   m_ObjectHideFlags: 0
