@@ -125,7 +125,7 @@ namespace NOLDA
         /// <param name="text"></param>
         public void ConnectingMessageUpdate(string text)
         {
-            ConnectingMessage.text = $"서버에 연결중입니다...\r\n{text}";
+            ConnectingMessage.text = $"서버에 연결 시도 중입니다...\r\n{text}";
         }
 
         public void ConnectingSuccess()
