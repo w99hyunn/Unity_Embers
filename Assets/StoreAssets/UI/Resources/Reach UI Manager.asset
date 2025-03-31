@@ -20,8 +20,8 @@ MonoBehaviour:
   hoverSound: {fileID: 8300000, guid: f0cb06f9461ea8b4bba64f3f7064a702, type: 3}
   clickSound: {fileID: 8300000, guid: 4656469a7b79f5c4a84f2ecd79f129d1, type: 3}
   notificationSound: {fileID: 8300000, guid: 35a7b929e025d674898e2f6a2d87c68a, type: 3}
-  accentColor: {r: 0.9150943, g: 0.5181829, b: 0.14244394, a: 1}
-  accentColorInvert: {r: 0.09803922, g: 0.13725491, b: 0.1764706, a: 1}
+  accentColor: {r: 0.050980393, g: 0.7019608, b: 0.4627451, a: 1}
+  accentColorInvert: {r: 0.19607843, g: 0.21960784, b: 0.28627452, a: 1}
   primaryColor: {r: 1, g: 1, b: 1, a: 1}
   secondaryColor: {r: 1, g: 1, b: 1, a: 1}
   negativeColor: {r: 1, g: 0.29411766, b: 0.29411766, a: 1}

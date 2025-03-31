@@ -282,7 +282,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";KeyboardMouse",
                     "action": "Skip",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -310,7 +310,7 @@
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";KeyboardMouse",
                     "action": "NextInputField",
                     "isComposite": false,
                     "isPartOfComposite": false
