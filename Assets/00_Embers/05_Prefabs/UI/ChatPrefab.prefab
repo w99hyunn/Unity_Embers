@@ -130,8 +130,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -10.505}
-  m_SizeDelta: {x: 52.39, y: 21.01}
+  m_AnchoredPosition: {x: 20, y: -12.28}
+  m_SizeDelta: {x: 62.57, y: 24.56}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8825199176244319815
 CanvasRenderer:
@@ -163,15 +163,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
-  m_sharedMaterial: {fileID: 7005715898997174795, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 79508aa80247e3045a1a0d7c4d2470ec, type: 2}
+  m_sharedMaterial: {fileID: 547826850885794203, guid: 79508aa80247e3045a1a0d7c4d2470ec, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280583401
-  m_fontColor: {r: 0.9150943, g: 0.5181829, b: 0.14244394, a: 1}
+    rgba: 4278237951
+  m_fontColor: {r: 1, g: 0.7294118, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 2
   m_fontColorGradient:
@@ -245,11 +245,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 98972d851a944df4a9402eac62a896e7, type: 2}
-  fontType: 1
+  fontType: 4
   colorType: 0
-  useCustomColor: 0
+  useCustomColor: 1
   useCustomAlpha: 1
-  useCustomFont: 1
+  useCustomFont: 0
 --- !u!114 &8459565599178169254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,8 +300,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 92.39, y: -0}
-  m_SizeDelta: {x: 559.44, y: 21.01}
+  m_AnchoredPosition: {x: 102.57, y: -0}
+  m_SizeDelta: {x: 559.44, y: 24.56}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6709635515132257280
 CanvasRenderer:
@@ -333,8 +333,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Message
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
-  m_sharedMaterial: {fileID: 7005715898997174795, guid: 89175981c17427a4aa43af62431ce79c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3a434c3a30736354da4a6bca6c26d872, type: 2}
+  m_sharedMaterial: {fileID: -6371996477248366360, guid: 3a434c3a30736354da4a6bca6c26d872, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -419,7 +419,7 @@ MonoBehaviour:
   colorType: 2
   useCustomColor: 0
   useCustomAlpha: 1
-  useCustomFont: 1
+  useCustomFont: 0
 --- !u!114 &3884187488500629694
 MonoBehaviour:
   m_ObjectHideFlags: 0

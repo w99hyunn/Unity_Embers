@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace NOLDA
 {
-    [RequireComponent(typeof(CanvasGroup))]
     public class ChatUIView : MonoBehaviour
     {
         [Header("UI Elements")]
@@ -16,7 +15,6 @@ namespace NOLDA
         public ScrollRect scrollView;
 
         private CanvasGroup _chatCanvasGroup;
-        private CanvasGroup _inputFieldCanvasGroup;
 
         //Chat Msg ObjectPool
         private ObjectPool<GameObject> _chatMessagePool;
@@ -26,9 +24,7 @@ namespace NOLDA
 
         private void Awake()
         {
-            TryGetComponent<CanvasGroup>(out _chatCanvasGroup);
-            chatInputField.TryGetComponent<CanvasGroup>(out _inputFieldCanvasGroup);
-            _inputFieldCanvasGroup.gameObject.SetActive(false);
+            scrollView.TryGetComponent<CanvasGroup>(out _chatCanvasGroup);
 
             _chatMessagePool = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(chatMessagePrefab, chatContentPanel),
@@ -77,7 +73,6 @@ namespace NOLDA
         public async Awaitable ShowChat()
         {
             CancelFadeOut();
-            _inputFieldCanvasGroup.gameObject.SetActive(true);
             _chatCanvasGroup.alpha = 1f;
             chatInputField.interactable = true;
             await Awaitable.NextFrameAsync();
@@ -86,7 +81,6 @@ namespace NOLDA
 
         public void HideChat()
         {
-            _inputFieldCanvasGroup.gameObject.SetActive(false);
             StartFadeOutChatCanvasGroup(5f).Forget();
             chatInputField.interactable = false;
             chatInputField.DeactivateInputField();
