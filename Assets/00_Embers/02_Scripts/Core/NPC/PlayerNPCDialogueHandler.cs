@@ -18,8 +18,7 @@ namespace NOLDA
 
         private void OnTriggerEnter(Collider other)
         {
-            NPCInteract npc = other.GetComponent<NPCInteract>();
-            if (npc != null)
+            if (other.TryGetComponent<NPCInteract>(out NPCInteract npc))
             {
                 currentNPC = npc;
             }
@@ -27,12 +26,15 @@ namespace NOLDA
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.GetComponent<NPCInteract>() == currentNPC)
+            if (other.TryGetComponent<NPCInteract>(out NPCInteract npc) && npc == currentNPC)
             {
                 currentNPC = null;
             }
         }
 
+        /// <summary>
+        /// F키를 눌러 대화 상호작용
+        /// </summary>
         private void OnInteract()
         {
             if (currentNPC != null && currentNPC.CanTalk() && _isTalking == false)
