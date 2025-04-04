@@ -454,7 +454,7 @@ namespace NOLDA
         private async Awaitable InitInGameAsync()
         {
             Singleton.UI.FadeIn();
-            Singleton.UI.OpenLoading("게임 시작", "탐험을 시작하기 위해 준비중입니다.\n잠시만 기다려주세요.", 3);
+            Singleton.UI.OpenLoading("게임 시작", "모험을 시작하기 위해 준비중입니다.\n잠시만 기다려주세요.", 3);
             await Awaitable.WaitForSecondsAsync(0.5f);
             Singleton.Map.LoadInGame();
         }
