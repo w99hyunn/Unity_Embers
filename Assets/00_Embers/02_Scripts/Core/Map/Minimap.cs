@@ -128,8 +128,11 @@ namespace NOLDA
 
         private async Awaitable UpdateIconsAsync()
         {
-            while (true)
+            while (this != null && gameObject != null)
             {
+                if (this == null || !this.isActiveAndEnabled)
+                    break;
+
                 UpdateNPCAndEnemyIcons();
                 await Awaitable.WaitForSecondsAsync(iconUpdateInterval);
             }
@@ -380,6 +383,9 @@ namespace NOLDA
 
         private void UpdateNPCAndEnemyIcons()
         {
+            if (this == null || !this.isActiveAndEnabled)
+                return;
+
             // 현재 활성화된 NPC와 Enemy 찾기 (태그 기반 검색은 비용이 크므로 주의)
             GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -403,8 +409,13 @@ namespace NOLDA
         private void UpdateIconsForTargets(GameObject[] targets, Dictionary<GameObject, GameObject> iconDict,
                                           GameObject iconPrefab, HashSet<GameObject> existingTargets)
         {
+            if (this == null || !this.isActiveAndEnabled)
+                return;
+
             foreach (GameObject target in targets)
             {
+                if (target == null) continue;
+
                 existingTargets.Remove(target); // 처리된 대상 제거
 
                 // 이미 아이콘이 있는지 확인
@@ -419,6 +430,9 @@ namespace NOLDA
                 else
                 {
                     // 새 아이콘 생성
+                    if (this == null || !this.isActiveAndEnabled || iconPrefab == null)
+                        continue;
+
                     GameObject iconObj = Instantiate(iconPrefab, transform);
                     RectTransform iconRect = iconObj.GetComponent<RectTransform>();
                     iconRect.sizeDelta = new Vector2(iconSize * 2, iconSize * 2);
@@ -433,6 +447,9 @@ namespace NOLDA
         // 더 이상 존재하지 않는 아이콘 제거 (코드 중복 제거)
         private void RemoveOldIcons(HashSet<GameObject> oldTargets, Dictionary<GameObject, GameObject> iconDict)
         {
+            if (this == null || !this.isActiveAndEnabled)
+                return;
+
             foreach (GameObject oldTarget in oldTargets)
             {
                 if (iconDict.TryGetValue(oldTarget, out GameObject iconObj))
@@ -445,7 +462,7 @@ namespace NOLDA
 
         private void UpdateIconPosition(GameObject target, GameObject iconObject)
         {
-            if (target == null || iconObject == null)
+            if (this == null || !this.isActiveAndEnabled || target == null || iconObject == null)
                 return;
 
             RectTransform iconRect = iconObject.GetComponent<RectTransform>();
