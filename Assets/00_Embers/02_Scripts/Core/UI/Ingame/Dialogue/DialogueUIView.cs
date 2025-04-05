@@ -1,12 +1,14 @@
-using System;
+using System.Collections.Generic;
 using Michsky.UI.Reach;
+using NOLDA;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(ModalWindowManager))]
 public class DialogueUIView : MonoBehaviour
 {
+    [SerializeField] private List<CanvasGroup> hideUIsOnDialogue;
     [SerializeField] private TMP_Text npcNameText;
     [SerializeField] private TMP_Text npcRoleText;
     [SerializeField] private TMP_Text dialogueText;
@@ -14,12 +16,59 @@ public class DialogueUIView : MonoBehaviour
     [SerializeField] private ButtonManager okButton;
     [SerializeField] private ButtonManager closeButton;
 
+    private ModalWindowManager dialogueUI;
+    public ModalWindowManager DialogueUI => dialogueUI;
+
     public string DialogueText
     {
         get => dialogueText.text;
         set
         {
             dialogueText.text = value;
+        }
+    }
+
+    private void Awake()
+    {
+        TryGetComponent<ModalWindowManager>(out dialogueUI);
+    }
+
+    public void HideUI()
+    {
+        foreach (var canvasGroup in hideUIsOnDialogue)
+        {
+            FadeCanvasGroup(canvasGroup, false).Forget();
+        }
+    }
+
+    public void ShowUI()
+    {
+        foreach (var canvasGroup in hideUIsOnDialogue)
+        {
+            FadeCanvasGroup(canvasGroup, true).Forget();
+        }
+    }
+
+    private async Awaitable FadeCanvasGroup(CanvasGroup canvasGroup, bool fadeIn)
+    {
+        float duration = 0.5f; // Fade duration
+        float elapsedTime = 0f;
+        float startAlpha = fadeIn ? 0 : 1;
+        float endAlpha = fadeIn ? 1 : 0;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+            await Awaitable.NextFrameAsync();
+        }
+
+        canvasGroup.alpha = endAlpha;
+
+        if (!fadeIn)
+        {
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
         }
     }
 

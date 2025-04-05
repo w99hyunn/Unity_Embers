@@ -1,4 +1,5 @@
 using Mirror;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace NOLDA
@@ -9,18 +10,21 @@ namespace NOLDA
     /// </summary>
     public class NPCInteract : MonoBehaviour
     {
-        [SerializeField] private NPCNameTag npcNameTag;
+        [Header("From Resources")]
         [SerializeField] private NPCData npcData;
-
+        [Space(10)]
+        [SerializeField] private NPCNameTag npcNameTag;
+        [SerializeField] private CinemachineCamera npcCamera;
         private bool isPlayerInRange = false;
 
-        void Awake()
+        private void Awake()
         {
             UpdateNPCInfo();
             npcNameTag.SetInteractUI(false);
+            npcCamera.enabled = false;
         }
 
-        void UpdateNPCInfo()
+        private void UpdateNPCInfo()
         {
             npcNameTag.SetNPCInfo(npcData.npcRole, npcData.npcName);
         }
@@ -41,6 +45,16 @@ namespace NOLDA
                 isPlayerInRange = false;
                 npcNameTag.SetInteractUI(false);
             }
+        }
+
+        public void StartDialogue()
+        {
+            npcCamera.enabled = true;
+        }
+
+        public void EndDialogue()
+        {
+            npcCamera.enabled = false;
         }
 
         public bool CanTalk() => isPlayerInRange;

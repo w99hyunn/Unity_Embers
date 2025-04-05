@@ -28,7 +28,7 @@ namespace Michsky.UI.Reach
             if (HUDPanel == null)
                 return;
 
-            cg = HUDPanel.AddComponent<CanvasGroup>();
+            HUDPanel.TryGetComponent<CanvasGroup>(out cg);
 
             if (defaultBehaviour == DefaultBehaviour.Visible) { cg.alpha = 1; isOn = true; onSetVisible.Invoke(); }
             else if (defaultBehaviour == DefaultBehaviour.Invisible) { cg.alpha = 0; isOn = false; onSetInvisible.Invoke(); }

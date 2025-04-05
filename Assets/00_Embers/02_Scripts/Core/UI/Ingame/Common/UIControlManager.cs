@@ -7,12 +7,16 @@ namespace NOLDA
 {
     public class UIControlManager : MonoBehaviour
     {
+        [Header("Main Camera")]
+        [SerializeField] private Camera mainCamera;
+        public Camera MainCamera => mainCamera;
+
         [Header("Windows 예외1 PauseMenu")]
         public PauseMenuManager pauseMenuManager;
 
         [Header("Windows 예외2 Chat")]
         public ChatUIController chatUIController;
-        
+
         [SerializeField]
         private List<ModalWindowManager> openUIs = new List<ModalWindowManager>();
         private bool _isChatting = false;
@@ -26,22 +30,22 @@ namespace NOLDA
             await PlayerBind();
             UpdateCursor();
         }
-        
+
         private async Awaitable PlayerBind()
         {
             while (NetworkClient.localPlayer == null)
             {
                 await Awaitable.NextFrameAsync();
             }
-            
+
             _localPlayer = NetworkClient.localPlayer.gameObject;
         }
-        
+
         public void OpenUI(ModalWindowManager ui)
         {
             if (true == _isChatting)
                 return;
-            
+
             if (!openUIs.Contains(ui))
             {
                 openUIs.Add(ui);
@@ -54,7 +58,7 @@ namespace NOLDA
         {
             if (true == _isChatting)
                 return;
-            
+
             if (openUIs.Contains(ui))
             {
                 openUIs.Remove(ui);
@@ -62,7 +66,7 @@ namespace NOLDA
                 UpdateCursor();
             }
         }
-        
+
         public void ToggleChat()
         {
             if (false == _isChatting)
@@ -77,10 +81,10 @@ namespace NOLDA
                 _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
                 _isChatting = false;
             }
-            
+
             UpdateCursor();
         }
-        
+
         /// <summary>
         /// ESC에 이 함수를 할당하면 창이 열려있으면 먼저 닫을것이고, 채팅창이 열려있으면 채팅창을 먼저 닫는다.
         /// </summary>
@@ -94,7 +98,7 @@ namespace NOLDA
                 UpdateCursor();
                 return;
             }
-            
+
             if (openUIs.Count > 0)
             {
                 CloseTopUI();
@@ -105,7 +109,7 @@ namespace NOLDA
             pauseMenuManager.OpenPauseMenu();
             UpdateCursor();
         }
-        
+
         private void CloseTopUI()
         {
             if (openUIs.Count > 0)
@@ -139,7 +143,7 @@ namespace NOLDA
                 _localPlayer.GetComponent<Player>().lockCursor = false;
             }
         }
-        
+
         public void ReturnTitle()
         {
             _localPlayer.GetComponent<Player>().CmdRemovePlayer();

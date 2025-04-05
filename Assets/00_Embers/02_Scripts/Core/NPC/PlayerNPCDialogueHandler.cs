@@ -8,8 +8,6 @@ namespace NOLDA
         private DialogueManager dialogueManager;
         private NPCInteract currentNPC;
 
-        private bool _isTalking = false;
-
         private void Awake()
         {
             TryGetComponent<PlayerController>(out playerController);
@@ -37,9 +35,8 @@ namespace NOLDA
         /// </summary>
         private void OnInteract()
         {
-            if (currentNPC != null && currentNPC.CanTalk() && _isTalking == false)
+            if (currentNPC != null && currentNPC.CanTalk() && playerController.isNpcTalk == false)
             {
-                _isTalking = true;
                 playerController.isNpcTalk = true;
                 dialogueManager.StartDialogue(currentNPC, EndDialogueCallback);
             }
@@ -47,8 +44,8 @@ namespace NOLDA
 
         private void EndDialogueCallback()
         {
-            _isTalking = false;
             playerController.isNpcTalk = false;
+            currentNPC.EndDialogue();
         }
     }
 }

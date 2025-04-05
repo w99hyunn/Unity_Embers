@@ -16,6 +16,6 @@ MonoBehaviour:
   - classType: 0
     avatarPrefab: {fileID: 1627533462307103322, guid: 09acd47259b1b3445b03b10bfcc8b48a, type: 3}
   - classType: 1
-    avatarPrefab: {fileID: -1728013695380148634, guid: 7ac9f344cbc9e0d45aba27247aa1b0e3, type: 3}
+    avatarPrefab: {fileID: 1855472547866099772, guid: 94aad2ac1af159e449f968959a7e077c, type: 3}
   - classType: 2
-    avatarPrefab: {fileID: -1728013695380148634, guid: aa3f53a691be75944ae3d98bcaf1a56c, type: 3}
+    avatarPrefab: {fileID: 1206433905077553410, guid: 6a276ee006ebca04c97db5a391e306d2, type: 3}

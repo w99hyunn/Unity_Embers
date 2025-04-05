@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using Michsky.UI.Reach;
 
 namespace NOLDA
 {
@@ -8,8 +7,6 @@ namespace NOLDA
     {
         [SerializeField] private DialogueUIView _view;
         [SerializeField] private UIControlManager uiControlManager;
-        [SerializeField] private ModalWindowManager dialogueUI;
-
         private string[] currentDialogue;
         private int dialogueIndex = 0;
         private bool _isTyping = false;
@@ -31,7 +28,7 @@ namespace NOLDA
 
         private void OnDisable()
         {
-            onDialogueEnd?.Invoke();
+            EndDialogue();
         }
 
         public void ShowNextDialogue()
@@ -42,20 +39,28 @@ namespace NOLDA
 
         public void EndDialogue()
         {
-            uiControlManager.CloseUI(dialogueUI);
+            _view.ShowUI();
+            uiControlManager.CloseUI(_view.DialogueUI);
+            uiControlManager.MainCamera.cullingMask |= (1 << 3) | (1 << 8);
+
             onDialogueEnd?.Invoke();
         }
 
         public void StartDialogue(NPCInteract npc, Action onEndCallback)
         {
-            _view.SetDefaultNpcInfo(npc.GetNPCData().npcName, npc.GetNPCData().npcRole);
+            npc.StartDialogue();
+
             currentDialogue = npc.GetNPCData().dialogueLines;
             dialogueIndex = 0;
             onDialogueEnd = onEndCallback;
+
+            _view.HideUI();
+            _view.SetDefaultNpcInfo(npc.GetNPCData().npcName, npc.GetNPCData().npcRole);
             _view.ShowNextButton(false);
             _view.ShowOkButton(false);
 
-            uiControlManager.OpenUI(dialogueUI);
+            uiControlManager.OpenUI(_view.DialogueUI);
+            uiControlManager.MainCamera.cullingMask &= ~((1 << 3) | (1 << 8));
 
             TypeDialogue(currentDialogue[dialogueIndex]).Forget();
         }

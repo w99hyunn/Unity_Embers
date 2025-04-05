@@ -9,6 +9,7 @@ namespace NOLDA
 
         public void StartDialogue(NPCInteract npc, Action onEndCallback)
         {
+
             dialogueUIController.StartDialogue(npc, onEndCallback);
         }
     }
