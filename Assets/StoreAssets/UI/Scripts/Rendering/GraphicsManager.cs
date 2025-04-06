@@ -81,7 +81,7 @@ namespace Michsky.UI.Reach
 
         public void SetVSync(bool value)
         {
-            if (value == true) { QualitySettings.vSyncCount = 2; }
+            if (value == true) { QualitySettings.vSyncCount = 1; }
             else { QualitySettings.vSyncCount = 0; }
         }
 
@@ -167,17 +167,17 @@ namespace Michsky.UI.Reach
                 case AntiAliasingOption.NONE:
                     additionalCameraData.antialiasing = AntialiasingMode.None;
                     break;
-                    
+
                 case AntiAliasingOption.FXAA:
                     additionalCameraData.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
                     // FXAA 강도는 URP 에셋에서 전역 설정으로 관리됨
                     break;
-                    
+
                 case AntiAliasingOption.SMAA:
                     additionalCameraData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
                     additionalCameraData.antialiasingQuality = AntialiasingQuality.High;
                     break;
-                    
+
                 case AntiAliasingOption.TAA:
                     additionalCameraData.antialiasing = AntialiasingMode.TemporalAntiAliasing;
                     // TAA 설정은 URP 에셋에서 전역으로 관리됨
