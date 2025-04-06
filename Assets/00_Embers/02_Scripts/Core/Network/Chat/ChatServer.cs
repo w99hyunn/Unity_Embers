@@ -6,12 +6,13 @@ namespace NOLDA
     public class ChatServer : NetworkBehaviour
     {
         public Action<string, string> OnMessageRecieved;
-        
+
         [Command(requiresAuthority = false)]
         public void CmdSendChatMessage(string playerName, string message)
         {
             if (string.IsNullOrEmpty(message)) return;
             RpcReceiveChatMessage(playerName, message);
+            DebugUtils.Log($"[Chat] {playerName} : {message}");
         }
 
         [ClientRpc]
