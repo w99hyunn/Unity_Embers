@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace NOLDA
 {
@@ -454,8 +455,18 @@ namespace NOLDA
         {
             Singleton.UI.FadeIn();
             Singleton.UI.OpenLoading("게임 시작", "모험을 시작하기 위해 준비중입니다.\n잠시만 기다려주세요.", 3);
+
             await Awaitable.WaitForSecondsAsync(0.5f);
-            Singleton.Map.LoadInGame();
+
+            await SceneManager.UnloadSceneAsync("Title");
+            AsyncOperation inGameLoadOperation = SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
+            while (!inGameLoadOperation.isDone)
+            {
+                await Awaitable.NextFrameAsync();
+            }
+
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("InGame"));
+            //InGame씬의 MapManager에서 Start시 맵 로드 후 로딩화면 닫음
         }
 
         //캐릭터 삭제

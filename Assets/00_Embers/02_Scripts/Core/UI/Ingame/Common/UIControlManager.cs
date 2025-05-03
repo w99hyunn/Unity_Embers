@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Michsky.UI.Reach;
 using Mirror;
@@ -12,20 +13,22 @@ namespace NOLDA
         public Camera MainCamera => mainCamera;
 
         [Header("Windows 예외1 PauseMenu")]
-        public PauseMenuManager pauseMenuManager;
+        [SerializeField] private PauseMenuManager pauseMenuManager;
 
         [Header("Windows 예외2 Chat")]
-        public ChatUIController chatUIController;
+        [SerializeField] private ChatUIController chatUIController;
 
-        [SerializeField]
         private List<ModalWindowManager> openUIs = new List<ModalWindowManager>();
         private bool _isChatting = false;
         private bool _isPause = false;
+        private Transform _localPlayerTransform;
+        private Player _localPlayer;
+        private UnityEngine.InputSystem.PlayerInput _localPlayerInput;
 
-        private GameObject _localPlayer;
-        public GameObject LocalPlayer => _localPlayer;
+        public Transform localPlayerTransform => _localPlayerTransform;
+        public Action OnReturnTitle;
 
-        async void Start()
+        private async void Start()
         {
             await PlayerBind();
             UpdateCursor();
@@ -38,7 +41,10 @@ namespace NOLDA
                 await Awaitable.NextFrameAsync();
             }
 
-            _localPlayer = NetworkClient.localPlayer.gameObject;
+            var localPlyer = NetworkClient.localPlayer.gameObject;
+            localPlyer.TryGetComponent<Transform>(out _localPlayerTransform);
+            localPlyer.TryGetComponent<Player>(out _localPlayer);
+            localPlyer.TryGetComponent<UnityEngine.InputSystem.PlayerInput>(out _localPlayerInput);
         }
 
         public void OpenUI(ModalWindowManager ui)
@@ -72,13 +78,13 @@ namespace NOLDA
             if (false == _isChatting)
             {
                 chatUIController.OpenChat();
-                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false;
+                _localPlayerInput.enabled = false;
                 _isChatting = true;
             }
             else if (true == _isChatting)
             {
                 chatUIController.SendChatMessage().Forget();
-                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+                _localPlayerInput.enabled = true;
                 _isChatting = false;
             }
 
@@ -93,7 +99,7 @@ namespace NOLDA
             if (true == _isChatting)
             {
                 chatUIController.CloseChat();
-                _localPlayer.GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = true;
+                _localPlayerInput.enabled = true;
                 _isChatting = false;
                 UpdateCursor();
                 return;
@@ -133,23 +139,23 @@ namespace NOLDA
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                _localPlayer.GetComponent<Player>().lockCursor = true;
+                _localPlayer.lockCursor = true;
             }
             else
             {
                 // UI가 모두 닫히면 커서를 숨김
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                _localPlayer.GetComponent<Player>().lockCursor = false;
+                _localPlayer.lockCursor = false;
             }
         }
 
         public void ReturnTitle()
         {
-            _localPlayer.GetComponent<Player>().CmdRemovePlayer();
+            _localPlayer.CmdRemovePlayer();
             NetworkClient.NotReady();
 
-            Singleton.Map.ReturnTitle();
+            OnReturnTitle?.Invoke();
         }
 
         public void InGameChatNotice(string header, string message)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine;
@@ -6,20 +7,36 @@ using UnityEngine.SceneManagement;
 
 namespace NOLDA
 {
-    public class MapSingleton : MonoBehaviour
+    [RequireComponent(typeof(AudioSource))]
+    public class MapManager : MonoBehaviour
     {
+        [SerializeField] private UIControlManager uIControlManager;
+        [SerializeField] private LocationNotificationUI locationNotificationUI;
         public ChunkListSO chunkList;
 
         private AudioSource _audioSource;
-
-        // 현재 로드돼있는 청크 목록
-        private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>();
-        // 현재 재생중인 BGM
-        private string _currentBGMName;
+        private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>(); // 현재 로드돼있는 청크 목록
+        private string _currentBGMName; // 현재 재생중인 BGM
 
         private void Awake()
         {
             TryGetComponent<AudioSource>(out _audioSource);
+            uIControlManager.OnReturnTitle += ReturnTitle;
+        }
+
+        private void Start()
+        {
+            InitLoadMapChunks();
+        }
+
+        void OnDisable()
+        {
+            uIControlManager.OnReturnTitle -= ReturnTitle;
+        }
+
+        public void LocationNotificationAlert(string message)
+        {
+            locationNotificationUI.LocationNoti(message);
         }
 
         #region # BGM(청크별 BGM 관리)
@@ -80,8 +97,7 @@ namespace NOLDA
         #endregion
 
         #region # Load InGame
-
-        public void LoadInGame()
+        public void InitLoadMapChunks()
         {
             LoadInGameAsync().Forget();
         }
@@ -89,16 +105,6 @@ namespace NOLDA
         private async Awaitable LoadInGameAsync()
         {
             float startTime = Time.time;
-
-            await SceneManager.UnloadSceneAsync("Title");
-
-            AsyncOperation inGameLoadOperation = SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
-            while (!inGameLoadOperation.isDone)
-            {
-                await Awaitable.NextFrameAsync();
-            }
-
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName("InGame"));
 
             await UpdateChunks(Singleton.Game.playerData.Position);
 
@@ -119,7 +125,6 @@ namespace NOLDA
         #endregion
 
         #region # Return Title
-
         public void ReturnTitle()
         {
             ReturnTitleCoroutine().Forget();
@@ -180,7 +185,12 @@ namespace NOLDA
         #endregion
 
         #region # Chunk Loading
-        public async Awaitable UpdateChunks(Vector3 playerPosition)
+        public void RequireUpdateChunk(Vector3 playerPosition)
+        {
+            UpdateChunks(playerPosition).Forget();
+        }
+
+        private async Awaitable UpdateChunks(Vector3 playerPosition)
         {
             Vector2Int currentChunkCoord = GetChunkCoord(playerPosition);
 
