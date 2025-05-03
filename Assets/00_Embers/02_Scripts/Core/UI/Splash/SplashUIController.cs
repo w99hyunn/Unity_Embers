@@ -6,16 +6,17 @@ namespace NOLDA
 {
     public class SplashUIController : MonoBehaviour
     {
-        private SplashUIView _view;
-        private SplashUIModel _model;
+        private const string NEXT_SCENE_NAME = "Title";
+        private const string SESSION_SCENE_NAME = "Session";
 
-        private AsyncOperation _asyncLoad;
-        private AsyncOperation _asyncLoad2;
+        private SplashUIView _view;
+
+        private AsyncOperation _asyncLoadTitle;
+        private AsyncOperation _asyncLoadSession;
 
         private void Start()
         {
             TryGetComponent<SplashUIView>(out _view);
-            _model = new SplashUIModel();
 
             LoadSceneAsync().Forget();
             SwitchCanvasAndLoadScene().Forget();
@@ -23,13 +24,13 @@ namespace NOLDA
 
         private async Awaitable LoadSceneAsync()
         {
-            _asyncLoad = SceneManager.LoadSceneAsync(_model.NextSceneName);
-            _asyncLoad.allowSceneActivation = false;
+            _asyncLoadTitle = SceneManager.LoadSceneAsync(NEXT_SCENE_NAME);
+            _asyncLoadTitle.allowSceneActivation = false;
 
-            _asyncLoad2 = SceneManager.LoadSceneAsync(_model.SessionSceneName, LoadSceneMode.Additive);
-            _asyncLoad2.allowSceneActivation = false;
+            _asyncLoadSession = SceneManager.LoadSceneAsync(SESSION_SCENE_NAME, LoadSceneMode.Additive);
+            _asyncLoadSession.allowSceneActivation = false;
 
-            await _asyncLoad;
+            await _asyncLoadTitle;
         }
 
         private async Awaitable SwitchCanvasAndLoadScene()
@@ -42,8 +43,8 @@ namespace NOLDA
             await Awaitable.WaitForSecondsAsync(4f);
 
             Cursor.visible = true;
-            _asyncLoad.allowSceneActivation = true;
-            _asyncLoad2.allowSceneActivation = true;
+            _asyncLoadTitle.allowSceneActivation = true;
+            _asyncLoadSession.allowSceneActivation = true;
         }
 
         /// <summary>
@@ -53,8 +54,8 @@ namespace NOLDA
         private void OnSkip(InputValue value)
         {
             Cursor.visible = true;
-            SceneManager.LoadScene(_model.NextSceneName);
-            SceneManager.LoadScene(_model.SessionSceneName, LoadSceneMode.Additive);
+            SceneManager.LoadScene(NEXT_SCENE_NAME);
+            SceneManager.LoadScene(SESSION_SCENE_NAME, LoadSceneMode.Additive);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,16 +6,16 @@ namespace NOLDA
 {
     public class TitleUIController : MonoBehaviour
     {
-        private TitleUIView _view;
-        private TitleUIModel _model;
-
         private const int SERVER_CONNECT_MAX_RETRY = 10;
+        private const int LOAD_DEFAULT_MAP_CODE = 1;
+
+        private TitleUIView _view;
+
         private bool _isCheckingConnection;
 
         private void Start()
         {
             TryGetComponent<TitleUIView>(out _view);
-            TryGetComponent<TitleUIModel>(out _model);
         }
 
         #region # General
@@ -305,7 +304,7 @@ namespace NOLDA
                 Faction = faction,
                 CharacterClass = characterClass,
                 Gender = gender,
-                MapCode = _model.MapCode,
+                MapCode = LOAD_DEFAULT_MAP_CODE, //현재는 청크단위로 로드해서 필요없지만, 인스턴스 던전등으로 인해 추후 필요할 수 있음.
             };
 
             NetworkClient.ReplaceHandler<CreateCharacterResponsetMessage>(OnCreateCharacterResultReceived);
