@@ -36,7 +36,7 @@ MonoBehaviour:
     - line: '|   targetDevice: 2'
     - line: '|   useOnDemandResources: 0'
     - line: '|   accelerometerFrequency: 60'
-    - line: '|   companyName: STARTING'
+    - line: '|   companyName: NOLDA'
     - line: '|   productName: Embers_DedicatedServer'
     - line: '|   defaultCursor: {fileID: 2800000, guid: 00f79f1979ad16044841b38649dd332c,
         type: 3}'
