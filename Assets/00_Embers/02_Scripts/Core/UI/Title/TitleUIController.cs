@@ -114,21 +114,21 @@ namespace NOLDA
             //아이디 길이 확인
             if (_view.SignUpID.Length < 5)
             {
-                Singleton.UI.OpenAlert("실패", "아이디는 최소 5자 이상이어야 합니다.");
+                Singleton.UI.OpenAlert("회원가입 실패", "아이디는 최소 5자 이상이어야 합니다.");
                 return;
             }
 
             //비밀번호 길이 확인
             if (_view.SignUpPw.Length < 5)
             {
-                Singleton.UI.OpenAlert("실패", "비밀번호는 최소 5자 이상이어야 합니다.");
+                Singleton.UI.OpenAlert("회원가입 실패", "비밀번호는 최소 5자 이상이어야 합니다.");
                 return;
             }
 
             //비밀번호 제대로 입력했는지 체크
             if (_view.SignUpPw != _view.SignUpPwConfirm)
             {
-                Singleton.UI.OpenAlert("실패", "비밀번호가 일치하지 않습니다.");
+                Singleton.UI.OpenAlert("회원가입 실패", "비밀번호가 일치하지 않습니다.");
                 return;
             }
 
@@ -157,18 +157,18 @@ namespace NOLDA
             switch (msg.Result)
             {
                 case SignUpResult.SUCCESS:
-                    title = "SUCCESS";
-                    message = "Sign Up was successful.";
+                    title = "회원가입 성공";
+                    message = "회원가입이 완료되었습니다.";
                     _view.SignUpSuccess();
                     break;
                 case SignUpResult.DUPLICATE:
-                    title = "DUPLICATE";
-                    message = "This is a duplicate ID. Please use a different ID.";
+                    title = "회원가입 실패";
+                    message = "이미 존재하는 아이디입니다. 다른 아이디를 사용해주세요.";
                     break;
                 case SignUpResult.ERROR:
                 default:
-                    title = "ERROR";
-                    message = "An error has occurred. Please try again.";
+                    title = "회원가입 실패";
+                    message = "오류가 발생했습니다. 다시 시도해주세요. (오류코드 101)";
                     break;
             }
 
@@ -209,17 +209,17 @@ namespace NOLDA
                     LoadCharacterInfo();
                     return;
                 case LoginResult.IDWRONG:
-                    title = "아이디 오류";
+                    title = "로그인 실패";
                     message = "존재하지 않는 아이디입니다.";
                     break;
                 case LoginResult.PWWRONG:
-                    title = "비밀번호 오류";
+                    title = "로그인 실패";
                     message = "비밀번호가 일치하지 않습니다.";
                     break;
                 case LoginResult.ERROR:
                 default:
-                    title = "오류";
-                    message = "오류가 발생했습니다. 다시 시도해주세요.";
+                    title = "로그인 실패";
+                    message = "오류가 발생했습니다. 다시 시도해주세요. (오류코드 102)";
                     break;
 
             }
@@ -275,12 +275,12 @@ namespace NOLDA
             if (true == msg.Success)
             {
                 Singleton.Game.UserInfoUpdate(msg.Email);
-                Singleton.UI.OpenAlert("성공", "회원정보 업데이트가 완료되었습니다.");
+                Singleton.UI.OpenAlert("정보 갱신 성공", "회원정보 업데이트가 완료되었습니다.");
                 _view.EditProfileUpdateSuccess();
             }
             else
             {
-                Singleton.UI.OpenAlert("실패", "회원정보 업데이트에 실패했습니다.");
+                Singleton.UI.OpenAlert("정보 갱신 실패", "회원정보 업데이트에 실패했습니다. (오류코드 103)");
             }
         }
         #endregion
@@ -318,16 +318,16 @@ namespace NOLDA
             {
                 case CreateCharacterResult.SUCCESS:
                     _view.CreateCharacterSuccess();
-                    Singleton.UI.OpenAlert("성공", "캐릭터 생성이 완료되었습니다.");
+                    Singleton.UI.OpenAlert("캐릭터 생성 성공", "캐릭터 생성이 완료되었습니다.");
                     LoadCharacterInfo();
                     _view.OpenPanel("GameStart");
                     break;
                 case CreateCharacterResult.DUPLICATE:
-                    Singleton.UI.OpenAlert("실패", "이미 존재하는 캐릭터 이름입니다.");
+                    Singleton.UI.OpenAlert("캐릭터 생성 실패", "이미 존재하는 캐릭터 이름입니다.");
                     break;
                 case CreateCharacterResult.ERROR:
                 default:
-                    Singleton.UI.OpenAlert("실패", "오류가 발생했습니다. 오류코드 101");
+                    Singleton.UI.OpenAlert("캐릭터 생성 실패", "오류가 발생했습니다. (오류코드 104)");
                     break;
             }
         }
