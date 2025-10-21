@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8e75f11ff90ca8409b9a2dee1416588
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Dry_Planks_02.mat
+  uploadId: 715985

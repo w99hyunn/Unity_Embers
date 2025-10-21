@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3ece8bd5b1315d8449648dbbcf2e0c63
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _TextureSample0: {fileID: 2800000, guid: e22367f851a12c643a0434abf951ee30, type: 3}
+  - _TextureSample1: {fileID: 2800000, guid: d2582041596c2d34eacc851e3f504e33, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Shaders/GM_Godrays.shader
+  uploadId: 715985

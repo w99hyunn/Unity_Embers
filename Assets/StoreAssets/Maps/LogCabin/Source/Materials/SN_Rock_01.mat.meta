@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9bea60c85d683e348920f9401a868cd7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/SN_Rock_01.mat
+  uploadId: 715985

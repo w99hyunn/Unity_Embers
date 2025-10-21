@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 796e55a05b9113948b3f5703327f56bf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/SN_Debris.mat
+  uploadId: 715985

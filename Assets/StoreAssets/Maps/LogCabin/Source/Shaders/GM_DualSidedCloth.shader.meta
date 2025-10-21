@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a837c25eb6b6f5043ace163246fe8e79
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Shaders/GM_DualSidedCloth.shader
+  uploadId: 715985

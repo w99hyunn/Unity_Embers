@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e3d6aa47cc314244f86f64348575da31
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Shelves_01.mat
+  uploadId: 715985

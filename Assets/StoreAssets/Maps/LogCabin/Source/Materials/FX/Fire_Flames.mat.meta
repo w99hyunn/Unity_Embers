@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 22ebe9d76214a1a458ca507ec3ab9b31
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/FX/Fire_Flames.mat
+  uploadId: 715985

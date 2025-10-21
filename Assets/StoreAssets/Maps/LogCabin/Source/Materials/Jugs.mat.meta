@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d602058f1e273f74d9b85cc08f69cab3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Jugs.mat
+  uploadId: 715985

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8b97131b7f842c649a9971a734b9a4e9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/BrickStack.mat
+  uploadId: 715985

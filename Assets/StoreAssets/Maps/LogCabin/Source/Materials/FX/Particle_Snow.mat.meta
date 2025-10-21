@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2f4448302ad625440a499293f71a5c89
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/FX/Particle_Snow.mat
+  uploadId: 715985

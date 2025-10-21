@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3358cf98a752bf84c818faec21793a43
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Mortar.mat
+  uploadId: 715985

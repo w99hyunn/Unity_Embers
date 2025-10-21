@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cf19ccd9a2bf03c4c8293db8fcb0118e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Deer_Hide.mat
+  uploadId: 715985

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f5c41a09eb43f084d821d9786014dfd4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Barrel.mat
+  uploadId: 715985

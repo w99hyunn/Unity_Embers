@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ac72f33e5d0bc7341aa1be01751471f7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Sack_03.mat
+  uploadId: 715985
