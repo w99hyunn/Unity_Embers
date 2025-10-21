@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 97c0a0c4887cc734e8996dc24c1ae579
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Planks_01.mat
+  uploadId: 715985

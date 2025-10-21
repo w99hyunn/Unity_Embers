@@ -37,3 +37,5 @@ MonoBehaviour:
     sceneIdentifier: Test
   - sceneName: Chunk_1_1
     sceneIdentifier: Chunk_1_1
+  - sceneName: Chunk_2_0
+    sceneIdentifier: Chunk_2_0

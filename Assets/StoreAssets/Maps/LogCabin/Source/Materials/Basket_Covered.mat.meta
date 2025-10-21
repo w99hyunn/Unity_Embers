@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a3005c35ba4dd35489273346f39088bf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Basket_Covered.mat
+  uploadId: 715985

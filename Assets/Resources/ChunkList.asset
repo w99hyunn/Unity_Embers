@@ -41,3 +41,7 @@ MonoBehaviour:
     sceneName: Chunk_1_1
     bgm: {fileID: 8300000, guid: a09601a1083a6cc48a28ebf1fc213b34, type: 3}
     sceneAsset: {fileID: 102900000, guid: 4c0619b8a617c694c87868307f243d93, type: 3}
+  - chunkDisplayName: "\uD5CC\uD2F0\uB4DC \uB9E8\uC158"
+    sceneName: Chunk_2_0
+    bgm: {fileID: 8300000, guid: 5f388aa9fc10b4eecacb8e80427082f5, type: 3}
+    sceneAsset: {fileID: 102900000, guid: c0dca748c4ec96b479c1a0672dc09d66, type: 3}

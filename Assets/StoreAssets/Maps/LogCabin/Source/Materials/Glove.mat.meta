@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8c0772a25e483dc44b45e17812db41ee
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Glove.mat
+  uploadId: 715985

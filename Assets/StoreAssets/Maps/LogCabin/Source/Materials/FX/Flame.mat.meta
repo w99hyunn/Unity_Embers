@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1caf103ed8bf56740b5307aa5c4c2469
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/FX/Flame.mat
+  uploadId: 715985

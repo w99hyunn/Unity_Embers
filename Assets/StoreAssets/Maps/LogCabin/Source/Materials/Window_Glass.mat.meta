@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 741b70589f029a140b0b18b6caccac43
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Window_Glass.mat
+  uploadId: 715985

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c23fb6d6f918e44aa0bed321a0ce997
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Kettle.mat
+  uploadId: 715985

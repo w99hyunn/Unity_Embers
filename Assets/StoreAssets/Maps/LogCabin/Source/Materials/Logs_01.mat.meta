@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7921270f40dd50842b1600c1b34da6c2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Logs_01.mat
+  uploadId: 715985

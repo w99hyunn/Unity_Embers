@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f1066dca3c0f9864283d6dff3c4ecdd9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Mugs.mat
+  uploadId: 715985
