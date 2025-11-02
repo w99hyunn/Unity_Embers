@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 65e00b8054c8e5e45b662e1fdb8d13b8
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Shaders/GM_CandleFlame.shader
+  uploadId: 715985

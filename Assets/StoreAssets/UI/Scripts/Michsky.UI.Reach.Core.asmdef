@@ -1,0 +1,21 @@
+{
+    "name": "Michsky.UI.Reach.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:1a86db1aa55c4044c9ec9358da821925",
+        "GUID:179652d7da581408b8baeed6637275e9",
+        "GUID:96a53531165ae4f4b92718bcb6991fe4",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

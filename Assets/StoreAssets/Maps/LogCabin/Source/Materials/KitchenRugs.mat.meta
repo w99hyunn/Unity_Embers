@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f3d752a7c22f354419766e6a7d5f6150
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/KitchenRugs.mat
+  uploadId: 715985

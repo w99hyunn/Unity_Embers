@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 957146fc40a442c4582833e2cfc2dc47
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Plates.mat
+  uploadId: 715985

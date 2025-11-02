@@ -1,0 +1,198 @@
+﻿using System.IO;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+
+namespace NOLDA
+{
+    public class DebugPanel : EditorWindow
+    {
+        private SceneData _sceneData;
+
+        private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
+        private bool _loadAdditively = false;
+        
+        private int _selectedIndex = 0;
+        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "4번 아이템 추가", "모두제거", "골드 +1000000"};
+
+        private Vector2 _scrollPosition;
+
+        [MenuItem("NOLDA/Debug Panel")]
+        public static void ShowWindow()
+        {
+            GetWindow<DebugPanel>("Debug Panel");
+        }
+        
+        private void OnEnable()
+        {
+            _sceneData = Resources.Load<SceneData>("SceneData");
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/00_Embers/04_Images/Editor/GameLevel Icon.png");
+            titleContent = new GUIContent("Debug Panel", icon);
+        }
+
+        private void OnGUI()
+        {
+            Rect buttonRect = new Rect(0, 0, 75, 25);
+            
+            if (GUI.Button(buttonRect, "새로고침"))
+            {
+                var window = GetWindow<DebugPanel>();
+                if (window != null)
+                {
+                    window.Repaint();
+                }
+            }
+            
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            GUILayout.Space(30);
+            GUILayout.Label("캐릭터 디버그 :", EditorStyles.boldLabel);
+            _selectedIndex = EditorGUILayout.Popup("Option:", _selectedIndex, _options);
+
+            // Button to execute selected option
+            if (GUILayout.Button("Execute"))
+            {
+                ExecuteOption(_selectedIndex);
+            }
+
+            GUILayout.Space(10);
+            GUILayout.Label("씬 전환 :", EditorStyles.boldLabel);
+            _sceneData = (SceneData)EditorGUILayout.ObjectField("Scene Data", _sceneData, typeof(SceneData), false);
+            
+            if (_sceneData == null)
+            {
+                EditorGUILayout.HelpBox("Scene Data not found at specified path!", MessageType.Error);
+                EditorGUILayout.EndScrollView();
+                return;
+            }
+            
+            // Additive 로드 옵션
+            _loadAdditively = EditorGUILayout.Toggle("Additive로 불러오기", _loadAdditively);
+            GUILayout.Space(10);
+            foreach (var sceneInfo in _sceneData.scenes)
+            {
+                if (GUILayout.Button(sceneInfo.sceneIdentifier))
+                {
+                    string scenePath = FindScenePath(sceneInfo.sceneName);
+
+                    if (!string.IsNullOrEmpty(scenePath))
+                    {
+                        if (Application.isPlaying)
+                        {
+                            if (_loadAdditively)
+                            {
+                                SceneManager.LoadScene(sceneInfo.sceneName, LoadSceneMode.Additive);
+                                Debug.Log($"Loaded scene (Additive): {sceneInfo.sceneName}");
+                            }
+                            else
+                            {
+                                SceneManager.LoadScene(sceneInfo.sceneName);
+                                Debug.Log($"Loaded scene: {sceneInfo.sceneName}");
+                            }
+                        }
+                        else
+                        {
+                            if (_loadAdditively)
+                            {
+                                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                                Debug.Log($"Opened scene (Additive): {scenePath}");
+                            }
+                            else
+                            {
+                                EditorSceneManager.OpenScene(scenePath);
+                                Debug.Log($"Opened scene: {scenePath}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"Scene file not found for: {sceneInfo.sceneName}");
+                    }
+                }
+                GUILayout.Space(10);
+            }
+
+            GUILayout.Space(10);
+            GUILayout.Label("\n빌드 세팅에 세팅된 씬을 모두 불러옵니다.", EditorStyles.boldLabel);
+
+            if (GUILayout.Button("빌드 세팅의 씬 불러오기"))
+            {
+                if (_sceneData != null)
+                {
+                    _sceneData.LoadScenesFromBuildSettings();
+                    EditorUtility.SetDirty(_sceneData);
+                    Debug.Log("Scenes loaded from build settings.");
+                }
+                else
+                {
+                    Debug.LogError("Scene Data is not assigned!");
+                }
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+
+        private string FindScenePath(string sceneName)
+        {
+            string[] allScenePaths = AssetDatabase.FindAssets("t:Scene", new[] { BASE_SCENE_FOLDER_PATH });
+
+            foreach (string guid in allScenePaths)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (Path.GetFileNameWithoutExtension(path) == sceneName)
+                {
+                    return path;
+                }
+            }
+
+            return null;
+        }
+        
+        private void ExecuteOption(int index)
+        {
+            if (Singleton.Game == null)
+                return;
+            
+            var _inventory = FindAnyObjectByType<InventoryUIController>();
+            
+            switch (index)
+            {
+                case 0:
+                    Singleton.Game.playerData.Hp += 450;
+                    break;
+                case 1:
+                    Singleton.Game.playerData.Mp += 450;
+                    break;
+                case 2:
+                    Singleton.Game.playerData.Hxp += 450;
+                    break;
+                case 3:
+                    Singleton.Game.playerData.Hp -= 450;
+                    break;
+                case 4:
+                    Singleton.Game.playerData.Mp -= 450;
+                    break;
+                case 5:
+                    _inventory.Add(Singleton.DB.GetItemDataById(0));
+                    break;
+                case 6:
+                    _inventory.Add(Singleton.DB.GetItemDataById(1));
+                    break;
+                case 7:
+                    _inventory.Add(Singleton.DB.GetItemDataById(4));
+                    break;
+                case 8:
+                    int capacity = Singleton.Game.playerData.InventorySpace;
+                    for(int i = 0; i < capacity; i++)
+                        _inventory.Remove(i);
+                    break;
+                case 9:
+                    Singleton.Game.playerData.Gold += 1000000;
+                    break;
+                default:
+                    Debug.LogWarning("Invalid Option Selected");
+                    break;
+            }
+        }
+    }
+}

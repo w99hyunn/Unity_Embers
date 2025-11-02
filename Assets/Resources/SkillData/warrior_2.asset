@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5bd34bd55da4e4999ee81d725f5c20, type: 3}
+  m_Name: Warrior_2
+  m_EditorClassIdentifier: 
+  skillID: 2
+  skillName: "\uC5B4\uD0DD \uC138\uC774\uBC84"
+  description: "\uACF5\uACA9\uB825\uC744 \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
+  icon: {fileID: 21300000, guid: 1fd6578f884e9b946ad27e66c66f1df1, type: 3}
+  classType: 0
+  skillType: 1
+  animationTriggerName: 
+  skillEffectPrefab: {fileID: 0}
+  cooldownTime: 0
+  defaultKey: 0
+  hitRadius: 0
+  baseDamage: 0
+  levelData:
+  - level: 1
+    spCost: 0
+    requiredLevel: 1
+    effectMultiplier: 0
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    armorIncrease: 0
+    attackIncrease: 5
+  - level: 2
+    spCost: 0
+    requiredLevel: 5
+    effectMultiplier: 0
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    armorIncrease: 0
+    attackIncrease: 10
+  - level: 3
+    spCost: 0
+    requiredLevel: 10
+    effectMultiplier: 0
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    armorIncrease: 0
+    attackIncrease: 15
+  - level: 4
+    spCost: 0
+    requiredLevel: 15
+    effectMultiplier: 0
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    armorIncrease: 0
+    attackIncrease: 20
+  - level: 5
+    spCost: 0
+    requiredLevel: 20
+    effectMultiplier: 0
+    maxHpIncrease: 0
+    maxMpIncrease: 0
+    armorIncrease: 0
+    attackIncrease: 25

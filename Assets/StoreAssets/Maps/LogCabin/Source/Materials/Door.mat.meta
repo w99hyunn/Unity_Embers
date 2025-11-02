@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aa8cebd623db2be4789ac9b845e49f74
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Door.mat
+  uploadId: 715985

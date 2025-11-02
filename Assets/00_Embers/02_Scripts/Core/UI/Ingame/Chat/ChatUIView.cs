@@ -1,0 +1,127 @@
+using System;
+using System.Threading;
+using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.UI;
+
+namespace NOLDA
+{
+    public class ChatUIView : MonoBehaviour
+    {
+        [Header("UI Elements")]
+        public GameObject chatMessagePrefab;
+        public Transform chatContentPanel;
+        public InputField chatInputField;
+        public ScrollRect scrollView;
+
+        private CanvasGroup _chatCanvasGroup;
+
+        //Chat Msg ObjectPool
+        private ObjectPool<GameObject> _chatMessagePool;
+        private int _currentMessages = 0;
+
+        private CancellationTokenSource _fadeCancellationTokenSource;
+
+        private void Awake()
+        {
+            scrollView.TryGetComponent<CanvasGroup>(out _chatCanvasGroup);
+
+            _chatMessagePool = new ObjectPool<GameObject>(
+                createFunc: () => Instantiate(chatMessagePrefab, chatContentPanel),
+                actionOnGet: obj =>
+                {
+                    obj.SetActive(true);
+                    obj.transform.SetAsLastSibling();
+                },
+                actionOnRelease: obj =>
+                {
+                    obj.SetActive(false);
+                    obj.transform.SetAsFirstSibling();
+                },
+                actionOnDestroy: obj => Destroy(obj),
+                collectionCheck: false, //중복반환
+                defaultCapacity: Singleton.Game.ChatMaxMessages,
+                maxSize: Singleton.Game.ChatMaxMessages
+                );
+        }
+
+        private void Start()
+        {
+            chatInputField.interactable = false;
+            StartFadeOutChatCanvasGroup(5f).Forget();
+        }
+
+        public void AddChatMessage(string playerName, string message)
+        {
+            GameObject chatMessageObject = _chatMessagePool.Get();
+            ChatMessage chatMessage = chatMessageObject.GetComponent<ChatMessage>();
+            chatMessage.SetMessage(playerName, message);
+
+            Canvas.ForceUpdateCanvases();
+            scrollView.verticalNormalizedPosition = 0f;
+
+            _currentMessages++;
+
+            if (_currentMessages > Singleton.Game.ChatMaxMessages)
+            {
+                Transform oldestChatMessage = chatContentPanel.GetChild(0);
+                _chatMessagePool.Release(oldestChatMessage.gameObject);
+                _currentMessages--;
+            }
+        }
+
+        public async Awaitable ShowChat()
+        {
+            CancelFadeOut();
+            _chatCanvasGroup.alpha = 1f;
+            chatInputField.interactable = true;
+            await Awaitable.NextFrameAsync();
+            chatInputField.ActivateInputField();
+        }
+
+        public void HideChat()
+        {
+            StartFadeOutChatCanvasGroup(5f).Forget();
+            chatInputField.interactable = false;
+            chatInputField.DeactivateInputField();
+        }
+
+        private async Awaitable StartFadeOutChatCanvasGroup(float duration)
+        {
+            CancelFadeOut();
+            _fadeCancellationTokenSource = new CancellationTokenSource();
+            var token = _fadeCancellationTokenSource.Token;
+
+            float startAlpha = _chatCanvasGroup.alpha;
+            float targetAlpha = 0.15f;
+            float elapsed = 0f;
+
+            try
+            {
+                while (elapsed < duration)
+                {
+                    elapsed += Time.deltaTime;
+                    _chatCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+                    await Awaitable.NextFrameAsync(token);
+                }
+
+                _chatCanvasGroup.alpha = targetAlpha;
+            }
+            catch (OperationCanceledException)
+            {
+                // cancel token. nothing
+            }
+
+        }
+
+        private void CancelFadeOut()
+        {
+            if (_fadeCancellationTokenSource != null)
+            {
+                _fadeCancellationTokenSource.Cancel();
+                _fadeCancellationTokenSource.Dispose();
+                _fadeCancellationTokenSource = null;
+            }
+        }
+    }
+}

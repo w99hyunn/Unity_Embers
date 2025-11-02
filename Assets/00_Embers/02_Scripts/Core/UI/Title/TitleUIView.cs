@@ -1,0 +1,196 @@
+﻿using System;
+using UnityEngine;
+using TMPro;
+using Michsky.UI.Reach;
+
+namespace NOLDA
+{
+    public class TitleUIView : MonoBehaviour
+    {
+        [Header("General")]
+        public MenuManager menuManager;
+        public PanelManager panelManager;
+        public ChapterManager chapterManager;
+        
+        [Header("Splash Screen")]
+        [Header("Connecting")]
+        public GameObject Connecting;
+        public TMP_Text ConnectingMessage;
+        public GameObject Login;
+        public GameObject RetryBtn;
+
+        [Header("Login")]
+        public TMP_InputField loginIdInputField;
+        public TMP_InputField loginPwInputField;
+
+        [Header("Sign Up")]
+        public TMP_InputField signUpIdInputField;
+        public TMP_InputField signUpPwInputField;
+        public TMP_InputField signUpPwConfirmInputField;
+        public TMP_InputField signUpEmailInputField;
+        [Header("SignUp Popup")]
+        public ModalWindowManager signUpPopup;
+
+        [Space(10)]
+        [Header("Main Content")]
+        [Header("Edit Profile")]
+        public ButtonManager profileEdit;
+        public ModalWindowManager editProfilePopup;
+        public TMP_InputField editProfilePWInputField;
+        public TMP_InputField editProfilePWConfirmInputField;
+        public TMP_InputField editProfileEmailInputField;
+        public TMP_InputField editProfileCreatedInputField;
+
+        [Header("Character Select - Class Background")]
+        public Sprite warriorBackground;
+        public Sprite mageBackground;
+        public Sprite rogueBackground;
+
+        [Space(20)]
+        [Header("Character Select - Character Delete Popup")]
+        public ModalWindowManager deleteCharacterPopup;
+
+        [Space(20)]
+        public ModeSelector classSelector;
+        public HorizontalSelector genderSelector;
+        public HorizontalSelector factionSelector;
+        public TMP_InputField nameInputField;
+
+        #region #GetVar
+        public string SignUpID => signUpIdInputField.text;
+        public string SignUpPw => signUpPwInputField.text;
+        public string SignUpPwConfirm => signUpPwConfirmInputField.text;
+        public string SignUpEmail => signUpEmailInputField.text;
+
+        public string LoginID => loginIdInputField.text;
+        public string LoginPw => loginPwInputField.text;
+
+        public string EditProfilePw => editProfilePWInputField.text;
+        public string EditProfilePwConfirm => editProfilePWConfirmInputField.text;
+        public string EditProfileEmail => editProfileEmailInputField.text;
+        
+
+        public Class Class => (Class)classSelector.currentModeIndex;
+        public Faction Faction => (Faction)factionSelector.index;
+        public Gender Gender => (Gender)genderSelector.index;
+        public string Name => nameInputField.text;
+        public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
+        public ChapterManager ChapterManager => chapterManager;
+        #endregion
+
+        /// <summary>
+        /// 첫 시작시 서버 연결창 띄우고 로그인창은 비활성화 되어있어야 함(실수방지)
+        /// </summary>
+        private void Awake()
+        {
+            Connecting.SetActive(true);
+            Login.SetActive(false);
+        }
+        
+        private void Update()
+        {
+            if (loginPwInputField.isFocused ||
+                signUpPwInputField.isFocused ||
+                signUpPwConfirmInputField.isFocused ||
+                editProfilePWInputField.isFocused ||
+                editProfilePWConfirmInputField.isFocused)
+            {
+                Input.imeCompositionMode = IMECompositionMode.Off;
+            }
+            else
+            {
+                Input.imeCompositionMode = IMECompositionMode.On;
+            }
+        }
+
+        public void OpenPanel(string panelName)
+        {
+            panelManager.OpenPanel(panelName);
+        }
+        
+        public void CreateCharacterSuccess()
+        {
+            //Reset
+            nameInputField.text = "";
+        }
+
+        public void EditProfileUpdateSuccess()
+        {
+            editProfilePopup.CloseWindow();
+        }
+
+        /// <summary>
+        /// Connecting 관련
+        /// </summary>
+        /// <param name="text"></param>
+        public void ConnectingMessageUpdate(string text)
+        {
+            ConnectingMessage.text = $"서버에 연결 시도 중입니다...\r\n{text}";
+        }
+
+        public void ConnectingSuccess()
+        {
+            Connecting.SetActive(false);
+            Login.SetActive(true);
+        }
+
+        public void ConnectingFail()
+        {
+            RetryBtn.SetActive(true);
+        }
+        
+        public void SignUpSuccess()
+        {
+            loginIdInputField.text = signUpIdInputField.text;
+            signUpPopup.CloseWindow();
+
+            //Reset
+            signUpIdInputField.text = null;
+            signUpPwInputField.text = null;
+            signUpPwConfirmInputField.text = null;
+            signUpEmailInputField.text = null;
+        }
+
+        public void TopPanelProfileUpdate()
+        {
+            profileEdit.buttonText = Singleton.Game.playerData.AccountID;
+        }
+
+        /// <summary>
+        /// 스플래시 - 로그인 화면
+        /// </summary>
+        public void OnSwitchOn()
+        {
+            LoadLoginId();
+            loginIdInputField.onValueChanged.AddListener(SaveLoginId);
+        }
+
+        public void OnSwitchOff()
+        {
+            loginIdInputField.onValueChanged.RemoveListener(SaveLoginId);
+        }
+
+        private void SaveLoginId(string value)
+        {
+            PlayerPrefs.SetString("LoginId", value);
+            PlayerPrefs.Save();
+        }
+
+        private void LoadLoginId()
+        {
+            if (PlayerPrefs.HasKey("LoginId"))
+            {
+                loginIdInputField.text = PlayerPrefs.GetString("LoginId");
+            }
+        }
+
+        public void EditProfilePopupInit()
+        {
+            editProfilePWInputField.text = "";
+            editProfilePWConfirmInputField.text = "";
+            editProfileEmailInputField.text = Singleton.Game.playerData.Email;
+            editProfileCreatedInputField.text = Singleton.Game.playerData.CreatedDate.ToString();
+            editProfilePopup.OpenWindow();
+        }
+    }
+}

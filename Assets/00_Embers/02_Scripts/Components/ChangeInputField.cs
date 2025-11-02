@@ -1,0 +1,37 @@
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+namespace NOLDA
+{
+    public class ChangeInputField : MonoBehaviour
+    {
+        private EventSystem _system;
+        public Selectable firstInput;
+        
+        void Start()
+        {
+            _system = EventSystem.current;
+            firstInput.Select();
+        }
+
+        void OnNextInputField(InputValue input)
+        {
+            Selectable next = _system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            if (next == null) return;
+
+            next.Select();
+        }
+
+        //void OnPrevInputField(InputValue input)
+        //{
+        //    Debug.Log("이전");
+        //    Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
+        //    if (next != null)
+        //    {
+        //        next.Select();
+        //    }
+        //}
+    }
+}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5e65a1d9598977b4ea461aebd619d9ba
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Pillow_02.mat
+  uploadId: 715985

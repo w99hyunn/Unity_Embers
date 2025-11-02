@@ -1,0 +1,558 @@
+using System.Collections.Generic;
+using Michsky.UI.Reach;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
+
+/*
+    - 필터
+      - [A] : 모든 아이템 필터링
+      - [E] : 장비 아이템 필터링
+      - [P] : 소비 아이템 필터링
+
+      * 필터링에서 제외된 아이템 슬롯들은 조작 불가
+
+*/
+namespace NOLDA
+{
+    public class InventoryUIView : MonoBehaviour
+    {
+        [Header("Options")]
+        [SerializeField] private bool _showTooltip = true;
+        [SerializeField] private bool _showHighlight = true;
+        [SerializeField] private bool _showRemovingPopup = true;
+
+        [Header("Connected Objects")]
+        [SerializeField] private RectTransform _contentAreaRT; // 슬롯들이 위치할 영역
+        [SerializeField] private GameObject _slotUiPrefab;     // 슬롯의 원본 프리팹
+        [SerializeField] private ItemTooltipUI _itemTooltip;   // 아이템 정보를 보여줄 툴팁 UI
+        [SerializeField] private InventoryPopupUI _popup;      // 팝업 UI 관리 객체
+
+        [Header("Buttons")]
+        [SerializeField] private ButtonManager _trimButton;
+        [SerializeField] private ButtonManager _sortButton;
+
+        [Header("Filter Toggles")]
+        [SerializeField] private Toggle _toggleFilterAll;
+        [SerializeField] private Toggle _toggleFilterEquipments;
+        [SerializeField] private Toggle _toggleFilterPortions;
+
+        [Space(16)]
+        [SerializeField] private bool _mouseReversed = false; // 마우스 클릭 반전 여부
+
+        [SerializeField] private TMP_Text goldText;
+
+        /// <summary> 연결된 인벤토리 </summary>
+        private InventoryUIController _inventory;
+
+        private List<ItemSlotUI> _slotUIList = new List<ItemSlotUI>();
+        private GraphicRaycaster _gr;
+        private PointerEventData _ped;
+        private List<RaycastResult> _rrList;
+
+        private ItemSlotUI _pointerOverSlot; // 현재 포인터가 위치한 곳의 슬롯
+        private ItemSlotUI _beginDragSlot; // 현재 드래그를 시작한 슬롯
+        private Transform _beginDragIconTransform; // 해당 슬롯의 아이콘 트랜스폼
+
+        private int _leftClick = 0;
+        private int _rightClick = 1;
+
+        private Vector3 _beginDragIconPoint;   // 드래그 시작 시 슬롯의 위치
+        private Vector3 _beginDragCursorPoint; // 드래그 시작 시 커서의 위치
+        private int _beginDragSlotSiblingIndex;
+        
+        /// <summary> 인벤토리 UI 내 아이템 필터링 옵션 </summary>
+        private enum FilterOption
+        {
+            ALL, EQUIPMENT, PORTION
+        }
+        private FilterOption _currentFilterOption = FilterOption.ALL;
+        
+        /***********************************************************************
+        *                               Unity Events
+        ***********************************************************************/
+        private void Awake()
+        {
+            Init();
+            InitSlots();
+            InitButtonEvents();
+            InitToggleEvents();
+        }
+
+        private void Update()
+        {
+            _ped.position = Input.mousePosition;
+
+            OnPointerEnterAndExit();
+            if(_showTooltip) ShowOrHideItemTooltip();
+            OnPointerDown();
+            OnPointerDrag();
+            OnPointerUp();
+        }
+        
+        /***********************************************************************
+        *                               Init Methods
+        ***********************************************************************/
+        private void Init()
+        {
+            TryGetComponent(out _gr);
+            if (_gr == null)
+                _gr = gameObject.AddComponent<GraphicRaycaster>();
+
+            // Graphic Raycaster
+            _ped = new PointerEventData(EventSystem.current);
+            _rrList = new List<RaycastResult>(10);
+        }
+
+        /// <summary>
+        /// 지정된 개수만큼 슬롯 영역 내에 슬롯들 동적 생성
+        /// </summary>
+        private void InitSlots()
+        {
+            // 슬롯 프리팹 설정
+            _slotUiPrefab.TryGetComponent(out RectTransform slotRect);
+            _slotUiPrefab.TryGetComponent(out ItemSlotUI itemSlot);
+            
+            if (itemSlot == null)
+                _slotUiPrefab.AddComponent<ItemSlotUI>();
+
+            _slotUiPrefab.SetActive(false);
+
+            _slotUIList = new List<ItemSlotUI>(Singleton.Game.playerData.InventorySpace);
+
+            for (int slotIndex = 0; slotIndex < Singleton.Game.MaxInventorySpace; slotIndex++)
+            {
+                var slotRT = CloneSlot();
+                slotRT.pivot = new Vector2(0f, 1f); // Left Top
+
+                slotRT.gameObject.SetActive(true);
+                slotRT.gameObject.name = $"Item Slot [{slotIndex}]";
+
+                var slotUI = slotRT.GetComponent<ItemSlotUI>();
+                slotUI.SetSlotIndex(slotIndex);
+                _slotUIList.Add(slotUI);
+            }
+
+            // 슬롯 프리팹 - 프리팹이 아닌 경우 파괴
+            if(_slotUiPrefab.scene.rootCount != 0)
+                Destroy(_slotUiPrefab);
+
+            // -- Local Method --
+            RectTransform CloneSlot()
+            {
+                GameObject slotGo = Instantiate(_slotUiPrefab);
+                RectTransform rt = slotGo.GetComponent<RectTransform>();
+                rt.SetParent(_contentAreaRT);
+
+                return rt;
+            }
+        }
+
+        private void InitButtonEvents()
+        {
+            _trimButton.onClick.AddListener(() => _inventory.TrimAll());
+            _sortButton.onClick.AddListener(() => _inventory.SortAll());
+        }
+
+        private void InitToggleEvents()
+        {
+            _toggleFilterAll.onValueChanged.AddListener(       flag => UpdateFilter(flag, FilterOption.ALL));
+            _toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.EQUIPMENT));
+            _toggleFilterPortions.onValueChanged.AddListener(  flag => UpdateFilter(flag, FilterOption.PORTION));
+
+            // Local Method
+            void UpdateFilter(bool flag, FilterOption option)
+            {
+                if (flag)
+                {
+                    _currentFilterOption = option;
+                    UpdateAllSlotFilters();
+                }
+            }
+        }
+        
+        /***********************************************************************
+        *                               Mouse Event Methods
+        ***********************************************************************/
+        private bool IsOverUI()
+            => EventSystem.current.IsPointerOverGameObject();
+
+        /// <summary> 레이캐스트하여 얻은 첫 번째 UI에서 컴포넌트 찾아 리턴 </summary>
+        private T RaycastAndGetFirstComponent<T>() where T : Component
+        {
+            _rrList.Clear();
+
+            _gr.Raycast(_ped, _rrList);
+            
+            if(_rrList.Count == 0)
+                return null;
+
+            return _rrList[0].gameObject.GetComponent<T>();
+        }
+        /// <summary> 슬롯에 포인터가 올라가는 경우, 슬롯에서 포인터가 빠져나가는 경우 </summary>
+        private void OnPointerEnterAndExit()
+        {
+            // 이전 프레임의 슬롯
+            var prevSlot = _pointerOverSlot;
+
+            // 현재 프레임의 슬롯
+            var curSlot = _pointerOverSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+            if (prevSlot == null)
+            {
+                // Enter
+                if (curSlot != null)
+                {
+                    OnCurrentEnter();
+                }
+            }
+            else
+            {
+                // Exit
+                if (curSlot == null)
+                {
+                    OnPrevExit();
+                }
+
+                // Change
+                else if (prevSlot != curSlot)
+                {
+                    OnPrevExit();
+                    OnCurrentEnter();
+                }
+            }
+
+            // ===================== Local Methods ===============================
+            void OnCurrentEnter()
+            {
+                if(_showHighlight)
+                    curSlot.Highlight(true);
+            }
+            void OnPrevExit()
+            {
+                prevSlot.Highlight(false);
+            }
+        }
+        /// <summary> 아이템 정보 툴팁 보여주거나 감추기 </summary>
+        private void ShowOrHideItemTooltip()
+        {
+            // 마우스가 유효한 아이템 아이콘 위에 올라와 있다면 툴팁 보여주기
+            bool isValid =
+                _pointerOverSlot != null && _pointerOverSlot.HasItem && _pointerOverSlot.IsAccessible
+                && (_pointerOverSlot != _beginDragSlot); // 드래그 시작한 슬롯이면 보여주지 않기
+
+            if (isValid)
+            {
+                UpdateTooltipUI(_pointerOverSlot);
+                _itemTooltip.Show();
+            }
+            else
+                _itemTooltip.Hide();
+        }
+        
+        /// <summary> 슬롯에 클릭하는 경우 </summary>
+        private void OnPointerDown()
+        {
+            // Left Click : Begin Drag
+            if (Input.GetMouseButtonDown(_leftClick))
+            {
+                _beginDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+                // 아이템을 갖고 있는 슬롯만 해당
+                if (_beginDragSlot != null && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
+                {
+                    // 위치 기억, 참조 등록
+                    _beginDragIconTransform = _beginDragSlot.IconRect.transform;
+                    _beginDragIconPoint = _beginDragIconTransform.position;
+                    _beginDragCursorPoint = Input.mousePosition;
+                    
+                    // 맨 위에 보이기
+                    _beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
+                    _beginDragSlot.transform.SetAsLastSibling();
+
+                    // 해당 슬롯의 하이라이트 이미지를 아이콘보다 뒤에 위치시키기
+                    _beginDragSlot.SetHighlightOnTop(false);
+
+                    // Disable Grid Layout
+                    _contentAreaRT.GetComponent<GridLayoutGroup>().enabled = false;
+                }
+                else
+                {
+                    _beginDragSlot = null;
+                }
+            }
+
+            // Right Click : Use Item
+            else if (Input.GetMouseButtonDown(_rightClick))
+            {
+                ItemSlotUI slot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+                if (slot != null && slot.HasItem && slot.IsAccessible)
+                {
+                    TryUseItem(slot.Index);
+                }
+            }
+        }
+        /// <summary> 드래그하는 도중 </summary>
+        private void OnPointerDrag()
+        {
+            if(_beginDragSlot == null) return;
+
+            if (Input.GetMouseButton(_leftClick))
+            {
+                // 위치 이동
+                _beginDragIconTransform.position =
+                    _beginDragIconPoint + (Input.mousePosition - _beginDragCursorPoint);
+            }
+        }
+        /// <summary> 클릭을 뗄 경우 </summary>
+        private void OnPointerUp()
+        {
+            if (Input.GetMouseButtonUp(_leftClick) && _beginDragSlot != null)
+            {
+                // 드래그 아이템 부모 복원
+                _beginDragIconTransform.position = _beginDragIconPoint;
+
+                // UI 순서 복원
+                _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
+                
+                // 드래그 완료 처리
+                EndDrag();
+                
+                // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
+                _beginDragSlot.SetHighlightOnTop(true);
+                
+                // Grid Layout 정렬 복원
+                _contentAreaRT.GetComponent<GridLayoutGroup>().enabled = true;
+
+                // 참조 제거
+                _beginDragSlot = null;
+                _beginDragIconTransform = null;
+            }
+        }
+
+
+        private void EndDrag()
+        {
+            ItemSlotUI endDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+            // 아이템 슬롯끼리 아이콘 교환 또는 이동
+            if (endDragSlot != null && endDragSlot.IsAccessible)
+            {
+                // 수량 나누기 조건
+                // 1) 마우스 클릭 떼는 순간 좌측 Ctrl 또는 Shift 키 유지
+                // 2) begin : 셀 수 있는 아이템 / end : 비어있는 슬롯
+                // 3) begin 아이템의 수량 > 1
+                bool isSeparatable = 
+                    (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift)) &&
+                    (_inventory.IsCountableItem(_beginDragSlot.Index) && !_inventory.HasItem(endDragSlot.Index));
+
+                // true : 수량 나누기, false : 교환 또는 이동
+                bool isSeparation = false;
+                int currentAmount = 0;
+
+                // 현재 개수 확인
+                if (isSeparatable)
+                {
+                    currentAmount = _inventory.GetCurrentAmount(_beginDragSlot.Index);
+                    if (currentAmount > 1)
+                    {
+                        isSeparation = true;
+                    }
+                }
+
+                // 1. 개수 나누기
+                if(isSeparation)
+                    TrySeparateAmount(_beginDragSlot.Index, endDragSlot.Index, currentAmount);
+                // 2. 교환 또는 이동
+                else
+                    TrySwapItems(_beginDragSlot, endDragSlot);
+
+                // 툴팁 갱신
+                UpdateTooltipUI(endDragSlot);
+                return;
+            }
+
+            // 버리기(커서가 UI 레이캐스트 타겟 위에 있지 않은 경우)
+            if (!IsOverUI())
+            {
+                // 확인 팝업 띄우고 콜백 위임
+                int index = _beginDragSlot.Index;
+                string itemName = _inventory.GetItemName(index);
+                int amount = _inventory.GetCurrentAmount(index);
+
+                // 셀 수 있는 아이템의 경우, 수량 표시
+                if(amount > 1)
+                    itemName += $" x{amount}";
+
+                if(_showRemovingPopup)
+                    _popup.OpenConfirmationPopup(() => TryRemoveItem(index), itemName);
+                else
+                    TryRemoveItem(index);
+            }
+        }
+        
+        public void TryRemoveGold(int amount)
+        {
+            _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold > 0 ? (gold > Singleton.Game.playerData.Gold ? Singleton.Game.playerData.Gold : gold) : 0);
+        }
+
+        /***********************************************************************
+        *                               Private Methods
+        ***********************************************************************/
+
+        /// <summary> UI 및 인벤토리에서 아이템 제거 </summary>
+        private void TryRemoveItem(int index)
+        {
+            _inventory.Remove(index);
+        }
+
+        /// <summary> 아이템 사용 </summary>
+        private void TryUseItem(int index)
+        {
+            _inventory.Use(index);
+        }
+
+        /// <summary> 두 슬롯의 아이템 교환 </summary>
+        private void TrySwapItems(ItemSlotUI from, ItemSlotUI to)
+        {
+            if (from == to)
+            {
+                return;
+            }
+
+            from.SwapOrMoveIcon(to);
+            _inventory.Swap(from.Index, to.Index);
+        }
+
+        /// <summary> 셀 수 있는 아이템 개수 나누기 </summary>
+        private void TrySeparateAmount(int indexA, int indexB, int amount)
+        {
+            if (indexA == indexB)
+            {
+                return;
+            }
+
+            string itemName = $"{_inventory.GetItemName(indexA)} x{amount}";
+
+            _popup.OpenAmountInputPopup(
+                amt => _inventory.SeparateAmount(indexA, indexB, amt),
+                amount, itemName
+            );
+        }
+
+        /// <summary> 툴팁 UI의 슬롯 데이터 갱신 </summary>
+        private void UpdateTooltipUI(ItemSlotUI slot)
+        {
+            if(!slot.IsAccessible || !slot.HasItem)
+                return;
+
+            // 툴팁 정보 갱신
+            _itemTooltip.SetItemInfo(_inventory.GetItemData(slot.Index));
+
+            // 툴팁 위치 조정
+            _itemTooltip.SetRectPosition(slot.SlotRect);
+        }
+        
+        /***********************************************************************
+        *                               Public Methods
+        ***********************************************************************/
+
+        public void UpdateGoldText()
+        {
+            goldText.text = string.Format("{0:N0}", Singleton.Game.playerData.Gold);
+        }
+
+        /// <summary> 인벤토리 참조 등록 (인벤토리에서 직접 호출) </summary>
+        public void SetInventoryReference(InventoryUIController inventory)
+
+        {
+            _inventory = inventory;
+        }
+
+        /// <summary> 마우스 클릭 좌우 반전시키기 (true : 반전) </summary>
+        public void InvertMouse(bool value)
+        {
+            _leftClick = value ? 1 : 0;
+            _rightClick = value ? 0 : 1;
+
+            _mouseReversed = value;
+        }
+
+        /// <summary> 슬롯에 아이템 아이콘 등록 </summary>
+        public void SetItemIcon(int index, Sprite icon)
+        {
+            //EditorLog($"Set Item Icon : Slot [{index}]");
+
+            _slotUIList[index].SetItem(icon);
+        }
+
+        /// <summary> 해당 슬롯의 아이템 개수 텍스트 지정 </summary>
+        public void SetItemAmountText(int index, int amount)
+        {
+            //EditorLog($"Set Item Amount Text : Slot [{index}], Amount [{amount}]");
+
+            // NOTE : amount가 1 이하일 경우 텍스트 미표시
+            _slotUIList[index].SetItemAmount(amount);
+        }
+
+        /// <summary> 해당 슬롯의 아이템 개수 텍스트 지정 </summary>
+        public void HideItemAmountText(int index)
+        {
+            //EditorLog($"Hide Item Amount Text : Slot [{index}]");
+
+            _slotUIList[index].SetItemAmount(1);
+        }
+
+        /// <summary> 슬롯에서 아이템 아이콘 제거, 개수 텍스트 숨기기 </summary>
+        public void RemoveItem(int index)
+        {
+            //EditorLog($"Remove Item : Slot [{index}]");
+
+            _slotUIList[index].RemoveItem();
+        }
+
+        /// <summary> 접근 가능한 슬롯 범위 설정 </summary>
+        public void SetAccessibleSlotRange(int accessibleSlotCount)
+        {
+            for (int i = 0; i < _slotUIList.Count; i++)
+            {
+                _slotUIList[i].SetSlotAccessibleState(i < accessibleSlotCount);
+            }
+        }
+
+        /// <summary> 특정 슬롯의 필터 상태 업데이트 </summary>
+        public void UpdateSlotFilterState(int index, ItemData itemData)
+        {
+            bool isFiltered = true;
+
+            // null인 슬롯은 타입 검사 없이 필터 활성화
+            if(itemData != null)
+                switch (_currentFilterOption)
+                {
+                    case FilterOption.EQUIPMENT:
+                        isFiltered = (itemData is EquipmentItemData);
+                        break;
+
+                    case FilterOption.PORTION:
+                        isFiltered = (itemData is PortionItemData);
+                        break;
+                }
+
+            _slotUIList[index].SetItemAccessibleState(isFiltered);
+        }
+
+        /// <summary> 모든 슬롯 필터 상태 업데이트 </summary>
+        public void UpdateAllSlotFilters()
+        {
+            int capacity = Singleton.Game.playerData.InventorySpace;
+
+            for (int i = 0; i < capacity; i++)
+            {
+                ItemData data = _inventory.GetItemData(i);
+                UpdateSlotFilterState(i, data);
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7539c9d863bd4c4b853db577afb8c99
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Broom.mat
+  uploadId: 715985

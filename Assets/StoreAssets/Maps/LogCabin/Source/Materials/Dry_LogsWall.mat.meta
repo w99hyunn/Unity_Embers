@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d041e38382be2b441bb1a31a4c12f6f7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Dry_LogsWall.mat
+  uploadId: 715985

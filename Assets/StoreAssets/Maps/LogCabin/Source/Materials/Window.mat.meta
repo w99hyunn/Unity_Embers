@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bdc37d916de669b448c0f4b90f3a99af
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/Window.mat
+  uploadId: 715985

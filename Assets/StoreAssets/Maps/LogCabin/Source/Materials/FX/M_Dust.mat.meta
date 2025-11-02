@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ba216f3902765344fa16b87978420170
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155658
+  packageName: Log Cabin
+  packageVersion: 1.4
+  assetPath: Assets/GM_LogCabin/Source/Materials/FX/M_Dust.mat
+  uploadId: 715985
