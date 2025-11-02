@@ -29,6 +29,7 @@ namespace Michsky.UI.Reach
         public string descriptionKey;
 
         // Settings
+        public bool disableCloseModal = false;
         public bool nowClose = false;
         public bool useCustomContent = false;
         public bool isOn = false;
@@ -83,7 +84,7 @@ namespace Michsky.UI.Reach
 
             CheckForEventButtons();
         }
-        
+
         public void ExitButtonSet(int buttonState)
         {
             switch (buttonState)
@@ -120,9 +121,9 @@ namespace Michsky.UI.Reach
                     if (windowTitle != null && !string.IsNullOrEmpty(titleKey))
                     {
                         LocalizedObject titleLoc = windowTitle.gameObject.GetComponent<LocalizedObject>();
-                        if (titleLoc != null) 
-                        { 
-                            titleLoc.tableIndex = mainLoc.tableIndex; 
+                        if (titleLoc != null)
+                        {
+                            titleLoc.tableIndex = mainLoc.tableIndex;
                             titleLoc.localizationKey = titleKey;
                             titleLoc.UpdateItem();
                         }
@@ -131,9 +132,9 @@ namespace Michsky.UI.Reach
                     if (windowDescription != null && !string.IsNullOrEmpty(descriptionKey))
                     {
                         LocalizedObject descLoc = windowDescription.gameObject.GetComponent<LocalizedObject>();
-                        if (descLoc != null) 
-                        { 
-                            descLoc.tableIndex = mainLoc.tableIndex; 
+                        if (descLoc != null)
+                        {
+                            descLoc.tableIndex = mainLoc.tableIndex;
                             descLoc.localizationKey = descriptionKey;
                             descLoc.UpdateItem();
                         }
@@ -194,7 +195,12 @@ namespace Michsky.UI.Reach
 
         public void CloseWindow()
         {
-            if(true == nowClose) //바로 닫는 기능을 켰을 때 따로 처리
+            if (true == disableCloseModal)
+            {
+                return;
+            }
+
+            if (true == nowClose) //바로 닫는 기능을 켰을 때 따로 처리
             {
                 gameObject.SetActive(false);
                 isOn = false;
@@ -218,7 +224,7 @@ namespace Michsky.UI.Reach
             mwAnimator.Play(animOut);
             onClose.Invoke();
 
-            if (ControllerManager.instance != null && latestEventSystemObject != null && latestEventSystemObject.activeInHierarchy) 
+            if (ControllerManager.instance != null && latestEventSystemObject != null && latestEventSystemObject.activeInHierarchy)
             {
                 ControllerManager.instance.SelectUIObject(latestEventSystemObject);
             }

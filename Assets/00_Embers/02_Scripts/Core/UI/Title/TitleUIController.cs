@@ -85,7 +85,7 @@ namespace NOLDA
 
             while (_isCheckingConnection)
             {
-                await Awaitable.WaitForSecondsAsync(15f); // 15초 대기
+                await Awaitable.WaitForSecondsAsync(3f); // 15초 대기
 
                 // 서버 연결 상태 확인
                 if (!NetworkClient.isConnected)
@@ -101,8 +101,7 @@ namespace NOLDA
         /// </summary>
         private void HandleServerDisconnection()
         {
-            Singleton.UI.OpenAlert("연결 종료",
-                "연결이 손실되었습니다. 게임을 종료합니다.", 1);
+            Singleton.UI.NetworkErrorAlert();
             _isCheckingConnection = false;
         }
 

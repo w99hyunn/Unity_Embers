@@ -10,6 +10,9 @@ namespace NOLDA
         [Header("Common Alert Popup")]
         public ModalWindowManager alertModal;
 
+        [Header("Logout Module")]
+        public Logout logoutModule;
+
         [Header("Loading Screen")]
         public ModalWindowManager loadingScreenModal;
 
@@ -82,6 +85,23 @@ namespace NOLDA
             alertModal.windowTitle.text = title;
             alertModal.windowDescription.text = message;
             alertModal.OpenWindow();
+        }
+
+        public void NetworkErrorAlert()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            alertModal.disableCloseModal = true;
+
+            Singleton.UI.OpenAlert("네트워크 오류",
+                "네트워크와의 연결이 불안정합니다. 게임을 종료합니다.", 0);
+            alertModal.confirmButton.onClick.AddListener(() =>
+            {
+                logoutModule.LogoutGame();
+                alertModal.disableCloseModal = false;
+                alertModal.CloseWindow();
+            });
         }
 
         public void CloseAlert()
