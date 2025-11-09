@@ -167,6 +167,8 @@ namespace NOLDA
             {
                 ApplyPassiveSkills();
             }
+            if (false == suppressEvents)
+                OnDataChanged?.Invoke(nameof(Skills), skills);
             return true;
         }
 
@@ -193,6 +195,8 @@ namespace NOLDA
             {
                 ApplyPassiveSkills();
             }
+            if (false == suppressEvents)
+                OnDataChanged?.Invoke(nameof(Skills), skills);
             return true;
         }
 

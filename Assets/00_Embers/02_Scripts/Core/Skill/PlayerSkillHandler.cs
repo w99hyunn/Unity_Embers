@@ -60,7 +60,7 @@ namespace NOLDA
             if (propertyName == nameof(PlayerDataSO.Skills))
             {
                 UpdateSkillCache();
-            }  //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
+            }
         }
 
         private void UpdateSkillCache()
