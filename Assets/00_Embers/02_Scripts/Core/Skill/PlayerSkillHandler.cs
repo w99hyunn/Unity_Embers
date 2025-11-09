@@ -27,6 +27,7 @@ namespace NOLDA
             public SkillData skillData;
             public int skillLevel;
             public KeyCode keyCode;
+            public GameObject effectInstance; // 미리 인스턴스화된 이펙트
         }
 
         private PlayerController playerController;
@@ -53,6 +54,15 @@ namespace NOLDA
         private void OnDestroy()
         {
             Singleton.Game.playerData.OnDataChanged -= OnPlayerDataChanged;
+
+            // 이펙트 인스턴스 정리
+            foreach (var cachedSkill in cachedSkills)
+            {
+                if (cachedSkill.effectInstance != null)
+                {
+                    Destroy(cachedSkill.effectInstance);
+                }
+            }
         }
 
         private void OnPlayerDataChanged(string propertyName, object value)
@@ -65,17 +75,35 @@ namespace NOLDA
 
         private void UpdateSkillCache()
         {
+            foreach (var cachedSkill in cachedSkills)
+            {
+                if (cachedSkill.effectInstance != null)
+                {
+                    Destroy(cachedSkill.effectInstance);
+                }
+            }
+
             cachedSkills.Clear();
             foreach (var skillEntry in Singleton.Game.playerData.Skills)
             {
                 SkillData skillData = Singleton.Skill.GetSkillData(skillEntry.Key);
                 if (skillData != null)
                 {
+                    GameObject effectInstance = null;
+
+                    // 이펙트 프리팹 미리 인스턴스화
+                    if (skillData.skillEffectPrefab != null)
+                    {
+                        effectInstance = Instantiate(skillData.skillEffectPrefab, transform);
+                        effectInstance.SetActive(false);
+                    }
+
                     cachedSkills.Add(new CachedSkillInfo
                     {
                         skillData = skillData,
                         skillLevel = skillEntry.Value,
-                        keyCode = skillData.defaultKey
+                        keyCode = skillData.defaultKey,
+                        effectInstance = effectInstance
                     });
                 }
             }
@@ -117,11 +145,24 @@ namespace NOLDA
                 skillScript.ExecuteSkill(animator, this);
             }
 
+            //이펙트 재생
+            PlaySkillEffectsLocal(skill.skillID, GetSkillEffectPosition());
+
             // 주변 적을 찾아 공격
-            TryUseSkillOnEnemy(skill);
+            //TryUseSkillOnEnemy(skill);
 
             // 쿨타임 설정
             Singleton.Skill.SetSkillCooldown(skill.skillID);
+        }
+
+        private Vector3 GetSkillEffectPosition()
+        {
+            Vector3 position;
+
+            position = transform.position + transform.forward * 1.5f;
+            position.y += 1f;
+
+            return position;
         }
 
         public void OnSkillEnd()
@@ -161,15 +202,89 @@ namespace NOLDA
                 enemy.TakeDamage(skill.baseDamage * levelData.effectMultiplier);
             }
 
-            RpcPlaySkillEffects(skill.skillEffectPrefab, target.transform.position);
+            RpcPlaySkillEffects(skillID, target.transform.position);
+        }
+
+        [Command]
+        private void CmdRequestPlaySkillEffects(int skillID, Vector3 targetPosition)
+        {
+            RpcPlaySkillEffects(skillID, targetPosition);
         }
 
         [ClientRpc]
-        private void RpcPlaySkillEffects(GameObject effectPrefab, Vector3 targetPosition)
+        private void RpcPlaySkillEffects(int skillID, Vector3 targetPosition)
         {
-            if (effectPrefab != null)
+            if (!isLocalPlayer)
             {
-                Instantiate(effectPrefab, targetPosition, Quaternion.identity);
+                PlaySkillEffectByID(skillID, targetPosition);
+            }
+        }
+
+        private void PlaySkillEffectsLocal(int skillID, Vector3 targetPosition)
+        {
+            PlaySkillEffectByID(skillID, targetPosition);
+            CmdRequestPlaySkillEffects(skillID, targetPosition);
+        }
+
+        private void PlaySkillEffectByID(int skillID, Vector3 targetPosition)
+        {
+            GameObject effectInstance = null;
+
+            CachedSkillInfo? foundSkill = null;
+            foreach (var cachedSkill in cachedSkills)
+            {
+                if (cachedSkill.skillData.skillID == skillID)
+                {
+                    foundSkill = cachedSkill;
+                    break;
+                }
+            }
+
+            //다른 플레이어 스킬 이펙트 임시 인스턴스
+            if (foundSkill.HasValue && foundSkill.Value.effectInstance != null)
+            {
+                effectInstance = foundSkill.Value.effectInstance;
+            }
+            else
+            {
+                SkillData skillData = Singleton.Skill.GetSkillData(skillID);
+                if (skillData == null || skillData.skillEffectPrefab == null)
+                    return;
+
+                effectInstance = Instantiate(skillData.skillEffectPrefab, transform);
+                effectInstance.SetActive(false);
+            }
+
+            // 위치 설정
+            effectInstance.transform.position = targetPosition;
+            effectInstance.transform.rotation = Quaternion.identity;
+
+            ParticleSystem[] particleSystems = effectInstance.GetComponentsInChildren<ParticleSystem>();
+            foreach (var ps in particleSystems)
+            {
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                ps.Play();
+            }
+
+            if (!effectInstance.activeSelf)
+            {
+                effectInstance.SetActive(true);
+            }
+
+            if (!foundSkill.HasValue)
+            {
+                float maxDuration = 0f;
+                foreach (var ps in particleSystems)
+                {
+                    float duration = ps.main.duration + ps.main.startLifetime.constantMax;
+                    if (duration > maxDuration)
+                        maxDuration = duration;
+                }
+
+                if (maxDuration > 0f)
+                {
+                    Destroy(effectInstance, maxDuration);
+                }
             }
         }
     }
