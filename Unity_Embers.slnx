@@ -1,0 +1,19 @@
+﻿<Solution>
+  <Project Path="Mirror.csproj" />
+  <Project Path="Mirror.Components.csproj" />
+  <Project Path="Edgegap.csproj" />
+  <Project Path="Michsky.UI.Reach.Core.csproj" />
+  <Project Path="Mirror.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="NOLDA.csproj" />
+  <Project Path="kcp2k.csproj" />
+  <Project Path="NOLDA.Editor.csproj" />
+  <Project Path="NOLDA.Components.csproj" />
+  <Project Path="Unity.Mirror.CodeGen.csproj" />
+  <Project Path="Mirror.Transports.csproj" />
+  <Project Path="Polyperfect.Universal.csproj" />
+  <Project Path="NOLDA.Enum.csproj" />
+  <Project Path="Michsky.UI.Reach.Editor.csproj" />
+  <Project Path="Mirror.CompilerSymbols.csproj" />
+  <Project Path="Mirror.Authenticators.csproj" />
+</Solution>
