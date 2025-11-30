@@ -21,21 +21,12 @@ namespace NOLDA
             }
         }
 
-        // 캐시된 스킬 데이터를 저장할 구조체
-        private struct CachedSkillInfo
-        {
-            public SkillData skillData;
-            public int skillLevel;
-            public KeyCode keyCode;
-        }
-
         private PlayerController playerController;
         private PlayerInput input;
         private Animator animator;
         private bool _isSkillInUse = false;
 
-        // 스킬 정보 캐시
-        private List<CachedSkillInfo> cachedSkills = new List<CachedSkillInfo>();
+        private Dictionary<int, GameObject> effectInstances = new Dictionary<int, GameObject>();
 
         private void Awake()
         {
@@ -46,37 +37,53 @@ namespace NOLDA
 
         private void Start()
         {
-            UpdateSkillCache(); // 플레이어가 스킬정보 캐시를 갖고있음(메모리 효율성)
+            InitializeEffectInstances();
             Singleton.Game.playerData.OnDataChanged += OnPlayerDataChanged;
         }
 
         private void OnDestroy()
         {
             Singleton.Game.playerData.OnDataChanged -= OnPlayerDataChanged;
+
+            // 이펙트 인스턴스 정리
+            foreach (var effectInstance in effectInstances.Values)
+            {
+                if (effectInstance != null)
+                {
+                    Destroy(effectInstance);
+                }
+            }
+            effectInstances.Clear();
         }
 
         private void OnPlayerDataChanged(string propertyName, object value)
         {
             if (propertyName == nameof(PlayerDataSO.Skills))
             {
-                UpdateSkillCache();
-            }  //TODO: 스킬 업데이트 이벤트 발생이 필요한가?? 확인필요 너무오랜만이라 기억안나//
+                InitializeEffectInstances();
+            }
         }
 
-        private void UpdateSkillCache()
+        private void InitializeEffectInstances()
         {
-            cachedSkills.Clear();
-            foreach (var skillEntry in Singleton.Game.playerData.Skills)
+            foreach (var effectInstance in effectInstances.Values)
             {
-                SkillData skillData = Singleton.Skill.GetSkillData(skillEntry.Key);
-                if (skillData != null)
+                if (effectInstance != null)
                 {
-                    cachedSkills.Add(new CachedSkillInfo
-                    {
-                        skillData = skillData,
-                        skillLevel = skillEntry.Value,
-                        keyCode = skillData.defaultKey
-                    });
+                    Destroy(effectInstance);
+                }
+            }
+            effectInstances.Clear();
+
+            // 플레이어가 보유한 스킬의 이펙트만 미리 인스턴스화
+            var playerSkills = Singleton.Skill.GetPlayerSkills();
+            foreach (var skillInfo in playerSkills)
+            {
+                if (skillInfo.skillData.skillEffectPrefab != null)
+                {
+                    GameObject effectInstance = Instantiate(skillInfo.skillData.skillEffectPrefab, transform);
+                    effectInstance.SetActive(false);
+                    effectInstances[skillInfo.skillData.skillID] = effectInstance;
                 }
             }
         }
@@ -88,7 +95,8 @@ namespace NOLDA
                 || input.IsPointerOverUI())
                 return;
 
-            foreach (var skillInfo in cachedSkills)
+            var playerSkills = Singleton.Skill.GetPlayerSkills();
+            foreach (var skillInfo in playerSkills)
             {
                 if (Input.GetKeyDown(skillInfo.keyCode))
                 {
@@ -117,11 +125,24 @@ namespace NOLDA
                 skillScript.ExecuteSkill(animator, this);
             }
 
+            //이펙트 재생
+            PlaySkillEffectsLocal(skill.skillID, GetSkillEffectPosition());
+
             // 주변 적을 찾아 공격
-            TryUseSkillOnEnemy(skill);
+            //TryUseSkillOnEnemy(skill);
 
             // 쿨타임 설정
             Singleton.Skill.SetSkillCooldown(skill.skillID);
+        }
+
+        private Vector3 GetSkillEffectPosition()
+        {
+            Vector3 position;
+
+            position = transform.position + transform.forward * 1.5f;
+            position.y += 1f;
+
+            return position;
         }
 
         public void OnSkillEnd()
@@ -161,15 +182,82 @@ namespace NOLDA
                 enemy.TakeDamage(skill.baseDamage * levelData.effectMultiplier);
             }
 
-            RpcPlaySkillEffects(skill.skillEffectPrefab, target.transform.position);
+            RpcPlaySkillEffects(skillID, target.transform.position);
+        }
+
+        [Command]
+        private void CmdRequestPlaySkillEffects(int skillID, Vector3 targetPosition)
+        {
+            RpcPlaySkillEffects(skillID, targetPosition);
         }
 
         [ClientRpc]
-        private void RpcPlaySkillEffects(GameObject effectPrefab, Vector3 targetPosition)
+        private void RpcPlaySkillEffects(int skillID, Vector3 targetPosition)
         {
-            if (effectPrefab != null)
+            if (!isLocalPlayer)
             {
-                Instantiate(effectPrefab, targetPosition, Quaternion.identity);
+                PlaySkillEffectByID(skillID, targetPosition);
+            }
+        }
+
+        private void PlaySkillEffectsLocal(int skillID, Vector3 targetPosition)
+        {
+            PlaySkillEffectByID(skillID, targetPosition);
+            CmdRequestPlaySkillEffects(skillID, targetPosition);
+        }
+
+        private void PlaySkillEffectByID(int skillID, Vector3 targetPosition)
+        {
+            GameObject effectInstance = null;
+            bool isPlayerSkill = false;
+
+            // 플레이어가 보유한 스킬인지 확인
+            if (effectInstances.TryGetValue(skillID, out effectInstance))
+            {
+                isPlayerSkill = true;
+            }
+            else
+            {
+                // 다른 플레이어의 스킬 이펙트를 위해 임시로 생성
+                SkillData skillData = Singleton.Skill.GetSkillData(skillID);
+                if (skillData == null || skillData.skillEffectPrefab == null)
+                    return;
+
+                effectInstance = Instantiate(skillData.skillEffectPrefab, transform);
+                effectInstance.SetActive(false);
+            }
+
+            // 소환 위치 설정
+            effectInstance.transform.position = targetPosition;
+            effectInstance.transform.rotation = Quaternion.identity;
+
+            ParticleSystem[] particleSystems = effectInstance.GetComponentsInChildren<ParticleSystem>();
+            foreach (var ps in particleSystems)
+            {
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                ps.Play();
+            }
+
+            if (!effectInstance.activeSelf)
+            {
+                effectInstance.SetActive(true);
+            }
+
+            // 다른 플레이어의 스킬 이펙트는 재생 후 자동 파괴
+            if (!isPlayerSkill)
+            {
+                float maxDuration = 0f;
+                foreach (var ps in particleSystems)
+                {
+                    float duration = ps.main.duration + ps.main.startLifetime.constantMax;
+                    if (duration > maxDuration)
+                        maxDuration = duration;
+                }
+
+                if (maxDuration > 0f)
+                {
+                    Destroy(effectInstance, maxDuration);
+                }
             }
         }
     }

@@ -51,13 +51,14 @@ namespace NOLDA
             }
             skillButtons.Clear();
 
-            foreach (var skill in Singleton.Skill.availableSkills)
+            foreach (var skillInfo in Singleton.Skill.GetAllSkills())
             {
+                var skill = skillInfo.skillData;
                 if (skill.classType != Singleton.Game.playerData.Class)
                     continue;
 
                 int skillLevel = Singleton.Game.playerData.Skills.ContainsKey(skill.skillID) ? Singleton.Game.playerData.Skills[skill.skillID] : 0;
-                bool canLearn = Singleton.Game.playerData.Level >= skill.levelData[0].requiredLevel 
+                bool canLearn = Singleton.Game.playerData.Level >= skill.levelData[0].requiredLevel
                                 && Singleton.Game.playerData.Sp >= skill.levelData[0].spCost;
                 bool canUpgrade = skillLevel > 0 && skillLevel < skill.levelData.Count;
 

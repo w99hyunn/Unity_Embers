@@ -1,11 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace NOLDA
 {
+    [Serializable]
+    public struct CachedSkillInfo
+    {
+        public SkillData skillData;
+        public int skillLevel;
+        public KeyCode keyCode;
+    }
+
     public class SkillSingleton : MonoBehaviour
     {
-        public List<SkillData> availableSkills = new List<SkillData>(); // 모든 스킬 데이터
+        [SerializeField] private List<CachedSkillInfo> cachedSkills = new List<CachedSkillInfo>();
         private Dictionary<string, float> cooldownTimers = new Dictionary<string, float>(); // 스킬 쿨타임
 
         private void Awake()
@@ -16,12 +25,49 @@ namespace NOLDA
         private void LoadSkillsFromResources()
         {
             SkillData[] skills = Resources.LoadAll<SkillData>("SkillData");
-            availableSkills.AddRange(skills);
+            cachedSkills.Clear();
+
+            foreach (var skill in skills)
+            {
+                cachedSkills.Add(new CachedSkillInfo
+                {
+                    skillData = skill,
+                    skillLevel = 0,
+                    keyCode = skill.defaultKey
+                });
+            }
         }
 
         public SkillData GetSkillData(int skillID)
         {
-            return availableSkills.Find(s => s.skillID == skillID);
+            var found = cachedSkills.Find(s => s.skillData != null && s.skillData.skillID == skillID);
+            return found.skillData != null ? found.skillData : null;
+        }
+
+        public List<CachedSkillInfo> GetAllSkills()
+        {
+            return cachedSkills;
+        }
+
+        public List<CachedSkillInfo> GetPlayerSkills()
+        {
+            List<CachedSkillInfo> playerSkills = new List<CachedSkillInfo>();
+
+            foreach (var cachedSkill in cachedSkills)
+            {
+                if (Singleton.Game.playerData.Skills.ContainsKey(cachedSkill.skillData.skillID))
+                {
+                    int skillLevel = Singleton.Game.playerData.Skills[cachedSkill.skillData.skillID];
+                    playerSkills.Add(new CachedSkillInfo
+                    {
+                        skillData = cachedSkill.skillData,
+                        skillLevel = skillLevel,
+                        keyCode = cachedSkill.keyCode
+                    });
+                }
+            }
+
+            return playerSkills;
         }
 
         public int GetSkillLevel(int skillID)

@@ -14,14 +14,14 @@ namespace NOLDA
         public string Email { get; set; }
         public string CreatedAt { get; set; }
     }
-    
+
     public class DBSingleton : MonoBehaviour
     {
         #region # ItemDataBase
 
         [SerializeField]
         private Dictionary<int, ItemData> itemDataCache = new Dictionary<int, ItemData>();
-        
+
         private void InitializeItemData()
         {
             // 모든 ScriptableObject를 로드
@@ -41,10 +41,10 @@ namespace NOLDA
             return itemData;
         }
         #endregion
-        
-        
+
+
         private MySqlConnection _connection;
-        
+
         private void Start()
         {
             InitializeItemData(); //아이템 데이터베이스
@@ -110,7 +110,7 @@ namespace NOLDA
             return Convert.ToBase64String(hashBytes);
         }
         #endregion
-        
+
         #region # 회원가입
         /// <summary>
         /// 회원가입
@@ -356,7 +356,7 @@ namespace NOLDA
                                         (Account_id, Name, Faction, Class, Gender, MapCode) 
                                         VALUES 
                                         (@Account_id, @Name, @Faction, @Class, @Gender, @MapCode)";
-                
+
                 using (MySqlCommand characterCmd = new MySqlCommand(characterQuery, _connection))
                 {
                     characterCmd.Parameters.AddWithValue("@Account_id", accountId);
@@ -435,7 +435,7 @@ namespace NOLDA
                                 description = $"레벨 {reader.GetInt32("Level")} | 공격력 {reader.GetInt32("Attack")}",
                                 defaultState = ChapterState.CharacterPlayAndDelete,
                             };
-                            
+
                             string classString = reader.GetString("Class");
                             if (Enum.TryParse(classString, true, out Class characterClass))
                             {
@@ -519,9 +519,9 @@ namespace NOLDA
                         playerData.Position = new Vector3(posX, posY, posZ);
                         playerData.MapCode = reader.GetString("MapCode");
                         playerData.InventorySpace = reader.GetInt32("InventorySpace");
-                        
+
                         reader.Close();
-                        
+
                         // 인벤토리 데이터 가져오기
                         string inventoryQuery = @"
                             SELECT `Item_id`, `Amount`, `Position`
@@ -594,7 +594,7 @@ namespace NOLDA
         public Dictionary<int, int> GetCharacterSkills(int characterId)
         {
             Dictionary<int, int> skills = new Dictionary<int, int>();
-            
+
             string query = "SELECT Skill_id, Level FROM Skill WHERE Character_id = @CharacterId";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@CharacterId", characterId);
@@ -660,11 +660,14 @@ namespace NOLDA
         {
             try
             {
+                if (fieldName == nameof(PlayerDataSO.Skills)) //스킬은 별도 DB로 업데이트됨
+                    return;
+
                 if (fieldName == nameof(PlayerDataSO.Position))
                 {
                     // Position 값을 처리하는 로직
                     Vector3 position = JsonUtility.FromJson<Vector3>(newValue);
-                    
+
                     string query = @"
                                     UPDATE `character` 
                                     SET `Current_position_x` = @PosX, 
