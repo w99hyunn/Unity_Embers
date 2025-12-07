@@ -1,9 +1,0 @@
-{
-    "serverIp": "localhost",
-    "serverPort": 8585,
-    "serverAutoRun": false,
-    "dbServerIP": "localhost",
-    "dbHost": "root",
-    "dbPw": "root",
-    "dbPort": "3306"
-}

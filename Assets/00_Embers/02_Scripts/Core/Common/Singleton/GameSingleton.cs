@@ -1,33 +1,19 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Mirror;
 using UnityEngine;
 
 namespace NOLDA
 {
-    [Serializable]
-    public class ServerConfig
-    {
-        public string serverIp = "localhost";
-        public ushort serverPort = 8585;
-        public bool serverAutoRun = false;
-        public string dbServerIP = "localhost";
-        public string dbHost = "root";
-        public string dbPw = "root";
-        public string dbPort = "3306";
-    }
-
     public class GameSingleton : MonoBehaviour
     {
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
 
-        private const string CONFIG_FILE_NAME = "ServerConfig.json";
-        private ServerConfig serverConfig;
-        private bool configLoaded = false;
+        [Header("Server Config")]
+        [Tooltip("SO가 없으면 기본값 사용")]
+        [SerializeField] private ServerConfigSO serverConfig;
 
-        // 기본값 (JSON이 없을 때 사용)
+        // 기본값 (SO가 없을 때 사용)
         private const string DEFAULT_SERVER_IP = "localhost";
         private const ushort DEFAULT_SERVER_PORT = 8585;
         private const bool DEFAULT_SERVER_AUTO_RUN = false;
@@ -36,13 +22,13 @@ namespace NOLDA
         private const string DEFAULT_DB_PW = "root";
         private const string DEFAULT_DB_PORT = "3306";
 
-        public string ServerIP => configLoaded ? serverConfig.serverIp : DEFAULT_SERVER_IP;
-        public ushort ServerPort => configLoaded ? serverConfig.serverPort : DEFAULT_SERVER_PORT;
-        public bool ServerAutoRun => configLoaded ? serverConfig.serverAutoRun : DEFAULT_SERVER_AUTO_RUN;
-        public string DBServerIP => configLoaded ? serverConfig.dbServerIP : DEFAULT_DB_SERVER_IP;
-        public string DBHost => configLoaded ? serverConfig.dbHost : DEFAULT_DB_HOST;
-        public string DBPw => configLoaded ? serverConfig.dbPw : DEFAULT_DB_PW;
-        public string DBPort => configLoaded ? serverConfig.dbPort : DEFAULT_DB_PORT;
+        public string ServerIP => serverConfig != null ? serverConfig.serverIp : DEFAULT_SERVER_IP;
+        public ushort ServerPort => serverConfig != null ? serverConfig.serverPort : DEFAULT_SERVER_PORT;
+        public bool ServerAutoRun => serverConfig != null ? serverConfig.serverAutoRun : DEFAULT_SERVER_AUTO_RUN;
+        public string DBServerIP => serverConfig != null ? serverConfig.dbServerIP : DEFAULT_DB_SERVER_IP;
+        public string DBHost => serverConfig != null ? serverConfig.dbHost : DEFAULT_DB_HOST;
+        public string DBPw => serverConfig != null ? serverConfig.dbPw : DEFAULT_DB_PW;
+        public string DBPort => serverConfig != null ? serverConfig.dbPort : DEFAULT_DB_PORT;
 
         #region ▶ Game Settings
         [Space(20)]
@@ -76,37 +62,6 @@ namespace NOLDA
         [SerializeField] private int loadRange = 1;
         public int LoadRange => loadRange;
         #endregion
-
-        private void Awake()
-        {
-            LoadServerConfig();
-        }
-
-        private void LoadServerConfig()
-        {
-            string filePath = Path.Combine(Application.streamingAssetsPath, CONFIG_FILE_NAME);
-
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    string json = File.ReadAllText(filePath);
-                    serverConfig = JsonUtility.FromJson<ServerConfig>(json);
-                    configLoaded = true;
-                    DebugUtils.Log("ServerConfig loaded from StreamingAssets");
-                }
-                catch (System.Exception e)
-                {
-                    DebugUtils.LogError($"Failed to load ServerConfig: {e.Message}");
-                    configLoaded = false;
-                }
-            }
-            else
-            {
-                DebugUtils.Log($"ServerConfig.json not found at {filePath}. Using default values.");
-                configLoaded = false;
-            }
-        }
 
         public GameObject GetAvatarPrefab(Class playerClass)
         {

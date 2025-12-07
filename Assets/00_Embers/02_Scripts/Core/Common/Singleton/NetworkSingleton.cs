@@ -58,7 +58,7 @@ namespace NOLDA
 
                 if (dbServer)
                 {
-                    DebugUtils.Log("[DataBase] DB 연결 성공");
+                    DebugUtils.Log($"[DataBase] DB 연결 성공 : ServerIP = {Singleton.Game.DBServerIP}");
                     break;
                 }
 
