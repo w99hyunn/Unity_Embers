@@ -2195,12 +2195,6 @@ MonoBehaviour:
   levelUpMaxHp: 100
   levelUpMaxMp: 100
   levelUpSp: 3
-  serverIp: localhost
-  serverPort: 8585
-  serverAutoRun: 0
-  dbServerIP: localhost
-  dbHost: root
-  dbPw: root
   maxInventorySpace: 60
   chatMaxMessages: 50
   chunkSize: 100

@@ -71,3 +71,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Server Configuration (contains sensitive information)
+/[Aa]ssets/[Ss]treamingAssets/ServerConfig.json
+/[Aa]ssets/[Ss]treamingAssets/ServerConfig.json.meta

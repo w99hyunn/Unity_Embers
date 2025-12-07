@@ -53,13 +53,13 @@ namespace NOLDA
         #region # DB 서버 Open / Close
         public bool ConnectDB()
         {
-            bool success = ConnectToDatabase(Singleton.Game.DBServerIP, "embers", Singleton.Game.DBHost, Singleton.Game.DBPw, "3306");
+            bool success = ConnectToDatabase(Singleton.Game.DBServerIP, "embers", Singleton.Game.DBHost, Singleton.Game.DBPw, Singleton.Game.DBPort);
             return success;
         }
 
         private bool ConnectToDatabase(string server, string database, string uid, string password, string port)
         {
-            string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Allow Zero Datetime=True;Convert Zero Datetime=True;";
+            string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Connection Timeout=30;Allow Zero Datetime=True;Convert Zero Datetime=True;";
 
             _connection = new MySqlConnection(connectionString);
 

@@ -11,7 +11,7 @@ namespace NOLDA
     {
         [SerializeField] private ChatServer chatServer;
         public ChatServer ChatServer => chatServer;
-        
+
         public override void Start()
         {
 #if UNITY_EDITOR
@@ -27,7 +27,7 @@ namespace NOLDA
             {
                 DebugUtils.Log("Client 동작 실행");
             }
-            
+
             if (true == Singleton.Game.ServerAutoRun)
             {
                 if (!NetworkServer.active)
@@ -39,10 +39,43 @@ namespace NOLDA
 #if UNITY_SERVER
             if (!NetworkServer.active)
             {
+
                 StartServer();
             }
 #endif
             base.Start();
+        }
+
+        public new void StartServer()
+        {
+            const int maxRetries = 5;
+            bool dbServer = false;
+
+            for (int attempt = 1; attempt <= maxRetries; attempt++)
+            {
+                dbServer = Singleton.DB.ConnectDB();
+                DebugUtils.Log($"[DataBase] DB 연결 시도 {attempt}/{maxRetries} : {dbServer}");
+
+                if (dbServer)
+                {
+                    DebugUtils.Log("[DataBase] DB 연결 성공");
+                    break;
+                }
+
+                if (attempt < maxRetries)
+                {
+                    DebugUtils.Log($"[DataBase] DB 연결 실패. {attempt + 1}번째 시도 대기");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+
+            if (!dbServer)
+            {
+                DebugUtils.LogError("[DataBase] DB 연결 실패 / 서버 시작 실패 (5번 시도 실패)");
+                return;
+            }
+
+            base.StartServer();
         }
 
         public new void StartClient()
@@ -55,14 +88,10 @@ namespace NOLDA
 
             base.StartClient();
         }
-        
+
         public override void OnStartServer()
         {
             base.OnStartServer();
-
-            //DB Connect
-            bool dbServer = Singleton.DB.ConnectDB();
-            DebugUtils.Log($"DB 연결 유무 : {dbServer}");
 
             //Network Message Register
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
@@ -75,7 +104,7 @@ namespace NOLDA
 
             //Player Data Update
             NetworkServer.ReplaceHandler<UpdatePlayerDataMessage>(OnUpdatePlayerDataMessageReceived);
-            
+
             //Player Inventory Update
             NetworkServer.ReplaceHandler<UpdateInventoryMessage>(OnUpdateInventoryMessageReceived);
 
@@ -111,7 +140,7 @@ namespace NOLDA
                 CreatedDate = result.CreatedAt,
                 Result = result.Result,
             };
-            
+
             conn.Send(response);
         }
 
@@ -170,7 +199,7 @@ namespace NOLDA
             };
             conn.Send(response);
         }
-        
+
         /// <summary>
         /// 클라이언트가 로그인 했을 때 || 캐릭터를 새로 생성했을 때, 해당 계정의 캐릭터 정보 요청 메시지
         /// </summary>

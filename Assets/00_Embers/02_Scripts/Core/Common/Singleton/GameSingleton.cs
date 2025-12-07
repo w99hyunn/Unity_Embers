@@ -1,13 +1,48 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 
 namespace NOLDA
 {
+    [Serializable]
+    public class ServerConfig
+    {
+        public string serverIp = "localhost";
+        public ushort serverPort = 8585;
+        public bool serverAutoRun = false;
+        public string dbServerIP = "localhost";
+        public string dbHost = "root";
+        public string dbPw = "root";
+        public string dbPort = "3306";
+    }
+
     public class GameSingleton : MonoBehaviour
     {
         public PlayerDataSO playerData;
         public AvatarDataSO avatarData;
+
+        private const string CONFIG_FILE_NAME = "ServerConfig.json";
+        private ServerConfig serverConfig;
+        private bool configLoaded = false;
+
+        // 기본값 (JSON이 없을 때 사용)
+        private const string DEFAULT_SERVER_IP = "localhost";
+        private const ushort DEFAULT_SERVER_PORT = 8585;
+        private const bool DEFAULT_SERVER_AUTO_RUN = false;
+        private const string DEFAULT_DB_SERVER_IP = "localhost";
+        private const string DEFAULT_DB_HOST = "root";
+        private const string DEFAULT_DB_PW = "root";
+        private const string DEFAULT_DB_PORT = "3306";
+
+        public string ServerIP => configLoaded ? serverConfig.serverIp : DEFAULT_SERVER_IP;
+        public ushort ServerPort => configLoaded ? serverConfig.serverPort : DEFAULT_SERVER_PORT;
+        public bool ServerAutoRun => configLoaded ? serverConfig.serverAutoRun : DEFAULT_SERVER_AUTO_RUN;
+        public string DBServerIP => configLoaded ? serverConfig.dbServerIP : DEFAULT_DB_SERVER_IP;
+        public string DBHost => configLoaded ? serverConfig.dbHost : DEFAULT_DB_HOST;
+        public string DBPw => configLoaded ? serverConfig.dbPw : DEFAULT_DB_PW;
+        public string DBPort => configLoaded ? serverConfig.dbPort : DEFAULT_DB_PORT;
 
         #region ▶ Game Settings
         [Space(20)]
@@ -24,55 +59,67 @@ namespace NOLDA
         [SerializeField] private int levelUpSp = 3;
         public int LevelUpSp => levelUpSp;
 
-
-        [Header("Server Info")]
-        [SerializeField] private string serverIp = "172.30.1.67";
-        public string ServerIP => serverIp;
-        [SerializeField] private ushort serverPort = 8585;
-        public ushort ServerPort => serverPort;
-
-        [SerializeField] private bool serverAutoRun = false;
-        public bool ServerAutoRun => serverAutoRun;
-        
-        [Header("DB Server Info")]
-        [SerializeField] private string dbServerIP = "localhost";
-        public string DBServerIP => dbServerIP;
-        [SerializeField] private string dbHost = "root";
-        public string DBHost => dbHost;
-        [SerializeField] private string dbPw = "root";
-        public string DBPw => dbPw;
-        
-        
         [Header("InGame")]
         [Tooltip("인벤토리에서 최대치로 쓸 슬롯 갯수. 이 수만큼 빈 슬롯이 생성됨")]
         [SerializeField] private int maxInventorySpace = 60;
         public int MaxInventorySpace => maxInventorySpace;
         [SerializeField] private int chatMaxMessages = 50;
         public int ChatMaxMessages => chatMaxMessages;
-        
-        
+
+
         [Header("Map")]
         [Tooltip("청크 사이즈(각 씬의 맵 사이즈)")]
         [SerializeField] private float chunkSize = 300f;
         public float ChunkSize => chunkSize;
-        
+
         [Tooltip("로드할 주변 청크 수(1로 설정시 플레이어가 있는 청크 기준 1칸 주변까지")]
         [SerializeField] private int loadRange = 1;
         public int LoadRange => loadRange;
         #endregion
-        
+
+        private void Awake()
+        {
+            LoadServerConfig();
+        }
+
+        private void LoadServerConfig()
+        {
+            string filePath = Path.Combine(Application.streamingAssetsPath, CONFIG_FILE_NAME);
+
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    string json = File.ReadAllText(filePath);
+                    serverConfig = JsonUtility.FromJson<ServerConfig>(json);
+                    configLoaded = true;
+                    DebugUtils.Log("ServerConfig loaded from StreamingAssets");
+                }
+                catch (System.Exception e)
+                {
+                    DebugUtils.LogError($"Failed to load ServerConfig: {e.Message}");
+                    configLoaded = false;
+                }
+            }
+            else
+            {
+                DebugUtils.Log($"ServerConfig.json not found at {filePath}. Using default values.");
+                configLoaded = false;
+            }
+        }
+
         public GameObject GetAvatarPrefab(Class playerClass)
         {
             var avatarDataPrefab = avatarData.avatarList.FirstOrDefault(data => data.classType == playerClass);
-            
+
             if (avatarDataPrefab != null)
             {
                 return avatarDataPrefab.avatarPrefab;
             }
-            
+
             return null;
         }
-        
+
         #region # 캐릭터 데이터 이벤트 등록
         //Managers.Game.playerData의 정보가 업데이트되면 자동으로 네트워크 메시지를 보내 DB 업데이트
         public void OnEnable()
@@ -85,7 +132,7 @@ namespace NOLDA
             playerData.OnDataChanged -= HandleDataChanged;
         }
         #endregion
-        
+
         #region # PlayerDataUpdate Logic
         private void HandleDataChanged(string fieldName, object newValue)
         {
