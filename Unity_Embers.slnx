@@ -1,6 +1,7 @@
 ﻿<Solution>
   <Project Path="Mirror.csproj" />
   <Project Path="Mirror.Components.csproj" />
+  <Project Path="Edgegap.csproj" />
   <Project Path="Michsky.UI.Reach.Core.csproj" />
   <Project Path="Mirror.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
