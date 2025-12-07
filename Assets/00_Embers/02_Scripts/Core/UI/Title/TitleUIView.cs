@@ -10,7 +10,7 @@ namespace NOLDA
         [Header("General")]
         public MenuManager menuManager;
         public PanelManager panelManager;
-        public ChapterManager chapterManager;
+        public CustomChapterManager chapterManager;
         
         [Header("Splash Screen")]
         [Header("Connecting")]

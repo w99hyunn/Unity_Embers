@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using static Michsky.UI.Reach.ChapterManager;
+using static NOLDA.CustomChapterManager;
 
 namespace NOLDA
 {
@@ -393,9 +393,9 @@ namespace NOLDA
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public List<ChapterItem> GetCharactersByUsername(string username)
+        public List<CustomChapterItem> GetCharactersByUsername(string username)
         {
-            List<ChapterItem> characters = new List<ChapterItem>();
+            List<CustomChapterItem> characters = new List<CustomChapterItem>();
 
             try
             {
@@ -428,12 +428,12 @@ namespace NOLDA
                     {
                         while (reader.Read())
                         {
-                            ChapterItem character = new ChapterItem
+                            CustomChapterItem character = new CustomChapterItem
                             {
                                 chapterID = reader.GetString("Name"),
                                 title = reader.GetString("Name"),
                                 description = $"레벨 {reader.GetInt32("Level")} | 공격력 {reader.GetInt32("Attack")}",
-                                defaultState = ChapterState.CharacterPlayAndDelete,
+                                defaultState = Michsky.UI.Reach.ChapterManager.ChapterState.CharacterPlayAndDelete,
                             };
 
                             string classString = reader.GetString("Class");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Michsky.UI.Reach.ChapterManager;
+using static NOLDA.CustomChapterManager;
 
 namespace NOLDA
 {
@@ -207,7 +208,7 @@ namespace NOLDA
         /// <param name="msg"></param>
         private void OnLoadCharacterInfoRequest(NetworkConnectionToClient conn, CharacterInfoLoadRequestMessage msg)
         {
-            List<ChapterItem> characterData = Singleton.DB.GetCharactersByUsername(msg.Username);
+            List<CustomChapterItem> characterData = Singleton.DB.GetCharactersByUsername(msg.Username);
 
             CharacterInfoLoadResponseMessage response = new CharacterInfoLoadResponseMessage
             {

@@ -46293,7 +46293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1391812937009547308, guid: 7ffa31debceb23a4c9b46fdd0a9e270f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 60.92505
+      value: 60.925003
       objectReference: {fileID: 0}
     - target: {fileID: 1391812937009547308, guid: 7ffa31debceb23a4c9b46fdd0a9e270f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -58483,7 +58483,7 @@ PrefabInstance:
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1955896820}
+      objectReference: {fileID: 1955896822}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -58494,7 +58494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Michsky.UI.Reach.ChapterManager, Assembly-CSharp
+      value: NOLDA.CustomChapterManager, NOLDA
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -58522,7 +58522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.16
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -62377,11 +62377,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &1107430636 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6494165353417270166, guid: 55e125313b5307545b68991fd6372f4d, type: 3}
-  m_PrefabInstance: {fileID: 6494165354457591674}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1108524234
 GameObject:
   m_ObjectHideFlags: 0
@@ -63047,7 +63042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuManager: {fileID: 594739431}
   panelManager: {fileID: 1579231287}
-  chapterManager: {fileID: 1955896820}
+  chapterManager: {fileID: 1955896822}
   Connecting: {fileID: 1610544774}
   ConnectingMessage: {fileID: 474602703}
   Login: {fileID: 1176828679}
@@ -81612,7 +81607,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1440141579}
-  - component: {fileID: 1440141582}
   - component: {fileID: 1440141581}
   - component: {fileID: 1440141580}
   m_Layer: 5
@@ -81833,19 +81827,6 @@ MonoBehaviour:
   onDeselect:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1440141582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440141578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb30741cc798ad341a52bd55b683443d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NOLDA.Components::NOLDA.ClassLocker
-  openClasses: 010000
 --- !u!1 &1442185195
 GameObject:
   m_ObjectHideFlags: 0
@@ -87260,7 +87241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 62.26
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -90032,7 +90013,7 @@ PrefabInstance:
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1955896820}
+      objectReference: {fileID: 1955896822}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -90043,7 +90024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Michsky.UI.Reach.ChapterManager, Assembly-CSharp
+      value: NOLDA.CustomChapterManager, NOLDA
       objectReference: {fileID: 0}
     - target: {fileID: 4386596381742545555, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: onHotkeyPress.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -90071,7 +90052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 35.66
       objectReference: {fileID: 0}
     - target: {fileID: 6044724140025765848, guid: a58adb5252f8b5447ace87508e27b7d3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -109387,7 +109368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1955896817}
-  - component: {fileID: 1955896820}
+  - component: {fileID: 1955896822}
   - component: {fileID: 1955896821}
   - component: {fileID: 1955896819}
   - component: {fileID: 1955896818}
@@ -109454,7 +109435,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &1955896820
+--- !u!114 &1955896821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109463,13 +109444,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 1955896816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490231dd090d15643ace2e0719884f7e, type: 3}
+  m_Script: {fileID: 11500000, guid: efc2fc407cf287745b4df9913e70134e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localizationSettings: {fileID: 11400000, guid: 2cbd73cf0fc79bf4ab2e27e18b1ba7c8, type: 2}
+  textObj: {fileID: 0}
+  audioObj: {fileID: 0}
+  imageObj: {fileID: 0}
+  tableIndex: 0
+  localizationKey: 
+  objectType: 2
+  updateMode: 0
+  rebuildLayoutOnUpdate: 0
+  forceAddToManager: 0
+  showOutputOnEditor: 1
+  onLanguageChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  isInitialized: 0
+--- !u!114 &1955896822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955896816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ab483bb7f65154c8ad3f5c34b2bb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOLDA::NOLDA.CustomChapterManager
   chapters:
   - chapterID: Create Character
     title: "\uCE90\uB9AD\uD130 \uC0DD\uC131"
-    characterClass: -1
     background: {fileID: 21300000, guid: c8ecd8f6dcfe2314e9d327bdf3402b90, type: 3}
     description: "\uC0DD\uC131\uB41C \uCE90\uB9AD\uD130\uAC00 \uC5C6\uB2E4\uBA74
       \uCE90\uB9AD\uD130\uB97C \uC0DD\uC131\uD558\uC138\uC694."
@@ -109514,30 +109521,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.18851778
-      value: 0.47798252
-      inSlope: 2.068921
-      outSlope: 2.068921
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.29272804
-      outWeight: 0.07063071
-    - serializedVersion: 3
-      time: 0.36163384
-      value: 0.7607662
-      inSlope: 1.2336681
-      outSlope: 1.2336681
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -109580,47 +109569,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   onChapterPanelChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1144619010}
-        m_TargetAssemblyTypeName: STARTING.TitleUIController, STARTING
-        m_MethodName: CurrentChapterIndexUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  currentBackgroundRect: {fileID: 1107430636}
---- !u!114 &1955896821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955896816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efc2fc407cf287745b4df9913e70134e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localizationSettings: {fileID: 11400000, guid: 2cbd73cf0fc79bf4ab2e27e18b1ba7c8, type: 2}
-  textObj: {fileID: 0}
-  audioObj: {fileID: 0}
-  imageObj: {fileID: 0}
-  tableIndex: 0
-  localizationKey: 
-  objectType: 2
-  updateMode: 0
-  rebuildLayoutOnUpdate: 0
-  forceAddToManager: 0
-  showOutputOnEditor: 1
-  onLanguageChanged:
-    m_PersistentCalls:
       m_Calls: []
-  isInitialized: 0
+  currentBackgroundRect: {fileID: 0}
+  customChapters: []
 --- !u!1 &1960913686
 GameObject:
   m_ObjectHideFlags: 0
@@ -120586,7 +120537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1391812937009547308, guid: 7ffa31debceb23a4c9b46fdd0a9e270f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 48.930054
+      value: 48.93
       objectReference: {fileID: 0}
     - target: {fileID: 1391812937009547308, guid: 7ffa31debceb23a4c9b46fdd0a9e270f, type: 3}
       propertyPath: m_AnchoredPosition.y

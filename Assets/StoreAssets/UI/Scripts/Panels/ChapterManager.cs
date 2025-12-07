@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using NOLDA;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace Michsky.UI.Reach
     {
         // Content
         public List<ChapterItem> chapters = new List<ChapterItem>();
-        private List<ChapterIdentifier> identifiers = new List<ChapterIdentifier>();
+        protected List<ChapterIdentifier> identifiers = new List<ChapterIdentifier>();
         public int currentChapterIndex;
 
         // Resources
@@ -25,15 +24,15 @@ namespace Michsky.UI.Reach
         [SerializeField] private bool showLockedChapters = true;
         [SerializeField] private bool setPanelAuto = true;
         [SerializeField] private bool checkChapterData = true;
-        [SerializeField] private bool useLocalization = true;
-        [SerializeField] [Range(0.5f, 10)] private float barCurveSpeed = 2f;
+        [SerializeField] protected bool useLocalization = true;
+        [SerializeField][Range(0.5f, 10)] private float barCurveSpeed = 2f;
         [SerializeField] private AnimationCurve barCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(1.0f, 1.0f));
-        [SerializeField] [Range(0.75f, 2)] private float animationSpeed = 1;
+        [SerializeField][Range(0.75f, 2)] private float animationSpeed = 1;
 
         // Background Animation
         [SerializeField] private bool backgroundStretch = true;
-        [SerializeField] [Range(0, 100)] private float maxStretch = 75;
-        [SerializeField] [Range(0.02f, 0.5f)] private float stretchCurveSpeed = 0.1f;
+        [SerializeField][Range(0, 100)] private float maxStretch = 75;
+        [SerializeField][Range(0.02f, 0.5f)] private float stretchCurveSpeed = 0.1f;
         [SerializeField] private AnimationCurve stretchCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(1.0f, 1.0f));
 
         // Events
@@ -52,7 +51,6 @@ namespace Michsky.UI.Reach
         {
             public string chapterID;
             public string title;
-            public Class characterClass;
             public Sprite background = null;
             [TextArea] public string description;
             public ChapterState defaultState;
@@ -101,8 +99,15 @@ namespace Michsky.UI.Reach
             StartCoroutine("StretchPhaseOne");
         }
 
-        public void InitializeChapters()
+        public virtual void InitializeChapters()
         {
+            // No chapters -> nothing to initialize
+            if (chapters == null || chapters.Count == 0)
+            {
+                identifiers.Clear();
+                return;
+            }
+
             if (useLocalization == true)
             {
                 localizedObject = gameObject.GetComponent<LocalizedObject>();
@@ -133,7 +138,7 @@ namespace Michsky.UI.Reach
                 else
                 {
                     LocalizedObject tempLoc = item.titleObject.GetComponent<LocalizedObject>();
-                    if (tempLoc != null) 
+                    if (tempLoc != null)
                     {
                         tempLoc.tableIndex = localizedObject.tableIndex;
                         tempLoc.localizationKey = chapters[i].titleKey;
@@ -141,27 +146,14 @@ namespace Michsky.UI.Reach
                     }
                 }
 
-                // ClassName
-                if (useLocalization == false && chapters[i].characterClass != Class.NONE) { item.classNameObject.text = ((NOLDA.Class)chapters[i].characterClass).ToString(); }
-                else
-                {
-                    //LocalizedObject tempLoc = item.descriptionObject.GetComponent<LocalizedObject>();
-                    //if (tempLoc != null)
-                    //{
-                    //    tempLoc.tableIndex = localizedObject.tableIndex;
-                    //    tempLoc.localizationKey = chapters[i].descriptionKey;
-                    //    tempLoc.UpdateItem();
-                    //}
-                }
-
                 // Description
                 if (useLocalization == false || string.IsNullOrEmpty(chapters[i].descriptionKey)) { item.descriptionObject.text = chapters[i].description; }
                 else
                 {
                     LocalizedObject tempLoc = item.descriptionObject.GetComponent<LocalizedObject>();
-                    if (tempLoc != null) 
+                    if (tempLoc != null)
                     {
-                        tempLoc.tableIndex = localizedObject.tableIndex; 
+                        tempLoc.tableIndex = localizedObject.tableIndex;
                         tempLoc.localizationKey = chapters[i].descriptionKey;
                         tempLoc.UpdateItem();
                     }
@@ -207,6 +199,9 @@ namespace Michsky.UI.Reach
             }
 
             // Set the current go active
+            if (identifiers.Count == 0 || currentChapterIndex < 0 || currentChapterIndex >= identifiers.Count)
+                return;
+
             identifiers[currentChapterIndex].gameObject.SetActive(true);
 
             // Set button events
@@ -295,9 +290,9 @@ namespace Michsky.UI.Reach
             }
 
             if (progressFill != null && gameObject.activeInHierarchy == true)
-            { 
-                StopCoroutine("PlayProgressFill"); 
-                StartCoroutine("PlayProgressFill"); 
+            {
+                StopCoroutine("PlayProgressFill");
+                StartCoroutine("PlayProgressFill");
             }
 
             onChapterPanelChanged.Invoke(currentChapterIndex);

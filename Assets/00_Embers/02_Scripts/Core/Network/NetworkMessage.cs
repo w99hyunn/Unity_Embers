@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
-using static Michsky.UI.Reach.ChapterManager;
+using static NOLDA.CustomChapterManager;
 
 namespace NOLDA
 {
@@ -75,7 +75,7 @@ namespace NOLDA
 
     public struct CharacterInfoLoadResponseMessage : NetworkMessage
     {
-        public List<ChapterItem> CharacterData;
+        public List<CustomChapterItem> CharacterData;
     }
     #endregion
     
