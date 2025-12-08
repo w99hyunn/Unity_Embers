@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 
 using System;
 using System.Collections.Generic;
@@ -595,7 +595,7 @@ namespace NOLDA
         {
             Dictionary<int, int> skills = new Dictionary<int, int>();
 
-            string query = "SELECT Skill_id, Level FROM Skill WHERE Character_id = @CharacterId";
+            string query = "SELECT Skill_id, Level FROM `skill` WHERE Character_id = @CharacterId";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@CharacterId", characterId);
 

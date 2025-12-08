@@ -7,6 +7,7 @@
     ],
     "includePlatforms": [
         "Editor",
+        "LinuxStandalone64Server",
         "WindowsStandalone32",
         "WindowsStandalone64"
     ],
