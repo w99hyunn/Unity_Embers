@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Michsky.UI.Reach.ChapterManager;
 using static NOLDA.CustomChapterManager;
 
 namespace NOLDA
@@ -93,6 +92,9 @@ namespace NOLDA
         public override void OnStartServer()
         {
             base.OnStartServer();
+
+            int port = (Transport.active is PortTransport pt) ? pt.Port : -1;
+            DebugUtils.Log($"[Server] Server Open OK. - IP: {base.networkAddress}, Port: {port}");
 
             //Network Message Register
             NetworkServer.ReplaceHandler<LoginRequestMessage>(OnLoginRequest);
