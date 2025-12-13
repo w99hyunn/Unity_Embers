@@ -61,6 +61,16 @@ namespace NOLDA
         {
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Connection Timeout=30;Allow Zero Datetime=True;Convert Zero Datetime=True;";
 
+            try
+            {
+                if (_connection != null)
+                {
+                    _connection.Close();
+                    _connection.Dispose();
+                }
+            }
+            catch { }
+
             _connection = new MySqlConnection(connectionString);
 
             try
@@ -72,6 +82,55 @@ namespace NOLDA
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// DB 연결 상태 확인
+        /// </summary>
+        private bool IsConnectionValid()
+        {
+            try
+            {
+                if (_connection == null)
+                    return false;
+
+                if (_connection.State != System.Data.ConnectionState.Open)
+                    return false;
+
+                using (MySqlCommand cmd = new MySqlCommand("SELECT 1", _connection))
+                {
+                    cmd.CommandTimeout = 3;
+                    cmd.ExecuteScalar();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// DB 연결이 끊겼을 때 자동으로 재연결 시도
+        /// </summary>
+        private bool EnsureConnection()
+        {
+            if (IsConnectionValid())
+                return true;
+
+            DebugUtils.Log("[DataBase] DB 연결이 끊어짐. 재연결 시도 중");
+
+            bool reconnected = ConnectDB();
+            if (reconnected)
+            {
+                DebugUtils.Log("[DataBase] DB 재연결 성공");
+            }
+            else
+            {
+                DebugUtils.LogError("[DataBase] DB 재연결 실패");
+            }
+
+            return reconnected;
         }
 
         public void CloseDBServer()
@@ -121,6 +180,11 @@ namespace NOLDA
         /// <returns></returns>
         public SignUpResult SignUp(string username, string password, string email)
         {
+            if (!EnsureConnection())
+            {
+                return SignUpResult.ERROR;
+            }
+
             // username 중복 확인
             if (IsUsernameDuplicate(username))
             {
@@ -156,6 +220,11 @@ namespace NOLDA
         /// <returns></returns>
         private bool IsUsernameDuplicate(string username)
         {
+            if (!EnsureConnection())
+            {
+                return false;
+            }
+
             string query = "SELECT COUNT(*) FROM account WHERE Username = @Username";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@Username", username);
@@ -182,6 +251,14 @@ namespace NOLDA
         /// <returns></returns>
         public LoginResponse Login(string username, string password)
         {
+            if (!EnsureConnection())
+            {
+                return new LoginResponse
+                {
+                    Result = LoginResult.ERROR
+                };
+            }
+
             string query = "SELECT Password_hash, Password_salt, Email, Created_at FROM account WHERE Username = @Username";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@Username", username);
@@ -256,6 +333,11 @@ namespace NOLDA
         /// <returns></returns>
         public bool UpdateUserInfo(string username, string newPassword, string newEmail)
         {
+            if (!EnsureConnection())
+            {
+                return false;
+            }
+
             string passwordHash = null;
             string salt = null;
 
@@ -317,6 +399,11 @@ namespace NOLDA
         /// <returns></returns>
         public CreateCharacterResult CreateCharacter(string username, string characterName, Faction faction, Class characterClass, Gender gender, int mapCode)
         {
+            if (!EnsureConnection())
+            {
+                return CreateCharacterResult.ERROR;
+            }
+
             try
             {
                 // 1. username으로 Account_id 가져오기
@@ -397,6 +484,11 @@ namespace NOLDA
         {
             List<CustomChapterItem> characters = new List<CustomChapterItem>();
 
+            if (!EnsureConnection())
+            {
+                return characters;
+            }
+
             try
             {
                 // 1. username으로 Account_id 가져오기
@@ -464,6 +556,11 @@ namespace NOLDA
         public PlayerDataSO FetchPlayerDataFromDB(string username)
         {
             PlayerDataSO playerData = ScriptableObject.CreateInstance<PlayerDataSO>();
+
+            if (!EnsureConnection())
+            {
+                return playerData;
+            }
 
             string characterQuery = @"
         SELECT 
@@ -595,6 +692,11 @@ namespace NOLDA
         {
             Dictionary<int, int> skills = new Dictionary<int, int>();
 
+            if (!EnsureConnection())
+            {
+                return skills;
+            }
+
             string query = "SELECT Skill_id, Level FROM `skill` WHERE Character_id = @CharacterId";
             MySqlCommand cmd = new MySqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@CharacterId", characterId);
@@ -628,6 +730,11 @@ namespace NOLDA
         /// <param name="username"></param>
         public bool DeleteCharacter(string username)
         {
+            if (!EnsureConnection())
+            {
+                return false;
+            }
+
             try
             {
                 string query = "DELETE FROM `character` WHERE `Name` = @Name;";
@@ -658,6 +765,11 @@ namespace NOLDA
         /// <param name="newValue"></param>
         public void UpdateDatabase(string username, string fieldName, string newValue)
         {
+            if (!EnsureConnection())
+            {
+                return;
+            }
+
             try
             {
                 if (fieldName == nameof(PlayerDataSO.Skills)) //스킬은 별도 DB로 업데이트됨
@@ -707,6 +819,11 @@ namespace NOLDA
 
         public void UpdateCharacterSkillsInDB(string characterName, int skillID, int level)
         {
+            if (!EnsureConnection())
+            {
+                return;
+            }
+
             string query = @"
             INSERT INTO `skill` (Character_id, Skill_id, Level) 
             VALUES (
@@ -738,6 +855,11 @@ namespace NOLDA
 
         public void HandleSlotUpdateInDB(string characterName, int index, int itemId, int amount)
         {
+            if (!EnsureConnection())
+            {
+                return;
+            }
+
             string query;
 
             // 슬롯 비우기

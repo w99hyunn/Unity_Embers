@@ -48,31 +48,32 @@ namespace NOLDA
 
         public new void StartServer()
         {
-            const int maxRetries = 5;
             bool dbServer = false;
+            int attempt = 0;
 
-            for (int attempt = 1; attempt <= maxRetries; attempt++)
+            while (!dbServer)
             {
-                dbServer = Singleton.DB.ConnectDB();
-                DebugUtils.Log($"[DataBase] DB 연결 시도 {attempt}/{maxRetries} : {dbServer}");
-
-                if (dbServer)
+                attempt++;
+                try
                 {
-                    DebugUtils.Log($"[DataBase] DB 연결 성공 : ServerIP = {Singleton.Game.DBServerIP}");
-                    break;
-                }
+                    dbServer = Singleton.DB.ConnectDB();
+                    DebugUtils.Log($"[DataBase] DB 연결 시도 {attempt} : {dbServer}");
 
-                if (attempt < maxRetries)
+                    if (dbServer)
+                    {
+                        DebugUtils.Log($"[DataBase] DB 연결 성공 : ServerIP = {Singleton.Game.DBServerIP}");
+                        break;
+                    }
+
+                    DebugUtils.Log($"[DataBase] DB 연결 실패. 5초 대기 후 재시작");
+                    System.Threading.Thread.Sleep(5000);
+                }
+                catch (System.Exception ex)
                 {
-                    DebugUtils.Log($"[DataBase] DB 연결 실패. {attempt + 1}번째 시도 대기");
-                    System.Threading.Thread.Sleep(1000);
+                    DebugUtils.LogError($"[DataBase] DB 연결 중 예외 발생 : {ex.Message}");
+                    DebugUtils.LogError("[DataBase] 서버 시작 실패");
+                    return;
                 }
-            }
-
-            if (!dbServer)
-            {
-                DebugUtils.LogError("[DataBase] DB 연결 실패 / 서버 시작 실패 (5번 시도 실패)");
-                return;
             }
 
             base.StartServer();
