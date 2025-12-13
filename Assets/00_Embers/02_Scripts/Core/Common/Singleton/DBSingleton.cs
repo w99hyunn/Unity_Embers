@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 using System;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ namespace NOLDA
 
         private bool ConnectToDatabase(string server, string database, string uid, string password, string port)
         {
-            string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};PORT={port};Connection Timeout=30;Allow Zero Datetime=True;Convert Zero Datetime=True;";
+            string connectionString = $"Server={server};Database={database};UserID={uid};Password={password};Port={port};ConnectionTimeout=30;AllowZeroDateTime=True;ConvertZeroDateTime=True;CharacterSet=utf8mb4;";
 
             try
             {
@@ -76,6 +76,12 @@ namespace NOLDA
             try
             {
                 _connection.Open();
+
+                using (MySqlCommand cmd = new MySqlCommand("SET character_set_client=utf8mb4, character_set_connection=utf8mb4, character_set_results=utf8mb4, collation_connection=utf8mb4_unicode_ci", _connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
                 return true;
             }
             catch
@@ -573,7 +579,7 @@ namespace NOLDA
 
             using (MySqlCommand command = new MySqlCommand(characterQuery, _connection))
             {
-                command.Parameters.AddWithValue("@name", username);
+                command.Parameters.AddWithValue("@Name", username);
 
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
@@ -614,7 +620,7 @@ namespace NOLDA
                         float posY = reader.GetFloat("Current_position_y");
                         float posZ = reader.GetFloat("Current_position_z");
                         playerData.Position = new Vector3(posX, posY, posZ);
-                        playerData.MapCode = reader.GetString("MapCode");
+                        playerData.MapCode = reader.GetInt32("MapCode").ToString();
                         playerData.InventorySpace = reader.GetInt32("InventorySpace");
 
                         reader.Close();
