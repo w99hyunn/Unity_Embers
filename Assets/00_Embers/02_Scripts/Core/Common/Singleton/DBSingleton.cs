@@ -1,4 +1,4 @@
-using MySqlConnector;
+﻿using MySqlConnector;
 
 using System;
 using System.Collections.Generic;
@@ -44,6 +44,7 @@ namespace NOLDA
 
 
         private MySqlConnection _connection;
+        private bool isReconnecting = false; // 재연결 시도 중인지 확인
 
         private void Start()
         {
@@ -54,6 +55,7 @@ namespace NOLDA
         public bool ConnectDB()
         {
             bool success = ConnectToDatabase(Singleton.Game.DBServerIP, "embers", Singleton.Game.DBHost, Singleton.Game.DBPw, Singleton.Game.DBPort);
+
             return success;
         }
 
@@ -82,12 +84,85 @@ namespace NOLDA
                     cmd.ExecuteNonQuery();
                 }
 
+                StartDatabaseHealthCheck(); // 10분(600초)마다 DB 연결 상태 점검
+
                 return true;
+
             }
             catch
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 10분마다 DB 연결 상태 점검
+        /// </summary>
+        private async void StartDatabaseHealthCheck()
+        {
+            while (true)
+            {
+                await Awaitable.WaitForSecondsAsync(600f);
+                await CheckDatabaseConnectionAsync();
+            }
+        }
+
+        /// <summary>
+        /// 주기적으로 DB 연결 상태를 점검하고 필요시 재연결 (성공할 때까지 재시도)
+        /// </summary>
+        private async Awaitable CheckDatabaseConnectionAsync()
+        {
+            if (!IsConnectionValid())
+            {
+                DebugUtils.LogWarning("[DataBase] 정기 점검 중 DB 연결 끊김 감지. 재연결 시도 중...");
+                await ReconnectUntilSuccessAsync(10f);
+            }
+            else
+            {
+                DebugUtils.Log("[DataBase] 정기 점검 - DB 연결 정상");
+            }
+        }
+
+
+        /// <summary>
+        /// DB 재연결을 성공할 때까지 반복 시도
+        /// </summary>
+        /// <param name="retryInterval">재시도 간격 (초)</param>
+        private async Awaitable ReconnectUntilSuccessAsync(float retryInterval)
+        {
+            if (isReconnecting)
+            {
+                DebugUtils.Log("[DataBase] 재연결 대기 중... ");
+                while (isReconnecting)
+                {
+                    await Awaitable.WaitForSecondsAsync(1f);
+                }
+                return;
+            }
+
+            isReconnecting = true;
+            int retryCount = 0;
+            bool reconnected = false;
+
+            while (!reconnected)
+            {
+                retryCount++;
+                DebugUtils.Log($"[DataBase] 재연결 시도 {retryCount}회");
+
+                reconnected = ConnectDB();
+
+                if (reconnected)
+                {
+                    DebugUtils.Log($"[DataBase] DB 재연결 성공 (시도 횟수: {retryCount})");
+                }
+                else
+                {
+                    DebugUtils.LogWarning($"[DataBase] 재연결 실패. {retryInterval}초 후 재시도... (시도 횟수: {retryCount})");
+                    await Awaitable.WaitForSecondsAsync(retryInterval);
+                }
+            }
+
+            isReconnecting = false;
         }
 
         /// <summary>
@@ -116,9 +191,6 @@ namespace NOLDA
             }
         }
 
-        /// <summary>
-        /// DB 연결이 끊겼을 때 자동으로 재연결 시도
-        /// </summary>
         private bool EnsureConnection()
         {
             if (IsConnectionValid())
@@ -138,6 +210,8 @@ namespace NOLDA
 
             return reconnected;
         }
+
+
 
         public void CloseDBServer()
         {
