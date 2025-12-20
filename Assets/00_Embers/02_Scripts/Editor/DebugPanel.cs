@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,10 +12,11 @@ namespace NOLDA
         private SceneData _sceneData;
 
         private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
+        private const string PREVIOUS_SCENE_SETUP_KEY = "NOLDA_PREVIOUS_SCENE_SETUP";
         private bool _loadAdditively = false;
-        
+
         private int _selectedIndex = 0;
-        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "4번 아이템 추가", "모두제거", "골드 +1000000"};
+        private readonly string[] _options = { "HP +450", "MP +450", "HXP +450", "HP -450", "MP -450", "0번 아이템 추가", "1번 아이템 추가", "4번 아이템 추가", "모두제거", "골드 +1000000" };
 
         private Vector2 _scrollPosition;
 
@@ -23,7 +25,35 @@ namespace NOLDA
         {
             GetWindow<DebugPanel>("Debug Panel");
         }
-        
+
+        static DebugPanel()
+        {
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        }
+
+        private static void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredEditMode)
+            {
+                string json = SessionState.GetString(PREVIOUS_SCENE_SETUP_KEY, string.Empty);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    var setups = JsonUtility.FromJson<SceneSetupList>(json);
+                    if (setups != null && setups.Setups != null && setups.Setups.Length > 0)
+                    {
+                        EditorSceneManager.RestoreSceneManagerSetup(setups.Setups);
+                    }
+                    SessionState.EraseString(PREVIOUS_SCENE_SETUP_KEY);
+                }
+            }
+        }
+
+        [System.Serializable]
+        private class SceneSetupList
+        {
+            public SceneSetup[] Setups;
+        }
+
         private void OnEnable()
         {
             _sceneData = Resources.Load<SceneData>("SceneData");
@@ -34,7 +64,7 @@ namespace NOLDA
         private void OnGUI()
         {
             Rect buttonRect = new Rect(0, 0, 75, 25);
-            
+
             if (GUI.Button(buttonRect, "새로고침"))
             {
                 var window = GetWindow<DebugPanel>();
@@ -43,9 +73,20 @@ namespace NOLDA
                     window.Repaint();
                 }
             }
-            
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+
             GUILayout.Space(30);
+
+            // 게임 시작 버튼 추가
+            GUI.backgroundColor = Color.green;
+            if (GUILayout.Button("게임 시작 (Title + Session)", GUILayout.Height(40)))
+            {
+                StartGame();
+            }
+            GUI.backgroundColor = Color.white;
+
+            GUILayout.Space(10);
+
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             GUILayout.Label("캐릭터 디버그 :", EditorStyles.boldLabel);
             _selectedIndex = EditorGUILayout.Popup("Option:", _selectedIndex, _options);
 
@@ -58,14 +99,14 @@ namespace NOLDA
             GUILayout.Space(10);
             GUILayout.Label("씬 전환 :", EditorStyles.boldLabel);
             _sceneData = (SceneData)EditorGUILayout.ObjectField("Scene Data", _sceneData, typeof(SceneData), false);
-            
+
             if (_sceneData == null)
             {
                 EditorGUILayout.HelpBox("Scene Data not found at specified path!", MessageType.Error);
                 EditorGUILayout.EndScrollView();
                 return;
             }
-            
+
             // Additive 로드 옵션
             _loadAdditively = EditorGUILayout.Toggle("Additive로 불러오기", _loadAdditively);
             GUILayout.Space(10);
@@ -132,6 +173,29 @@ namespace NOLDA
             EditorGUILayout.EndScrollView();
         }
 
+        private async void StartGame()
+        {
+            var setups = EditorSceneManager.GetSceneManagerSetup();
+            if (setups != null && setups.Length > 0)
+            {
+                string json = JsonUtility.ToJson(new SceneSetupList { Setups = setups });
+                SessionState.SetString(PREVIOUS_SCENE_SETUP_KEY, json);
+            }
+
+            string titlePath = FindScenePath("Title");
+            string sessionPath = FindScenePath("Session");
+
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            {
+                EditorSceneManager.OpenScene(titlePath, OpenSceneMode.Single);
+                EditorSceneManager.OpenScene(sessionPath, OpenSceneMode.Additive);
+
+                await Task.Delay(1000);
+
+                EditorApplication.isPlaying = true;
+            }
+        }
+
         private string FindScenePath(string sceneName)
         {
             string[] allScenePaths = AssetDatabase.FindAssets("t:Scene", new[] { BASE_SCENE_FOLDER_PATH });
@@ -147,14 +211,14 @@ namespace NOLDA
 
             return null;
         }
-        
+
         private void ExecuteOption(int index)
         {
             if (Singleton.Game == null)
                 return;
-            
+
             var _inventory = FindAnyObjectByType<InventoryUIController>();
-            
+
             switch (index)
             {
                 case 0:
@@ -183,7 +247,7 @@ namespace NOLDA
                     break;
                 case 8:
                     int capacity = Singleton.Game.playerData.InventorySpace;
-                    for(int i = 0; i < capacity; i++)
+                    for (int i = 0; i < capacity; i++)
                         _inventory.Remove(i);
                     break;
                 case 9:
