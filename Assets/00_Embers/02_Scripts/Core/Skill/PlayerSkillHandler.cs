@@ -129,7 +129,7 @@ namespace NOLDA
             PlaySkillEffectsLocal(skill.skillID, GetSkillEffectPosition());
 
             // 주변 적을 찾아 공격
-            //TryUseSkillOnEnemy(skill);
+            TryUseSkillOnEnemy(skill, skillLevel);
 
             // 쿨타임 설정
             Singleton.Skill.SetSkillCooldown(skill.skillID);
@@ -151,38 +151,50 @@ namespace NOLDA
             //animator.applyRootMotion = false;
         }
 
-        private void TryUseSkillOnEnemy(SkillData skill)
+        private void TryUseSkillOnEnemy(SkillData skill, int skillLevel)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, skill.hitRadius);
+            Vector3 attackPosition = transform.position + transform.forward * 1.5f;
+            Collider[] hitColliders = Physics.OverlapSphere(attackPosition, skill.hitRadius);
+
+            List<NetworkIdentity> hitEnemies = new List<NetworkIdentity>();
+
             foreach (Collider hitCollider in hitColliders)
             {
                 if (hitCollider.TryGetComponent(out NetworkIdentity targetIdentity) &&
                     hitCollider.TryGetComponent(out Enemy enemy))
                 {
-                    CmdUseSkillOnTarget(skill.skillID, targetIdentity);
-                    break;
+                    hitEnemies.Add(targetIdentity);
                 }
+            }
+
+            // 범위 내 모든 적에게 공격
+            if (hitEnemies.Count > 0)
+            {
+                SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
+                float damage = skill.baseDamage * (levelData != null ? levelData.effectMultiplier : 1f);
+
+                CmdUseSkillOnTargets(skill.skillID, hitEnemies.ToArray(), damage);
             }
         }
 
         [Command]
-        private void CmdUseSkillOnTarget(int skillID, NetworkIdentity target)
+        private void CmdUseSkillOnTargets(int skillID, NetworkIdentity[] targets, float damage)
         {
-            SkillData skill = Singleton.Skill.GetSkillData(skillID);
-            if (skill == null || target == null) return;
+            if (targets == null || targets.Length == 0) return;
 
-            if (!Singleton.Game.playerData.Skills.ContainsKey(skillID)) return;
-            int skillLevel = Singleton.Game.playerData.Skills[skillID];
-
-            SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
-            if (levelData == null) return;
-
-            if (target.TryGetComponent(out Enemy enemy))
+            foreach (NetworkIdentity target in targets)
             {
-                enemy.TakeDamage(skill.baseDamage * levelData.effectMultiplier);
+                if (target != null && target.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(damage);
+                }
             }
 
-            RpcPlaySkillEffects(skillID, target.transform.position);
+            // 첫 번째 타겟 위치에 이펙트 재생
+            if (targets.Length > 0 && targets[0] != null)
+            {
+                RpcPlaySkillEffects(skillID, targets[0].transform.position);
+            }
         }
 
         [Command]

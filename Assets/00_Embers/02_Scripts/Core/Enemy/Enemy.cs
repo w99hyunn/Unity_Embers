@@ -8,6 +8,10 @@ namespace NOLDA
 {
     public class Enemy : NetworkBehaviour
     {
+        [Header("Enemy Settings")]
+        [SerializeField][SyncVar] private float maxHp = 100;
+        [SyncVar] private float currentHp;
+
         private Transform target;
         private GameObject[] waypoints;
         private NavMeshAgent navMeshAgent;
@@ -18,11 +22,6 @@ namespace NOLDA
         {
             TryGetComponent<NavMeshAgent>(out navMeshAgent);
             TryGetComponent<BehaviorGraphAgent>(out behaviorGraphAgent);
-
-            if (behaviorGraphAgent != null && !NetworkServer.active)
-            {
-                behaviorGraphAgent.enabled = false;
-            }
         }
 
         [Server]
@@ -40,10 +39,12 @@ namespace NOLDA
             if (behaviorGraphAgent != null)
             {
                 behaviorGraphAgent.enabled = true;
+
             }
 
             if (navMeshAgent != null)
             {
+                navMeshAgent.enabled = true;
                 navMeshAgent.updateRotation = false;
                 navMeshAgent.updateUpAxis = false;
             }
@@ -62,12 +63,12 @@ namespace NOLDA
             {
                 behaviorGraphAgent.enabled = false;
             }
+
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.enabled = false;
+            }
         }
-
-
-
-        [SyncVar] public float maxHp = 100;
-        [SyncVar] private float currentHp;
 
         private void Start()
         {
@@ -78,7 +79,7 @@ namespace NOLDA
         public void TakeDamage(float damage)
         {
             currentHp -= damage;
-            Debug.Log($"몬스터 {gameObject.name}가 {damage}의 피해를 받음. 현재 HP: {currentHp}");
+            Debug.Log($"{gameObject.name} 피해 {damage}, 현재 HP: {currentHp}");
 
             if (currentHp <= 0)
             {
@@ -89,7 +90,7 @@ namespace NOLDA
         [Server]
         private void Die()
         {
-            Debug.Log($"몬스터 {gameObject.name}가 사망했습니다!");
+            Debug.Log($"{gameObject.name} 사망");
 
             enemySpawner.OnEnemyDied(gameObject);
             NetworkServer.Destroy(gameObject);
