@@ -2468,7 +2468,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 133.71, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &662192399974378561
 CanvasRenderer:
@@ -2536,6 +2536,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 5
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3049,6 +3050,7 @@ GameObject:
   - component: {fileID: 6264850838824765293}
   - component: {fileID: 4642785328477867404}
   - component: {fileID: 1216500154946041524}
+  - component: {fileID: 2651374086529051129}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3373,6 +3375,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visRange: 200
   rebuildInterval: 1
+--- !u!136 &2651374086529051129
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820342126467287035}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.19
+  m_Height: 1.59
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &8903303439882815063
 GameObject:
   m_ObjectHideFlags: 0

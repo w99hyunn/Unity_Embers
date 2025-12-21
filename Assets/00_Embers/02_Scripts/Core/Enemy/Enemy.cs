@@ -45,8 +45,8 @@ namespace NOLDA
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
-                navMeshAgent.updateRotation = false;
-                navMeshAgent.updateUpAxis = false;
+                //navMeshAgent.updateRotation = false;
+                //navMeshAgent.updateUpAxis = false;
             }
 
             if (behaviorGraphAgent != null && waypoints != null && waypoints.Length > 0)
@@ -75,6 +75,14 @@ namespace NOLDA
             currentHp = maxHp;
         }
 
+        private void Update()
+        {
+            if (isServer)
+            {
+                FindClosestPlayer(10f);
+            }
+        }
+
         [Server]
         public void TakeDamage(float damage)
         {
@@ -94,6 +102,43 @@ namespace NOLDA
 
             enemySpawner.OnEnemyDied(gameObject);
             NetworkServer.Destroy(gameObject);
+        }
+
+        /// <summary>
+        /// Player를 찾는 메소드임. BT에서 직접 시행시 Player 태그를 찾지 못하는 문제가 발생함.
+        /// 따라서 Enemy.cs에서 찾은 후 BT의 Target.Value에 할당함.
+        /// 모든 몬스터 판단 로직(BT)는 Server에서 시행됨.
+        /// </summary>
+        /// <param name="radius">탐색 범위</param>
+        [Server]
+        public void FindClosestPlayer(float radius)
+        {
+            GameObject closest = null;
+            float closestSqrDist = radius * radius;
+
+            var serverPlayers = Singleton.Session.ServerPlayers;
+            if (serverPlayers.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var player in serverPlayers)
+            {
+                if (player == null || !player.activeInHierarchy)
+                {
+                    continue;
+                }
+
+                float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
+                if (sqrDist < closestSqrDist)
+                {
+                    closestSqrDist = sqrDist;
+                    closest = player;
+                }
+            }
+
+            behaviorGraphAgent.SetVariableValue("Target", closest);
+            //return closest;
         }
     }
 }

@@ -38,6 +38,18 @@ namespace NOLDA
             InitClass(); //Class SyncVar로 공유 후 Init Avatar 해줌.
         }
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            Singleton.Session.AddPlayer(this.gameObject);
+        }
+
+        public override void OnStopServer()
+        {
+            base.OnStopServer();
+            Singleton.Session.RemovePlayer(this.gameObject);
+        }
+
         #region # Sync Nickname / Class
         //Sync Nickname
         private void InitNickName()
@@ -127,6 +139,7 @@ namespace NOLDA
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
+            Singleton.Session.RemovePlayer(this.gameObject);
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
             NetworkServer.RemovePlayerForConnection(connectionToClient);
         }

@@ -121,6 +121,10 @@ MonoBehaviour:
   m_Graph: {fileID: 3333847616220697545, guid: 3fe1f5e72b75cff4fb1cbd35626c9b22, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 3434954106773176745
+  - rid: 4918135784348319959
+  - rid: 4918135784348319960
+  - rid: 4918135784348319961
+  - rid: 4918135785401352349
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -135,6 +139,38 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 7915444426210335330}
+    - rid: 4918135784348319959
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 14648837369039293638
+          m_Value1: 16727850623649178829
+        Name: attackDistance
+        m_Value: 4
+    - rid: 4918135784348319960
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 14581590513075458662
+          m_Value1: 12674769622591443520
+        Name: chaseDistance
+        m_Value: 6
+    - rid: 4918135784348319961
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10439227682044184297
+          m_Value1: 2646971061517779099
+        Name: fallOutDistance
+        m_Value: 10
+    - rid: 4918135785401352349
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8867400955867885554
+          m_Value1: 4575968702215038314
+        Name: FindTargetDistance
+        m_Value: 15
 --- !u!95 &3515136432045992845
 Animator:
   serializedVersion: 7
@@ -196,7 +232,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1.8893042
   m_Direction: 1
-  m_Center: {x: 0, y: 0.16114974, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &-5646471935053062764
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -237,7 +273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692936907923324424, guid: 265dbe52419c8434ba1ed50a2f392529, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 692936907923324424, guid: 265dbe52419c8434ba1ed50a2f392529, type: 3}
       propertyPath: m_LocalPosition.z

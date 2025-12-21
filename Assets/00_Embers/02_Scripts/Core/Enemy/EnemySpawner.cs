@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Threading;
 using System.Collections.Generic;
 using Mirror;
@@ -11,6 +12,8 @@ namespace NOLDA
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private float spawnInterval = 5f;
         [SerializeField] private int maxEnemyCount = 10;
+        [SerializeField] private float navMeshSampleDistance = 10f;
+        [SerializeField] private int maxSpawnAttempts = 30;
 
         private BoxCollider boxCollider;
         private CancellationTokenSource cancellationTokenSource;
@@ -55,6 +58,12 @@ namespace NOLDA
 
             Vector3 spawnPosition = FindRandomPosition();
 
+            //navMesh를 못찾은 경우 소환하지 않음.
+            if (spawnPosition == Vector3.zero)
+            {
+                return;
+            }
+
             GameObject enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             GameObject[] waypoints = CreateWaypoints();
             Enemy enemyFSM = enemyInstance.GetComponent<Enemy>();
@@ -74,13 +83,22 @@ namespace NOLDA
         {
             Bounds bounds = boxCollider.bounds;
 
-            Vector3 randomPoint = new Vector3(
-                Random.Range(bounds.min.x, bounds.max.x),
-                bounds.center.y,
-                Random.Range(bounds.min.z, bounds.max.z)
-            );
+            for (int i = 0; i < maxSpawnAttempts; i++)
+            {
+                Vector3 randomPoint = new Vector3(
+                    Random.Range(bounds.min.x, bounds.max.x),
+                    bounds.center.y,
+                    Random.Range(bounds.min.z, bounds.max.z)
+                );
 
-            return randomPoint;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomPoint, out hit, navMeshSampleDistance, NavMesh.AllAreas))
+                {
+                    return hit.position;
+                }
+            }
+
+            return Vector3.zero; //navMesh 못찾으면 zero 반환
         }
 
         private GameObject[] CreateWaypoints()
