@@ -12,7 +12,6 @@ namespace NOLDA
         [SerializeField][SyncVar] private float maxHp = 100;
         [SyncVar] private float currentHp;
 
-        private Transform target;
         private GameObject[] waypoints;
         private NavMeshAgent navMeshAgent;
         private BehaviorGraphAgent behaviorGraphAgent;
@@ -25,9 +24,8 @@ namespace NOLDA
         }
 
         [Server]
-        public void Setup(Transform target, GameObject[] waypoints, EnemySpawner spawner)
+        public void Setup(GameObject[] waypoints, EnemySpawner spawner)
         {
-            this.target = target;
             this.waypoints = waypoints;
             this.enemySpawner = spawner;
         }

@@ -7,7 +7,7 @@ namespace NOLDA
     public class SessionSingleton : MonoBehaviour
     {
 
-        [SerializeField] private readonly List<GameObject> m_ServerPlayers = new List<GameObject>();
+        [SerializeField] private List<GameObject> m_ServerPlayers = new List<GameObject>();
         public IReadOnlyList<GameObject> ServerPlayers => m_ServerPlayers;
 
 
@@ -17,7 +17,7 @@ namespace NOLDA
             if (!m_ServerPlayers.Contains(player))
             {
                 m_ServerPlayers.Add(player);
-                Debug.Log($"PlayerManager: '{player.name}' added. Total players: {m_ServerPlayers.Count}");
+                DebugUtils.Log($"Session: '{player.name}' added. Total players: {m_ServerPlayers.Count}");
             }
         }
 
@@ -26,7 +26,7 @@ namespace NOLDA
         {
             if (m_ServerPlayers.Remove(player))
             {
-                Debug.Log($"PlayerManager: '{player.name}' removed. Total players: {m_ServerPlayers.Count}");
+                DebugUtils.Log($"PlayerManager: '{player.name}' removed. Total players: {m_ServerPlayers.Count}");
             }
         }
     }

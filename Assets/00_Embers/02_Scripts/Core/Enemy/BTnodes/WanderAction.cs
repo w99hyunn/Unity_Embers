@@ -7,10 +7,11 @@ using UnityEngine.AI;
 using NOLDA;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Wander", story: "[Self] Navigate To WanderPosition", category: "Action", id: "061ce2cad0c95aaa77de346ae9564eaf")]
+[NodeDescription(name: "Wander", story: "[Self] Navigate To WanderPosition [WanderState]", category: "Action", id: "061ce2cad0c95aaa77de346ae9564eaf")]
 public partial class WanderAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
+    [SerializeReference] public BlackboardVariable<bool> WanderState;
 
     private NavMeshAgent navMeshAgent;
     private Vector3 wanderPosition;
@@ -26,6 +27,7 @@ public partial class WanderAction : Action
 
         // 목표 위치 = 자신(Selft)의 위치 각도(wanderJitter)에 해당하는 반지름(wanderRadius) 크기의 원의 둘레 위치
         wanderPosition = Self.Value.transform.position + Utils.GetPositionFromAngle(wanderRadius, wanderJitter);
+        wanderPosition.y = Self.Value.transform.position.y;
 
         navMeshAgent = Self.Value.GetComponent<NavMeshAgent>();
         navMeshAgent.SetDestination(wanderPosition);
@@ -38,8 +40,10 @@ public partial class WanderAction : Action
     {
         if ((wanderPosition - Self.Value.transform.position).sqrMagnitude < 0.1f || Time.time - currentWanderTime > maxWanderTime)
         {
+            WanderState.Value = false;
             return Status.Success;
         }
+        WanderState.Value = true;
         return Status.Running;
     }
 }

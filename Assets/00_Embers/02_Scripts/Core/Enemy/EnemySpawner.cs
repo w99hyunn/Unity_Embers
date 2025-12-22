@@ -67,7 +67,7 @@ namespace NOLDA
             GameObject enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             GameObject[] waypoints = CreateWaypoints();
             Enemy enemyFSM = enemyInstance.GetComponent<Enemy>();
-            enemyFSM.Setup(enemyInstance.transform, waypoints, this);
+            enemyFSM.Setup(waypoints, this);
 
             NetworkServer.Spawn(enemyInstance);
             spawnedEnemies.Add(enemyInstance);
