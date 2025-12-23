@@ -15,7 +15,7 @@ MonoBehaviour:
   serverIp: localhost
   serverPort: 8585
   serverAutoRun: 0
-  dbServerIP: localhost
-  dbHost: root
-  dbPw: root
+  dbServerIP: 168.107.31.184
+  dbHost: EmbersConnectDB
+  dbPw: Yena990929!!@
   dbPort: 3306

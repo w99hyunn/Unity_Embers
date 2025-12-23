@@ -35,16 +35,18 @@ namespace NOLDA
         /// </summary>
         private void OnInteract()
         {
-            if (currentNPC != null && currentNPC.CanTalk() && playerController.isNpcTalk == false)
+            if (currentNPC != null
+                && currentNPC.CanTalk()
+                && playerController.State == PlayerController.PlayerState.Normal)
             {
-                playerController.isNpcTalk = true;
+                playerController.State = PlayerController.PlayerState.NpcTalk;
                 dialogueManager.StartDialogue(currentNPC, EndDialogueCallback);
             }
         }
 
         private void EndDialogueCallback()
         {
-            playerController.isNpcTalk = false;
+            playerController.State = PlayerController.PlayerState.Normal;
             currentNPC.EndDialogue();
         }
     }

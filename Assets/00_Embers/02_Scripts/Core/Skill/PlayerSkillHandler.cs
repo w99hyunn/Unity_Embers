@@ -16,7 +16,14 @@ namespace NOLDA
                 if (value != _isSkillInUse)
                 {
                     _isSkillInUse = value;
-                    playerController.isUseSkill = value;
+                    if (value)
+                    {
+                        playerController.State = PlayerController.PlayerState.UsingSkill;
+                    }
+                    else if (playerController.State == PlayerController.PlayerState.UsingSkill)
+                    {
+                        playerController.State = PlayerController.PlayerState.Normal;
+                    }
                 }
             }
         }

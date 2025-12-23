@@ -6,6 +6,14 @@ namespace NOLDA
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour
     {
+        public enum PlayerState
+        {
+            Normal,
+            NpcTalk,
+            UsingSkill,
+            Dead
+        }
+
         public UnityEngine.InputSystem.PlayerInput playerInput;
         public CharacterController controller;
         public PlayerInput input;
@@ -70,11 +78,8 @@ namespace NOLDA
         [Tooltip("카메라 위치를 미세 조정할 때 유용한 추가 각도")]
         public float CameraAngleOverride = 0.0f;
 
-        [Header("NPC 대화 중")]
-        public bool isNpcTalk = false;
-
-        [Header("스킬 사용 중")]
-        public bool isUseSkill = false;
+        [Header("플레이어 상태")]
+        public PlayerState State = PlayerState.Normal;
 
         #region private variables
         // cinemachine
@@ -131,7 +136,7 @@ namespace NOLDA
 
         private void Update()
         {
-            if (!isLocalPlayer || isUseSkill || isNpcTalk)
+            if (!isLocalPlayer || State != PlayerState.Normal)
                 return;
 
             _hasAnimator = TryGetComponent(out _animator);

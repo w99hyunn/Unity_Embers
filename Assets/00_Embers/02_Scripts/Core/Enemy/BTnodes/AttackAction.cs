@@ -20,9 +20,9 @@ public partial class AttackAction : Action
             return Status.Failure;
         }
 
-        if (Target.Value.TryGetComponent<Player>(out var player))
+        if (Target.Value.TryGetComponent<PlayerEnemyHandler>(out var playerEnemyHandler))
         {
-            player.TakeDamage(Damage.Value);
+            playerEnemyHandler.TakeDamage(Damage.Value);
         }
 
         return Status.Success;
