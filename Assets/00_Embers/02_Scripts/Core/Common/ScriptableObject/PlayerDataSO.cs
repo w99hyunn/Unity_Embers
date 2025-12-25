@@ -351,12 +351,13 @@ namespace NOLDA
             get => hxp;
             set
             {
-                if (hxp != value)
+                int clampedValue = Mathf.Max(0, value);
+                if (hxp != clampedValue)
                 {
-                    hxp = value;
+                    hxp = clampedValue;
                     if (false == suppressEvents)
                     {
-                        OnDataChanged?.Invoke(nameof(Hxp), value);
+                        OnDataChanged?.Invoke(nameof(Hxp), hxp);
                         CheckLevelUp();
                     }
                 }

@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ namespace NOLDA
 {
     public class PlayerEnemyHandler : NetworkBehaviour
     {
+        public event Action OnPlayerDied;
+        public event Action OnPlayerRespawned;
+
         private PlayerController playerController;
         private Animator animator;
 
@@ -62,9 +66,36 @@ namespace NOLDA
 
         private void DiePlayer()
         {
+            animator.SetTrigger("isDie");
             Singleton.Game.playerData.Hp = 0;
             playerController.State = PlayerController.PlayerState.Dead;
-            animator.SetTrigger("isDie");
+
+            OnPlayerDied?.Invoke();
+        }
+
+        /// <summary>
+        /// 플레이어 부활 처리
+        /// </summary>
+        public void RespawnPlayer()
+        {
+            if (playerController.State != PlayerController.PlayerState.Dead)
+            {
+                return;
+            }
+
+            Singleton.Game.playerData.Hp = Singleton.Game.playerData.TotalMaxHp;
+            Singleton.Game.playerData.Hxp -= 5000;
+            playerController.State = PlayerController.PlayerState.Normal;
+
+            animator.ResetTrigger("isDie");
+            animator.Rebind();
+            animator.Update(0);
+
+            playerController.enabled = false;
+            this.transform.position = Vector3.zero;
+            playerController.enabled = true;
+
+            OnPlayerRespawned?.Invoke();
         }
 
         #endregion

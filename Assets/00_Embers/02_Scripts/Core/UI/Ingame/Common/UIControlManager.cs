@@ -18,11 +18,16 @@ namespace NOLDA
         [Header("Windows 예외2 Chat")]
         [SerializeField] private ChatUIController chatUIController;
 
+        [Header("Death UI")]
+        [SerializeField] private ModalWindowManager deathUI;
+
         private List<ModalWindowManager> openUIs = new List<ModalWindowManager>();
         private bool _isChatting = false;
         private bool _isPause = false;
+        private bool _isDead = false;
         private Transform _localPlayerTransform;
         private Player _localPlayer;
+        private PlayerEnemyHandler _localPlayerEnemyHandler;
         private UnityEngine.InputSystem.PlayerInput _localPlayerInput;
 
         public Transform localPlayerTransform => _localPlayerTransform;
@@ -32,6 +37,12 @@ namespace NOLDA
         {
             await PlayerBind();
             UpdateCursor();
+        }
+
+        private void OnDisable()
+        {
+            _localPlayerEnemyHandler.OnPlayerDied -= HandlePlayerDied;
+            _localPlayerEnemyHandler.OnPlayerRespawned -= HandlePlayerRespawned;
         }
 
         private async Awaitable PlayerBind()
@@ -45,6 +56,20 @@ namespace NOLDA
             localPlyer.TryGetComponent<Transform>(out _localPlayerTransform);
             localPlyer.TryGetComponent<Player>(out _localPlayer);
             localPlyer.TryGetComponent<UnityEngine.InputSystem.PlayerInput>(out _localPlayerInput);
+            localPlyer.TryGetComponent<PlayerEnemyHandler>(out _localPlayerEnemyHandler);
+
+            _localPlayerEnemyHandler.OnPlayerDied += HandlePlayerDied;
+            _localPlayerEnemyHandler.OnPlayerRespawned += HandlePlayerRespawned;
+        }
+
+        private void HandlePlayerDied()
+        {
+            ShowDeathUI();
+        }
+
+        private void HandlePlayerRespawned()
+        {
+            HideDeathUI();
         }
 
         public void OpenUI(ModalWindowManager ui)
@@ -134,19 +159,21 @@ namespace NOLDA
 
         private void UpdateCursor()
         {
-            // 커서 표시 조건: UI가 열려 있거나 채팅 중일 때
-            if (openUIs.Count > 0 || _isChatting || _isPause)
+            // 커서 표시 조건: UI가 열려 있거나 채팅 중일 때, 또는 사망 상태일 때
+            if (openUIs.Count > 0 || _isChatting || _isPause || _isDead)
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                _localPlayer.lockCursor = true;
+                if (_localPlayer != null)
+                    _localPlayer.lockCursor = true;
             }
             else
             {
                 // UI가 모두 닫히면 커서를 숨김
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                _localPlayer.lockCursor = false;
+                if (_localPlayer != null)
+                    _localPlayer.lockCursor = false;
             }
         }
 
@@ -161,6 +188,26 @@ namespace NOLDA
         public void InGameChatNotice(string header, string message)
         {
             chatUIController.AddChatMessageHandle($"[{header}]", message);
+        }
+
+        public void ShowDeathUI()
+        {
+            _isDead = true;
+            OpenUI(deathUI);
+        }
+
+        public void HideDeathUI()
+        {
+            _isDead = false;
+            CloseUI(deathUI);
+        }
+
+        /// <summary>
+        /// UI 버튼에서 호출할 부활 함수
+        /// </summary>
+        public void Respawn()
+        {
+            _localPlayerEnemyHandler.RespawnPlayer();
         }
     }
 }
