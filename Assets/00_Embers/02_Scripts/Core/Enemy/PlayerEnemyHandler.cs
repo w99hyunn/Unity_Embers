@@ -26,6 +26,18 @@ namespace NOLDA
             TargetApplyDamage(connectionToClient, intDamage);
         }
 
+        [Server]
+        public void GainHxp(int hxp)
+        {
+            TargetApplyGainHxp(connectionToClient, hxp);
+        }
+
+        [TargetRpc]
+        public void TargetApplyGainHxp(NetworkConnection target, int hxp)
+        {
+            Singleton.Game.playerData.Hxp += hxp;
+        }
+
         /// <summary>
         /// targetPRC로 해당 클라이언트에서만 실행 / HP 감소 > 로컬 PlayerDataSO
         /// </summary>

@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Behavior;
 using UnityEngine.AI;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NOLDA
 {
@@ -16,11 +17,13 @@ namespace NOLDA
         private NavMeshAgent navMeshAgent;
         private BehaviorGraphAgent behaviorGraphAgent;
         private EnemySpawner enemySpawner;
+        private NetworkAnimator networkAnimator;
 
         void Awake()
         {
             TryGetComponent<NavMeshAgent>(out navMeshAgent);
             TryGetComponent<BehaviorGraphAgent>(out behaviorGraphAgent);
+            TryGetComponent<NetworkAnimator>(out networkAnimator);
         }
 
         [Server]
@@ -94,12 +97,24 @@ namespace NOLDA
         }
 
         [Server]
-        private void Die()
+        private async void Die()
         {
             Debug.Log($"{gameObject.name} 사망");
+            behaviorGraphAgent.SetVariableValue("currentState", EnemyState.Die);
 
+            await AwaitDie();
+        }
+
+        private async Awaitable AwaitDie()
+        {
+            await Awaitable.WaitForSecondsAsync(5f);
             enemySpawner.OnEnemyDied(gameObject);
             NetworkServer.Destroy(gameObject);
+        }
+
+        public void DieAction()
+        {
+            networkAnimator.SetTrigger("isDie");
         }
 
         /// <summary>

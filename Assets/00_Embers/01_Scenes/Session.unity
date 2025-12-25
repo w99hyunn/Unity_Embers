@@ -2481,7 +2481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: NOLDA::NOLDA.EnemySpawner
   enemyPrefab: {fileID: 7915444426210335330, guid: a4cc0d22a5785eb4c9291b201b132051, type: 3}
   spawnInterval: 5
-  maxEnemyCount: 3
+  maxEnemyCount: 1
   navMeshSampleDistance: 10
   maxSpawnAttempts: 30
 --- !u!114 &517942507
