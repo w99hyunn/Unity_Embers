@@ -45,6 +45,10 @@ namespace NOLDA
         [SerializeField] private int levelUpSp = 3;
         public int LevelUpSp => levelUpSp;
 
+        [Header("Character Position - 플레이어 초기 위치")]
+        [SerializeField] private Vector3 defaultPosition = new Vector3(33, 7.5f, 36);
+        public Vector3 DefaultPosition => defaultPosition;
+
         [Header("InGame")]
         [Tooltip("인벤토리에서 최대치로 쓸 슬롯 갯수. 이 수만큼 빈 슬롯이 생성됨")]
         [SerializeField] private int maxInventorySpace = 60;

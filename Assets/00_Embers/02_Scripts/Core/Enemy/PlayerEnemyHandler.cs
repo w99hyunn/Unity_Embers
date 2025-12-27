@@ -87,13 +87,13 @@ namespace NOLDA
             Singleton.Game.playerData.Hxp -= 5000;
             playerController.State = PlayerController.PlayerState.Normal;
 
+            playerController.enabled = false;
+            this.transform.position = Singleton.Game.DefaultPosition;
+            playerController.enabled = true;
+
             animator.ResetTrigger("isDie");
             animator.Rebind();
             animator.Update(0);
-
-            playerController.enabled = false;
-            this.transform.position = Vector3.zero;
-            playerController.enabled = true;
 
             OnPlayerRespawned?.Invoke();
         }

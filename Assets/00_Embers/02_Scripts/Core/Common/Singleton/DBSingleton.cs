@@ -697,6 +697,13 @@ namespace NOLDA
                         playerData.MapCode = reader.GetInt32("MapCode").ToString();
                         playerData.InventorySpace = reader.GetInt32("InventorySpace");
 
+                        // 죽은 상태로 그냥 종료했으면 HP가 0일거임. HP채우고 초기 위치로 옮겨주기
+                        if (playerData.Hp <= 0)
+                        {
+                            playerData.Hp = playerData.MaxHp;
+                            playerData.Position = Singleton.Game.DefaultPosition;
+                        }
+
                         reader.Close();
 
                         // 인벤토리 데이터 가져오기

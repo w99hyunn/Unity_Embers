@@ -145,8 +145,15 @@ namespace NOLDA
         {
             if (openUIs.Count > 0)
             {
-                ModalWindowManager topUI = openUIs[openUIs.Count - 1];
-                CloseUI(topUI);
+                // deathUI는 제외하고 가장 위에 있는 UI를 닫음
+                for (int i = openUIs.Count - 1; i >= 0; i--)
+                {
+                    if (openUIs[i] != deathUI)
+                    {
+                        CloseUI(openUIs[i]);
+                        return;
+                    }
+                }
             }
         }
 
