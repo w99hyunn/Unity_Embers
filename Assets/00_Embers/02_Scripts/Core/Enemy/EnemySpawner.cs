@@ -8,6 +8,7 @@ namespace NOLDA
 {
     public class EnemySpawner : MonoBehaviour
     {
+        [Tooltip("Enemy 추가시, EnemySpawner를 추가하고, NetworkSingleton의 Registered Spawnable Prefabs에 Enemy Prefab 추가 필요")]
         [Header("Spawn Settings")]
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private float spawnInterval = 5f;
