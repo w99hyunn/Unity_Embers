@@ -3,14 +3,16 @@ using UnityEngine;
 using Unity.Behavior;
 using UnityEngine.AI;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace NOLDA
 {
     public class Enemy : NetworkBehaviour
     {
         [Header("Enemy Settings")]
-        [SerializeField][SyncVar] private float maxHp = 100;
+        [SerializeField] private string enemyName;
+        public string EnemyName => enemyName;
+        [SerializeField][SyncVar] private float maxHp = 500;
+        public float MaxHp => maxHp;
         [SyncVar] private float currentHp;
 
         private GameObject[] waypoints;
@@ -18,6 +20,8 @@ namespace NOLDA
         private BehaviorGraphAgent behaviorGraphAgent;
         private EnemySpawner enemySpawner;
         private NetworkAnimator networkAnimator;
+
+        public event System.Action<float> OnAttacked;
 
         void Awake()
         {
@@ -46,8 +50,6 @@ namespace NOLDA
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
-                //navMeshAgent.updateRotation = false;
-                //navMeshAgent.updateUpAxis = false;
             }
 
             if (behaviorGraphAgent != null && waypoints != null && waypoints.Length > 0)
@@ -88,18 +90,24 @@ namespace NOLDA
         public void TakeDamage(float damage)
         {
             currentHp -= damage;
-            Debug.Log($"{gameObject.name} 피해 {damage}, 현재 HP: {currentHp}");
 
             if (currentHp <= 0)
             {
                 Die();
             }
+
+            AttackMySelf(currentHp);
+        }
+
+        [ClientRpc]
+        private void AttackMySelf(float newHp)
+        {
+            OnAttacked?.Invoke(newHp);
         }
 
         [Server]
         private async void Die()
         {
-            Debug.Log($"{gameObject.name} 사망");
             behaviorGraphAgent.SetVariableValue("currentState", EnemyState.Die);
 
             await AwaitDie();
