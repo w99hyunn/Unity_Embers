@@ -54,12 +54,9 @@ namespace NOLDA
             }
 
             Singleton.Game.playerData.Hp -= damage;
-            DebugUtils.Log($"{gameObject.name} 피해 {damage}, 현재 HP: {Singleton.Game.playerData.Hp}/{Singleton.Game.playerData.TotalMaxHp}");
 
             if (Singleton.Game.playerData.Hp <= 0)
             {
-                DebugUtils.Log("사망");
-                //사망 UI 및 서버에 전송 필요
                 DiePlayer();
             }
         }
