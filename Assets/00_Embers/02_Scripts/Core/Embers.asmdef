@@ -1,9 +1,16 @@
 {
-    "name": "w99hyun.Components",
+    "name": "Embers",
     "rootNamespace": "",
     "references": [
+        "GUID:1a86db1aa55c4044c9ec9358da821925",
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:99c25e4e3cf98de42ab383a7361e5b85"
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:99c25e4e3cf98de42ab383a7361e5b85",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:73907d139b13f8a43b7e3e95c329d30a",
+        "GUID:20ee76f6d94ae4b0595f3ceb1c5359a7",
+        "GUID:72872094b21c16e48b631b2224833d49"
     ],
     "includePlatforms": [
         "Editor",

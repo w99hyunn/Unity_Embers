@@ -179,6 +179,7 @@ namespace Embers
         /// </summary>
         public void Login()
         {
+            _view.LoadingPopup.OpenWindow();
             LoginRequest(_view.LoginID, _view.LoginPw);
         }
 
@@ -203,9 +204,10 @@ namespace Embers
             {
                 case LoginResult.SUCCESS:
                     Singleton.Game.LoginSuccess(msg.Username, msg.Email, msg.CreatedDate);
-                    _view.menuManager.DisableSplashScreen();
+                    _view.MenuManager.DisableSplashScreen();
                     _view.TopPanelProfileUpdate();
                     LoadCharacterInfo();
+                    _view.LoadingPopup.CloseWindow();
                     return;
                 case LoginResult.IDWRONG:
                     title = "로그인 실패";
@@ -390,7 +392,8 @@ namespace Embers
                     character.onPlay = new UnityEvent();
                     character.onPlay.AddListener(() =>
                     {
-                        //해당 캐릭터에 대한 정보 받아오는 이벤트
+                        _view.LoadingPopup.OpenWindow();
+                        //해당 캐릭터에 대한 정보 로드
                         SelectCharacter(character.title);
                     });
 

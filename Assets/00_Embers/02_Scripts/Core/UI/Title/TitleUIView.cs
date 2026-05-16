@@ -8,9 +8,10 @@ namespace Embers
     public class TitleUIView : MonoBehaviour
     {
         [Header("General")]
-        public MenuManager menuManager;
-        public PanelManager panelManager;
-        public CustomChapterManager chapterManager;
+        [SerializeField] private MenuManager menuManager;
+        [SerializeField] private PanelManager panelManager;
+        [SerializeField] private CustomChapterManager chapterManager;
+        [SerializeField] private ModalWindowManager loadingPopup;
 
         [Header("Splash Screen")]
         [Header("Connecting")]
@@ -74,7 +75,9 @@ namespace Embers
         public Faction Faction => (Faction)factionSelector.index;
         public Gender Gender => (Gender)genderSelector.index;
         public string Name => nameInputField.text;
+        public MenuManager MenuManager => menuManager;
         public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
+        public ModalWindowManager LoadingPopup => loadingPopup;
         public ChapterManager ChapterManager => chapterManager;
         #endregion
 
