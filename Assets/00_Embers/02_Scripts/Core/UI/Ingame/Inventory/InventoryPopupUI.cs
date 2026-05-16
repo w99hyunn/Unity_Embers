@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary>
     /// 아이템을 버리거나 수량 나눌 때 띄우는 팝업
@@ -13,14 +13,14 @@ namespace NOLDA
         // 1. 아이템 버리기 확인 팝업
         [Header("Confirmation Popup")]
         [SerializeField] private ModalWindowManager _confirmationPopupObject;
-        [SerializeField] private TMP_Text   _confirmationItemNameText;
+        [SerializeField] private TMP_Text _confirmationItemNameText;
         [SerializeField] private ButtonManager _confirmationOkButton;     // Ok
         [SerializeField] private ButtonManager _confirmationCancelButton; // Cancel
 
         // 2. 수량 입력 팝업
         [Header("Amount Input Popup")]
         [SerializeField] private ModalWindowManager _amountInputPopupObject;
-        [SerializeField] private TMP_Text       _amountInputItemNameText;
+        [SerializeField] private TMP_Text _amountInputItemNameText;
         [SerializeField] private TMP_InputField _amountInputField;
         [SerializeField] private ButtonManager _amountPlusButton;        // +
         [SerializeField] private ButtonManager _amountMinusButton;       // -
@@ -41,7 +41,7 @@ namespace NOLDA
 
         // 수량 입력 제한 개수
         private int _maxAmount;
-        
+
         private void Awake()
         {
             InitUIEvents();
@@ -58,13 +58,13 @@ namespace NOLDA
             ShowConfirmationPopup(itemName);
             SetConfirmationOKEvent(okCallback);
         }
-        
+
         /// <summary> 수량 입력 팝업 띄우기 </summary>
         public void OpenAmountInputPopup(Action<int> okCallback, int currentAmount, string itemName)
         {
             _maxAmount = currentAmount - 1;
             _amountInputField.text = "1";
-            
+
             ShowAmountInputPopup(itemName);
             SetAmountInputOKEvent(okCallback);
         }
@@ -81,12 +81,12 @@ namespace NOLDA
             // 1. 버릴건지 팝업
             _confirmationOkButton.onClick.AddListener(HideConfirmationPopup);
             _confirmationOkButton.onClick.AddListener(() => OnConfirmationOK?.Invoke());
-            
+
             _confirmationCancelButton.onClick.AddListener(HideConfirmationPopup);
 
             // 3. 골드 입력 팝업
             _goldInputOkButton.onClick.AddListener(HideGoldInputPopup);
-            _goldInputOkButton.onClick.AddListener(() => 
+            _goldInputOkButton.onClick.AddListener(() =>
             {
                 int gold = 0;
                 if (!string.IsNullOrEmpty(_goldInputField.text))
@@ -95,13 +95,13 @@ namespace NOLDA
                 }
                 OnGoldInputOK?.Invoke(gold <= 0 ? 0 : gold);
             });
-            
+
             _goldInputCancelButton.onClick.AddListener(HideGoldInputPopup);
 
             // 2. 수량 입력 팝업
             _amountInputOkButton.onClick.AddListener(HideAmountInputPopup);
             _amountInputOkButton.onClick.AddListener(() => OnAmountInputOK?.Invoke(int.Parse(_amountInputField.text)));
-            
+
             _amountInputCancelButton.onClick.AddListener(HideAmountInputPopup);
 
             // - 버튼
@@ -112,7 +112,7 @@ namespace NOLDA
                 {
                     // Shift 누르면 10씩 감소
                     int nextAmount = Input.GetKey(KeyCode.LeftShift) ? amount - 10 : amount - 1;
-                    if(nextAmount < 1)
+                    if (nextAmount < 1)
                         nextAmount = 1;
                     _amountInputField.text = nextAmount.ToString();
                 }
@@ -149,7 +149,7 @@ namespace NOLDA
                     amount = _maxAmount;
                 }
 
-                if(flag)
+                if (flag)
                     _amountInputField.text = amount.ToString();
             });
 

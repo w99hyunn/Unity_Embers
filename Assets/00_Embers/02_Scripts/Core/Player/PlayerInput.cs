@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace NOLDA
+namespace Embers
 {
 	public class PlayerInput : MonoBehaviour
 	{

@@ -2,7 +2,7 @@ using System;
 using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class PlayerEnemyHandler : NetworkBehaviour
     {

@@ -4,7 +4,7 @@ using Unity.Behavior;
 using UnityEngine.AI;
 using System.Linq;
 
-namespace NOLDA
+namespace Embers
 {
     public class Enemy : NetworkBehaviour
     {

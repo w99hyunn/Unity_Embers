@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Animator))]

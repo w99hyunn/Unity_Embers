@@ -1,6 +1,6 @@
-namespace NOLDA
+namespace Embers
 {
-     /// <summary>
+    /// <summary>
     /// DBManager
     /// </summary>
     public enum SignUpResult
@@ -25,7 +25,7 @@ namespace NOLDA
         ERROR
     }
     //
-    
+
     /// <summary>
     /// ChunkState
     /// </summary>

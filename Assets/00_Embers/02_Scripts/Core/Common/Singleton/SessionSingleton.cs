@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class SessionSingleton : MonoBehaviour
     {

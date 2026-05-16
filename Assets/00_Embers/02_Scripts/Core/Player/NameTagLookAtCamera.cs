@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class NameTagLookAtCamera : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace NOLDA
 
             _cameraTransform = NetworkClient.localPlayer.GetComponent<PlayerController>().mainCamera.transform;
         }
-        
+
         void Update()
         {
             transform.LookAt(_cameraTransform);

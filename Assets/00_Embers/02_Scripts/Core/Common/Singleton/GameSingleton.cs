@@ -2,7 +2,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class GameSingleton : MonoBehaviour
     {

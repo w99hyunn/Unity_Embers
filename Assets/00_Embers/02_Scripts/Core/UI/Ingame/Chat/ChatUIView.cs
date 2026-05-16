@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class ChatUIView : MonoBehaviour
     {

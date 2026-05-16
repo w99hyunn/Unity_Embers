@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class HudUIController : MonoBehaviour
     {

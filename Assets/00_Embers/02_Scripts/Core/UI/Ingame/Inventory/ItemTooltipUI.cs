@@ -2,14 +2,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class ItemTooltipUI : MonoBehaviour
     {
         public TMP_Text titleText;
 
         public TMP_Text contentText;
-        
+
         private RectTransform _rectTransform;
         private CanvasScaler _canvasScaler;
 
@@ -18,7 +18,7 @@ namespace NOLDA
             Init();
             Hide();
         }
-        
+
         private void Init()
         {
             TryGetComponent(out _rectTransform);
@@ -35,7 +35,7 @@ namespace NOLDA
         {
             // 본인이 Graphic(UI)를 상속하면 레이캐스트 타겟 해제
             tr.TryGetComponent(out Graphic gr);
-            if(gr != null)
+            if (gr != null)
                 gr.raycastTarget = false;
 
             // 자식이 없으면 종료
@@ -47,7 +47,7 @@ namespace NOLDA
                 DisableAllChildrenRaycastTarget(tr.GetChild(i));
             }
         }
-        
+
         /// <summary>
         /// 툴팁 UI에 아이템 정보 등록
         /// </summary>
@@ -63,7 +63,7 @@ namespace NOLDA
             // 캔버스 스케일러에 따른 해상도 대응
             float wRatio = Screen.width / _canvasScaler.referenceResolution.x;
             float hRatio = Screen.height / _canvasScaler.referenceResolution.y;
-            float ratio = 
+            float ratio =
                 wRatio * (1f - _canvasScaler.matchWidthOrHeight) +
                 hRatio * (_canvasScaler.matchWidthOrHeight);
 

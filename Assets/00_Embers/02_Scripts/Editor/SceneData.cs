@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = "SceneData", menuName = "NOLDA/SceneData", order = 1)]
     public class SceneData : ScriptableObject
@@ -30,7 +30,7 @@ namespace NOLDA
             return null;
         }
 
-//에디터에서 빌드 세팅에 있는 씬을 모두 불러와서 SceneData asset에 추가하는 코드
+        //에디터에서 빌드 세팅에 있는 씬을 모두 불러와서 SceneData asset에 추가하는 코드
 #if UNITY_EDITOR
         public void LoadScenesFromBuildSettings()
         {

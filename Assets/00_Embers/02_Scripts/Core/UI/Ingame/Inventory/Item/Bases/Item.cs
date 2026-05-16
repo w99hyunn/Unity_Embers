@@ -1,4 +1,4 @@
-namespace NOLDA
+namespace Embers
 {
     /*
         [상속 구조]

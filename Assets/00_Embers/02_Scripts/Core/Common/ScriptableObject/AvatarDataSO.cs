@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [System.Serializable]
     public class AvatarData
@@ -9,7 +9,7 @@ namespace NOLDA
         public Class classType;
         public GameObject avatarPrefab;
     }
-    
+
     [CreateAssetMenu(fileName = "AvatarData", menuName = "NOLDA/AvatarData", order = 1)]
     public class AvatarDataSO : ScriptableObject
     {

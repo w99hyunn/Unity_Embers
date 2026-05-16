@@ -1,4 +1,4 @@
-﻿namespace NOLDA
+﻿namespace Embers
 {
     /// <summary>
     /// 캐릭터

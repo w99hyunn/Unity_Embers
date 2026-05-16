@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = "ExperienceTable", menuName = "NOLDA/Experience Table", order = 1)]
     public class HxpTableSO : ScriptableObject

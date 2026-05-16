@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace NOLDA
+namespace Embers
 {
     [System.Serializable]
     public class ChunkInfo
@@ -18,23 +18,23 @@ namespace NOLDA
 
         [Tooltip("이 청크에서 재생할 BGM")]
         public AudioClip bgm;
-        
+
 #if UNITY_EDITOR
         [Tooltip("씬 객체")]
         public SceneAsset sceneAsset;
 #endif
     }
-    
+
     [CreateAssetMenu(fileName = "ChunkList", menuName = "NOLDA/ChunkList", order = 1)]
     public class ChunkListSO : ScriptableObject
     {
         public List<ChunkInfo> chunkSceneNames;
-        
+
         public ChunkInfo GetChunkInfo(string sceneName)
         {
             return chunkSceneNames.Find(chunk => chunk.sceneName == sceneName);
         }
-        
+
 #if UNITY_EDITOR
         private void OnValidate()
         {

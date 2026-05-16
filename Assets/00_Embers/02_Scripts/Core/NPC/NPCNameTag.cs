@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace NOLDA
+namespace Embers
 {
     public class NPCNameTag : MonoBehaviour
     {

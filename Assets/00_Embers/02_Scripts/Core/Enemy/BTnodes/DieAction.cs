@@ -3,7 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
-using NOLDA;
+using Embers;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Die", story: "[Self] die for [Target] and gain [Hxp] HXP", category: "Action", id: "95db283abd2453f42f4f0ee6321dd696")]

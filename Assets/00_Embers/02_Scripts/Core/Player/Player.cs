@@ -2,7 +2,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class Player : NetworkBehaviour
     {

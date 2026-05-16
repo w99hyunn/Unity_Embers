@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class HudUIView : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace NOLDA
 
         [Header("Minimap")]
         public ButtonManager mapName;
-        
+
         void Start()
         {
             StartHUDInit();
@@ -31,7 +31,7 @@ namespace NOLDA
         {
             Singleton.Game.playerData.OnDataChanged -= HandleDataChanged;
         }
-        
+
         private void HandleDataChanged(string fieldName, object newValue)
         {
             switch (fieldName)
@@ -57,14 +57,14 @@ namespace NOLDA
                     break;
             }
         }
-        
+
         private void StartHUDInit()
         {
             //Level Init
             playerLevel.text = Singleton.Game.playerData.Level.ToString();
             playerHxp.SetValue(Singleton.Game.playerData.Hxp);
             MaxHxpSet();
-            
+
             //HP, MP Init
             playerHp.SetMaxValue(Singleton.Game.playerData.TotalMaxHp);
             playerMp.SetMaxValue(Singleton.Game.playerData.TotalMaxMp);

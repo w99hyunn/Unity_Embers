@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary>
     /// 소비아이템 중 포션아이템의 정의

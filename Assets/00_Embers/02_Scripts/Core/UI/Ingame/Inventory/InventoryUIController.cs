@@ -48,13 +48,13 @@ using UnityEngine;
     - void SortAll() : 앞에서부터 아이템 슬롯 채우면서 정렬
 */
 
-namespace NOLDA
+namespace Embers
 {
     public class InventoryUIController : MonoBehaviour
     {
         // /// <summary> 현재 아이템 개수 </summary>
         //public int ItemCount => _itemArray.Count;
-        
+
         [SerializeField]
         private InventoryUIView _view;
 
@@ -82,7 +82,7 @@ namespace NOLDA
             }
         }
         private static readonly ItemComparer _itemComparer = new ItemComparer();
-        
+
         private void Awake()
         {
             //Managers.Game.playerData.Items = new Item[_maxCapacity];
@@ -109,7 +109,7 @@ namespace NOLDA
 
         private void HandleDataChanged(string fieldName, object newValue)
         {
-            if(fieldName == nameof(Singleton.Game.playerData.Gold))
+            if (fieldName == nameof(Singleton.Game.playerData.Gold))
             {
                 UpdateGoldText();
             }
@@ -119,7 +119,7 @@ namespace NOLDA
         {
             _view.UpdateGoldText();
         }
-        
+
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
         private bool IsValidIndex(int index)
 
@@ -273,23 +273,23 @@ namespace NOLDA
 
             return Singleton.Game.playerData.Items[index].Data.Name;
         }
-        
+
         /// <summary> 인벤토리 UI 연결 </summary>
         public void ConnectUI(InventoryUIView inventoryUI)
         {
             _view = inventoryUI;
             _view.SetInventoryReference(this);
         }
-        
+
         /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
         public void UpdateAccessibleStatesAll()
         {
             _view.SetAccessibleSlotRange(Singleton.Game.playerData.InventorySpace);
         }
-        
+
 
         #region # 인벤토리 아이템의 행동 (추가 / 삭제 / 스왑 / 삭제 / 수 나눔 / 사용)
-                /// <summary> 인벤토리에 아이템 추가
+        /// <summary> 인벤토리에 아이템 추가
         /// <para/> 넣는 데 실패한 잉여 아이템 개수 리턴
         /// <para/> 리턴이 0이면 넣는데 모두 성공했다는 의미
         /// </summary>
@@ -395,7 +395,7 @@ namespace NOLDA
 
             return amount;
         }
-        
+
         /// <summary> 해당 슬롯의 아이템 제거 </summary>
         public void Remove(int index)
         {
@@ -403,7 +403,7 @@ namespace NOLDA
 
             Singleton.Game.playerData.Items[index] = null;
             _view.RemoveItem(index);
-            
+
             Singleton.Game.SendSlotUpdateToServer(index);
         }
 
@@ -454,8 +454,8 @@ namespace NOLDA
         {
             // amount : 나눌 목표 수량
 
-            if(!IsValidIndex(indexA)) return;
-            if(!IsValidIndex(indexB)) return;
+            if (!IsValidIndex(indexA)) return;
+            if (!IsValidIndex(indexB)) return;
 
             Item _itemA = Singleton.Game.playerData.Items[indexA];
             Item _itemB = Singleton.Game.playerData.Items[indexB];
@@ -469,7 +469,7 @@ namespace NOLDA
                 Singleton.Game.playerData.Items[indexB] = _ciA.SeperateAndClone(amount);
 
                 UpdateSlot(indexA, indexB);
-                
+
                 Singleton.Game.SendSlotUpdateToServer(indexA);
                 Singleton.Game.SendSlotUpdateToServer(indexB);
             }
@@ -490,13 +490,13 @@ namespace NOLDA
                 if (succeeded)
                 {
                     UpdateSlot(index);
-                    
+
                     Singleton.Game.SendSlotUpdateToServer(index);
                 }
             }
         }
         #endregion
-        
+
 
         #region # 인벤토리 정렬
         /// <summary> 빈 슬롯 없이 앞에서부터 채우기 </summary>
@@ -520,7 +520,7 @@ namespace NOLDA
 
             while (true)
             {
-                while (++j < Singleton.Game.playerData.InventorySpace && Singleton.Game.playerData.Items[j] == null);
+                while (++j < Singleton.Game.playerData.InventorySpace && Singleton.Game.playerData.Items[j] == null) ;
 
                 if (j == Singleton.Game.playerData.InventorySpace)
                     break;
@@ -568,7 +568,7 @@ namespace NOLDA
             _view.UpdateAllSlotFilters(); // 필터 상태 업데이트
         }
         #endregion
-        
-        
+
+
     }
 }

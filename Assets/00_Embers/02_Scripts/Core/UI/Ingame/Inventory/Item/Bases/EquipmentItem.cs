@@ -1,4 +1,4 @@
-namespace NOLDA
+namespace Embers
 {
     /// <summary> 장비 아이템</summary>
     public abstract class EquipmentItem : Item
@@ -11,8 +11,8 @@ namespace NOLDA
             get => _durability;
             set
             {
-                if(value < 0) value = 0;
-                if(value > EquipmentData.MaxDurability)
+                if (value < 0) value = 0;
+                if (value > EquipmentData.MaxDurability)
                     value = EquipmentData.MaxDurability;
 
                 _durability = value;

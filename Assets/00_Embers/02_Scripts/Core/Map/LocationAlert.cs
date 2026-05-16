@@ -2,7 +2,7 @@ using System.Linq;
 using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary>
     /// 각 청크 Trigger에 달려있음. MapManager를 시작시 할당받아, 현재 플레이어가 위치한 청크를 탐지함

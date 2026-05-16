@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace NOLDA
+namespace Embers
 {
     public class TitleUIController : MonoBehaviour
     {

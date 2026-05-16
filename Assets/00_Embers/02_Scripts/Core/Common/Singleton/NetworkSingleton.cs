@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static NOLDA.CustomChapterManager;
+using static Embers.CustomChapterManager;
 
-namespace NOLDA
+namespace Embers
 {
     public class NetworkSingleton : NetworkManager
     {

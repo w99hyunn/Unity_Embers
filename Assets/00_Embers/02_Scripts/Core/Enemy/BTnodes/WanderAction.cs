@@ -4,7 +4,7 @@ using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
 using UnityEngine.AI;
-using NOLDA;
+using Embers;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Wander", story: "[Self] Navigate To WanderPosition [WanderState]", category: "Action", id: "061ce2cad0c95aaa77de346ae9564eaf")]

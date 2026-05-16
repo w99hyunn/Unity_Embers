@@ -1,9 +1,9 @@
 ﻿using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
-using static NOLDA.CustomChapterManager;
+using static Embers.CustomChapterManager;
 
-namespace NOLDA
+namespace Embers
 {
     #region # 로그인
     public struct LoginRequestMessage : NetworkMessage
@@ -66,7 +66,7 @@ namespace NOLDA
         public CreateCharacterResult Result;
     }
     #endregion
-    
+
     #region # 캐릭터 리스트 로드
     public struct CharacterInfoLoadRequestMessage : NetworkMessage
     {
@@ -78,7 +78,7 @@ namespace NOLDA
         public List<CustomChapterItem> CharacterData;
     }
     #endregion
-    
+
     #region # 캐릭터 선택시 정보 로드
     public struct CharacterDataRequestMessage : NetworkMessage
     {
@@ -107,7 +107,7 @@ namespace NOLDA
         public List<InventoryItemMessage> InventoryItems;
         public List<SkillEntry> Skills;
     }
-    
+
     [System.Serializable]
     public struct SkillEntry
     {
@@ -128,7 +128,7 @@ namespace NOLDA
         public int Position;
     }
     #endregion
-    
+
     #region # 캐릭터 삭제
     public struct DeleteCharacterRequestMessage : NetworkMessage
     {
@@ -140,7 +140,7 @@ namespace NOLDA
         public bool Result;
     }
     #endregion
-    
+
     #region # 캐릭터 데이터 업데이트
     //PlayerDataSO update
     public struct UpdatePlayerDataMessage : NetworkMessage
@@ -149,7 +149,7 @@ namespace NOLDA
         public string FieldName;
         public string NewValue;
     }
-    
+
     //Inventory Data update
     public struct UpdateInventoryMessage : NetworkMessage
     {

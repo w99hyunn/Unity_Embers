@@ -1,7 +1,7 @@
 using Michsky.UI.Reach;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(HorizontalSelector))]
     public class WindowModeSync : MonoBehaviour

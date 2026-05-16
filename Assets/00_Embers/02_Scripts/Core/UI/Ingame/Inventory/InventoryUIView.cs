@@ -14,7 +14,7 @@ using TMPro;
       * 필터링에서 제외된 아이템 슬롯들은 조작 불가
 
 */
-namespace NOLDA
+namespace Embers
 {
     public class InventoryUIView : MonoBehaviour
     {
@@ -61,14 +61,14 @@ namespace NOLDA
         private Vector3 _beginDragIconPoint;   // 드래그 시작 시 슬롯의 위치
         private Vector3 _beginDragCursorPoint; // 드래그 시작 시 커서의 위치
         private int _beginDragSlotSiblingIndex;
-        
+
         /// <summary> 인벤토리 UI 내 아이템 필터링 옵션 </summary>
         private enum FilterOption
         {
             ALL, EQUIPMENT, PORTION
         }
         private FilterOption _currentFilterOption = FilterOption.ALL;
-        
+
         /***********************************************************************
         *                               Unity Events
         ***********************************************************************/
@@ -85,12 +85,12 @@ namespace NOLDA
             _ped.position = Input.mousePosition;
 
             OnPointerEnterAndExit();
-            if(_showTooltip) ShowOrHideItemTooltip();
+            if (_showTooltip) ShowOrHideItemTooltip();
             OnPointerDown();
             OnPointerDrag();
             OnPointerUp();
         }
-        
+
         /***********************************************************************
         *                               Init Methods
         ***********************************************************************/
@@ -113,7 +113,7 @@ namespace NOLDA
             // 슬롯 프리팹 설정
             _slotUiPrefab.TryGetComponent(out RectTransform slotRect);
             _slotUiPrefab.TryGetComponent(out ItemSlotUI itemSlot);
-            
+
             if (itemSlot == null)
                 _slotUiPrefab.AddComponent<ItemSlotUI>();
 
@@ -135,7 +135,7 @@ namespace NOLDA
             }
 
             // 슬롯 프리팹 - 프리팹이 아닌 경우 파괴
-            if(_slotUiPrefab.scene.rootCount != 0)
+            if (_slotUiPrefab.scene.rootCount != 0)
                 Destroy(_slotUiPrefab);
 
             // -- Local Method --
@@ -157,9 +157,9 @@ namespace NOLDA
 
         private void InitToggleEvents()
         {
-            _toggleFilterAll.onValueChanged.AddListener(       flag => UpdateFilter(flag, FilterOption.ALL));
+            _toggleFilterAll.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.ALL));
             _toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.EQUIPMENT));
-            _toggleFilterPortions.onValueChanged.AddListener(  flag => UpdateFilter(flag, FilterOption.PORTION));
+            _toggleFilterPortions.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.PORTION));
 
             // Local Method
             void UpdateFilter(bool flag, FilterOption option)
@@ -171,7 +171,7 @@ namespace NOLDA
                 }
             }
         }
-        
+
         /***********************************************************************
         *                               Mouse Event Methods
         ***********************************************************************/
@@ -184,8 +184,8 @@ namespace NOLDA
             _rrList.Clear();
 
             _gr.Raycast(_ped, _rrList);
-            
-            if(_rrList.Count == 0)
+
+            if (_rrList.Count == 0)
                 return null;
 
             return _rrList[0].gameObject.GetComponent<T>();
@@ -226,7 +226,7 @@ namespace NOLDA
             // ===================== Local Methods ===============================
             void OnCurrentEnter()
             {
-                if(_showHighlight)
+                if (_showHighlight)
                     curSlot.Highlight(true);
             }
             void OnPrevExit()
@@ -250,7 +250,7 @@ namespace NOLDA
             else
                 _itemTooltip.Hide();
         }
-        
+
         /// <summary> 슬롯에 클릭하는 경우 </summary>
         private void OnPointerDown()
         {
@@ -266,7 +266,7 @@ namespace NOLDA
                     _beginDragIconTransform = _beginDragSlot.IconRect.transform;
                     _beginDragIconPoint = _beginDragIconTransform.position;
                     _beginDragCursorPoint = Input.mousePosition;
-                    
+
                     // 맨 위에 보이기
                     _beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
                     _beginDragSlot.transform.SetAsLastSibling();
@@ -297,7 +297,7 @@ namespace NOLDA
         /// <summary> 드래그하는 도중 </summary>
         private void OnPointerDrag()
         {
-            if(_beginDragSlot == null) return;
+            if (_beginDragSlot == null) return;
 
             if (Input.GetMouseButton(_leftClick))
             {
@@ -316,13 +316,13 @@ namespace NOLDA
 
                 // UI 순서 복원
                 _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
-                
+
                 // 드래그 완료 처리
                 EndDrag();
-                
+
                 // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
                 _beginDragSlot.SetHighlightOnTop(true);
-                
+
                 // Grid Layout 정렬 복원
                 _contentAreaRT.GetComponent<GridLayoutGroup>().enabled = true;
 
@@ -344,7 +344,7 @@ namespace NOLDA
                 // 1) 마우스 클릭 떼는 순간 좌측 Ctrl 또는 Shift 키 유지
                 // 2) begin : 셀 수 있는 아이템 / end : 비어있는 슬롯
                 // 3) begin 아이템의 수량 > 1
-                bool isSeparatable = 
+                bool isSeparatable =
                     (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift)) &&
                     (_inventory.IsCountableItem(_beginDragSlot.Index) && !_inventory.HasItem(endDragSlot.Index));
 
@@ -363,7 +363,7 @@ namespace NOLDA
                 }
 
                 // 1. 개수 나누기
-                if(isSeparation)
+                if (isSeparation)
                     TrySeparateAmount(_beginDragSlot.Index, endDragSlot.Index, currentAmount);
                 // 2. 교환 또는 이동
                 else
@@ -383,16 +383,16 @@ namespace NOLDA
                 int amount = _inventory.GetCurrentAmount(index);
 
                 // 셀 수 있는 아이템의 경우, 수량 표시
-                if(amount > 1)
+                if (amount > 1)
                     itemName += $" x{amount}";
 
-                if(_showRemovingPopup)
+                if (_showRemovingPopup)
                     _popup.OpenConfirmationPopup(() => TryRemoveItem(index), itemName);
                 else
                     TryRemoveItem(index);
             }
         }
-        
+
         public void TryRemoveGold(int amount)
         {
             _popup.OpenGoldInputPopup(gold => Singleton.Game.playerData.Gold -= gold > 0 ? (gold > Singleton.Game.playerData.Gold ? Singleton.Game.playerData.Gold : gold) : 0);
@@ -445,7 +445,7 @@ namespace NOLDA
         /// <summary> 툴팁 UI의 슬롯 데이터 갱신 </summary>
         private void UpdateTooltipUI(ItemSlotUI slot)
         {
-            if(!slot.IsAccessible || !slot.HasItem)
+            if (!slot.IsAccessible || !slot.HasItem)
                 return;
 
             // 툴팁 정보 갱신
@@ -454,7 +454,7 @@ namespace NOLDA
             // 툴팁 위치 조정
             _itemTooltip.SetRectPosition(slot.SlotRect);
         }
-        
+
         /***********************************************************************
         *                               Public Methods
         ***********************************************************************/
@@ -528,7 +528,7 @@ namespace NOLDA
             bool isFiltered = true;
 
             // null인 슬롯은 타입 검사 없이 필터 활성화
-            if(itemData != null)
+            if (itemData != null)
                 switch (_currentFilterOption)
                 {
                     case FilterOption.EQUIPMENT:

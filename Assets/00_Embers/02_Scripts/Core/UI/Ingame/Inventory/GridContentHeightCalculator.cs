@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(GridLayoutGroup))]
     public class GridContentHeightCalculator : MonoBehaviour

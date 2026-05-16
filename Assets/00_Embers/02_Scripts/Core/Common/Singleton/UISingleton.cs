@@ -3,7 +3,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class UISingleton : MonoBehaviour
     {

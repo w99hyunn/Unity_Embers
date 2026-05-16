@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : NetworkBehaviour

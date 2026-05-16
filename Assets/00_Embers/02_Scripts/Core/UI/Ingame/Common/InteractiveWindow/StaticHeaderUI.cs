@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary>
     /// UI 헤더에 부착. 움직이는 기능은 제거하고 눌렀을 때 최상위로 오는 기능만 존재

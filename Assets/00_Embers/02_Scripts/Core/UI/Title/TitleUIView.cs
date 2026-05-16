@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using Michsky.UI.Reach;
 
-namespace NOLDA
+namespace Embers
 {
     public class TitleUIView : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace NOLDA
         public MenuManager menuManager;
         public PanelManager panelManager;
         public CustomChapterManager chapterManager;
-        
+
         [Header("Splash Screen")]
         [Header("Connecting")]
         public GameObject Connecting;
@@ -68,7 +68,7 @@ namespace NOLDA
         public string EditProfilePw => editProfilePWInputField.text;
         public string EditProfilePwConfirm => editProfilePWConfirmInputField.text;
         public string EditProfileEmail => editProfileEmailInputField.text;
-        
+
 
         public Class Class => (Class)classSelector.currentModeIndex;
         public Faction Faction => (Faction)factionSelector.index;
@@ -86,7 +86,7 @@ namespace NOLDA
             Connecting.SetActive(true);
             Login.SetActive(false);
         }
-        
+
         private void Update()
         {
             if (loginPwInputField.isFocused ||
@@ -107,7 +107,7 @@ namespace NOLDA
         {
             panelManager.OpenPanel(panelName);
         }
-        
+
         public void CreateCharacterSuccess()
         {
             //Reset
@@ -138,7 +138,7 @@ namespace NOLDA
         {
             RetryBtn.SetActive(true);
         }
-        
+
         public void SignUpSuccess()
         {
             loginIdInputField.text = signUpIdInputField.text;

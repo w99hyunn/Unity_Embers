@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-namespace NOLDA
+namespace Embers
 {
     public class SplashUIController : MonoBehaviour
     {

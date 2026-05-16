@@ -1,7 +1,7 @@
 using System;
 using Mirror;
 
-namespace NOLDA
+namespace Embers
 {
     public class ChatServer : NetworkBehaviour
     {

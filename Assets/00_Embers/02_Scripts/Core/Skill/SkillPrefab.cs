@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class SkillPrefab : MonoBehaviour
     {

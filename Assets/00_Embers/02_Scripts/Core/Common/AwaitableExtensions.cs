@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public static class AwaitableExtensions
     {

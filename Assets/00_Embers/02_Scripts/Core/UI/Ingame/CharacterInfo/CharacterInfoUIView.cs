@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class CharacterInfoUIView : MonoBehaviour
     {

@@ -3,13 +3,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class ChangeInputField : MonoBehaviour
     {
         private EventSystem _system;
         public Selectable firstInput;
-        
+
         void Start()
         {
             _system = EventSystem.current;

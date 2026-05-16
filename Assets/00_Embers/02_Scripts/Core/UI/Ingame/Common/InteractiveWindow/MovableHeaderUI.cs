@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace NOLDA
+namespace Embers
 {
     public class MovableHeaderUI : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
@@ -13,12 +13,12 @@ namespace NOLDA
 
         private void Awake()
         {
-            if(targetTransform == null)
+            if (targetTransform == null)
                 targetTransform = transform.parent;
 
             LoadPosition();
         }
-        
+
         private void LoadPosition()
         {
             if (PlayerPrefs.HasKey(positionKey + "_x"))
@@ -48,7 +48,7 @@ namespace NOLDA
             _moveBegin = eventData.position;
             targetTransform.SetAsLastSibling();
         }
-        
+
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
             targetTransform.position = _beginPoint + (eventData.position - _moveBegin);

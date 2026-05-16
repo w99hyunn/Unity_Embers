@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(AudioSource))]
     public class MapManager : MonoBehaviour

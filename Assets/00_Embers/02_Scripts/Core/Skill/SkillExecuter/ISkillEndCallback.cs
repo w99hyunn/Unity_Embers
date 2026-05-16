@@ -1,4 +1,4 @@
-namespace NOLDA
+namespace Embers
 {
     public interface ISkillEndCallback
     {

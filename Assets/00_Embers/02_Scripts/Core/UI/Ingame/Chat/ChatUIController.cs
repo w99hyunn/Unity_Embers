@@ -2,12 +2,12 @@ using System;
 using Mirror;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class ChatUIController : MonoBehaviour
     {
         public ChatUIView _view;
-        
+
         private void OnEnable()
         {
             Singleton.Network.ChatServer.OnMessageRecieved += AddChatMessageHandle;
@@ -27,16 +27,16 @@ namespace NOLDA
         {
             _view.ShowChat().Forget();
         }
-        
+
         public async Awaitable SendChatMessage()
         {
             _view.chatInputField.MoveTextEnd(false);
 
             await Awaitable.NextFrameAsync();
-            
+
             if (!string.IsNullOrEmpty(_view.chatInputField.text))
             {
-                
+
                 Singleton.Network.ChatServer.CmdSendChatMessage(
                     NetworkClient.localPlayer != null ? NetworkClient.localPlayer.gameObject.name : "Anonymous",
                     _view.chatInputField.text

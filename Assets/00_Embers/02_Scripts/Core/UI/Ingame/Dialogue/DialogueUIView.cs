@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NOLDA
+namespace Embers
 {
     [RequireComponent(typeof(ModalWindowManager))]
     public class DialogueUIView : MonoBehaviour

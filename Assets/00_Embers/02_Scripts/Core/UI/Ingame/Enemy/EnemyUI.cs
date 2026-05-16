@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using TMPro;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     public class EnemyUI : MonoBehaviour
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 
-namespace NOLDA
+namespace Embers
 {
     public class DebugPanel : EditorWindow
     {

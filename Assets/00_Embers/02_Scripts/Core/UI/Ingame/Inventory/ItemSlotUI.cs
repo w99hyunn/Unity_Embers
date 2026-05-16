@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class ItemSlotUI : MonoBehaviour
     {
@@ -25,7 +25,7 @@ namespace NOLDA
 
         [Tooltip("하이라이트 소요 시간")]
         [SerializeField] private float _highlightFadeDuration = 0.2f;
-        
+
         /// <summary> 슬롯의 인덱스 </summary>
         public int Index { get; private set; }
 
@@ -37,7 +37,7 @@ namespace NOLDA
 
         public RectTransform SlotRect => _slotRect;
         public RectTransform IconRect => _iconRect;
-        
+
         private InventoryUIView _inventoryUI;
 
         private RectTransform _slotRect;
@@ -60,13 +60,13 @@ namespace NOLDA
         private static readonly Color InaccessibleSlotColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
         /// <summary> 비활성화된 아이콘 색상 </summary>
         private static readonly Color InaccessibleIconColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-        
+
         private void Awake()
         {
             InitComponents();
             InitValues();
         }
-        
+
         /***********************************************************************
         *                               Private Methods
         ***********************************************************************/
@@ -146,7 +146,7 @@ namespace NOLDA
         public void SetItemAccessibleState(bool value)
         {
             // 중복 처리는 지양
-            if(_isAccessibleItem == value) return;
+            if (_isAccessibleItem == value) return;
 
             if (value)
             {
@@ -155,7 +155,7 @@ namespace NOLDA
             }
             else
             {
-                _iconImage.color  = InaccessibleIconColor;
+                _iconImage.color = InaccessibleIconColor;
                 _amountText.color = InaccessibleIconColor;
             }
 
@@ -240,12 +240,12 @@ namespace NOLDA
         /// <summary> 하이라이트 이미지를 아이콘 이미지의 상단/하단으로 표시 </summary>
         public void SetHighlightOnTop(bool value)
         {
-            if(value)
+            if (value)
                 _highlightRect.SetAsLastSibling();
             else
                 _highlightRect.SetAsFirstSibling();
         }
-        
+
         /// <summary> 하이라이트 알파값 서서히 증가 </summary>
         private IEnumerator HighlightFadeInRoutine()
         {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace NOLDA
+namespace Embers
 {
     public class DialogueUIController : MonoBehaviour
     {

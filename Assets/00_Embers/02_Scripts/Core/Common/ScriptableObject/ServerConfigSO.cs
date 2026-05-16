@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = "ServerConfig", menuName = "NOLDA/ServerConfig", order = 1)]
     public class ServerConfigSO : ScriptableObject

@@ -1,12 +1,12 @@
 {
-    "name": "NOLDA.Enum",
+    "name": "w99hyun.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:544a21ae022790349bebcb0bad78a057"
+    ],
     "includePlatforms": [
-        "Editor",
-        "LinuxStandalone64Server",
-        "WindowsStandalone32",
-        "WindowsStandalone64"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

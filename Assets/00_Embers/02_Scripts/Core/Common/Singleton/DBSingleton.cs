@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using static NOLDA.CustomChapterManager;
+using static Embers.CustomChapterManager;
 
-namespace NOLDA
+namespace Embers
 {
     public class LoginResponse
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary> 장비 아이템 </summary>
     public abstract class EquipmentItemData : ItemData

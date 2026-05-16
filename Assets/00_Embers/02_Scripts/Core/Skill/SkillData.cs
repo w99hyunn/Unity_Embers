@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = "NewSkill", menuName = "NOLDA/Skill System/SkillData", order = 1)]
     public class SkillData : ScriptableObject

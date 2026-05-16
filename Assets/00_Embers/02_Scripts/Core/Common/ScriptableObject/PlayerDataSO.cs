@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
     /// <summary>

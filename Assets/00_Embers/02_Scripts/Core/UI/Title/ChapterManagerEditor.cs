@@ -3,7 +3,7 @@ using Michsky.UI.Reach;
 using UnityEditor;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [CustomEditor(typeof(CustomChapterManager))]
     public class CustomChapterManagerEditor : Editor
@@ -75,10 +75,10 @@ namespace NOLDA
                         GUI.enabled = false;
                         EditorGUILayout.LabelField(new GUIContent("Current Chapter:"), customSkin.FindStyle("Text"), GUILayout.Width(94));
                         GUI.enabled = true;
-                        
+
                         if (setPanelAuto.boolValue == true) { GUI.enabled = false; }
                         EditorGUILayout.LabelField(new GUIContent(cmTarget.chapters[currentChapterIndex.intValue].chapterID), customSkin.FindStyle("Text"));
-                       
+
                         GUILayout.EndHorizontal();
                         GUILayout.Space(2);
 
@@ -123,11 +123,11 @@ namespace NOLDA
 
                     backgroundStretch.boolValue = GUILayout.Toggle(backgroundStretch.boolValue, new GUIContent("Background Stretch"), customSkin.FindStyle("Toggle"));
                     backgroundStretch.boolValue = GUILayout.Toggle(backgroundStretch.boolValue, new GUIContent(""), customSkin.FindStyle("ToggleHelper"));
-                    
+
                     GUILayout.EndHorizontal();
                     GUILayout.Space(4);
 
-                    if (backgroundStretch.boolValue == true) 
+                    if (backgroundStretch.boolValue == true)
                     {
                         ReachUIEditorHandler.DrawProperty(maxStretch, customSkin, "Max Stretch");
                         ReachUIEditorHandler.DrawProperty(stretchCurveSpeed, customSkin, "Curve Speed");

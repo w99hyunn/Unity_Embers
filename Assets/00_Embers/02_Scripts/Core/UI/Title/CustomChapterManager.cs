@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Michsky.UI.Reach;
 
-namespace NOLDA
+namespace Embers
 {
     public class CustomChapterManager : ChapterManager
     {

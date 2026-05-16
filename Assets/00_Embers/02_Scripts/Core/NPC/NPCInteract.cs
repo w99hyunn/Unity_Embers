@@ -2,7 +2,7 @@ using Mirror;
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     /// <summary>
     /// NPC에 부착

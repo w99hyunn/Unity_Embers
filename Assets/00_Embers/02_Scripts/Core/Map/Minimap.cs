@@ -3,7 +3,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NOLDA
+namespace Embers
 {
     public class Minimap : MonoBehaviour
     {

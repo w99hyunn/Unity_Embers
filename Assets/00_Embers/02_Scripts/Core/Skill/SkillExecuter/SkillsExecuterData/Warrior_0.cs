@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NOLDA
+namespace Embers
 {
     [CreateAssetMenu(fileName = SKILL_CODE, menuName = MENU_NAME)]
     public class Warrior_0 : SkillExecuter

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Mirror;
 
-namespace NOLDA
+namespace Embers
 {
     public class EnemySpawner : MonoBehaviour
     {
