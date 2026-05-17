@@ -647,7 +647,7 @@ namespace Embers
             `Character_id`, `Name`, `Level`, `Hp`, `Mp`, `Hxp`, `Gold`, `MaxHp`, `MaxMp`, 
             `Attack`, `Armor`, `Class`, `Faction`, `Sp`, `Gender`, 
             `Current_position_x`, `Current_position_y`, `Current_position_z`, 
-            `MapCode`, `InventorySpace`
+            `MapCode`, `InventorySpace`, `EquippedWeaponPosition`, `EquippedArmorPosition`
         FROM `character`
         WHERE `Name` = @Name;";
 
@@ -696,6 +696,9 @@ namespace Embers
                         playerData.Position = new Vector3(posX, posY, posZ);
                         playerData.MapCode = reader.GetInt32("MapCode").ToString();
                         playerData.InventorySpace = reader.GetInt32("InventorySpace");
+                        playerData.SetEquipmentPositions(
+                            reader.GetInt32("EquippedWeaponPosition"),
+                            reader.GetInt32("EquippedArmorPosition"));
 
                         // 죽은 상태로 그냥 종료했으면 HP가 0일거임. HP채우고 초기 위치로 옮겨주기
                         if (playerData.Hp <= 0)

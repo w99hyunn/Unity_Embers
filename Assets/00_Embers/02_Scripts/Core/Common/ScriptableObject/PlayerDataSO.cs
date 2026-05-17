@@ -41,13 +41,75 @@ namespace Embers
         [SerializeField] private int additionalMaxMp;
 
         //외부에서 참조해야할 최종 능력치
-        public int TotalAttack => Attack + additionalAttack;
-        public int TotalArmor => Armor + additionalArmor;
+        public int TotalAttack => Attack + additionalAttack + EquipmentAttack;
+        public int TotalArmor => Armor + additionalArmor + EquipmentArmor;
         public int TotalMaxHp => MaxHp + additionalMaxHp;
         public int TotalMaxMp => MaxMp + additionalMaxMp;
 
+        public WeaponItem EquippedWeapon { get; private set; }
+        public ArmorItem EquippedArmor { get; private set; }
+        public int EquipmentAttack => EquippedWeapon?.WeaponData.Damage ?? 0;
+        public int EquipmentArmor => EquippedArmor?.ArmorData.Defence ?? 0;
+
+        public void ToggleEquipment(EquipmentItem equipmentItem)
+        {
+            switch (equipmentItem)
+            {
+                case WeaponItem weaponItem:
+                    EquippedWeapon = EquippedWeapon == weaponItem ? null : weaponItem;
+                    EquippedWeaponPosition = EquippedWeapon == null ? -1 : Array.IndexOf(Items, EquippedWeapon);
+                    break;
+                case ArmorItem armorItem:
+                    EquippedArmor = EquippedArmor == armorItem ? null : armorItem;
+                    EquippedArmorPosition = EquippedArmor == null ? -1 : Array.IndexOf(Items, EquippedArmor);
+                    break;
+            }
+
+            OnPassiveSkillsApplied?.Invoke();
+        }
+
+        public void UnequipEquipment(EquipmentItem equipmentItem)
+        {
+            if (EquippedWeapon == equipmentItem)
+            {
+                EquippedWeapon = null;
+                EquippedWeaponPosition = -1;
+            }
+
+            if (EquippedArmor == equipmentItem)
+            {
+                EquippedArmor = null;
+                EquippedArmorPosition = -1;
+            }
+
+            OnPassiveSkillsApplied?.Invoke();
+        }
+
+        public void RefreshEquipmentPositions()
+        {
+            EquippedWeaponPosition = EquippedWeapon == null ? -1 : Array.IndexOf(Items, EquippedWeapon);
+            EquippedArmorPosition = EquippedArmor == null ? -1 : Array.IndexOf(Items, EquippedArmor);
+            OnPassiveSkillsApplied?.Invoke();
+        }
+
+        private void ClearEquipment()
+        {
+            EquippedWeapon = null;
+            EquippedArmor = null;
+            equippedWeaponPosition = -1;
+            equippedArmorPosition = -1;
+        }
+
+        public void SetEquipmentPositions(int weaponPosition, int armorPosition)
+        {
+            equippedWeaponPosition = weaponPosition;
+            equippedArmorPosition = armorPosition;
+        }
+
         public void Init(CharacterDataResponseMessage msg)
         {
+            ClearEquipment();
+
             Username = msg.Username;
             Level = msg.Level;
             MaxHp = msg.MaxHp;
@@ -65,6 +127,8 @@ namespace Embers
             Position = msg.Position;
             MapCode = msg.MapCode;
             InventorySpace = msg.InventorySpace;
+            equippedWeaponPosition = msg.EquippedWeaponPosition;
+            equippedArmorPosition = msg.EquippedArmorPosition;
 
             // 스킬 데이터 초기화
             Skills = new Dictionary<int, int>();
@@ -114,6 +178,8 @@ namespace Embers
                     DebugUtils.LogWarning($"ItemData not found for ItemId: {itemMessage.ItemId}");
                 }
             }
+
+            ApplyEquipmentFromPositions();
         }
 
         //추가 능력치 적용 메소드
@@ -230,6 +296,47 @@ namespace Embers
         {
             get => items;
             set => items = value;
+        }
+
+        [SerializeField] private int equippedWeaponPosition = -1;
+        public int EquippedWeaponPosition
+        {
+            get => equippedWeaponPosition;
+            private set
+            {
+                if (equippedWeaponPosition != value)
+                {
+                    equippedWeaponPosition = value;
+                    if (false == suppressEvents)
+                        OnDataChanged?.Invoke(nameof(EquippedWeaponPosition), value);
+                }
+            }
+        }
+
+        [SerializeField] private int equippedArmorPosition = -1;
+        public int EquippedArmorPosition
+        {
+            get => equippedArmorPosition;
+            private set
+            {
+                if (equippedArmorPosition != value)
+                {
+                    equippedArmorPosition = value;
+                    if (false == suppressEvents)
+                        OnDataChanged?.Invoke(nameof(EquippedArmorPosition), value);
+                }
+            }
+        }
+
+        private void ApplyEquipmentFromPositions()
+        {
+            EquippedWeapon = equippedWeaponPosition >= 0 && equippedWeaponPosition < Items.Length
+                ? Items[equippedWeaponPosition] as WeaponItem
+                : null;
+            EquippedArmor = equippedArmorPosition >= 0 && equippedArmorPosition < Items.Length
+                ? Items[equippedArmorPosition] as ArmorItem
+                : null;
+            OnPassiveSkillsApplied?.Invoke();
         }
         #endregion
 

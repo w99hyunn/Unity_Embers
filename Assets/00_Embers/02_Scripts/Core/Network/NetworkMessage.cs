@@ -104,6 +104,8 @@ namespace Embers
         public Vector3 Position;
         public string MapCode;
         public int InventorySpace;
+        public int EquippedWeaponPosition;
+        public int EquippedArmorPosition;
         public List<InventoryItemMessage> InventoryItems;
         public List<SkillEntry> Skills;
     }

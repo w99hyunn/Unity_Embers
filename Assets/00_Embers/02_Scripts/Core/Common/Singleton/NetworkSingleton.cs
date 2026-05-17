@@ -251,6 +251,8 @@ namespace Embers
                 Position = playerData.Position,
                 MapCode = playerData.MapCode,
                 InventorySpace = playerData.InventorySpace,
+                EquippedWeaponPosition = playerData.EquippedWeaponPosition,
+                EquippedArmorPosition = playerData.EquippedArmorPosition,
                 InventoryItems = new List<InventoryItemMessage>(),
                 Skills = new List<SkillEntry>()
             };

@@ -177,7 +177,8 @@ namespace Embers
             if (hitEnemies.Count > 0)
             {
                 SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
-                float damage = skill.baseDamage * (levelData != null ? levelData.effectMultiplier : 1f);
+                float damage = (skill.baseDamage + Singleton.Game.playerData.TotalAttack)
+                    * (levelData != null ? levelData.effectMultiplier : 1f);
 
                 CmdUseSkillOnTargets(hitEnemies.ToArray(), damage);
             }

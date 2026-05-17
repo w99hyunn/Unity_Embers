@@ -92,7 +92,8 @@ namespace Embers
                 return;
             }
 
-            Singleton.Game.playerData.Hp -= damage;
+            int finalDamage = Mathf.Max(1, damage - Singleton.Game.playerData.TotalArmor);
+            Singleton.Game.playerData.Hp -= finalDamage;
 
             if (Singleton.Game.playerData.Hp <= 0)
             {

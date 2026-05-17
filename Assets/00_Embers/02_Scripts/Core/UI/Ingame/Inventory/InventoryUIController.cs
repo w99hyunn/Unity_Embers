@@ -94,6 +94,7 @@ namespace Embers
         {
             UpdateAccessibleStatesAll();
             UpdateAllSlot();
+            Singleton.Game.playerData.RefreshEquipmentPositions();
             UpdateGoldText();
         }
 
@@ -401,6 +402,11 @@ namespace Embers
         {
             if (!IsValidIndex(index)) return;
 
+            if (Singleton.Game.playerData.Items[index] is EquipmentItem equipmentItem)
+            {
+                Singleton.Game.playerData.UnequipEquipment(equipmentItem);
+            }
+
             Singleton.Game.playerData.Items[index] = null;
             _view.RemoveItem(index);
 
@@ -445,6 +451,7 @@ namespace Embers
 
             // 두 슬롯 정보 갱신
             UpdateSlot(indexA, indexB);
+            Singleton.Game.playerData.RefreshEquipmentPositions();
             Singleton.Game.SendSlotUpdateToServer(indexA);
             Singleton.Game.SendSlotUpdateToServer(indexB);
         }
@@ -537,6 +544,7 @@ namespace Embers
             {
                 UpdateSlot(index);
             }
+            Singleton.Game.playerData.RefreshEquipmentPositions();
             _view.UpdateAllSlotFilters();
         }
 
@@ -565,6 +573,7 @@ namespace Embers
 
             // 3. Update
             UpdateAllSlot();
+            Singleton.Game.playerData.RefreshEquipmentPositions();
             _view.UpdateAllSlotFilters(); // 필터 상태 업데이트
         }
         #endregion

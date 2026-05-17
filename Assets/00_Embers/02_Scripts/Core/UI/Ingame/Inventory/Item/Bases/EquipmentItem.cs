@@ -1,7 +1,7 @@
 namespace Embers
 {
     /// <summary> 장비 아이템</summary>
-    public abstract class EquipmentItem : Item
+    public abstract class EquipmentItem : Item, IUsableItem
     {
         public EquipmentItemData EquipmentData { get; private set; }
 
@@ -24,6 +24,12 @@ namespace Embers
         {
             EquipmentData = data;
             Durability = data.MaxDurability;
+        }
+
+        public bool Use()
+        {
+            Singleton.Game.playerData.ToggleEquipment(this);
+            return true;
         }
 
         // Item Data 외의 필드값에 대한 매개변수를 갖는 생성자는 추가로 제공하지 않음
