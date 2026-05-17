@@ -7,6 +7,8 @@ namespace Embers
 {
     public class TitleUIView : MonoBehaviour
     {
+        [SerializeField] private ChunkListSO chunkList;
+
         [Header("General")]
         [SerializeField] private MenuManager menuManager;
         [SerializeField] private PanelManager panelManager;
@@ -79,6 +81,7 @@ namespace Embers
         public ModalWindowManager DeleteCharacterPopup => deleteCharacterPopup;
         public ModalWindowManager LoadingPopup => loadingPopup;
         public ChapterManager ChapterManager => chapterManager;
+        public ChunkListSO ChunkList => chunkList;
         #endregion
 
         /// <summary>

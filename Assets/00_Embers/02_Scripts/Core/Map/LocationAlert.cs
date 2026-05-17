@@ -24,7 +24,7 @@ namespace Embers
                 mapManager.RequireUpdateChunk(NetworkClient.localPlayer.gameObject.transform.position);
                 Vector2Int currentChunkCoord = mapManager.GetChunkCoord(other.transform.position);
 
-                var locationChunkInfo = mapManager.chunkList.chunkSceneNames
+                var locationChunkInfo = mapManager.ChunkList.chunkSceneNames
                     .FirstOrDefault(ci => ci.sceneName == $"Chunk_{currentChunkCoord.x}_{currentChunkCoord.y}");
 
                 mapManager.LocationNotificationAlert(locationChunkInfo.chunkDisplayName);

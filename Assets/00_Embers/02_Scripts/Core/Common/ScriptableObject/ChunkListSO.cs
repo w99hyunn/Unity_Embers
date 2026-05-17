@@ -35,6 +35,13 @@ namespace Embers
             return chunkSceneNames.Find(chunk => chunk.sceneName == sceneName);
         }
 
+        public string GetChunkDisplayName(Vector3 position, float chunkSize)
+        {
+            int x = Mathf.FloorToInt(position.x / chunkSize);
+            int z = Mathf.FloorToInt(position.z / chunkSize);
+            return GetChunkInfo($"Chunk_{x}_{z}").chunkDisplayName;
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {

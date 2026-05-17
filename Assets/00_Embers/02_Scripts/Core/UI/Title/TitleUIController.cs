@@ -455,7 +455,8 @@ namespace Embers
         private async Awaitable InitInGameAsync()
         {
             Singleton.UI.FadeIn();
-            Singleton.UI.OpenLoading("게임 시작", "모험을 시작하기 위해 준비중입니다.\n잠시만 기다려주세요.", 3);
+            string mapName = _view.ChunkList.GetChunkDisplayName(Singleton.Game.playerData.Position, Singleton.Game.ChunkSize);
+            Singleton.UI.OpenLoading(mapName, "모험을 시작하기 위해 준비중입니다.\n잠시만 기다려주세요.", 3);
 
             await Awaitable.WaitForSecondsAsync(0.5f);
 

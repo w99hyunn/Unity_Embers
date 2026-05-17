@@ -11,11 +11,13 @@ namespace Embers
     {
         [SerializeField] private UIControlManager uIControlManager;
         [SerializeField] private LocationNotificationUI locationNotificationUI;
-        public ChunkListSO chunkList;
+        [SerializeField] private ChunkListSO chunkList;
 
         private AudioSource _audioSource;
         private Dictionary<Vector2Int, ChunkLoadState> chunkStates = new Dictionary<Vector2Int, ChunkLoadState>(); // 현재 로드돼있는 청크 목록
         private string _currentBGMName; // 현재 재생중인 BGM
+
+        public ChunkListSO ChunkList => chunkList;
 
         private void Awake()
         {
