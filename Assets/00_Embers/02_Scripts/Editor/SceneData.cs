@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "SceneData", menuName = "NOLDA/SceneData", order = 1)]
+    [CreateAssetMenu(fileName = "SceneData", menuName = "Embers/SceneData", order = 1)]
     public class SceneData : ScriptableObject
     {
         [System.Serializable]

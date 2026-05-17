@@ -10,14 +10,12 @@ namespace Embers
         public static GameSingleton Game { get; private set; }
         public static UISingleton UI { get; private set; }
         public static NetworkSingleton Network { get; private set; }
-        public static SessionSingleton Session { get; private set; }
         public static DBSingleton DB { get; private set; }
         public static SkillSingleton Skill { get; private set; }
 
         public GameSingleton gameSingleton;
         public UISingleton uISingleton;
         public NetworkSingleton networkSingleton;
-        public SessionSingleton sessionSingleton;
         public DBSingleton dbSingleton;
         public SkillSingleton skillSingleton;
 
@@ -35,7 +33,6 @@ namespace Embers
             Game = gameSingleton;
             UI = uISingleton;
             Network = networkSingleton;
-            Session = sessionSingleton;
             DB = dbSingleton;
             Skill = skillSingleton;
         }

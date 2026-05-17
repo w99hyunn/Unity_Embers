@@ -8,6 +8,9 @@ namespace Embers
 {
     public class Enemy : NetworkBehaviour
     {
+        private const string IS_ATTACK_PARAMETER = "isAttack";
+        private const string IS_DIE_TRIGGER = "isDie";
+
         [Header("Enemy Settings")]
         [SerializeField] private string enemyName;
         public string EnemyName => enemyName;
@@ -19,7 +22,9 @@ namespace Embers
         private NavMeshAgent navMeshAgent;
         private BehaviorGraphAgent behaviorGraphAgent;
         private EnemySpawner enemySpawner;
+        private Animator animator;
         private NetworkAnimator networkAnimator;
+        private bool isDead;
 
         public event System.Action<float> OnAttacked;
 
@@ -27,6 +32,7 @@ namespace Embers
         {
             TryGetComponent<NavMeshAgent>(out navMeshAgent);
             TryGetComponent<BehaviorGraphAgent>(out behaviorGraphAgent);
+            TryGetComponent<Animator>(out animator);
             TryGetComponent<NetworkAnimator>(out networkAnimator);
         }
 
@@ -89,10 +95,16 @@ namespace Embers
         [Server]
         public void TakeDamage(float damage)
         {
+            if (isDead)
+            {
+                return;
+            }
+
             currentHp -= damage;
 
             if (currentHp <= 0)
             {
+                currentHp = 0;
                 Die();
             }
 
@@ -108,7 +120,9 @@ namespace Embers
         [Server]
         private async void Die()
         {
+            isDead = true;
             behaviorGraphAgent.SetVariableValue("currentState", EnemyState.Die);
+            PlayDeathAnimation();
 
             await AwaitDie();
         }
@@ -122,7 +136,13 @@ namespace Embers
 
         public void DieAction()
         {
-            networkAnimator.SetTrigger("isDie");
+            PlayDeathAnimation();
+        }
+
+        private void PlayDeathAnimation()
+        {
+            animator.SetBool(IS_ATTACK_PARAMETER, false);
+            networkAnimator.SetTrigger(IS_DIE_TRIGGER);
         }
 
         /// <summary>
@@ -137,11 +157,7 @@ namespace Embers
             GameObject closest = null;
             float closestSqrDist = radius * radius;
 
-            var serverPlayers = Singleton.Session.ServerPlayers;
-            if (serverPlayers.Count == 0)
-            {
-                return;
-            }
+            var serverPlayers = Singleton.Network.ServerPlayers;
 
             foreach (var player in serverPlayers)
             {

@@ -12,7 +12,7 @@ namespace Embers
         private SceneData _sceneData;
 
         private const string BASE_SCENE_FOLDER_PATH = "Assets/00_Embers/01_Scenes/";
-        private const string PREVIOUS_SCENE_SETUP_KEY = "NOLDA_PREVIOUS_SCENE_SETUP";
+        private const string PREVIOUS_SCENE_SETUP_KEY = "EMBERS_PREVIOUS_SCENE_SETUP";
         private bool _loadAdditively = false;
 
         private int _selectedIndex = 0;
@@ -20,7 +20,7 @@ namespace Embers
 
         private Vector2 _scrollPosition;
 
-        [MenuItem("NOLDA/Debug Panel")]
+        [MenuItem("Embers/Debug Panel")]
         public static void ShowWindow()
         {
             GetWindow<DebugPanel>("Debug Panel");

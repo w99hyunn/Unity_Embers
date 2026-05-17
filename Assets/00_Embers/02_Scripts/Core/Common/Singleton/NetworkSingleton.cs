@@ -12,6 +12,9 @@ namespace Embers
         [SerializeField] private ChatServer chatServer;
         public ChatServer ChatServer => chatServer;
 
+        [SerializeField] private List<GameObject> m_ServerPlayers = new List<GameObject>();
+        public IReadOnlyList<GameObject> ServerPlayers => m_ServerPlayers;
+
         public override void Start()
         {
 #if UNITY_EDITOR
@@ -334,5 +337,24 @@ namespace Embers
         //    ChatManager.Instance?.CmdSendChatMessage("퇴장", $"{conn.identity.name}님이 퇴장하셨습니다.");
         //    base.OnServerDisconnect(conn);
         //}
+
+        [Server]
+        public void AddPlayer(GameObject player)
+        {
+            if (!m_ServerPlayers.Contains(player))
+            {
+                m_ServerPlayers.Add(player);
+                DebugUtils.Log($"[플레이어 로그인]'{player.name}' 로그인 - Total players: {m_ServerPlayers.Count}");
+            }
+        }
+
+        [Server]
+        public void RemovePlayer(GameObject player)
+        {
+            if (m_ServerPlayers.Remove(player))
+            {
+                DebugUtils.Log($"[플레이어 로그아웃] '{player.name}' 로그아웃 - Total players: {m_ServerPlayers.Count}");
+            }
+        }
     }
 }

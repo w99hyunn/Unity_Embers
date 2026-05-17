@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "PlayerData", menuName = "NOLDA/PlayerData", order = 1)]
+    [CreateAssetMenu(fileName = "PlayerData", menuName = "Embers/PlayerData", order = 1)]
     /// <summary>
     /// Username = 캐릭터 이름
     /// Level = 캐릭터 레벨
@@ -545,6 +545,8 @@ namespace Embers
             //레벨업하면 현재 HP, MP를 모두 채워줌
             Hp = TotalMaxHp;
             Mp = TotalMaxMp;
+
+            InGameChatNoticeHandler.Notice("시스템", $"레벨이 {Level}로 올랐습니다.");
         }
         #endregion
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "ServerConfig", menuName = "NOLDA/ServerConfig", order = 1)]
+    [CreateAssetMenu(fileName = "ServerConfig", menuName = "Embers/ServerConfig", order = 1)]
     public class ServerConfigSO : ScriptableObject
     {
         [Header("Server Info")]

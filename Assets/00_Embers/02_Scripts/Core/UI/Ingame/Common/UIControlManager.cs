@@ -25,12 +25,9 @@ namespace Embers
         private bool _isChatting = false;
         private bool _isPause = false;
         private bool _isDead = false;
-        private Transform _localPlayerTransform;
         private Player _localPlayer;
         private PlayerEnemyHandler _localPlayerEnemyHandler;
         private UnityEngine.InputSystem.PlayerInput _localPlayerInput;
-
-        public Transform localPlayerTransform => _localPlayerTransform;
         public Action OnReturnTitle;
 
         private async void Start()
@@ -53,7 +50,6 @@ namespace Embers
             }
 
             var localPlyer = NetworkClient.localPlayer.gameObject;
-            localPlyer.TryGetComponent<Transform>(out _localPlayerTransform);
             localPlyer.TryGetComponent<Player>(out _localPlayer);
             localPlyer.TryGetComponent<UnityEngine.InputSystem.PlayerInput>(out _localPlayerInput);
             localPlyer.TryGetComponent<PlayerEnemyHandler>(out _localPlayerEnemyHandler);
@@ -194,7 +190,7 @@ namespace Embers
 
         public void InGameChatNotice(string header, string message)
         {
-            chatUIController.AddChatMessageHandle($"[{header}]", message);
+            InGameChatNoticeHandler.Notice(header, message);
         }
 
         public void ShowDeathUI()

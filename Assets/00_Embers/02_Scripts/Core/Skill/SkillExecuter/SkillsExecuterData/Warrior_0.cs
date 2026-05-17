@@ -7,8 +7,9 @@ namespace Embers
     {
         #region Skill Code Info
         public const string SKILL_CODE = "Warrior_0"; //스킬 제작시 이 부분 수정 필요
-        public const string MENU_NAME = "NOLDA/Skill System/SkillExecuter/" + SKILL_CODE;
+        public const string MENU_NAME = "Embers/Skill System/SkillExecuter/" + SKILL_CODE;
         #endregion
+        private const float SKILL_DURATION = 1.0f;
 
         public override void ExecuteSkill(Animator animator, ISkillEndCallback skillEndCallback)
         {
@@ -17,7 +18,7 @@ namespace Embers
         private async Awaitable WaitForAnimationEnd(Animator animator, ISkillEndCallback skillEndCallback)
         {
             animator.SetTrigger("Warrior_0");
-            await Awaitable.WaitForSecondsAsync(1.5f);
+            await Awaitable.WaitForSecondsAsync(SKILL_DURATION);
             skillEndCallback.OnSkillEnd();
         }
     }

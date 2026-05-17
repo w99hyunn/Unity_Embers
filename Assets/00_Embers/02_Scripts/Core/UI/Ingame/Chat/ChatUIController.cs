@@ -10,11 +10,13 @@ namespace Embers
 
         private void OnEnable()
         {
+            InGameChatNoticeHandler.Register(this);
             Singleton.Network.ChatServer.OnMessageRecieved += AddChatMessageHandle;
         }
 
         private void OnDisable()
         {
+            InGameChatNoticeHandler.Unregister();
             Singleton.Network.ChatServer.OnMessageRecieved -= AddChatMessageHandle;
         }
 

@@ -10,7 +10,7 @@ namespace Embers
         public GameObject avatarPrefab;
     }
 
-    [CreateAssetMenu(fileName = "AvatarData", menuName = "NOLDA/AvatarData", order = 1)]
+    [CreateAssetMenu(fileName = "AvatarData", menuName = "Embers/AvatarData", order = 1)]
     public class AvatarDataSO : ScriptableObject
     {
         public List<AvatarData> avatarList;

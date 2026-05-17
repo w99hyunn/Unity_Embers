@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "NewSkill", menuName = "NOLDA/Skill System/SkillData", order = 1)]
+    [CreateAssetMenu(fileName = "NewSkill", menuName = "Embers/Skill System/SkillData", order = 1)]
     public class SkillData : ScriptableObject
     {
         public int skillID;

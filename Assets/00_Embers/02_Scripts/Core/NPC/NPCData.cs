@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "NPC_0", menuName = "NOLDA/NPC/NPC Data")]
+    [CreateAssetMenu(fileName = "NPC_0", menuName = "Embers/NPC/NPC Data")]
     public class NPCData : ScriptableObject
     {
         public string npcName;

@@ -11,26 +11,14 @@ namespace Embers
         public bool IsSkillInUse
         {
             get => _isSkillInUse;
-            set
-            {
-                if (value != _isSkillInUse)
-                {
-                    _isSkillInUse = value;
-                    if (value)
-                    {
-                        playerController.State = PlayerController.PlayerState.UsingSkill;
-                    }
-                    else if (playerController.State == PlayerController.PlayerState.UsingSkill)
-                    {
-                        playerController.State = PlayerController.PlayerState.Normal;
-                    }
-                }
-            }
+            set => _isSkillInUse = value;
         }
 
         private PlayerController playerController;
         private PlayerInput input;
         private Animator animator;
+        private SkillData currentSkill;
+        private int currentSkillLevel;
         private bool _isSkillInUse = false;
 
         private Dictionary<int, GameObject> effectInstances = new Dictionary<int, GameObject>();
@@ -88,7 +76,7 @@ namespace Embers
             {
                 if (skillInfo.skillData.skillEffectPrefab != null)
                 {
-                    GameObject effectInstance = Instantiate(skillInfo.skillData.skillEffectPrefab, transform);
+                    GameObject effectInstance = Instantiate(skillInfo.skillData.skillEffectPrefab);
                     effectInstance.SetActive(false);
                     effectInstances[skillInfo.skillData.skillID] = effectInstance;
                 }
@@ -119,24 +107,22 @@ namespace Embers
         /// <param name="skillLevel"></param>
         public void ExecuteSkill(SkillData skill, int skillLevel)
         {
-            if (Singleton.Skill.IsSkillOnCooldown(skill.skillID) || IsSkillInUse)
+            if (playerController.State != PlayerController.PlayerState.Normal
+                || Singleton.Skill.IsSkillOnCooldown(skill.skillID)
+                || IsSkillInUse)
             {
                 return;
             }
 
             // 애니메이션 실행
             IsSkillInUse = true;
+            currentSkill = skill;
+            currentSkillLevel = skillLevel;
             //animator.applyRootMotion = true;
             if (skill.skillExecuter is ISkill skillScript)
             {
                 skillScript.ExecuteSkill(animator, this);
             }
-
-            //이펙트 재생
-            PlaySkillEffectsLocal(skill.skillID, GetSkillEffectPosition());
-
-            // 주변 적을 찾아 공격
-            TryUseSkillOnEnemy(skill, skillLevel);
 
             // 쿨타임 설정
             Singleton.Skill.SetSkillCooldown(skill.skillID);
@@ -158,6 +144,17 @@ namespace Embers
             //animator.applyRootMotion = false;
         }
 
+        public void OnSkillEffectAnimationEvent()
+        {
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+
+            PlaySkillEffectsLocal(currentSkill.skillID, GetSkillEffectPosition());
+            TryUseSkillOnEnemy(currentSkill, currentSkillLevel);
+        }
+
         private void TryUseSkillOnEnemy(SkillData skill, int skillLevel)
         {
             Vector3 attackPosition = transform.position + transform.forward * 1.5f;
@@ -167,8 +164,8 @@ namespace Embers
 
             foreach (Collider hitCollider in hitColliders)
             {
-                if (hitCollider.TryGetComponent(out NetworkIdentity targetIdentity) &&
-                    hitCollider.TryGetComponent(out Enemy enemy))
+                if (hitCollider.TryGetComponent<NetworkIdentity>(out NetworkIdentity targetIdentity) &&
+                    hitCollider.TryGetComponent<Enemy>(out Enemy enemy))
                 {
                     hitEnemies.Add(targetIdentity);
                 }
@@ -180,27 +177,21 @@ namespace Embers
                 SkillLevelData levelData = skill.GetSkillLevelData(skillLevel);
                 float damage = skill.baseDamage * (levelData != null ? levelData.effectMultiplier : 1f);
 
-                CmdUseSkillOnTargets(skill.skillID, hitEnemies.ToArray(), damage);
+                CmdUseSkillOnTargets(hitEnemies.ToArray(), damage);
             }
         }
 
         [Command]
-        private void CmdUseSkillOnTargets(int skillID, NetworkIdentity[] targets, float damage)
+        private void CmdUseSkillOnTargets(NetworkIdentity[] targets, float damage)
         {
             if (targets == null || targets.Length == 0) return;
 
             foreach (NetworkIdentity target in targets)
             {
-                if (target != null && target.TryGetComponent(out Enemy enemy))
+                if (target != null && target.TryGetComponent<Enemy>(out Enemy enemy))
                 {
                     enemy.TakeDamage(damage);
                 }
-            }
-
-            // 첫 번째 타겟 위치에 이펙트 재생
-            if (targets.Length > 0 && targets[0] != null)
-            {
-                RpcPlaySkillEffects(skillID, targets[0].transform.position);
             }
         }
 
@@ -242,7 +233,7 @@ namespace Embers
                 if (skillData == null || skillData.skillEffectPrefab == null)
                     return;
 
-                effectInstance = Instantiate(skillData.skillEffectPrefab, transform);
+                effectInstance = Instantiate(skillData.skillEffectPrefab);
                 effectInstance.SetActive(false);
             }
 

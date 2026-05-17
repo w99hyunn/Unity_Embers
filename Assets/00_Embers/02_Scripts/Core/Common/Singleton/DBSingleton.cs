@@ -367,7 +367,7 @@ namespace Embers
                             updateCmd.Parameters.AddWithValue("@Username", username);
                             updateCmd.ExecuteNonQuery();
 
-                            DebugUtils.Log($"User Login : {username}");
+                            DebugUtils.Log($"[로그인 성공] {username}");
                             return new LoginResponse
                             {
                                 Result = LoginResult.SUCCESS,
@@ -394,7 +394,7 @@ namespace Embers
             }
             catch (Exception ex)
             {
-                DebugUtils.Log($"User Login Error: {username}, Exception : {ex}");
+                DebugUtils.Log($"[로그인 실패] {username} / Exception : {ex}");
                 return new LoginResponse
                 {
                     Result = LoginResult.ERROR

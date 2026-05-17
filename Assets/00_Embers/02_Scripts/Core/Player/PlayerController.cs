@@ -126,7 +126,7 @@ namespace Embers
 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-            _hasAnimator = TryGetComponent(out _animator);
+            _hasAnimator = TryGetComponent<Animator>(out _animator);
             AssignAnimationIDs();
 
             // 시작 시 타임아웃 초기화
@@ -139,7 +139,7 @@ namespace Embers
             if (!isLocalPlayer || State != PlayerState.Normal)
                 return;
 
-            _hasAnimator = TryGetComponent(out _animator);
+            _hasAnimator = TryGetComponent<Animator>(out _animator);
 
             JumpAndGravity();
             GroundedCheck();

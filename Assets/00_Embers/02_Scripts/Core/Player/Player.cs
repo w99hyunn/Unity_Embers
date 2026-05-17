@@ -41,13 +41,13 @@ namespace Embers
         public override void OnStartServer()
         {
             base.OnStartServer();
-            Singleton.Session.AddPlayer(this.gameObject);
+            Singleton.Network.AddPlayer(this.gameObject);
         }
 
         public override void OnStopServer()
         {
             base.OnStopServer();
-            Singleton.Session.RemovePlayer(this.gameObject);
+            Singleton.Network.RemovePlayer(this.gameObject);
         }
 
         #region # Sync Nickname / Class
@@ -139,7 +139,7 @@ namespace Embers
         [Command(requiresAuthority = false)]
         public void CmdRemovePlayer()
         {
-            Singleton.Session.RemovePlayer(this.gameObject);
+            Singleton.Network.RemovePlayer(this.gameObject);
             NetworkServer.Destroy(connectionToClient.identity.gameObject);
             NetworkServer.RemovePlayerForConnection(connectionToClient);
         }

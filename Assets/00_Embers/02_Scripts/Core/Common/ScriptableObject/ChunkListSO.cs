@@ -25,7 +25,7 @@ namespace Embers
 #endif
     }
 
-    [CreateAssetMenu(fileName = "ChunkList", menuName = "NOLDA/ChunkList", order = 1)]
+    [CreateAssetMenu(fileName = "ChunkList", menuName = "Embers/ChunkList", order = 1)]
     public class ChunkListSO : ScriptableObject
     {
         public List<ChunkInfo> chunkSceneNames;

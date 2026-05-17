@@ -2,7 +2,7 @@
 
 namespace Embers
 {
-    [CreateAssetMenu(fileName = "ExperienceTable", menuName = "NOLDA/Experience Table", order = 1)]
+    [CreateAssetMenu(fileName = "ExperienceTable", menuName = "Embers/Experience Table", order = 1)]
     public class HxpTableSO : ScriptableObject
     {
         public int[] experienceRequiredPerLevel;
