@@ -9,8 +9,8 @@ namespace Embers
 
         private void Awake()
         {
-            StartingLogo(false);
-            EmbersLogo(false);
+            // StartingLogo(false);
+            // EmbersLogo(false);
         }
 
         public void StartingLogo(bool index)

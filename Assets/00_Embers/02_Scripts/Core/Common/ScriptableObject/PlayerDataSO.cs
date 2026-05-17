@@ -92,6 +92,11 @@ namespace Embers
             OnPassiveSkillsApplied?.Invoke();
         }
 
+        public bool IsEquippedItem(Item item)
+        {
+            return item == EquippedWeapon || item == EquippedArmor;
+        }
+
         private void ClearEquipment()
         {
             EquippedWeapon = null;

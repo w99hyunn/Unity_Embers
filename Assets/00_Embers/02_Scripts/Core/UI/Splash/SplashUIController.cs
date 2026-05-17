@@ -9,14 +9,14 @@ namespace Embers
         private const string NEXT_SCENE_NAME = "Title";
         private const string SESSION_SCENE_NAME = "Session";
 
-        private SplashUIView _view;
+        private SplashUIView view;
 
         private AsyncOperation _asyncLoadTitle;
         private AsyncOperation _asyncLoadSession;
 
         private void Start()
         {
-            TryGetComponent<SplashUIView>(out _view);
+            TryGetComponent<SplashUIView>(out view);
 
             LoadSceneAsync().Forget();
             SwitchCanvasAndLoadScene().Forget();
@@ -37,10 +37,10 @@ namespace Embers
         {
             Cursor.visible = false;
             await Awaitable.WaitForSecondsAsync(4f);
-            _view.StartingLogo(true);
-            await Awaitable.WaitForSecondsAsync(4f);
-            _view.EmbersLogo(true);
-            await Awaitable.WaitForSecondsAsync(4f);
+            // view.StartingLogo(true);
+            // await Awaitable.WaitForSecondsAsync(4f);
+            // view.EmbersLogo(true);
+            // await Awaitable.WaitForSecondsAsync(4f);
 
             Cursor.visible = true;
             _asyncLoadTitle.allowSceneActivation = true;

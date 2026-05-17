@@ -52,20 +52,11 @@ namespace Embers
 {
     public class InventoryUIController : MonoBehaviour
     {
-        // /// <summary> 현재 아이템 개수 </summary>
-        //public int ItemCount => _itemArray.Count;
+        [SerializeField] private EquipUIController equipController;
 
-        [SerializeField]
-        private InventoryUIView _view;
+        private InventoryUIView view;
 
-        /// <summary> 아이템 목록 </summary>
-        //[SerializeField]
-        //private Item[] Managers.Game.playerData.Items;
-
-        /// <summary> 업데이트 할 인덱스 목록 </summary>
         private readonly HashSet<int> _indexSetForUpdate = new HashSet<int>();
-
-        /// <summary> 아이템 데이터 타입별 정렬 가중치 </summary>
         private readonly static Dictionary<Type, int> _sortWeightDict = new Dictionary<Type, int>
         {
             { typeof(PortionItemData), 10000 },
@@ -85,17 +76,23 @@ namespace Embers
 
         private void Awake()
         {
-            //Managers.Game.playerData.Items = new Item[_maxCapacity];
-
-            _view.SetInventoryReference(this);
+            TryGetComponent<InventoryUIView>(out view);
+            view.SetInventoryReference(this);
         }
 
         private void Start()
         {
             UpdateAccessibleStatesAll();
+            SetupEquipView();
             UpdateAllSlot();
             Singleton.Game.playerData.RefreshEquipmentPositions();
+            UpdateEquipView();
             UpdateGoldText();
+        }
+
+        private void SetupEquipView()
+        {
+            equipController.Initialize(this);
         }
 
         public void OnEnable()
@@ -118,7 +115,7 @@ namespace Embers
 
         private void UpdateGoldText()
         {
-            _view.UpdateGoldText();
+            view.UpdateGoldText();
         }
 
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
@@ -168,7 +165,13 @@ namespace Embers
             if (item != null)
             {
                 // 아이콘 등록
-                _view.SetItemIcon(index, item.Data.IconSprite);
+                if (Singleton.Game.playerData.IsEquippedItem(item))
+                {
+                    view.HideSlotItem(index);
+                    return;
+                }
+
+                view.SetItemIcon(index, item.Data.IconSprite);
 
                 // 1-1. 셀 수 있는 아이템
                 if (item is CountableItem ci)
@@ -183,17 +186,17 @@ namespace Embers
                     // 1-1-2. 수량 텍스트 표시
                     else
                     {
-                        _view.SetItemAmountText(index, ci.Amount);
+                        view.SetItemAmountText(index, ci.Amount);
                     }
                 }
                 // 1-2. 셀 수 없는 아이템인 경우 수량 텍스트 제거
                 else
                 {
-                    _view.HideItemAmountText(index);
+                    view.HideItemAmountText(index);
                 }
 
                 // 슬롯 필터 상태 업데이트
-                _view.UpdateSlotFilterState(index, item.Data);
+                view.UpdateSlotFilterState(index, item.Data);
             }
             // 2. 빈 슬롯인 경우 : 아이콘 제거
             else
@@ -204,8 +207,8 @@ namespace Embers
             // 로컬 : 아이콘 제거하기
             void RemoveIcon()
             {
-                _view.RemoveItem(index);
-                _view.HideItemAmountText(index); // 수량 텍스트 숨기기
+                view.RemoveItem(index);
+                view.HideItemAmountText(index); // 수량 텍스트 숨기기
             }
         }
 
@@ -278,14 +281,14 @@ namespace Embers
         /// <summary> 인벤토리 UI 연결 </summary>
         public void ConnectUI(InventoryUIView inventoryUI)
         {
-            _view = inventoryUI;
-            _view.SetInventoryReference(this);
+            view = inventoryUI;
+            view.SetInventoryReference(this);
         }
 
         /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
         public void UpdateAccessibleStatesAll()
         {
-            _view.SetAccessibleSlotRange(Singleton.Game.playerData.InventorySpace);
+            view.SetAccessibleSlotRange(Singleton.Game.playerData.InventorySpace);
         }
 
 
@@ -405,10 +408,11 @@ namespace Embers
             if (Singleton.Game.playerData.Items[index] is EquipmentItem equipmentItem)
             {
                 Singleton.Game.playerData.UnequipEquipment(equipmentItem);
+                UpdateEquipView();
             }
 
             Singleton.Game.playerData.Items[index] = null;
-            _view.RemoveItem(index);
+            view.RemoveItem(index);
 
             Singleton.Game.SendSlotUpdateToServer(index);
         }
@@ -452,6 +456,7 @@ namespace Embers
             // 두 슬롯 정보 갱신
             UpdateSlot(indexA, indexB);
             Singleton.Game.playerData.RefreshEquipmentPositions();
+            UpdateEquipView();
             Singleton.Game.SendSlotUpdateToServer(indexA);
             Singleton.Game.SendSlotUpdateToServer(indexB);
         }
@@ -488,6 +493,9 @@ namespace Embers
             if (!IsValidIndex(index)) return;
             if (Singleton.Game.playerData.Items[index] == null) return;
 
+            int prevWeaponPosition = Singleton.Game.playerData.EquippedWeaponPosition;
+            int prevArmorPosition = Singleton.Game.playerData.EquippedArmorPosition;
+
             // 사용 가능한 아이템인 경우
             if (Singleton.Game.playerData.Items[index] is IUsableItem uItem)
             {
@@ -496,11 +504,22 @@ namespace Embers
 
                 if (succeeded)
                 {
-                    UpdateSlot(index);
+                    UpdateSlot(index, prevWeaponPosition, prevArmorPosition);
+                    UpdateEquipView();
 
                     Singleton.Game.SendSlotUpdateToServer(index);
                 }
             }
+        }
+
+        public void UpdateEquippedSlot(int index)
+        {
+            UpdateSlot(index);
+        }
+
+        private void UpdateEquipView()
+        {
+            equipController.Refresh();
         }
         #endregion
 
@@ -545,7 +564,8 @@ namespace Embers
                 UpdateSlot(index);
             }
             Singleton.Game.playerData.RefreshEquipmentPositions();
-            _view.UpdateAllSlotFilters();
+            UpdateEquipView();
+            view.UpdateAllSlotFilters();
         }
 
         /// <summary> 빈 슬롯 없이 채우면서 아이템 종류별로 정렬하기 </summary>
@@ -574,7 +594,8 @@ namespace Embers
             // 3. Update
             UpdateAllSlot();
             Singleton.Game.playerData.RefreshEquipmentPositions();
-            _view.UpdateAllSlotFilters(); // 필터 상태 업데이트
+            UpdateEquipView();
+            view.UpdateAllSlotFilters(); // 필터 상태 업데이트
         }
         #endregion
 

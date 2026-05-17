@@ -45,6 +45,7 @@ namespace Embers
 
         /// <summary> 연결된 인벤토리 </summary>
         private InventoryUIController _inventory;
+        public GameObject SlotUiPrefab => _slotUiPrefab;
 
         private List<ItemSlotUI> _slotUIList = new List<ItemSlotUI>();
         private GraphicRaycaster _gr;
@@ -226,7 +227,7 @@ namespace Embers
             // ===================== Local Methods ===============================
             void OnCurrentEnter()
             {
-                if (_showHighlight)
+                if (_showHighlight && curSlot.IsInventorySlot)
                     curSlot.Highlight(true);
             }
             void OnPrevExit()
@@ -239,7 +240,8 @@ namespace Embers
         {
             // 마우스가 유효한 아이템 아이콘 위에 올라와 있다면 툴팁 보여주기
             bool isValid =
-                _pointerOverSlot != null && _pointerOverSlot.HasItem && _pointerOverSlot.IsAccessible
+                _pointerOverSlot != null && _pointerOverSlot.IsInventorySlot
+                && _pointerOverSlot.HasItem && _pointerOverSlot.IsAccessible
                 && (_pointerOverSlot != _beginDragSlot); // 드래그 시작한 슬롯이면 보여주지 않기
 
             if (isValid)
@@ -260,7 +262,8 @@ namespace Embers
                 _beginDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
 
                 // 아이템을 갖고 있는 슬롯만 해당
-                if (_beginDragSlot != null && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
+                if (_beginDragSlot != null && _beginDragSlot.IsInventorySlot
+                    && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
                 {
                     // 위치 기억, 참조 등록
                     _beginDragIconTransform = _beginDragSlot.IconRect.transform;
@@ -288,7 +291,7 @@ namespace Embers
             {
                 ItemSlotUI slot = RaycastAndGetFirstComponent<ItemSlotUI>();
 
-                if (slot != null && slot.HasItem && slot.IsAccessible)
+                if (slot != null && slot.IsInventorySlot && slot.HasItem && slot.IsAccessible)
                 {
                     TryUseItem(slot.Index);
                 }
@@ -448,7 +451,6 @@ namespace Embers
             if (!slot.IsAccessible || !slot.HasItem)
                 return;
 
-            // 툴팁 정보 갱신
             _itemTooltip.SetItemInfo(_inventory.GetItemData(slot.Index));
 
             // 툴팁 위치 조정
@@ -511,6 +513,12 @@ namespace Embers
             //EditorLog($"Remove Item : Slot [{index}]");
 
             _slotUIList[index].RemoveItem();
+        }
+
+        public void HideSlotItem(int index)
+        {
+            _slotUIList[index].RemoveItem();
+            _slotUIList[index].SetItemAmount(1);
         }
 
         /// <summary> 접근 가능한 슬롯 범위 설정 </summary>
