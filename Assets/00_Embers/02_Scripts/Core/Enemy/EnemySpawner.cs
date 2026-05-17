@@ -67,7 +67,7 @@ namespace Embers
 
             GameObject enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             GameObject[] waypoints = CreateWaypoints();
-            Enemy enemyFSM = enemyInstance.GetComponent<Enemy>();
+            enemyInstance.TryGetComponent<Enemy>(out Enemy enemyFSM);
             enemyFSM.Setup(waypoints, this);
 
             NetworkServer.Spawn(enemyInstance);

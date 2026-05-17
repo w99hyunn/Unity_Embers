@@ -17,8 +17,8 @@ public partial class DieAction : Action
     protected override Status OnStart()
     {
         if (hasExecuted) return Status.Success;
-        Self.Value.GetComponent<Enemy>().DieAction();
-        Target.Value.GetComponent<PlayerEnemyHandler>().GainHxp(Hxp.Value);
+        Self.Value.TryGetComponent<Enemy>(out Enemy enemy);
+        enemy.DieAction();
         hasExecuted = true;
         return Status.Success;
     }

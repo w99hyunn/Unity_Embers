@@ -29,7 +29,7 @@ public partial class WanderAction : Action
         wanderPosition = Self.Value.transform.position + Utils.GetPositionFromAngle(wanderRadius, wanderJitter);
         wanderPosition.y = Self.Value.transform.position.y;
 
-        navMeshAgent = Self.Value.GetComponent<NavMeshAgent>();
+        Self.Value.TryGetComponent<NavMeshAgent>(out navMeshAgent);
         navMeshAgent.SetDestination(wanderPosition);
         currentWanderTime = Time.time;
 

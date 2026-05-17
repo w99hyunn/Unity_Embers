@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Embers
 {
     /// <summary> 수량 아이템 - 포션 아이템 </summary>
@@ -11,6 +13,19 @@ namespace Embers
         /// <returns></returns>
         public bool Use()
         {
+            PortionItemData portionData = CountableData as PortionItemData;
+            int effectValue = Mathf.RoundToInt(portionData.Value);
+
+            switch (portionData.EffectType)
+            {
+                case PortionEffectType.HP:
+                    Singleton.Game.playerData.Hp += effectValue;
+                    break;
+                case PortionEffectType.MP:
+                    Singleton.Game.playerData.Mp += effectValue;
+                    break;
+            }
+
             Amount--;
 
             return true;

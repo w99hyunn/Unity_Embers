@@ -44,10 +44,10 @@ namespace Embers
                     playerHxp.SetValue(Convert.ToInt32(newValue));
                     break;
                 case "MaxHp":
-                    playerHp.SetMaxValue(Convert.ToInt32(newValue));
+                    playerHp.SetMaxValue(Singleton.Game.playerData.TotalMaxHp);
                     break;
                 case "MaxMp":
-                    playerMp.SetMaxValue(Convert.ToInt32(newValue));
+                    playerMp.SetMaxValue(Singleton.Game.playerData.TotalMaxMp);
                     break;
                 case "Hp":
                     playerHp.SetValue(Convert.ToInt32(newValue));

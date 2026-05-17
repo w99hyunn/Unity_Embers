@@ -291,7 +291,7 @@ namespace Embers
                     if (false == suppressEvents)
                         OnDataChanged?.Invoke(nameof(MaxHp), value);
 
-                    Hp = Mathf.Clamp(Hp, 0, maxHp);
+                    Hp = Mathf.Clamp(Hp, 0, TotalMaxHp);
                 }
             }
         }
@@ -324,7 +324,7 @@ namespace Embers
                     if (false == suppressEvents)
                         OnDataChanged?.Invoke(nameof(MaxMp), value);
 
-                    Mp = Mathf.Clamp(Mp, 0, maxMp);
+                    Mp = Mathf.Clamp(Mp, 0, TotalMaxMp);
                 }
             }
         }

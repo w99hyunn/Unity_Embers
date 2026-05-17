@@ -15,6 +15,7 @@ namespace Embers
         }
 
         private PlayerController playerController;
+        private PlayerEnemyHandler playerEnemyHandler;
         private PlayerInput input;
         private Animator animator;
         private SkillData currentSkill;
@@ -26,6 +27,7 @@ namespace Embers
         private void Awake()
         {
             TryGetComponent<PlayerController>(out playerController);
+            TryGetComponent<PlayerEnemyHandler>(out playerEnemyHandler);
             TryGetComponent<PlayerInput>(out input);
             TryGetComponent<Animator>(out animator);
         }
@@ -190,7 +192,7 @@ namespace Embers
             {
                 if (target != null && target.TryGetComponent<Enemy>(out Enemy enemy))
                 {
-                    enemy.TakeDamage(damage);
+                    enemy.TakeDamage(damage, playerEnemyHandler);
                 }
             }
         }

@@ -12,10 +12,9 @@ namespace Embers
         private const string IS_DIE_TRIGGER = "isDie";
 
         [Header("Enemy Settings")]
-        [SerializeField] private string enemyName;
-        public string EnemyName => enemyName;
-        [SerializeField][SyncVar] private float maxHp = 500;
-        public float MaxHp => maxHp;
+        [SerializeField] private EnemySO enemyData;
+        public string EnemyName => enemyData.EnemyName;
+        public float MaxHp => enemyData.MaxHp;
         [SyncVar] private float currentHp;
 
         private GameObject[] waypoints;
@@ -24,6 +23,7 @@ namespace Embers
         private EnemySpawner enemySpawner;
         private Animator animator;
         private NetworkAnimator networkAnimator;
+        private PlayerEnemyHandler lastAttacker;
         private bool isDead;
 
         public event System.Action<float> OnAttacked;
@@ -81,7 +81,7 @@ namespace Embers
 
         private void Start()
         {
-            currentHp = maxHp;
+            currentHp = enemyData.MaxHp;
         }
 
         private void Update()
@@ -93,13 +93,14 @@ namespace Embers
         }
 
         [Server]
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, PlayerEnemyHandler attacker)
         {
             if (isDead)
             {
                 return;
             }
 
+            lastAttacker = attacker;
             currentHp -= damage;
 
             if (currentHp <= 0)
@@ -123,8 +124,15 @@ namespace Embers
             isDead = true;
             behaviorGraphAgent.SetVariableValue("currentState", EnemyState.Die);
             PlayDeathAnimation();
+            GiveRewardToLastAttacker();
 
             await AwaitDie();
+        }
+
+        [Server]
+        private void GiveRewardToLastAttacker()
+        {
+            lastAttacker.GainEnemyReward(enemyData);
         }
 
         private async Awaitable AwaitDie()

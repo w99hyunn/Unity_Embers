@@ -342,8 +342,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  enemyName: "\uD0F1\uD06C \uB3FC\uC9C0"
-  maxHp: 500
+  enemyData: {fileID: 11400000, guid: c4b3f6ad9bf24a5794dfc24717e2bf30, type: 2}
 --- !u!114 &3072819666931281076
 MonoBehaviour:
   m_ObjectHideFlags: 0

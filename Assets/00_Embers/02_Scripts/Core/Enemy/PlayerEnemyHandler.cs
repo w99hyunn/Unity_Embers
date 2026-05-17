@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
@@ -36,10 +37,48 @@ namespace Embers
             TargetApplyGainHxp(connectionToClient, hxp);
         }
 
+        [Server]
+        public void GainEnemyReward(EnemySO enemyData)
+        {
+            List<int> itemIds = new List<int>();
+            List<int> amounts = new List<int>();
+
+            foreach (EnemySO.DropEntry entry in enemyData.DropEntries)
+            {
+                if (UnityEngine.Random.value < entry.DropChance)
+                {
+                    itemIds.Add(entry.ItemData.ID);
+                    amounts.Add(entry.Amount);
+                }
+            }
+
+            TargetApplyEnemyReward(connectionToClient, enemyData.Hxp, itemIds.ToArray(), amounts.ToArray());
+        }
+
         [TargetRpc]
         public void TargetApplyGainHxp(NetworkConnection target, int hxp)
         {
             Singleton.Game.playerData.Hxp += hxp;
+        }
+
+        [TargetRpc]
+        public void TargetApplyEnemyReward(NetworkConnection target, int hxp, int[] itemIds, int[] amounts)
+        {
+            Singleton.Game.playerData.Hxp += hxp;
+
+            InventoryUIController inventory = FindFirstObjectByType<InventoryUIController>(FindObjectsInactive.Include);
+
+            for (int i = 0; i < itemIds.Length; i++)
+            {
+                ItemData itemData = Singleton.DB.GetItemDataById(itemIds[i]);
+                int remainingAmount = inventory.Add(itemData, amounts[i]);
+                int gainedAmount = amounts[i] - remainingAmount;
+
+                if (gainedAmount > 0)
+                {
+                    InGameChatNoticeHandler.Notice("획득", $"{itemData.Name} x{gainedAmount}");
+                }
+            }
         }
 
         /// <summary>
